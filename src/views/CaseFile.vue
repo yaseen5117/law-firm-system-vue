@@ -77,7 +77,7 @@
                       <th>Case #</th>
                       <th>Case Title</th>
                       <th>Court</th>
-                      <th>Client Name</th>
+                      <th>Client Name </th>
                       <th>Date of Institution</th>
                       <th>Actions</th>
                     </tr>
