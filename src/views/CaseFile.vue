@@ -19,55 +19,30 @@
         <div class="container" data-aos="fade-up">
           <div class="row gy-4">
             <div class="col-12">
-              <div class="row">
-                <div class="col-3">
-                  <label for="Date" class="form-label fw-bold"
-                    >Date of Institution</label
-                  >
-                  <input
-                    type="text"
-                    id="Date"
-                    class="form-control"
-                    aria-describedby="Date"
-                  />
-                </div>
-                <div class="col-3">
-                  <label for="Case" class="form-label fw-bold">Case #</label>
-                  <input
-                    type="text"
-                    id="Case"
-                    class="form-control"
-                    aria-describedby="Case"
-                  />
-                </div>
-                <div class="col-3">
-                  <label for="Court" class="form-label fw-bold">Court</label>
-                  <input
-                    type="text"
-                    id="Court"
-                    class="form-control"
-                    aria-describedby="Court"
-                  />
-                </div>
-                <div class="col-3">
-                  <label for="ClientName" class="form-label fw-bold"
-                    >Client Name</label
-                  >
-                  <input
-                    type="text"
-                    id="ClientName"
-                    class="form-control"
-                    aria-describedby="ClientName"
-                  />
-                </div>
+            <form class="row gy-2 gx-3 align-items-center">
+              <div class="col-auto">
+                <input type="text" id="date" class="form-control form-control-sm" placeholder="Date of Institution">
               </div>
-            </div>
-            <div class="col-12">
-              <button type="button" class="btn btn-primary btn-md">
-                Search
-              </button>
-              <button type="button" class="btn btn-danger btn-md">Reset</button>
-            </div>
+               <div class="col-auto">
+                
+                <input type="text" id="Case" class="form-control form-control-sm" placeholder="Case #" aria-describedby="Case">
+              </div>
+               <div class="col-auto">
+
+                <input placeholder="Court" type="text" id="Court" class="form-control form-control-sm" aria-describedby="Court">
+              </div>
+               <div class="col-auto">
+                
+                <input placeholder="Client Name" type="text" id="ClientName" class="form-control form-control-sm" aria-describedby="ClientName">
+              </div>
+
+               <div class="col-auto">
+                <button type="button" class="btn btn-danger btn-sm">Reset</button>
+              </div>
+
+            </form>
+          </div>
+             
             <div class="col-12">
               <div class="table-responsive">
                 <table class="table">
@@ -82,28 +57,19 @@
                       <th>Actions</th>
                     </tr>
                   </thead>
-                  <tbody v-for="case_file in case_files" :key="case_file.id">
+                  <tbody v-for="petition in petitions" :key="petition.id">
                     <tr>
-                      <td>{{ case_file.id }}</td>
-                      <td>{{ case_file.case_no }}</td>
-                      <td>{{ case_file.title }}</td>
-                      <td>{{ case_file.court }}</td>
-                      <td>{{ case_file.client_name }}</td>
-                      <td>{{ case_file.institution_date }}</td>
+                      <td>{{ petition.id }}</td>
+                      <td>{{ petition.case_no}}</td>
+                      <td>{{ petition.name }}</td>
+                      <td>{{ petition.court }}</td>
+                      <td>{{ petition.client_name }}</td>
+                      <td>{{ petition.created_at }}</td>
                       <td>
-                        <router-link
-                          to="case_details"
-                          class="btn btn-primary"
-                          role="button"
-                          >View</router-link
-                        >
-                        <router-link to="#" class="btn btn-success" role="button"
-                          >Update</router-link
-                        >
-                        <router-link to="#" class="btn btn-warning" role="button"
-                          >Alerts</router-link
-                        >
-                      </td>
+                        <router-link to="case_details" class="btn btn-primary btn-sm" role="button">View</router-link>
+                        <router-link to="#" class="btn btn-success btn-sm" role="button">Update</router-link>
+                        <router-link to="#" class="btn btn-warning btn-sm" role="button">Alerts</router-link>
+                    </td>
                     </tr>                    
                   </tbody>
                 </table>
@@ -124,7 +90,7 @@ export default {
     name: 'CaseFile',
     data(){
       return {
-        case_files: Array
+        petitions: Array
       }
     },
     created() {
@@ -132,10 +98,10 @@ export default {
     },
     methods: {
       async getCaseFiles() {
-        let url = 'http://127.0.0.1:8000/api/case_files';
+        let url = 'http://127.0.0.1:8000/api/petitions';
         await axios.get(url).then(response => {
-          this.case_files = response.data.case_files;
-          console.log(this.case_files);
+          this.petitions = response.data.petitions;
+          console.log(this.petitions);
         }).catch(error => {
           console.log(error);
         })

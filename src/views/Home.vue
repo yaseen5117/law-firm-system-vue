@@ -56,7 +56,7 @@
                   </svg>
                   <i class="bx bx-file"></i>
                 </div>
-                <h4><router-link to="case_files">Case Files</router-link></h4>
+                <h4><router-link to="petitions">Case Files</router-link></h4>
                 <p>Contains all Details of Case. Click to Open all Details.</p>
               </div>
             </div>
@@ -247,10 +247,8 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import Header from "./Header.vue";
-import Footer from "./Footer.vue";
-import CaseDetail from "./CaseDetail.vue";
+// @ is an alias to /src 
+//import CaseDetail from "./CaseDetail.vue";
 
 export default {
   name: 'Home',

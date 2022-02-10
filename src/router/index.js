@@ -7,10 +7,10 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
-  },
+  },  
   {
-    path: '/case_files',
-    name: 'CaseFile',    
+    path: '/petitions',
+    name: 'Petitions',    
     component: CaseFile
   },
   {

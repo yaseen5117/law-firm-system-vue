@@ -3,15 +3,15 @@
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top">
       <div class="container d-flex align-items-center justify-content-between">
-        <h1 class="logo"><router-link to="/">LFMS</router-link></h1>
+        <h1 class="logo"><a href="index.html">LFMS</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
         <nav id="navbar" class="navbar">
           <ul>
-            <li><router-link class="nav-link scrollto active" to="/">Home</router-link></li>
-            <li><router-link class="nav-link scrollto" to="#">About</router-link></li>
-            <li><a class="nav-link scrollto" href="#">Link-2</a></li>
+            <li><a class="nav-link scrollto" href="#">Welcome Admin!</a></li>
+            <!-- <li><a class="nav-link scrollto" href="#">Link-1</a></li>
+          <li><a class="nav-link scrollto" href="#">Link-2</a></li>           -->
             <li class="dropdown">
               <a href="#"
                 ><span>Settings</span> <i class="bi bi-chevron-down"></i
@@ -44,7 +44,7 @@
 
 <script>
 export default {
-    name: 'Header'
+  name: "Header",
 };
 </script>
 
