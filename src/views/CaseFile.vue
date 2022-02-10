@@ -1,7 +1,7 @@
 <template>
   <div class="case_file">
     <main id="main">
-      <!-- ======= Breadcrumbs ======= -->
+      <!-- ======== Breadcrumbs ======== -->
       <section id="breadcrumbs" class="breadcrumbs">
         <div class="container">
           <div class="d-flex justify-content-between align-items-center">
