@@ -1,5 +1,5 @@
 <template>
-  <div id="case_detail">
+  
       <main id="main">
 
     <!-- ======= Breadcrumbs ======= -->
@@ -32,22 +32,22 @@
       <div class="container" data-aos="fade-up">        
         <div class="row">
           <div class="col-12">
-            <div class="card-body align-center">
+            <div class="card-body align-center case_heading">
               <div>
-                <h5>
+                <h6>
                   <u>BEFORE THE ISLAMABAD HIGH COURT, ISLAMABAD</u>
 
-                </h5>
+                </h6>
                 <p>
                   Writ Petition No. <u>1812</u> /2021
                 </p>
-                <h6>KAMRAN KHAN AND OTHERS</h6>
-                <h6>VERSUS</h6>
-                <h6>CDA AND OTHERS</h6>
-                <h6>
+                <p>KAMRAN KHAN AND OTHERS</p>
+                <p>VERSUS</p>
+                <p>CDA AND OTHERS</p>
+                <p>
                   WRIT PETITION UNDER ARTICLE 199 OF THE CONSTITUTION OF THE ISLAMIC REPUBLIC OF PAKISTAN, 1973
-                </h6><br/>
-                <h6><u>INDEX</u></h6>
+                </p> 
+                <p><u><strong>INDEX</strong></u></p>
               </div>
             </div>
           </div>
@@ -58,7 +58,7 @@
               <div class="card-body">
                 <div class="d-flex align-items-start">
                   <table class="table table-bordered">
-                    <tbody>
+                    
                       <thead>
                         <th>Sr. #</th>
                         <th>Description of Documents</th>
@@ -66,84 +66,16 @@
                         <th>Annexure</th>
                         <th>Page</th>
                       </thead>
+                      <tbody>
+                      <template v-for="petition_detail in petition_details" :key="petition_detail.id">
                       <tr>
-                        <td>1</td>
-                        <td><a href="petition_slide_docs.html">Writ Petition along with Affidavit</a></td>
-                        <td></td>
-                        <td></td>
-                        <td>1-15</td>
+                        <td>{{ petition_detail.id  }}</td>
+                        <td><a href="petition_slide_docs.html">{{ petition_detail.document_description  }}</a></td>
+                        <td>{{ petition_detail.date  }}</td>
+                        <td>{{ petition_detail.annexure  }}</td>
+                        <td>{{ petition_detail.page_info  }}</td>
                       </tr>
-                      <tr>
-                        <td>2</td>
-                        <td><a href="petition_slide_docs_a.html">Copy of Impugned Turmintion Order</a></td>
-                        <td>02.12.2021</td>
-                        <td>A</td>                        
-                        <td>16-17</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td><a href="petition_slide_docs_b.html">Copy of Contract of the Petitioner</a></td>
-                        <td>04.05.2021</td>
-                        <td>B</td>
-                        <td>18-19</td>
-                      </tr>
-                      <tr>
-                        <td>4</td>
-                        <td><a href="petition_slide_docs_c.html">Copy of the Additional Charge Notification</a></td>
-                        <td>20.09.2021</td>
-                        <td>C</td>
-                        <td>20-22</td>
-                      </tr>
-                      <tr>
-                        <td>5</td>
-                        <td><a href="petition_slide_docs_d.html">Copy of the Complaint Submitted to the Ombudsman</a></td>
-                        <td>01.11.2021</td>
-                        <td>D</td>
-                        <td>23-42</td>
-                      </tr>
-                      <tr>
-                        <td>6</td>
-                        <td><a href="#">Copy of the Petitioner Urgent Email to the Respodent</a></td>
-                        <td>30.11.2021</td>
-                        <td>E</td>
-                        <td>43</td>
-                      </tr>
-                      <tr>
-                        <td>7</td>
-                        <td><a href="#">Copy of the Civil Suit Seeking Pre-termination hearing</a></td>
-                        <td>01.12.2021</td>
-                        <td>F</td>
-                        <td>44-50</td>
-                      </tr>
-                      <tr>
-                        <td>8</td>
-                        <td><a href="#">Copy of the Stay Order passed by ADJ</a></td>
-                        <td>2.12.2021</td>
-                        <td>G</td>
-                        <td>51</td>
-                      </tr>
-
-                      <tr>
-                        <td>9</td>
-                        <td><a href="#">Application for Exemption of Certified Copies Along With Affidavit</a></td>
-                        <td></td>
-                        <td></td>
-                        <td>52-53</td>
-                      </tr>
-                      <tr>
-                        <td>10</td>
-                        <td><a href="#">Application for Intirem Relief Along with Affidavit</a></td>
-                        <td></td>
-                        <td></td>
-                        <td>54-55</td>
-                      </tr>
-                      <tr>
-                        <td>11</td>
-                        <td><a href="#">Power of Attorney</a></td>
-                        <td></td>
-                        <td></td>
-                        <td>56-57</td>
-                      </tr>
+                      </template>                   
                     </tbody>
                   </table>
 
@@ -159,19 +91,39 @@
     </section><!-- End Services Section -->
 
   </main><!-- End #main -->
-  </div>
+   
 </template>
 
 <script> 
-import NavComponents from "./Cases/NavComponents.vue";
-
-export default {
-  name: "CaseDetail",
+import axios from 'axios';
+import NavComponents from './Cases/NavComponents.vue';
+export default {  
   components: {
     NavComponents
-  }
-  
-};
+  },   
+    data(){
+      return {
+        petition_details: Array,
+        id: this.$route.params.id //this is the id from the browser
+      }
+    },
+    created() {
+      this.getCaseDetails();
+    },
+    methods: {
+      async getCaseDetails() {       
+        await axios.get('http://127.0.0.1:8000/api/petitions/1').then(response => {
+          this.petition_details = response.data.petition_details;  
+          console.log(this.petition_details);
+        }).catch(error => {
+          console.log(error);
+        })
+      }
+    },
+    mounted() {
+      console.log('Case Details Component Mounted');
+    }
+};  
 </script>
 
 <style>
@@ -199,4 +151,8 @@ export default {
     .align-center {
       text-align: center;
     }
+    .case_heading p{
+        font-size: 12px;
+        line-height: 2px;
+      }
 </style>

@@ -14,8 +14,8 @@ const routes = [
     component: CaseFile
   },
   {
-    path: '/case_details',
-    name: 'CaseDetail',    
+    path: '/petitions/:id',
+    name: 'case-detail',    
     component: CaseDetail
   }
 ]

@@ -1,5 +1,4 @@
-<template>
-  <div>
+<template> 
     <!-- ======= Footer ======= -->
     <footer id="footer">
       <div class="container">
@@ -27,8 +26,7 @@
         </div>
       </div>
     </footer>
-    <!-- End Footer -->
-  </div>
+    <!-- End Footer -->   
 </template>
 
 <script>

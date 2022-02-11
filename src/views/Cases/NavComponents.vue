@@ -12,7 +12,7 @@
           <li class="nav-item" role="presentation">
             <button
               class="nav-link active"
-              onclick="document.location='case_details.html'"
+              onclick="document.location='case_details'"
               id="retition"
               data-bs-toggle="tab"
               data-bs-target="#petition"

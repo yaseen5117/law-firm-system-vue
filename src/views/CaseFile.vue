@@ -61,12 +61,12 @@
                     <tr>
                       <td>{{ petition.id }}</td>
                       <td>{{ petition.case_no}}</td>
-                      <td>{{ petition.name }}</td>
+                      <td>{{ petition.title }}</td>
                       <td>{{ petition.court }}</td>
                       <td>{{ petition.client_name }}</td>
                       <td>{{ petition.created_at }}</td>
                       <td>
-                        <router-link to="case_details" class="btn btn-primary btn-sm" role="button">View</router-link>
+                        <router-link :to="{ name: 'case-detail', params: {id: petition.id}}" class="btn btn-primary btn-sm" role="button">View</router-link>
                         <router-link to="#" class="btn btn-success btn-sm" role="button">Update</router-link>
                         <router-link to="#" class="btn btn-warning btn-sm" role="button">Alerts</router-link>
                     </td>
@@ -90,7 +90,7 @@ export default {
     name: 'CaseFile',
     data(){
       return {
-        petitions: Array
+        petitions: Array,                 
       }
     },
     created() {
