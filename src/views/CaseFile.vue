@@ -62,9 +62,9 @@
                       <td>{{ petition.id }}</td>
                       <td>{{ petition.case_no}}</td>
                       <td>{{ petition.title }}</td>
-                      <td>{{ petition.court }}</td>
-                      <td>{{ petition.client_name }}</td>
-                      <td>{{ petition.created_at }}</td>
+                      <td>{{ petition.court.title }}</td>
+                      <td>{{ petition.client.first_name }} {{ petition.client.last_name }}</td>
+                      <td>{{ petition.institution_date }}</td>
                       <td>
                         <router-link :to="{ name: 'case-detail', params: {id: petition.id}}" class="btn btn-primary btn-sm" role="button">View</router-link>
                         <router-link to="#" class="btn btn-success btn-sm" role="button">Update</router-link>

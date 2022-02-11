@@ -196,6 +196,7 @@
               aria-controls="contact"
               aria-selected="false"
             >
+            
               Others
             </button>
           </li>
@@ -206,8 +207,42 @@
 </template>
 
 <script>
-export default {};
-</script>
 
+
+export default {
+
+  mounted(){
+    let recaptchaScript = document.createElement('script')
+    recaptchaScript.setAttribute('src', '../../../public/js/bootstrap-nav-paginator.min.js')
+    document.head.appendChild(recaptchaScript)
+  }
+
+};
+</script>
 <style>
+.nav-pills .nav-link {
+  background-color: #f2f6f9;
+  color: black;
+  margin: 2px !important;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #0d6efd;
+}
+
+section {
+  padding: 40px 0 !important;
+  overflow: hidden !important;
+}
+
+h2 span {
+  font-size: 16px;
+}
+
+.align-center {
+  text-align: center;
+}
+
 </style>
