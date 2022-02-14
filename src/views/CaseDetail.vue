@@ -1,30 +1,7 @@
 <template>
   <main id="main">
-    <!-- ======= Breadcrumbs ======= -->
-    <section id="breadcrumbs" class="breadcrumbs">
-      <div class="container">
-        <div class="d-flex justify-content-between align-items-center">
-          <h2>
-            Case Details
-            <span>(<strong>Case Title:</strong> Criminal,</span>
-            <span><strong>Case #:</strong> AS123,</span>
-            <span><strong>Client Name:</strong> XYZ Client,</span>
-            <span><strong>Court:</strong> Supreme Court)</span>
-          </h2>
-          <ol>
-            <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/petitions">Case Files</router-link></li>
-            <li>Case Details</li>
-          </ol>
-        </div>
-      </div>
-    </section>
-    <!-- End Breadcrumbs -->
-
-    <!-- ======= tab using nav component ======= -->
-    <NavComponents />
-    <!-- End tab using nav component -->
-
+    <page-header title="Petition"  />
+    <nav-components />
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
@@ -70,9 +47,10 @@
                         <tr>
                           <td>{{ petition_detail.id }}</td>
                           <td>
-                            <a href="petition_slide_docs.html">{{
-                              petition_detail.document_description
-                            }}</a>
+                            <router-link 
+                              :to="{ name: 'petition-index-details', params: { id: petition_detail.id} }" 
+                            >{{petition_detail.document_description}}</router-link>
+                            
                           </td>
                           <td>{{ petition_detail.date }}</td>
                           <td>{{ petition_detail.annexure }}</td>
@@ -96,9 +74,11 @@
 <script>
 import axios from "axios";
 import NavComponents from "./Cases/NavComponents.vue";
+import PageHeader from "../views/shared/PageHeader";
 export default {
   components: {
     NavComponents,
+    PageHeader,
   },
   data() {
     return {
@@ -113,7 +93,7 @@ export default {
   methods: {
     async getCaseDetails() {
       await axios
-        .get("http://127.0.0.1:8000/api/petitions/1")
+        .get("http://127.0.0.1:8000/api/petitions/"+this.id)
         .then((response) => {
           this.petition = response.data.petition;
           this.petition_details = response.data.petition_details;
@@ -126,6 +106,10 @@ export default {
   },
   mounted() {
     console.log("Case Details Component Mounted");
+
+    let externalScript = document.createElement('script')
+    externalScript.setAttribute('src', '../../public/js/bootstrap-nav-paginator.min.js')
+    document.head.appendChild(externalScript)
   },
 };
 </script>

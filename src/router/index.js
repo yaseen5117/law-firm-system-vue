@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import CaseFile from '../views/CaseFile.vue'
 import CaseDetail from '../views/CaseDetail'
+import PetitionIndexDetails from '../views/petition-index/PetitionIndexDetails'
 const routes = [
   {
     path: '/',
@@ -17,6 +18,12 @@ const routes = [
     path: '/petitions/:id',
     name: 'case-detail',    
     component: CaseDetail
+  },
+
+  {
+    path: '/petition-index-details/:id',
+    name: 'petition-index-details',    
+    component: PetitionIndexDetails
   }
 ]
 
