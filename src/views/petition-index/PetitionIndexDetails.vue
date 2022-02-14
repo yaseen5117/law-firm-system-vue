@@ -8,9 +8,17 @@
         <p>{{ petition_index_details.document_description }}</p>
         <div>
           <div class="col-md-8">
-            <carousel :items-to-show="1.5">
-              <slide v-for="slide in 10" :key="slide">
-                <img src="https://via.placeholder.com/500" />
+            <carousel :items-to-show="1">
+              <slide
+                v-for="attachment in petition_index_details.attachments"
+                :key="attachment"
+              >
+                <img
+                  :src="
+                    'http://127.0.0.1:8000/storage/attachments/' +
+                    attachment.file_name
+                  "
+                />
               </slide>
 
               <template #addons>
@@ -22,7 +30,7 @@
 
           <div class="col-md-3">
             <div
-              class="nav flex-column nav-pills me-3"
+              class="nav flex-column nav-pills"
               id="v-pills-tab"
               role="tablist"
               aria-orientation="vertical"
