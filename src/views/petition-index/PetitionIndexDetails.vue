@@ -28,6 +28,20 @@
                 <pagination />
               </template>
             </carousel>
+
+
+            <div class="row" v-for="attachment in petition_index_details.attachments"
+                :key="attachment">
+                <div class="col-12">
+                    <img
+                    :src="
+                        'http://127.0.0.1:8000/storage/attachments/' +
+                        attachment.file_name
+                    "
+                    />
+                    <hr class="mt-4 mb-4" style="border: solid 3px" >
+                </div>    
+            </div> 
           </div>
 
           <div class="col-3">
