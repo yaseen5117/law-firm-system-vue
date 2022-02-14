@@ -1,13 +1,15 @@
 <template>
   <main id="main">
     <!-- ======= Breadcrumbs ======= -->
-    <page-header :title="'Petition Index'" :petition="petition" />
+    <page-header
+      :title="petition_index_details.document_description"
+      :petition="petition"
+    />
     <!-- End Breadcrumbs -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
-        <p>{{ petition_index_details.document_description }}</p>
-        <div>
-          <div class="col-md-8">
+        <div class="row">
+          <div class="col-8">
             <carousel :items-to-show="1">
               <slide
                 v-for="attachment in petition_index_details.attachments"
@@ -28,7 +30,7 @@
             </carousel>
           </div>
 
-          <div class="col-md-3">
+          <div class="col-3">
             <div
               class="nav flex-column nav-pills"
               id="v-pills-tab"
@@ -36,72 +38,8 @@
               aria-orientation="vertical"
             >
               <button
-                class="nav-link"
-                onclick="document.location='petition_slide_docs.html'"
-                id="v-pills-home-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#v-pills-home"
-                type="button"
-                role="tab"
-                aria-controls="v-pills-home"
-                aria-selected="true"
-              >
-                Petition
-              </button>
-              <button
-                class="nav-link active"
-                onclick="document.location='petition_slide_docs_a.html'"
-                id="v-pills-profile-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#v-pills-profile"
-                type="button"
-                role="tab"
-                aria-controls="v-pills-profile"
-                aria-selected="false"
-              >
-                A
-              </button>
-              <button
-                class="nav-link"
-                onclick="document.location='petition_slide_docs_b.html'"
-                id="v-pills-profile-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#v-pills-profile"
-                type="button"
-                role="tab"
-                aria-controls="v-pills-profile"
-                aria-selected="false"
-              >
-                B
-              </button>
-              <button
-                class="nav-link"
-                onclick="document.location='petition_slide_docs_c.html'"
-                id="v-pills-messages-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#v-pills-messages"
-                type="button"
-                role="tab"
-                aria-controls="v-pills-messages"
-                aria-selected="false"
-              >
-                C
-              </button>
-              <button
-                class="nav-link"
-                onclick="document.location='petition_slide_docs_d.html'"
-                id="v-pills-settings-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#v-pills-settings"
-                type="button"
-                role="tab"
-                aria-controls="v-pills-settings"
-                aria-selected="false"
-              >
-                D
-              </button>
-
-              <button
+                v-for="petition_index_single in petition_index"
+                :key="petition_index_single"
                 class="nav-link"
                 id="v-pills-home-tab"
                 data-bs-toggle="pill"
@@ -111,31 +49,14 @@
                 aria-controls="v-pills-home"
                 aria-selected="true"
               >
-                E
-              </button>
-              <button
-                class="nav-link"
-                id="v-pills-profile-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#v-pills-profile"
-                type="button"
-                role="tab"
-                aria-controls="v-pills-profile"
-                aria-selected="false"
-              >
-                F
-              </button>
-              <button
-                class="nav-link"
-                id="v-pills-messages-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#v-pills-messages"
-                type="button"
-                role="tab"
-                aria-controls="v-pills-messages"
-                aria-selected="false"
-              >
-                G
+                
+                <router-link
+                        :to="{
+                          name: 'petition-index-details',
+                          params: { id: petition_index_single.id },
+                        }"
+                        >{{ petition_index_single.annexure }}</router-link
+                      >
               </button>
 
               <button
@@ -183,6 +104,7 @@ export default {
   data() {
     return {
       petition: {},
+      petition_index: [],
       petition_index_details: {},
       id: this.$route.params.id, //this is the id from the browser
     };
@@ -197,6 +119,27 @@ export default {
         .then((response) => {
           this.petition_index_details = response.data.petition_index;
           this.petition = response.data.petition;
+
+          this.getPetitionAnnexure(response.data.petition.id);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    async getPetitionAnnexure(petition_id) {
+      await axios
+        .get("http://127.0.0.1:8000/api/petitions/" + petition_id)
+        .then((response) => {
+          this.petition_index = response.data.petition_details;
+          var arr = [];
+          this.petition_index.forEach((element) => {
+            if (element.annexure) {
+              arr.push(element);
+            }
+          });
+          console.log("arr",arr);
+          this.petition_index = arr;
         })
         .catch((error) => {
           console.log(error);
