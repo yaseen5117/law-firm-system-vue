@@ -1,5 +1,5 @@
 <template>
-  <div>
+   
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top">
       <div class="container d-flex align-items-center justify-content-between">
@@ -39,7 +39,7 @@
       </div>
     </header>
     <!-- End Header -->
-  </div>
+ 
 </template>
 
 <script>

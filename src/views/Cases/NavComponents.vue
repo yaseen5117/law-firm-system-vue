@@ -14,12 +14,7 @@
               class="nav-link active"
               onclick="document.location='case_details'"
               id="retition"
-              data-bs-toggle="tab"
-              data-bs-target="#petition"
-              type="button"
-              role="tab"
-              aria-controls="petition"
-              aria-selected="true"
+              data-bs-toggle="tab"             
             >
               Petition
             </button>
@@ -29,12 +24,7 @@
               class="nav-link"
               onclick="document.location='replies.html'"
               id="replies"
-              data-bs-toggle="tab"
-              data-bs-target="#replies"
-              type="button"
-              role="tab"
-              aria-controls="replies"
-              aria-selected="false"
+              data-bs-toggle="tab"             
             >
               Replies
             </button>
@@ -43,12 +33,7 @@
             <button
               class="nav-link"
               id="contact-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#contact"
-              type="button"
-              role="tab"
-              aria-controls="contact"
-              aria-selected="false"
+              data-bs-toggle="tab"             
             >
               Order Sheets
             </button>
@@ -58,12 +43,7 @@
             <button
               class="nav-link"
               id="contact-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#contact"
-              type="button"
-              role="tab"
-              aria-controls="contact"
-              aria-selected="false"
+              data-bs-toggle="tab"              
             >
               Prayers
             </button>
@@ -73,12 +53,7 @@
             <button
               class="nav-link"
               id="contact-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#contact"
-              type="button"
-              role="tab"
-              aria-controls="contact"
-              aria-selected="false"
+              data-bs-toggle="tab"              
             >
               CM’s
             </button>
@@ -89,11 +64,7 @@
               class="nav-link"
               id="contact-tab"
               data-bs-toggle="tab"
-              data-bs-target="#contact"
-              type="button"
-              role="tab"
-              aria-controls="contact"
-              aria-selected="false"
+             
             >
               Naqal Forms
             </button>
@@ -103,11 +74,7 @@
               class="nav-link"
               id="contact-tab"
               data-bs-toggle="tab"
-              data-bs-target="#contact"
-              type="button"
-              role="tab"
-              aria-controls="contact"
-              aria-selected="false"
+              
             >
               Talbana
             </button>
@@ -118,11 +85,7 @@
               class="nav-link"
               id="contact-tab"
               data-bs-toggle="tab"
-              data-bs-target="#contact"
-              type="button"
-              role="tab"
-              aria-controls="contact"
-              aria-selected="false"
+              
             >
               Case Laws
             </button>
@@ -133,11 +96,7 @@
               class="nav-link"
               id="contact-tab"
               data-bs-toggle="tab"
-              data-bs-target="#contact"
-              type="button"
-              role="tab"
-              aria-controls="contact"
-              aria-selected="false"
+              
             >
               Extra Docs
             </button>
@@ -147,11 +106,7 @@
               class="nav-link"
               id="contact-tab"
               data-bs-toggle="tab"
-              data-bs-target="#contact"
-              type="button"
-              role="tab"
-              aria-controls="contact"
-              aria-selected="false"
+              
             >
               Oral Arguments
             </button>
@@ -161,11 +116,7 @@
               class="nav-link"
               id="contact-tab"
               data-bs-toggle="tab"
-              data-bs-target="#contact"
-              type="button"
-              role="tab"
-              aria-controls="contact"
-              aria-selected="false"
+             
             >
               Synopsis
             </button>
@@ -176,11 +127,7 @@
               class="nav-link"
               id="contact-tab"
               data-bs-toggle="tab"
-              data-bs-target="#contact"
-              type="button"
-              role="tab"
-              aria-controls="contact"
-              aria-selected="false"
+              
             >
               Judgment
             </button>
@@ -190,11 +137,7 @@
               class="nav-link"
               id="contact-tab"
               data-bs-toggle="tab"
-              data-bs-target="#contact"
-              type="button"
-              role="tab"
-              aria-controls="contact"
-              aria-selected="false"
+              
             >
             
               Others

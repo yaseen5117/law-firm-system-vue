@@ -8,9 +8,10 @@
     <!-- End Breadcrumbs -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
-        <div class="row">
+        <div class="row">         
           <div class="col-8">
-            <carousel :items-to-show="1">
+             <button class="btn btn-primary btn-sm mb-3" v-on:click="isShow = !isShow">Slide/Horizontal View</button>
+            <carousel :items-to-show="1" v-show="isShow">
               <slide
                 v-for="attachment in petition_index_details.attachments"
                 :key="attachment"
@@ -28,11 +29,23 @@
                 <pagination />
               </template>
             </carousel>
-
-
-            <div class="row" v-for="attachment in petition_index_details.attachments"
+            
+          <div v-show="!isShow"> 
+            <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle btn-sm mb-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Go to page#
+            </button>
+             
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <template v-for="attachment in petition_index_details.attachments"
                 :key="attachment">
-                <div class="col-12">
+                <li><a class="dropdown-item" @click="scrollIntoView(attachment.id)">{{ attachment.id }}</a></li>               
+              </template>
+            </ul>
+          </div>
+            <div class="row" v-for="attachment in petition_index_details.attachments"
+                :key="attachment">               
+                <div :id="'image-container-'+attachment.id" class="col-12">
                     <img
                     :src="
                         'http://127.0.0.1:8000/storage/attachments/' +
@@ -41,6 +54,7 @@
                     />
                     <hr class="mt-4 mb-4" style="border: solid 3px" >
                 </div>    
+            </div>
             </div> 
           </div>
 
@@ -121,12 +135,17 @@ export default {
       petition_index: [],
       petition_index_details: {},
       id: this.$route.params.id, //this is the id from the browser
+      isShow:true,
     };
   },
   created() {
     this.getCaseDetails();
   },
   methods: {
+    scrollIntoView(id) { 
+      document.getElementById('image-container-'+id).scrollIntoView();        
+       
+    },
     async getCaseDetails() {
       await axios
         .get("http://127.0.0.1:8000/api/petitions_index/" + this.id)

@@ -2,7 +2,7 @@
   <div id="home">
      <main id="main">
       <!-- ======= Services Section ======= -->
-      <section id="services" class="services section-bg">
+      <section id="services" class="services section-bg m-top">
         <div class="container" data-aos="fade-up">
           <div class="row gy-4">
             <div
@@ -255,3 +255,9 @@ export default {
    
 }
 </script>
+
+<style>
+.m-top{
+  margin-top: 60px;
+}
+</style>

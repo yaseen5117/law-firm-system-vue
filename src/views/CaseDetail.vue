@@ -103,13 +103,7 @@ export default {
   },
   mounted() {
     console.log("Case Details Component Mounted");
-
-    let externalScript = document.createElement("script");
-    externalScript.setAttribute(
-      "src",
-      "../../public/js/bootstrap-nav-paginator.min.js"
-    );
-    document.head.appendChild(externalScript);
+ 
   },
 };
 </script>
