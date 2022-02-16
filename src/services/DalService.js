@@ -1,12 +1,7 @@
-class DalService {
+export default class DalService {
 
   sendRequest() {
-    alert('request')
+    // Use vue-resource or any other http library to send your request
   }
 
-}
-
-
-export default {
-  Data1
 }

@@ -3,6 +3,8 @@ import Home from '../views/Home.vue'
 import CaseFile from '../views/CaseFile.vue'
 import CaseDetail from '../views/CaseDetail'
 import PetitionIndexDetails from '../views/petition-index/PetitionIndexDetails'
+import CreatePetition from '../views/petitions/CreatePetition'
+
 const routes = [
   {
     path: '/',
@@ -14,6 +16,13 @@ const routes = [
     name: 'Petitions',    
     component: CaseFile
   },
+
+  {
+    path: '/petitions/create',
+    name: 'create-petition',    
+    component: CreatePetition
+  },
+
   {
     path: '/petitions/:id',
     name: 'case-detail',    

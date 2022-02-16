@@ -33,6 +33,7 @@
              
             <div class="col-12">
               <div class="table-responsive">
+                <router-link class="btn btn-success btn-sm mb-3" :to="'/petitions/create'" >New</router-link>
                 <table  class="table table-bordered" style="font-size:12px">
                   <thead>
                     <tr>
@@ -49,9 +50,9 @@
                     <tr>
                       <td>{{ petition.id }}</td>
                       <td>{{ petition.case_no}}</td>
-                      <td>{{ petition.title.length >15 ? petition.title.substring(0,47)+"..." : petition.title }}</td>
-                      <td>{{ petition.court.title }}</td>
-                      <td>{{ petition.client.first_name }} {{ petition.client.last_name }}</td>
+                      <td>{{ (petition.title && petition.title.length >15) ? petition.title.substring(0,47)+"..." : petition.title }}</td>
+                      <td>{{ (petition && petition.court) ?petition.court.title :'' }}</td>
+                      <td>{{ petition.client?petition.client.first_name:'' }} {{ petition.client?petition.client.last_name:'' }}</td>
                       <td>{{ petition.institution_date }}</td>
                       <td>
                         <router-link style="    margin-right: 2px;" :to="{ name: 'case-detail', params: {id: petition.id}}" class="btn btn-primary btn-sm" role="button">View</router-link>
