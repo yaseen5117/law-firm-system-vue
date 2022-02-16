@@ -31,18 +31,7 @@
             </carousel>
             
           <div v-show="!isShow">                 
-            <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle btn-sm mb-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              Go to page#
-            </button>
-             
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <template v-for="attachment in petition_index_details.attachments"
-                :key="attachment">
-                <li><a class="dropdown-item" @click="scrollIntoView(attachment.id)">{{ attachment.id }}</a></li>               
-              </template>
-            </ul>
-          </div>
+            
             <div class="row" v-for="attachment in petition_index_details.attachments"
                 :key="attachment">               
                 <div :id="'image-container-'+attachment.id" class="col-12">
