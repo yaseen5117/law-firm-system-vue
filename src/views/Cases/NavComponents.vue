@@ -1,7 +1,7 @@
 <template>
   <!-- ======= tab using nav component ======= -->
 
-  <div class="container" style="margin-top: 15px">
+  <div class="container mrgn-top">
     <div class="row">
       <div class="col-12">
         <ul
@@ -151,12 +151,11 @@
 
 <script>
 
-
 export default {
 
-  mounted(){
+  mounted(){ 
     let recaptchaScript = document.createElement('script')
-    recaptchaScript.setAttribute('src', '../../../public/js/bootstrap-nav-paginator.min.js')
+    recaptchaScript.setAttribute('src', '../../../public/js/bootstrap-nav-paginator.js')
     document.head.appendChild(recaptchaScript)
   }
 
@@ -182,6 +181,9 @@ section {
 
 h2 span {
   font-size: 16px;
+}
+.mrgn-top{
+  margin-top: 15px;
 }
 
 .align-center {

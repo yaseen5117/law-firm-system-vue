@@ -9,7 +9,7 @@
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="row">         
-          <div class="col-8">
+          <div class="col-9">
              <button class="btn btn-primary btn-sm mb-3" v-on:click="isShow = !isShow">Slide/Horizontal View</button>
             <carousel :items-to-show="1" v-show="isShow">
               <slide
@@ -30,7 +30,7 @@
               </template>
             </carousel>
             
-          <div v-show="!isShow"> 
+          <div v-show="!isShow">                 
             <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle btn-sm mb-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               Go to page#
@@ -114,9 +114,18 @@
               </button>
             </div>
           </div>
-        </div>
+        </div> 
+       
       </div>
     </section>
+     <div v-show="!isShow" class="fixed"> 
+            <div class="list-group" v-for="attachment in petition_index_details.attachments"
+                :key="attachment">
+              <a class="list-group-item" @click="scrollIntoView(attachment.id)">{{ attachment.id }}</a>               
+            </div>
+
+            
+        </div>
   </main>
   <!-- End #main -->
 </template>
@@ -143,7 +152,7 @@ export default {
   },
   methods: {
     scrollIntoView(id) { 
-      document.getElementById('image-container-'+id).scrollIntoView();        
+      document.getElementById('image-container-'+id).scrollIntoView({ duration: 2000 });        
        
     },
     async getCaseDetails() {
@@ -183,4 +192,9 @@ export default {
 </script>
 
 <style>
+.fixed{
+  position: absolute;  
+  left: 0;
+  top: 245px;   
+}
 </style>
