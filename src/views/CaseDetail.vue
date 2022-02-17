@@ -95,15 +95,25 @@
                       v-show="!petition_detail.editMode"
                       @click="petition_detail.editMode = true"
                       class="btn btn-primary btn-sm bx-pull-right"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"
                     >
-                      Edit
+                      <i class="fa fa-edit"></i>
                     </button>
                     <button
                       v-show="petition_detail.editMode"
                       @click="editPetitionIndex(petition_detail)"
                       class="btn btn-warning btn-sm bx-pull-right"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Update"
                     >
-                      Update
+                      <i class="fa fa-save"></i>
+                    </button>
+                    <button
+                      v-show="!petition_detail.editMode"
+                      @click="deletePetitionIndex(petition_detail.id)"
+                      class="btn btn-danger btn-sm bx-pull-right mt-1"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
+                    >
+                     <i class="fa fa-trash-o"></i>
                     </button>
                   </td>
                 </tr>
@@ -137,7 +147,7 @@
                   <td>
                     <button
                       @click="submitPetitionIndex()"
-                      class="btn btn-success btn-sm bx-pull-right"
+                      class="btn btn-primary btn-sm bx-pull-right"
                     >
                       Save
                     </button>
@@ -259,6 +269,38 @@ export default {
           );
       }
     },
+    deletePetitionIndex(petitionId) {
+      if (true) {
+        var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("rezo_customers_user"),           
+        };
+
+        axios
+          .post("http://127.0.0.1:8000/api/petitions_index", petitionId, {
+            headers,
+          })
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "Deleted Successfully!",
+                });                 
+              }
+            },
+            (error) => {
+              console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
+            }
+          );
+      }
+    },
   },
   mounted() {
     console.log("Case Details Component Mounted");
@@ -266,3 +308,8 @@ export default {
 };
 </script>
 
+<style>
+.red{
+  color:red;
+}
+</style>
