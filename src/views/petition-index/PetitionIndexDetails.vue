@@ -8,9 +8,14 @@
     <!-- End Breadcrumbs -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
-        <div class="row">         
+        <div class="row">
           <div class="col-9">
-             <button class="btn btn-primary btn-sm mb-3" v-on:click="isShow = !isShow">Slide/Horizontal View</button>
+            <!-- <button
+              class="btn btn-primary btn-sm mb-3"
+              v-on:click="isShow = !isShow"
+            >
+              Slide/Horizontal View
+            </button> -->
             <carousel :items-to-show="1" v-show="isShow">
               <slide
                 v-for="attachment in petition_index_details.attachments"
@@ -29,22 +34,24 @@
                 <pagination />
               </template>
             </carousel>
-            
-          <div v-show="!isShow">                 
-            
-            <div class="row" v-for="attachment in petition_index_details.attachments"
-                :key="attachment">               
-                <div :id="'image-container-'+attachment.id" class="col-12">
-                    <img
+
+            <div v-show="!isShow">
+              <div
+                class="row"
+                v-for="attachment in petition_index_details.attachments"
+                :key="attachment"
+              >
+                <div :id="'image-container-' + attachment.id" class="col-12">
+                  <img
                     :src="
-                        'http://127.0.0.1:8000/storage/attachments/' +
-                        attachment.file_name
+                      'http://127.0.0.1:8000/storage/attachments/' +
+                      attachment.file_name
                     "
-                    />
-                    <hr class="mt-4 mb-4" style="border: solid 3px" >
-                </div>    
+                  />
+                  <hr class="mt-4 mb-4" style="border: solid 3px" />
+                </div>
+              </div>
             </div>
-            </div> 
           </div>
 
           <div class="col-3">
@@ -66,14 +73,13 @@
                 aria-controls="v-pills-home"
                 aria-selected="true"
               >
-                
                 <router-link
-                        :to="{
-                          name: 'petition-index-details',
-                          params: { id: petition_index_single.id },
-                        }"
-                        >{{ petition_index_single.annexure }}</router-link
-                      >
+                  :to="{
+                    name: 'petition-index-details',
+                    params: { id: petition_index_single.id },
+                  }"
+                  >{{ petition_index_single.annexure }}</router-link
+                >
               </button>
 
               <button
@@ -103,18 +109,20 @@
               </button>
             </div>
           </div>
-        </div> 
-       
+        </div>
       </div>
     </section>
-     <div v-show="!isShow" class="fixed"> 
-            <div class="list-group" v-for="attachment in petition_index_details.attachments"
-                :key="attachment">
-              <a class="list-group-item" @click="scrollIntoView(attachment.id)">{{ attachment.id }}</a>               
-            </div>
-
-            
-        </div>
+    <div v-show="!isShow" class="fixed">
+      <div
+        class="list-group"
+        v-for="attachment in petition_index_details.attachments"
+        :key="attachment"
+      >
+        <a class="list-group-item" @click="scrollIntoView(attachment.id)">{{
+          attachment.id
+        }}</a>
+      </div>
+    </div>
   </main>
   <!-- End #main -->
 </template>
@@ -133,16 +141,17 @@ export default {
       petition_index: [],
       petition_index_details: {},
       id: this.$route.params.id, //this is the id from the browser
-      isShow:true,
+      isShow: false, //it will show vertical images by default
     };
   },
   created() {
     this.getCaseDetails();
   },
   methods: {
-    scrollIntoView(id) { 
-      document.getElementById('image-container-'+id).scrollIntoView({ duration: 2000 });        
-       
+    scrollIntoView(id) {
+      document
+        .getElementById("image-container-" + id)
+        .scrollIntoView({ duration: 2000 });
     },
     async getCaseDetails() {
       await axios
@@ -169,7 +178,7 @@ export default {
               arr.push(element);
             }
           });
-          console.log("arr",arr);
+          console.log("arr", arr);
           this.petition_index = arr;
         })
         .catch((error) => {
@@ -181,9 +190,9 @@ export default {
 </script>
 
 <style>
-.fixed{
-  position: absolute;  
+.fixed {
+  position: absolute;
   left: 0;
-  top: 245px;   
+  top: 245px;
 }
 </style>

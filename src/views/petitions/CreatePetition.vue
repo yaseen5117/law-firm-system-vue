@@ -6,39 +6,21 @@
         <div class="row">
           <div class="col-12">
             <form @submit="submitForm($event)">
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-3">
-                    <label>Petitioner</label>
-                    <select
-                      class="form-control"
-                      v-model="petition.petitioner_id"                      
-                    >
-                    <option value="">--Select--</option>                                                               
-                      <option v-for="client in clients" :key="client.id" :value="client.id">{{ client.first_name +' '+ client.first_name}}</option>                       
-                    </select>
-                  </div>
-                  <div class="col-3">
-                    <label>Opponent</label>
-                    <select class="form-control" v-model="petition.opponent_id">
-                      <option value="">--Select--</option>                                                                 
-                      <option v-for="client in clients" :key="client.id" :value="client.id">{{ client.first_name +' '+ client.first_name}}</option>                            
-                    </select>
-                  </div>
-                </div>
-              </div>
+
               <div class="form-group">
                 <div class="row">
                   <div class="col-9">
-                    <label>Title</label>
+                    <label>Title <span style="color:red">*</span></label>
                     <input class="form-control" v-model="petition.title" />
                   </div>
                 </div>
               </div>
+
+
               <div class="form-group">
                 <div class="row">
                   <div class="col-3">
-                    <label>Petition Type</label>
+                    <label>Petition Type <span style="color:red">*</span></label>
                     <select
                       class="form-control"
                       v-model="petition.petition_type_id"
@@ -65,6 +47,74 @@
                   </div>
                 </div>
               </div>
+
+
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-3">
+                    
+                    <label>Petitioner <span style="color:red">*</span> <input type="checkbox" v-model="petition.new_petitioner" @change="petition.new_petitioner?!petition.new_petitioner:petition.new_petitioner" /> New</label>
+                    
+                    <select
+                      v-show="!petition.new_petitioner"
+                      class="form-control"
+                      v-model="petition.petitioner_id"                      
+                    >
+                    <option value="">--Select--</option>                                                               
+                      <option v-for="client in clients" :key="client.id" :value="client.id">{{ client.first_name +' '+ client.first_name}}</option>                       
+                    </select>
+
+                    <div v-show="petition.new_petitioner" >
+                      <div class="form-group ">
+                        <div class="card">
+                          
+                          <div class="card-body">
+                            
+                            <div class="row">
+                              <div class="col-6">
+                                <label>First Name <span style="color:red">*</span></label>
+                                <input class="form-control" v-model="petition.petitioner.first_name" />
+                              </div>
+
+                              <div class="col-6">
+                                <label>Last Name <span style="color:red">*</span></label>
+                                <input class="form-control"  v-model="petition.petitioner.last_name" />
+                              </div>
+
+                              <div class="col-12">
+                                <label>Email <span style="color:red">*</span></label>
+                                <input type="email" class="form-control"  v-model="petition.petitioner.email" />
+                              </div>
+                              <div class="col-12">
+                                <label>Company Name </label>
+                                <input class="form-control"  v-model="petition.petitioner.company_name" />
+                              </div>
+
+
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-12-1-12">
+                            
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <label>Opponent</label>
+                    <select class="form-control" v-model="petition.opponent_id">
+                      <option value="">--Select--</option>                                                                 
+                      <option v-for="client in clients" :key="client.id" :value="client.id">{{ client.first_name +' '+ client.first_name}}</option>                            
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
+              
 
               <div class="form-group">
                 <div class="row">
@@ -100,9 +150,10 @@ export default {
   components: { PageHeader },
   data() {
     return {
-      page_title: "Create New Petition",
+      page_title: "Add New Petition",
       petition: {
         petitioner_id: "",
+        petitioner: {},
         petition_type_id: "",
         court_id: "",
         opponent_id: "",
@@ -157,8 +208,8 @@ export default {
     async getUsers() {
         let url = 'http://127.0.0.1:8000/api/clients';
         await axios.get(url).then(response => {
-          this.clients = response.data.clients;
-          console.log(this.clients);
+          this.clients = response.data.users;
+          console.log(this.users);
         }).catch(error => {
           console.log(error);
         })
@@ -186,4 +237,15 @@ export default {
 </script>
 
 <style>
+
+
+
+.card{
+  background: #f7f7f7;
+
+}
+.form-group{
+  margin-bottom: 5px;
+}
+
 </style>

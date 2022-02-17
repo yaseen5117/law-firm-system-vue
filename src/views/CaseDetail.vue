@@ -49,6 +49,7 @@
                       v-show="petition_detail.editMode"
                       class="form-control"
                       v-model="petition_detail.document_description"
+                      v-on:keyup.enter="editPetitionIndex(petition_detail)"
                     />
                     <router-link
                       v-show="!petition_detail.editMode"
@@ -65,6 +66,7 @@
                       class="form-control"
                       type="date"
                       v-model="petition_detail.date"
+                      v-on:keyup.enter="editPetitionIndex(petition_detail)"
                     />
                     <span v-show="!petition_detail.editMode">{{
                       petition_detail.date
@@ -75,6 +77,7 @@
                       v-show="petition_detail.editMode"
                       class="form-control"
                       v-model="petition_detail.annexure"
+                      v-on:keyup.enter="editPetitionIndex(petition_detail)"
                     />
                     <span v-show="!petition_detail.editMode">{{
                       petition_detail.annexure
@@ -85,49 +88,51 @@
                       v-show="petition_detail.editMode"
                       class="form-control"
                       v-model="petition_detail.page_info"
+                      v-on:keyup.enter="editPetitionIndex(petition_detail)"
                     />
                     <span v-show="!petition_detail.editMode">{{
                       petition_detail.page_info
                     }}</span>
                   </td>
                   <td>
-                    <button
+                    <a
                       v-show="!petition_detail.editMode"
                       @click="petition_detail.editMode = true"
-                      class="btn btn-primary btn-sm ml-1"
+                      href="javascript:void"
                       style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"
                     >
                       <i class="fa fa-edit"></i>
-                    </button>
-                    <button
+                    </a>
+                    <a
                       v-show="petition_detail.editMode"
                       @click="editPetitionIndex(petition_detail)"
-                      class="btn btn-warning btn-sm  ml-1"
+                      href="javascript:void"
                       style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Update"
                     >
                       <i class="fa fa-save"></i>
-                    </button>
+                    </a>
 
-                    <button
+                    <a
                       v-show="petition_detail.editMode"
                       @click="petition_detail.editMode=false"
-                      class="btn btn-warning btn-sm  ml-1"
+                      href="javascript:void"
                       style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Cacncel"
                     >
-                      <i class="fa-solid fa-text-slash"></i>
-                    </button>
+                      <i class="fa fa-remove"></i>
+                    </a>
 
-                    <button
+                    <a
                       v-show="!petition_detail.editMode"
                       @click="deletePetitionIndex(petition_detail.id,petitionIndex)"
-                      class="btn btn-danger btn-sm bx-pull-right mt-1"
+                      href="javascript:void"
+                      style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
                     >
                      <i class="fa fa-trash-o"></i>
-                    </button>
+                    </a>
                   </td>
                 </tr>
                 <tr>
@@ -158,12 +163,13 @@
                     />
                   </td>
                   <td>
-                    <button
+                    <a
+                      href="javascript:void"
                       @click="submitPetitionIndex()"
-                      class="btn btn-success btn-sm "
+                      class=" "
                     >
                       <i class="fa fa-save"></i>
-                    </button>
+                    </a>
                   </td>
                 </tr>
               </tbody>
