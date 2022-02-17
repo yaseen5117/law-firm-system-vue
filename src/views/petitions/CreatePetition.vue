@@ -14,19 +14,15 @@
                       class="form-control"
                       v-model="petition.petitioner_id"                      
                     >
-                    <option value="">--Select--</option>   
-                    <template v-for="user in users" :key="user.id">                                          
-                      <option :value="user.id">{{ user.first_name +' '+ user.first_name}}</option>                       
-                    </template>
+                    <option value="">--Select--</option>                                                               
+                      <option v-for="client in clients" :key="client.id" :value="client.id">{{ client.first_name +' '+ client.first_name}}</option>                       
                     </select>
                   </div>
                   <div class="col-3">
                     <label>Opponent</label>
                     <select class="form-control" v-model="petition.opponent_id">
-                      <option value="">--Select--</option>   
-                    <template v-for="user in users" :key="user.id">                                          
-                      <option :value="user.id">{{ user.first_name +' '+ user.first_name}}</option>                       
-                    </template>
+                      <option value="">--Select--</option>                                                                 
+                      <option v-for="client in clients" :key="client.id" :value="client.id">{{ client.first_name +' '+ client.first_name}}</option>                            
                     </select>
                   </div>
                 </div>
@@ -110,7 +106,7 @@ export default {
         court_id: "",
         opponent_id: "",
       },
-      users: [],
+      clients: [],
       courts: [],
       petition_types: []
     };
@@ -158,10 +154,10 @@ export default {
       }
     },
     async getUsers() {
-        let url = 'http://127.0.0.1:8000/api/users';
+        let url = 'http://127.0.0.1:8000/api/clients';
         await axios.get(url).then(response => {
-          this.users = response.data.users;
-          console.log(this.users);
+          this.clients = response.data.clients;
+          console.log(this.clients);
         }).catch(error => {
           console.log(error);
         })
