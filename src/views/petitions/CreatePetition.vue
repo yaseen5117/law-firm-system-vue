@@ -12,21 +12,21 @@
                     <label>Petitioner</label>
                     <select
                       class="form-control"
-                      v-model="petition.petitioner_id"
+                      v-model="petition.petitioner_id"                      
                     >
-                      <option value="">--Select--</option>
-                      <option value="1">Person 1</option>
-                      <option value="2">Person 2</option>
-                      <option value="3">Person 3</option>
+                    <option value="">--Select--</option>   
+                    <template v-for="user in users" :key="user.id">                                          
+                      <option :value="user.id">{{ user.first_name +' '+ user.first_name}}</option>                       
+                    </template>
                     </select>
                   </div>
                   <div class="col-3">
                     <label>Opponent</label>
                     <select class="form-control" v-model="petition.opponent_id">
-                      <option value="">--Select--</option>
-                      <option value="1">Person 1</option>
-                      <option value="2">Person 2</option>
-                      <option value="3">Person 3</option>
+                      <option value="">--Select--</option>   
+                    <template v-for="user in users" :key="user.id">                                          
+                      <option :value="user.id">{{ user.first_name +' '+ user.first_name}}</option>                       
+                    </template>
                     </select>
                   </div>
                 </div>
@@ -47,18 +47,20 @@
                       class="form-control"
                       v-model="petition.petition_type_id"
                     >
-                      <option value="">--Select--</option>
-                      <option value="1">Type 1</option>
-                      <option value="2">Type 2</option>
-                      <option value="3">Type 3</option>
+                      <option value="">--Select--</option>   
+                      <template v-for="petition_type in petition_types" :key="petition_type.id">                                          
+                      <option :value="petition_type.id">{{ petition_type.title }}</option>                       
+                      </template>
                     </select>
                   </div>
 
                   <div class="col-3">
                     <label>Court</label>
                     <select class="form-control" v-model="petition.court_id">
-                      <option value="">--Select--</option>
-                      <option value="1">Court 1</option>
+                      <option value="">--Select--</option>   
+                                                                
+                      <option  v-for="court in courts" :key="court.id" :value="court.id">{{ court.title }}</option>                       
+                      
                     </select>
                   </div>
                   <div class="col-3">
@@ -82,7 +84,7 @@
               </div>
 
               <div class="form-group">
-                <button class="btn btn-success">Save</button>
+                <button class="btn btn-success btn-sm mt-2">Save</button>
               </div>
             </form>
           </div>
@@ -108,9 +110,16 @@ export default {
         court_id: "",
         opponent_id: "",
       },
+      users: [],
+      courts: [],
+      petition_types: []
     };
   },
-  created() {},
+  created() {
+    this.getUsers();
+    this.getCourts();
+    this.getPetitionTypes();
+  },
   methods: {
     submitForm: function (event) {
       if (event) {
@@ -148,6 +157,33 @@ export default {
           );
       }
     },
+    async getUsers() {
+        let url = 'http://127.0.0.1:8000/api/users';
+        await axios.get(url).then(response => {
+          this.users = response.data.users;
+          console.log(this.users);
+        }).catch(error => {
+          console.log(error);
+        })
+      },
+      async getCourts() {
+        let url = 'http://127.0.0.1:8000/api/courts';
+        await axios.get(url).then(response => {
+          this.courts = response.data.courts;
+          console.log(this.courts);
+        }).catch(error => {
+          console.log(error);
+        })
+      },
+      async getPetitionTypes() {
+        let url = 'http://127.0.0.1:8000/api/petition_types';
+        await axios.get(url).then(response => {
+          this.petition_types = response.data.petition_types;
+          console.log(this.petition_types);
+        }).catch(error => {
+          console.log(error);
+        })
+      },
   },
 };
 </script>
