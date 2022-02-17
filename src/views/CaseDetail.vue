@@ -40,7 +40,7 @@
               <tbody>
                 <tr
                   @dblclick="petition_detail.editMode = true"
-                  v-for="petition_detail in petition_details"
+                  v-for="(petition_detail , petitionIndex) in petition_details"
                   :key="petition_detail.id"
                 >
                   <td>{{ petition_detail.id }}</td>
@@ -122,9 +122,8 @@
 
                     <button
                       v-show="!petition_detail.editMode"
-                      @click="deletePetitionIndex(petition_detail.id)"
-                      class="btn btn-danger btn-sm   ml-1"
-                      style="margin-left:2px"
+                      @click="deletePetitionIndex(petition_detail.id,petitionIndex)"
+                      class="btn btn-danger btn-sm bx-pull-right mt-1"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
                     >
                      <i class="fa fa-trash-o"></i>
@@ -283,15 +282,15 @@ export default {
           );
       }
     },
-    deletePetitionIndex(petitionId) {
-      if (true) {
+    deletePetitionIndex(petitionId,petitionIndex) {
+      if (confirm("Do you really want to delete?")) {
         var headers = {
           Authorization:
             `Bearer ` + localStorage.getItem("rezo_customers_user"),           
         };
-
+       
         axios
-          .post("http://127.0.0.1:8000/api/petitions_index", petitionId, {
+          .delete("http://127.0.0.1:8000/api/petitions_index/"+petitionId, {
             headers,
           })
           .then(
@@ -301,7 +300,9 @@ export default {
                   type: "success",
                   title: "Success",
                   text: "Deleted Successfully!",
-                });                 
+                }); 
+                //this.getCaseDetails()  
+                this.petition_details.splice(petitionIndex,1);//removing record from list/index after deleting record from DB              
               }
             },
             (error) => {
