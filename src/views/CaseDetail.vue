@@ -94,7 +94,8 @@
                     <button
                       v-show="!petition_detail.editMode"
                       @click="petition_detail.editMode = true"
-                      class="btn btn-primary btn-sm bx-pull-right"
+                      class="btn btn-primary btn-sm ml-1"
+                      style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"
                     >
                       <i class="fa fa-edit"></i>
@@ -102,15 +103,28 @@
                     <button
                       v-show="petition_detail.editMode"
                       @click="editPetitionIndex(petition_detail)"
-                      class="btn btn-warning btn-sm bx-pull-right"
+                      class="btn btn-warning btn-sm  ml-1"
+                      style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Update"
                     >
                       <i class="fa fa-save"></i>
                     </button>
+
+                    <button
+                      v-show="petition_detail.editMode"
+                      @click="petition_detail.editMode=false"
+                      class="btn btn-warning btn-sm  ml-1"
+                      style="margin-left:2px"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Cacncel"
+                    >
+                      <i class="fa-solid fa-text-slash"></i>
+                    </button>
+
                     <button
                       v-show="!petition_detail.editMode"
                       @click="deletePetitionIndex(petition_detail.id)"
-                      class="btn btn-danger btn-sm bx-pull-right mt-1"
+                      class="btn btn-danger btn-sm   ml-1"
+                      style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
                     >
                      <i class="fa fa-trash-o"></i>
@@ -147,9 +161,9 @@
                   <td>
                     <button
                       @click="submitPetitionIndex()"
-                      class="btn btn-primary btn-sm bx-pull-right"
+                      class="btn btn-success btn-sm "
                     >
-                      Save
+                      <i class="fa fa-save"></i>
                     </button>
                   </td>
                 </tr>
