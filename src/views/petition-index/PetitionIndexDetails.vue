@@ -9,14 +9,14 @@
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="row">
-          <div class="col-9">
+          <div class="col-12 text-center">
             <!-- <button
               class="btn btn-primary btn-sm mb-3"
-              v-on:click="isShow = !isShow"
+              v-on:click="horizontalView = !horizontalView"
             >
               Slide/Horizontal View
             </button> -->
-            <carousel :items-to-show="1" v-show="isShow">
+            <!-- <carousel :items-to-show="1" v-show="horizontalView">
               <slide
                 v-for="attachment in petition_index_details.attachments"
                 :key="attachment"
@@ -33,16 +33,19 @@
                 <navigation />
                 <pagination />
               </template>
-            </carousel>
+            </carousel> -->
 
-            <div v-show="!isShow">
+            <div v-show="!horizontalView">
               <div
-                class="row"
+                class="row  mb-2"
+                :id="'image-container-' + attachment.id"
                 v-for="attachment in petition_index_details.attachments"
                 :key="attachment"
               >
-                <div :id="'image-container-' + attachment.id" class="col-12">
+                <div  class="col-12">
                   <img
+                    :class="activePage==attachment.id?'active-img':''" 
+                    class="img-fluid" style="width:90%"
                     :src="
                       'http://127.0.0.1:8000/storage/attachments/' +
                       attachment.file_name
@@ -53,75 +56,36 @@
               </div>
             </div>
           </div>
-
-          <div class="col-3">
-            <div
-              class="nav flex-column nav-pills"
-              id="v-pills-tab"
-              role="tablist"
-              aria-orientation="vertical"
-            >
-              <button
-                v-for="petition_index_single in petition_index"
-                :key="petition_index_single"
-                class="nav-link"
-                id="v-pills-home-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#v-pills-home"
-                type="button"
-                role="tab"
-                aria-controls="v-pills-home"
-                aria-selected="true"
-              >
-                <router-link
-                  :to="{
-                    name: 'petition-index-details',
-                    params: { id: petition_index_single.id },
-                  }"
-                  >{{ petition_index_single.annexure }}</router-link
-                >
-              </button>
-
-              <button
-                class="nav-link"
-                id="v-pills-messages-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#v-pills-messages"
-                type="button"
-                role="tab"
-                aria-controls="v-pills-messages"
-                aria-selected="false"
-              >
-                Prayers
-              </button>
-
-              <button
-                class="nav-link"
-                id="v-pills-messages-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#v-pills-messages"
-                type="button"
-                role="tab"
-                aria-controls="v-pills-messages"
-                aria-selected="false"
-              >
-                Stay Order
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </section>
-    <div v-show="!isShow" class="fixed">
+    <div v-show="!horizontalView" class="fixed-page-numbers">
       <div
         class="list-group"
         v-for="attachment in petition_index_details.attachments"
         :key="attachment"
       >
-        <a class="list-group-item" @click="scrollIntoView(attachment.id)">{{
+        <a class="list-group-item" :class="activePage==attachment.id?'active':''" href="javascript:void" @click="scrollIntoView(attachment.id)">{{
           attachment.id
         }}</a>
       </div>
+    </div>
+
+    <div class="fixed-annexsures">
+      <div
+        class="list-group"
+         v-for="petition_index_single in petition_index"
+                :key="petition_index_single"
+      >
+        <router-link class="list-group-item"
+                  :to="{
+                    name: 'petition-index-details',
+                    params: { id: petition_index_single.id },
+                  }"
+                  >{{ petition_index_single.annexure }}</router-link>
+      </div>
+      <!-- Prayers -->
+      <!-- Stay Order -->
     </div>
   </main>
   <!-- End #main -->
@@ -141,7 +105,8 @@ export default {
       petition_index: [],
       petition_index_details: {},
       id: this.$route.params.id, //this is the id from the browser
-      isShow: false, //it will show vertical images by default
+      horizontalView: false, //it will show vertical images by default
+      activePage:null
     };
   },
   created() {
@@ -149,9 +114,16 @@ export default {
   },
   methods: {
     scrollIntoView(id) {
-      document
-        .getElementById("image-container-" + id)
-        .scrollIntoView({ duration: 2000 });
+      // document
+      //   .getElementById("image-container-" + id)
+      //   .scrollIntoView({ duration: 2000 });
+
+      const yOffset = -200; 
+      const element = document.getElementById("image-container-" + id);
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({top: y, behavior: 'smooth'});
+      //document.getElementById("image-container-" + id).style.border="solid 1px red"
+      this.activePage=id;
     },
     async getCaseDetails() {
       await axios
@@ -190,9 +162,17 @@ export default {
 </script>
 
 <style>
-.fixed {
-  position: absolute;
+.fixed-page-numbers {
+  position: fixed;
   left: 0;
-  top: 245px;
+  top: 23.8%;
+}
+.fixed-annexsures {
+  position: fixed;
+  right: 0;
+  top: 23.8%;
+}
+.active-img {
+  border: solid 1px red;
 }
 </style>
