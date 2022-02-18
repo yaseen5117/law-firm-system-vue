@@ -13,7 +13,7 @@
                   <u>BEFORE THE {{ petition.court.title }}</u>
                 </h6>
                 <p>Writ Petition No. {{ petition.writ_number }}</p>
-                <p>{{ petition.client?petition.client.company_name:'' }}</p>
+                <p>{{ petition.petitioner_names }}</p>
                 <p>VERSUS</p>
                 <p>CDA AND OTHERS</p>
                 <p>
@@ -28,14 +28,14 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <table class="table">
+            <table  class="table table-striped">
               <thead>
                 <th>Sr. #</th>
                 <th>Description of Documents</th>
                 <th>Date</th>
                 <th>Annexure</th>
                 <th>Page</th>
-                <th>Actions</th>
+                <th width=10%>Actions</th>
               </thead>
               <tbody>
                 <tr
@@ -96,6 +96,7 @@
                   </td>
                   <td>
                     <a
+                      class="btn btn-sm btn-primary"
                       v-show="!petition_detail.editMode"
                       @click="petition_detail.editMode = true"
                       href="javascript:void"
@@ -106,6 +107,7 @@
                     </a>
                     <a
                       v-show="petition_detail.editMode"
+                      class="btn btn-sm btn-warning"
                       @click="editPetitionIndex(petition_detail)"
                       href="javascript:void"
                       style="margin-left:2px"
@@ -117,6 +119,7 @@
                     <a
                       v-show="petition_detail.editMode"
                       @click="petition_detail.editMode=false"
+                      class="btn btn-sm btn-info"
                       href="javascript:void"
                       style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Cacncel"
@@ -125,6 +128,8 @@
                     </a>
 
                     <a
+                    class="btn btn-sm btn-danger"
+
                       v-show="!petition_detail.editMode"
                       @click="deletePetitionIndex(petition_detail.id,petitionIndex)"
                       href="javascript:void"
@@ -166,7 +171,7 @@
                     <a
                       href="javascript:void"
                       @click="submitPetitionIndex()"
-                      class=" "
+                      class="btn btn-sm btn-success"
                     >
                       <i class="fa fa-save"></i>
                     </a>
