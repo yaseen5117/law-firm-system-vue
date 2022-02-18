@@ -6,28 +6,29 @@
         <div class="row">
           <div class="col-12">
             <form @submit="submitForm($event)">
-
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-9">
-                    <label>Title <span style="color:red">*</span></label>
-                    <input class="form-control" v-model="petition.title" />
-                  </div>
-                </div>
-              </div>
-
-
               <div class="form-group">
                 <div class="row">
                   <div class="col-3">
-                    <label>Petition Type <span style="color:red">*</span></label>
+                    <label>Case No.</label>
+                    <input class="form-control" v-model="petition.case_no" />
+                  </div>
+
+                  <div class="col-3">
+                    <label
+                      >Case Category <span style="color: red">*</span></label
+                    >
                     <select
                       class="form-control"
                       v-model="petition.petition_type_id"
                     >
-                      <option value="">--Select--</option>   
-                      <template v-for="petition_type in petition_types" :key="petition_type.id">                                          
-                      <option :value="petition_type.id">{{ petition_type.title }}</option>                       
+                      <option value="">--Select--</option>
+                      <template
+                        v-for="petition_type in petition_types"
+                        :key="petition_type.id"
+                      >
+                        <option :value="petition_type.id">
+                          {{ petition_type.title }}
+                        </option>
                       </template>
                     </select>
                   </div>
@@ -35,86 +36,90 @@
                   <div class="col-3">
                     <label>Court</label>
                     <select class="form-control" v-model="petition.court_id">
-                      <option value="">--Select--</option>   
-                                                                
-                      <option  v-for="court in courts" :key="court.id" :value="court.id">{{ court.title }}</option>                       
-                      
+                      <option value="">--Select--</option>
+
+                      <option
+                        v-for="court in courts"
+                        :key="court.id"
+                        :value="court.id"
+                      >
+                        {{ court.title }}
+                      </option>
                     </select>
-                  </div>
-                  <div class="col-3">
-                    <label>Case No.</label>
-                    <input class="form-control" v-model="petition.case_no" />
                   </div>
                 </div>
               </div>
-
-
 
               <div class="form-group">
                 <div class="row">
-                  <div class="col-3">
-                    
-                    <label>Petitioner <span style="color:red">*</span> <input type="checkbox" v-model="petition.new_petitioner" @change="petition.new_petitioner?!petition.new_petitioner:petition.new_petitioner" /> New</label>
-                    
-                    <select
-                      v-show="!petition.new_petitioner"
-                      class="form-control"
-                      v-model="petition.petitioner_id"                      
-                    >
-                    <option value="">--Select--</option>                                                               
-                      <option v-for="client in clients" :key="client.id" :value="client.id">{{ client.first_name +' '+ client.first_name}}</option>                       
-                    </select>
-
-                    <div v-show="petition.new_petitioner" >
-                      <div class="form-group ">
-                        <div class="card">
-                          
-                          <div class="card-body">
-                            
-                            <div class="row">
-                              <div class="col-6">
-                                <label>First Name <span style="color:red">*</span></label>
-                                <input class="form-control" v-model="petition.petitioner.first_name" />
-                              </div>
-
-                              <div class="col-6">
-                                <label>Last Name <span style="color:red">*</span></label>
-                                <input class="form-control"  v-model="petition.petitioner.last_name" />
-                              </div>
-
-                              <div class="col-12">
-                                <label>Email <span style="color:red">*</span></label>
-                                <input type="email" class="form-control"  v-model="petition.petitioner.email" />
-                              </div>
-                              <div class="col-12">
-                                <label>Company Name </label>
-                                <input class="form-control"  v-model="petition.petitioner.company_name" />
-                              </div>
-
-
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-12-1-12">
-                            
-                          </div>
-                        </div>
-                        
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-3">
-                    <label>Opponent</label>
-                    <select class="form-control" v-model="petition.opponent_id">
-                      <option value="">--Select--</option>                                                                 
-                      <option v-for="client in clients" :key="client.id" :value="client.id">{{ client.first_name +' '+ client.first_name}}</option>                            
-                    </select>
+                  <div class="col-9">
+                    <label>Title <span style="color: red">*</span></label>
+                    <input class="form-control" v-model="petition.title" />
                   </div>
                 </div>
               </div>
-              
-              
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-5">
+                    <div class="card">
+                      <img
+                        class="card-img-top"
+                        src="holder.js/100px180/"
+                        alt=""
+                      />
+                      <div class="card-body">
+                        <h4 class="card-title">
+                          Petitioner
+                          <small
+                            style="cursor: pointer;font-size:12px; text-decoration:underline"
+                            @click="addMorePetitioner()"
+                            class="pull-right"
+                            >Add More</small
+                          >
+                        </h4>
+                        <input
+                          placeholder="Name"
+                          v-for="petitioner in petition.petitioner"
+                          :key="petitioner"
+                          v-model="petitioner.name"
+                          class="form-control mb-2"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-2">
+                    <h4 class="mx-auto text-center">VS</h4>
+                  </div>
+                  <div class="col-5">
+                    <div class="card">
+                      <img
+                        class="card-img-top"
+                        src="holder.js/100px180/"
+                        alt=""
+                      />
+                      <div class="card-body">
+                        <h4 class="card-title">
+                          Opponent
+                          <small
+                            style="cursor: pointer;font-size:12px; text-decoration:underline"
+                            @click="addMoreOpponent()"
+                            class="pull-right"
+                            >Add More</small
+                          >
+                        </h4>
+                        <input
+                          placeholder="Name"
+                          v-for="opponent in petition.opponent"
+                          :key="opponent"
+                          v-model="opponent.name"
+                          class="form-control mb-2"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <div class="form-group">
                 <div class="row">
@@ -128,11 +133,10 @@
                   </div>
                 </div>
               </div>
-
+              <pre>{{petition}}</pre>
               <div class="form-group">
                 <button class="btn btn-success btn-sm mt-2">Save</button>
               </div>
-              
             </form>
           </div>
         </div>
@@ -152,15 +156,16 @@ export default {
     return {
       page_title: "Add New Petition",
       petition: {
-        petitioner_id: "",
-        petitioner: {},
+        
+        petitioner: [{}],
+        opponent: [{}],
         petition_type_id: "",
         court_id: "",
-        opponent_id: "",
+        
       },
       clients: [],
       courts: [],
-      petition_types: []
+      petition_types: [],
     };
   },
   created() {
@@ -169,6 +174,12 @@ export default {
     this.getPetitionTypes();
   },
   methods: {
+    addMorePetitioner: function () {
+      this.petition.petitioner.push({});
+    },
+    addMoreOpponent: function () {
+      this.petition.opponent.push({});
+    },
     submitForm: function (event) {
       if (event) {
         event.preventDefault();
@@ -206,46 +217,50 @@ export default {
       }
     },
     async getUsers() {
-        let url = 'http://127.0.0.1:8000/api/clients';
-        await axios.get(url).then(response => {
+      let url = "http://127.0.0.1:8000/api/clients";
+      await axios
+        .get(url)
+        .then((response) => {
           this.clients = response.data.users;
           console.log(this.users);
-        }).catch(error => {
-          console.log(error);
         })
-      },
-      async getCourts() {
-        let url = 'http://127.0.0.1:8000/api/courts';
-        await axios.get(url).then(response => {
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async getCourts() {
+      let url = "http://127.0.0.1:8000/api/courts";
+      await axios
+        .get(url)
+        .then((response) => {
           this.courts = response.data.courts;
           console.log(this.courts);
-        }).catch(error => {
-          console.log(error);
         })
-      },
-      async getPetitionTypes() {
-        let url = 'http://127.0.0.1:8000/api/petition_types';
-        await axios.get(url).then(response => {
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async getPetitionTypes() {
+      let url = "http://127.0.0.1:8000/api/petition_types";
+      await axios
+        .get(url)
+        .then((response) => {
           this.petition_types = response.data.petition_types;
           console.log(this.petition_types);
-        }).catch(error => {
-          console.log(error);
         })
-      },
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
 
 <style>
-
-
-
-.card{
+.card {
   background: #f7f7f7;
-
 }
-.form-group{
+.form-group {
   margin-bottom: 5px;
 }
-
 </style>

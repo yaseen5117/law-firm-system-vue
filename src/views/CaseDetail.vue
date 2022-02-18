@@ -13,7 +13,7 @@
                   <u>BEFORE THE {{ petition.court.title }}</u>
                 </h6>
                 <p>Writ Petition No. {{ petition.writ_number }}</p>
-                <p>{{ petition.client?petition.client.company_name:'' }}</p>
+                <p>{{ petition.petitioner_names }}</p>
                 <p>VERSUS</p>
                 <p>CDA AND OTHERS</p>
                 <p>

@@ -33,8 +33,8 @@
              
             <div class="col-12">
               <div class="table-responsive">
-                <router-link class="btn btn-success btn-sm mb-3" :to="'/petitions/create'" >New</router-link>
-                <table  class="table table-bordered" style="font-size:12px">
+                <router-link class="btn btn-success btn-sm mb-2" :to="'/petitions/create'" >New Case</router-link>
+                <table  class="table table-striped">
                   <thead>
                     <tr>
                       <th>Sr No</th>
@@ -43,16 +43,16 @@
                       <th>Court</th>
                       <th>Client Name </th>
                       <th>Date of Institution</th>
-                      <th>Actions</th>
+                      <th width="10%">Actions</th>
                     </tr>
                   </thead>
-                  <tbody v-for="petition in petitions" :key="petition.id">
-                    <tr>
+                  <tbody >
+                    <tr v-for="petition in petitions" :key="petition.id">
                       <td>{{ petition.id }}</td>
                       <td>{{ petition.case_no}}</td>
                       <td>{{ (petition.title && petition.title.length >15) ? petition.title.substring(0,47)+"..." : petition.title }}</td>
                       <td>{{ (petition && petition.court) ?petition.court.title :'' }}</td>
-                      <td>{{ petition.client?petition.client.first_name:'' }} {{ petition.client?petition.client.last_name:'' }}</td>
+                      <td>{{ petition.petitioner_names }}</td>
                       <td>{{ petition.institution_date }}</td>
                       <td>
                         <router-link style="    margin-right: 2px;" :to="{ name: 'case-detail', params: {id: petition.id}}" class="btn btn-primary btn-sm" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-eye"></i></router-link>

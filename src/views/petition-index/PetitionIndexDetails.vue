@@ -60,7 +60,7 @@
       </div>
     </section>
     <div v-show="!horizontalView" class="fixed-page-numbers">
-      <div
+      <ul
         class="list-group"
         v-for="attachment in petition_index_details.attachments"
         :key="attachment"
@@ -68,7 +68,7 @@
         <a class="list-group-item" :class="activePage==attachment.id?'active':''" href="javascript:void" @click="scrollIntoView(attachment.id)">{{
           attachment.id
         }}</a>
-      </div>
+      </ul>
     </div>
 
     <div class="fixed-annexsures">
@@ -78,6 +78,7 @@
                 :key="petition_index_single"
       >
         <router-link class="list-group-item"
+                  :class="id==petition_index_single.id?'active':''"
                   :to="{
                     name: 'petition-index-details',
                     params: { id: petition_index_single.id },
@@ -165,12 +166,14 @@ export default {
 .fixed-page-numbers {
   position: fixed;
   left: 0;
-  top: 23.8%;
+  bottom: 0;
+  font-size: 12px;
+
 }
 .fixed-annexsures {
   position: fixed;
   right: 0;
-  top: 23.8%;
+  bottom: 0;
 }
 .active-img {
   border: solid 1px red;

@@ -16,7 +16,7 @@
         <div style="font-size:12px" v-if="petition">( 
             <span><strong>Case Title:</strong> {{petition? petition.title :'Loading'}},</span>
             <span><strong>Case #:</strong> {{petition ?petition.writ_number :''}},</span>
-            <span><strong>Client Name:</strong> {{petition ? petition.client.first_name : ''}} {{petition? petition.client.last_name:''}}</span>
+            <span><strong>Client Name:</strong> {{petition.petitioner_names}}</span>
             <span><strong>Court:</strong> {{petition? petition.court.title:''}}</span> )
           </div>
     </div>
