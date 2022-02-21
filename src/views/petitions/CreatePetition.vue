@@ -5,7 +5,7 @@
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="col-12">
-            <form @submit="submitForm($event)">
+            <form @submit.prevent="submitForm($event)"> 
               <div class="form-group">
                 <div class="row">
                   <div class="col-3">
@@ -20,6 +20,7 @@
                     <select
                       class="form-control"
                       v-model="petition.petition_type_id"
+                      @blur="v$.petition.petition_type_id.$touch"
                     >
                       <option value="">--Select--</option>
                       <template
@@ -31,6 +32,7 @@
                         </option>
                       </template>
                     </select>
+                    <span v-if="v$.petition.petition_type_id.$error" class="errorMessage">Case Category field is required.</span>
                   </div>
 
                   <div class="col-3">
@@ -54,7 +56,8 @@
                 <div class="row">
                   <div class="col-9">
                     <label>Title <span style="color: red">*</span></label>
-                    <input class="form-control" v-model="petition.title" />
+                    <input class="form-control" v-model="petition.title" @blur="v$.petition.title.$touch"/>
+                    <span v-if="v$.petition.title.$error" class="errorMessage">Title field is required.</span>
                   </div>
                 </div>
               </div>
@@ -133,7 +136,7 @@
                   </div>
                 </div>
               </div>
-              <pre>{{petition}}</pre>
+               
               <div class="form-group">
                 <button class="btn btn-success btn-sm mt-2">Save</button>
               </div>
@@ -149,9 +152,16 @@
 <script>
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
+import useVuelidate from '@vuelidate/core'
+import { required, email, helpers } from '@vuelidate/validators'
 
 export default {
   components: { PageHeader },
+  setup () {
+    return {
+      v$: useVuelidate()
+    }
+  },
   data() {
     return {
       page_title: "Add New Petition",
@@ -161,12 +171,21 @@ export default {
         opponent: [{}],
         petition_type_id: "",
         court_id: "",
+        title: '',
         
       },
       clients: [],
       courts: [],
       petition_types: [],
     };
+  },
+  validations () {
+    return {
+      petition: {
+        petition_type_id: { required },
+        title: { required },
+      }
+    }
   },
   created() {
     this.getUsers();
@@ -181,7 +200,8 @@ export default {
       this.petition.opponent.push({});
     },
     submitForm: function (event) {
-      if (event) {
+      this.v$.$validate();
+    if (!this.v$.$error) {
         event.preventDefault();
 
         var headers = {
@@ -262,5 +282,8 @@ export default {
 }
 .form-group {
   margin-bottom: 5px;
+}
+.errorMessage{
+  color: red;
 }
 </style>
