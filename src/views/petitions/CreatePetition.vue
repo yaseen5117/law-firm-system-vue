@@ -5,7 +5,7 @@
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="col-12">
-            <form @submit.prevent="submitForm($event)"> 
+            <form @submit.prevent="submitForm($event)">
               <div class="form-group">
                 <div class="row">
                   <div class="col-3">
@@ -32,10 +32,14 @@
                         </option>
                       </template>
                     </select>
-                    <span v-if="v$.petition.petition_type_id.$error" class="errorMessage">Case Category field is required.</span>
+                    <span
+                      v-if="v$.petition.petition_type_id.$error"
+                      class="errorMessage"
+                      >Case Category field is required.</span
+                    >
                   </div>
 
-                  <div class="col-3">
+                  <div class="col-4">
                     <label>Court</label>
                     <select class="form-control" v-model="petition.court_id">
                       <option value="">--Select--</option>
@@ -54,10 +58,16 @@
 
               <div class="form-group">
                 <div class="row">
-                  <div class="col-9">
+                  <div class="col-10">
                     <label>Title <span style="color: red">*</span></label>
-                    <input class="form-control" v-model="petition.title" @blur="v$.petition.title.$touch"/>
-                    <span v-if="v$.petition.title.$error" class="errorMessage">Title field is required.</span>
+                    <input
+                      class="form-control"
+                      v-model="petition.title"
+                      @blur="v$.petition.title.$touch"
+                    />
+                    <span v-if="v$.petition.title.$error" class="errorMessage"
+                      >Title field is required.</span
+                    >
                   </div>
                 </div>
               </div>
@@ -75,7 +85,11 @@
                         <h4 class="card-title">
                           Petitioner
                           <small
-                            style="cursor: pointer;font-size:12px; text-decoration:underline"
+                            style="
+                              cursor: pointer;
+                              font-size: 12px;
+                              text-decoration: underline;
+                            "
                             @click="addMorePetitioner()"
                             class="pull-right"
                             >Add More</small
@@ -91,9 +105,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-2">
-                    <h4 class="mx-auto text-center">VS</h4>
-                  </div>
+
                   <div class="col-5">
                     <div class="card">
                       <img
@@ -105,7 +117,11 @@
                         <h4 class="card-title">
                           Opponent
                           <small
-                            style="cursor: pointer;font-size:12px; text-decoration:underline"
+                            style="
+                              cursor: pointer;
+                              font-size: 12px;
+                              text-decoration: underline;
+                            "
                             @click="addMoreOpponent()"
                             class="pull-right"
                             >Add More</small
@@ -136,7 +152,7 @@
                   </div>
                 </div>
               </div>
-               
+
               <div class="form-group">
                 <button class="btn btn-success btn-sm mt-2">Save</button>
               </div>
@@ -152,45 +168,51 @@
 <script>
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
-import useVuelidate from '@vuelidate/core'
-import { required, email, helpers } from '@vuelidate/validators'
+import useVuelidate from "@vuelidate/core";
+import { required, email, helpers } from "@vuelidate/validators";
 
 export default {
   components: { PageHeader },
-  setup () {
+  setup() {
+    
     return {
-      v$: useVuelidate()
-    }
+      v$: useVuelidate(),
+    };
   },
   data() {
     return {
       page_title: "Add New Petition",
       petition: {
-        
         petitioner: [{}],
         opponent: [{}],
         petition_type_id: "",
+        id: this.$route.params.id, //this is the id from the browser
         court_id: "",
-        title: '',
-        
+        title: "",
       },
       clients: [],
       courts: [],
       petition_types: [],
     };
   },
-  validations () {
+  validations() {
     return {
       petition: {
         petition_type_id: { required },
         title: { required },
-      }
-    }
+      },
+    };
   },
   created() {
     this.getUsers();
     this.getCourts();
     this.getPetitionTypes();
+    this.getPetition();
+    
+  },
+  activated() {
+    
+    
   },
   methods: {
     addMorePetitioner: function () {
@@ -201,7 +223,7 @@ export default {
     },
     submitForm: function (event) {
       this.v$.$validate();
-    if (!this.v$.$error) {
+      if (!this.v$.$error) {
         event.preventDefault();
 
         var headers = {
@@ -272,6 +294,21 @@ export default {
           console.log(error);
         });
     },
+    getPetition() {
+        var url = "http://127.0.0.1:8000/api/petitions/" + this.$route.params.id;
+        axios
+          .get(url)
+          .then((response) => {
+            this.petition = response.data.petition;
+            this.petitioner = [{}];
+            this.opponent = [{}];
+            
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      
+    },
   },
 };
 </script>
@@ -283,7 +320,7 @@ export default {
 .form-group {
   margin-bottom: 5px;
 }
-.errorMessage{
+.errorMessage {
   color: red;
 }
 </style>

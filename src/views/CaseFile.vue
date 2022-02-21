@@ -55,7 +55,8 @@
                       <td>{{ petition.petitioner_names }}</td>
                       <td>{{ petition.institution_date }}</td>
                       <td>
-                        <router-link style="    margin-right: 2px;" :to="{ name: 'case-detail', params: {id: petition.id}}" class="btn btn-primary btn-sm" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-eye"></i></router-link>
+                        <router-link style="    margin-right: 2px;" :to="{ name: 'edit-petition', params: {id: petition.id}}" class="btn btn-primary btn-sm" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-edit"></i></router-link>
+                        <router-link style="    margin-right: 2px;" :to="{ name: 'case-detail', params: {id: petition.id}}" class="btn btn-success btn-sm" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-eye"></i></router-link>
                         <router-link style="    margin-right: 2px;"  to="#" class="btn btn-warning btn-sm" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Alert"><i class="fa fa-bell"></i></router-link>
                     </td>
                     </tr>                    
