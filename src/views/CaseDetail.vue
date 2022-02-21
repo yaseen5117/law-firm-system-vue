@@ -15,7 +15,7 @@
                 <p>Writ Petition No. {{ petition.writ_number }}</p>
                 <p>{{ petition.petitioner_names }}</p>
                 <p>VERSUS</p>
-                <p>CDA AND OTHERS</p>
+                <p>{{ petition.opponent_names }}</p>
                 <p>
                   {{ petition.title }}
                 </p>
