@@ -97,9 +97,9 @@
                         </h4>
                         <input
                           placeholder="Name"
-                          v-for="petitioner in petition.petitioner"
+                          v-for="petitioner in petition.petitioners"
                           :key="petitioner"
-                          v-model="petitioner.name"
+                          v-model="petitioner.user.name"
                           class="form-control mb-2"
                         />
                       </div>
@@ -129,9 +129,9 @@
                         </h4>
                         <input
                           placeholder="Name"
-                          v-for="opponent in petition.opponent"
+                          v-for="opponent in petition.opponents"
                           :key="opponent"
-                          v-model="opponent.name"
+                          v-model="opponent.user.name"
                           class="form-control mb-2"
                         />
                       </div>
@@ -183,8 +183,16 @@ export default {
     return {
       page_title: "Add New Petition",
       petition: {
-        petitioner: [{}],
-        opponent: [{}],
+        petitioners: [{
+          user:{
+
+          }
+        }],
+        opponents: [{
+          user:{
+
+          }
+        }],
         petition_type_id: "",
         id: this.$route.params.id, //this is the id from the browser
         court_id: "",
@@ -216,10 +224,16 @@ export default {
   },
   methods: {
     addMorePetitioner: function () {
-      this.petition.petitioner.push({});
+      var new_petitioner = {
+        user:{}
+      };
+      this.petition.petitioners.push(new_petitioner);
     },
     addMoreOpponent: function () {
-      this.petition.opponent.push({});
+      var new_opponent = {
+        user:{}
+      };
+      this.petition.opponents.push(new_opponent);
     },
     submitForm: function (event) {
       this.v$.$validate();
@@ -295,18 +309,20 @@ export default {
         });
     },
     getPetition() {
+      if (this.$route.params.id) {
         var url = "http://127.0.0.1:8000/api/petitions/" + this.$route.params.id;
         axios
           .get(url)
           .then((response) => {
             this.petition = response.data.petition;
-            this.petitioner = [{}];
-            this.opponent = [{}];
+            this.opponents = [{}];
             
           })
           .catch((error) => {
             console.log(error);
           });
+      }
+        
       
     },
   },
