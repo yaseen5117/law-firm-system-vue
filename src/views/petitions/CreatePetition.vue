@@ -21,6 +21,7 @@
                       class="form-control"
                       v-model="petition.petition_type_id"
                       @blur="v$.petition.petition_type_id.$touch"
+                      v-bind:class="{'error-boarder' : v$.petition.petition_type_id.$error}"
                     >
                       <option value="">--Select--</option>
                       <template
@@ -56,7 +57,7 @@
                 <div class="row">
                   <div class="col-9">
                     <label>Title <span style="color: red">*</span></label>
-                    <input class="form-control" v-model="petition.title" @blur="v$.petition.title.$touch"/>
+                    <input v-bind:class="{'error-boarder' : v$.petition.title.$error}" class="form-control" v-model="petition.title" @blur="v$.petition.title.$touch"/>
                     <span v-if="v$.petition.title.$error" class="errorMessage">Title field is required.</span>
                   </div>
                 </div>
@@ -285,5 +286,8 @@ export default {
 }
 .errorMessage{
   color: red;
+}
+.error-boarder{
+  border: 1px solid red;
 }
 </style>
