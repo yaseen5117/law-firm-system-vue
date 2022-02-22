@@ -34,10 +34,12 @@
                 <pagination />
               </template>
             </carousel> -->
-
-            <div v-show="!horizontalView">
+            <div class="mb-4">
+              <file-upload/>
+            </div>              
+            <div v-show="!horizontalView">            
               <div
-                class="row  mb-2"
+                class="row mb-2"
                 :id="'image-container-' + attachment.id"
                 v-for="attachment in petition_index_details.attachments"
                 :key="attachment"
@@ -47,7 +49,7 @@
                     :class="activePage==attachment.id?'active-img':''" 
                     class="img-fluid" style="width:90%"
                     :src="
-                      'http://127.0.0.1:8000/storage/attachments/' +
+                      'http://127.0.0.1:8000/storage/attachments/'+this.$route.params.id + '/' +
                       attachment.file_name
                     "
                   />
@@ -70,8 +72,8 @@
         }}</a>
       </ul>
     </div>
-
-    <div class="fixed-annexsures">
+   
+    <div class="fixed-annexsures">          
       <div
         class="list-group"
          v-for="petition_index_single in petition_index"
@@ -98,8 +100,9 @@ import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 
 import PageHeader from "../shared/PageHeader.vue";
+import FileUpload from "../petition-index/FileUpload.vue";
 export default {
-  components: { PageHeader, Carousel, Slide, Pagination, Navigation },
+  components: { PageHeader, Carousel, Slide, Pagination, Navigation, FileUpload },
   data() {
     return {
       petition: {},
@@ -174,7 +177,7 @@ export default {
   position: fixed;
   right: 0;
   bottom: 0;
-}
+} 
 .active-img {
   border: solid 1px red;
 }
