@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "test": "vue-cli-service serve --mode test",
+    "prod": "vue-cli-service serve --mode production"
   },
   "dependencies": {
     "@kyvg/vue3-notification": "^2.3.4",
