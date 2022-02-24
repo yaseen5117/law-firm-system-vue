@@ -4,7 +4,8 @@
   <div class="container mrgn-top">
     <div class="row">
       <div class="col-12">
-        <ul
+        <ul 
+          style="font-size:12.5px"
           class="nav nav-tabs nav-paginator"
           data-paginator-item-count="6"
           data-paginator-buttons-class="nav-link"

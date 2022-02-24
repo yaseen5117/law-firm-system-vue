@@ -43,7 +43,7 @@
                   v-for="(petition_detail , petitionIndex) in petition_details"
                   :key="petition_detail.id"
                 >
-                  <td>{{ petition_detail.id }}</td>
+                  <td>{{ petitionIndex+1 }}</td>
                   <td>
                     <input
                       v-show="petition_detail.editMode"

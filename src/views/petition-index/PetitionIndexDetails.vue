@@ -64,6 +64,7 @@
                     :src="
                       this.base_url + '/storage/attachments/' +
                       '/' +
+                      this.$route.params.id + '/' +
                       attachment.file_name
                     "
                   />
