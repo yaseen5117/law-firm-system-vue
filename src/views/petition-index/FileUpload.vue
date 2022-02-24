@@ -1,24 +1,24 @@
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">Upload New Files</div>
-          <div class="card-body">
-            <div v-if="success != ''" class="alert alert-success">
-              {{ success }}
-            </div>
-            <form @submit="formSubmit" enctype="multipart/form-data">
-              <input @blur="v$.file.$touch" accept="image/png, image/jpeg, image/jpg" type="file" class="form-control" v-on:change="onChange" />
-              <span v-if="v$.file.$error" class="errorMessage"
-                >Select a File Before Uploading.</span
-              ><br>
-              <button class="btn btn-primary mt-2">Upload</button>
-              <input type="hidden" />
-            </form>
-          </div>
-        </div>
+  <div class="card">
+    <div class="card-header">Upload New Files</div>
+    <div class="card-body">
+      <div v-if="success != ''" class="alert alert-success">
+        {{ success }}
       </div>
+      <form @submit="formSubmit" enctype="multipart/form-data">
+        <input
+          @blur="v$.file.$touch"
+          accept="image/png, image/jpeg, image/jpg"
+          type="file"
+          class="form-control"
+          v-on:change="onChange"
+        />
+        <span v-if="v$.file.$error" class="errorMessage"
+          >Select a File Before Uploading.</span
+        ><br />
+        <button class="btn btn-primary btn-sm">Upload</button>
+        <input type="hidden" />
+      </form>
     </div>
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
     };
   },
   data() {
-    return {
+    return {      
       name: "",
       file: "",
       attachmentable_id: this.$route.params.id, //this is the id from the browser
@@ -55,6 +55,8 @@ export default {
       const config = {
         headers: {
           "content-type": "multipart/form-data",
+          Authorization:
+            `Bearer ` + localStorage.getItem("rezo_customers_user"),
         },
       };
       let data = new FormData();
@@ -66,6 +68,9 @@ export default {
           .post("http://127.0.0.1:8000/api/uploads", data, config)
           .then(function (res) {
             existingObj.success = res.data.success;
+            console.log(res.data.file_data);
+            window.location.reload();
+            //res.data.file_data.push(res.data.file_data);
           })
           .catch(function (err) {
             existingObj.output = err;

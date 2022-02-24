@@ -4,13 +4,19 @@ import CaseFile from '../views/CaseFile.vue'
 import CaseDetail from '../views/CaseDetail'
 import PetitionIndexDetails from '../views/petition-index/PetitionIndexDetails'
 import CreatePetition from '../views/petitions/CreatePetition'
+import Login from '../views/Auth/Login'
 
 const routes = [
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
   {
     path: '/',
     name: 'Home',
     component: Home
-  },  
+  },      
   {
     path: '/petitions',
     name: 'Petitions',    
@@ -39,6 +45,6 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
-})
+});
 
 export default router
