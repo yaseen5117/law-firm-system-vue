@@ -1,6 +1,6 @@
 <template>
   
-    <Header />
+    <Header v-if="['login'].includes($route.name)" />
     <notifications />
     <router-view :key="$route.fullPath" />    
    

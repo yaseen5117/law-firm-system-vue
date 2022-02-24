@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-12">
         <ul
-          class="nav nav-tabs nav-fill nav-paginator"
+          class="nav nav-tabs nav-paginator"
           data-paginator-item-count="6"
           data-paginator-buttons-class="nav-link"
         >

@@ -34,20 +34,37 @@
                 <pagination />
               </template>
             </carousel> -->
+            <div class="row justify-content-end mb-4">
+              <div class="col-md-4">
+                <button
+                v-if="isHidden"
+                  type="button"
+                  @click="showModal"
+                  class="btn btn-success btn-sm"
+                  v-on:click="isHidden = !isHidden"
+                >
+                  Upload New Image
+                </button>
+              </div>
+              <div class="col-md-4" v-if="!isHidden"><file-upload /></div>
+            </div>
 
             <div v-show="!horizontalView">
               <div
-                class="row  mb-2"
+                class="row mb-2"
                 :id="'image-container-' + attachment.id"
                 v-for="attachment in petition_index_details.attachments"
                 :key="attachment"
               >
-                <div  class="col-12">
+                <div class="col-12">
                   <img
-                    :class="activePage==attachment.id?'active-img':''" 
-                    class="img-fluid" style="width:90%"
+                    :class="activePage == attachment.id ? 'active-img' : ''"
+                    class="img-fluid"
+                    style="width: 90%"
                     :src="
                       'http://127.0.0.1:8000/storage/attachments/' +
+                      this.$route.params.id +
+                      '/' +
                       attachment.file_name
                     "
                   />
@@ -65,25 +82,31 @@
         v-for="attachment in petition_index_details.attachments"
         :key="attachment"
       >
-        <a class="list-group-item" :class="activePage==attachment.id?'active':''" href="javascript:void" @click="scrollIntoView(attachment.id)">{{
-          attachment.id
-        }}</a>
+        <a
+          class="list-group-item"
+          :class="activePage == attachment.id ? 'active' : ''"
+          href="javascript:void"
+          @click="scrollIntoView(attachment.id)"
+          >{{ attachment.id }}</a
+        >
       </ul>
     </div>
 
     <div class="fixed-annexsures">
       <div
         class="list-group"
-         v-for="petition_index_single in petition_index"
-                :key="petition_index_single"
+        v-for="petition_index_single in petition_index"
+        :key="petition_index_single"
       >
-        <router-link class="list-group-item"
-                  :class="id==petition_index_single.id?'active':''"
-                  :to="{
-                    name: 'petition-index-details',
-                    params: { id: petition_index_single.id },
-                  }"
-                  >{{ petition_index_single.annexure }}</router-link>
+        <router-link
+          class="list-group-item"
+          :class="id == petition_index_single.id ? 'active' : ''"
+          :to="{
+            name: 'petition-index-details',
+            params: { id: petition_index_single.id },
+          }"
+          >{{ petition_index_single.annexure }}</router-link
+        >
       </div>
       <!-- Prayers -->
       <!-- Stay Order -->
@@ -98,16 +121,25 @@ import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 
 import PageHeader from "../shared/PageHeader.vue";
+import FileUpload from "../petition-index/FileUpload.vue";
 export default {
-  components: { PageHeader, Carousel, Slide, Pagination, Navigation },
+  components: {
+    PageHeader,
+    Carousel,
+    Slide,
+    Pagination,
+    Navigation,
+    FileUpload,
+  },
   data() {
     return {
+      isHidden: true,
       petition: {},
       petition_index: [],
       petition_index_details: {},
       id: this.$route.params.id, //this is the id from the browser
       horizontalView: false, //it will show vertical images by default
-      activePage:null
+      activePage: null,
     };
   },
   created() {
@@ -120,12 +152,13 @@ export default {
       //   .getElementById("image-container-" + id)
       //   .scrollIntoView({ duration: 2000 });
 
-      const yOffset = -200; 
+      const yOffset = -200;
       const element = document.getElementById("image-container-" + id);
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({top: y, behavior: 'smooth'});
+      const y =
+        element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
       //document.getElementById("image-container-" + id).style.border="solid 1px red"
-      this.activePage=id;
+      this.activePage = id;
     },
     async getCaseDetails() {
       await axios
@@ -169,7 +202,6 @@ export default {
   left: 0;
   bottom: 0;
   font-size: 12px;
-
 }
 .fixed-annexsures {
   position: fixed;
