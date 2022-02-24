@@ -9,8 +9,13 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-3">
-                    <label>Case No.</label>
-                    <input class="form-control" v-model="petition.case_no" />
+                    <label>Case No.<span style="color: red">*</span></label>
+                    <input class="form-control" v-model="petition.case_no" v-bind:class="{'error-boarder' : v$.petition.case_no.$error}" @blur="v$.petition.case_no.$touch" />
+                    <span
+                      v-if="v$.petition.case_no.$error"
+                      class="errorMessage"
+                      >Case No field is required.</span
+                    >
                   </div>
 
                   <div class="col-3">
@@ -193,6 +198,7 @@ export default {
         id: this.$route.params.id, //this is the id from the browser
         court_id: "",
         title: "",
+        case_no: "",
       },
       clients: [],
       courts: [],
@@ -204,6 +210,7 @@ export default {
       petition: {
         petition_type_id: { required },
         title: { required },
+        case_no: { required },
       },
     };
   },
