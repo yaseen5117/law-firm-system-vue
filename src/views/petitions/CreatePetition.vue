@@ -244,7 +244,7 @@ export default {
         };
 
         axios
-          .post(this.base_url+"/petitions", this.petition, {
+          .post(this.base_url +  "/api/petitions", this.petition, {
             headers,
           })
           .then(
@@ -271,7 +271,7 @@ export default {
       }
     },
     async getUsers() {
-      let url = this.base_url + "/clients";
+      let url = this.base_url + "/api/clients";
       await axios
         .get(url)
         .then((response) => {
@@ -283,7 +283,7 @@ export default {
         });
     },
     async getCourts() {
-      let url = this.base_url + "/courts";
+      let url = this.base_url + "/api/courts";
       await axios
         .get(url)
         .then((response) => {
@@ -295,7 +295,7 @@ export default {
         });
     },
     async getPetitionTypes() {
-      let url = this.base_url + "/petition_types";
+      let url = this.base_url + "/api/petition_types";
       await axios
         .get(url)
         .then((response) => {
@@ -308,7 +308,7 @@ export default {
     },
     getPetition() {
       if (this.$route.params.id) {
-        var url = this.base_url + "/petitions/" + this.$route.params.id;
+        var url = this.base_url + "/api/petitions/" + this.$route.params.id;
         axios
           .get(url)
           .then((response) => {
