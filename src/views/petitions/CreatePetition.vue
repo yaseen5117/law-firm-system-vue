@@ -176,7 +176,7 @@ export default {
   },
   data() {
     return {
-      page_title: "Add New Petition",
+      page_title: this.$route.params.id ?"Edit Petition":"Add New Petition",
       base_url: process.env.VUE_APP_SERVICE_URL,
       petition: {
         petitioners: [{

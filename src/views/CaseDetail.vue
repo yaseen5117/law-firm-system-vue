@@ -10,7 +10,7 @@
             <div class="card-body align-center case_heading">
               <div>
                 <h6>
-                  <u>BEFORE THE {{ petition.court.title }}</u>
+                  <u>BEFORE THE {{ petition.court.title }} <router-link style="    margin-right: 2px;" :to="{ name: 'edit-petition', params: {id: petition.id}}" class="" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-edit"></i></router-link></u>
                 </h6>
                 <p>Writ Petition No. {{ petition.writ_number }}</p>
                 <p>{{ petition.petitioner_names }}</p>
