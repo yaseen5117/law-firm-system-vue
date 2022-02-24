@@ -134,7 +134,7 @@
                             "
                           />
                         </td>
-                        <td>{{ attachment.file_name }}</td>
+                        <td>{{ attachment.title }}</td>
                         <td>{{ attachment.display_order }}</td>
                       </tr>
                     </tbody>
