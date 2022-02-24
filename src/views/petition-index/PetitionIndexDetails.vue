@@ -8,8 +8,51 @@
     <!-- End Breadcrumbs -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
+
+        <div class="row text-right">
+          <div class="col-12">
+
+            <button
+              v-if="isHidden"
+              type="button"
+              @click="showModal"
+              class="btn btn-success btn-sm"
+              style="margin-right:2px"
+              v-on:click="isHidden = !isHidden"
+            >
+              Upload New Image
+            </button>
+
+            <button
+              v-show="!editView"
+              @click="
+                editView = true;
+                horizontalView: true;
+              "
+              style="margin-right:2px"
+              class="btn btn-primary btn-sm"
+            >
+              Edit
+            </button>
+            <button
+              v-show="editView"
+              @click="
+                editView = false;
+                horizontalView: false;
+              "
+              style="margin-right:2px"
+              class="btn btn-success btn-sm"
+            >
+              Cancel
+            </button>
+
+
+          </div>
+          <div class="col-md-12" v-if="!isHidden"><file-upload /></div>
+        </div>
+
         <div class="row">
-          <div class="col-12 text-center">
+          <div class="col-12">
             <!-- <button
               class="btn btn-primary btn-sm mb-3"
               v-on:click="horizontalView = !horizontalView"
@@ -34,24 +77,10 @@
                 <pagination />
               </template>
             </carousel> -->
-            <div class="row justify-content-end mb-4">
-              <div class="col-md-4">
-                <button
-                v-if="isHidden"
-                  type="button"
-                  @click="showModal"
-                  class="btn btn-success btn-sm"
-                  v-on:click="isHidden = !isHidden"
-                >
-                  Upload New Image
-                </button>
-              </div>
-              <div class="col-md-4" v-if="!isHidden"><file-upload /></div>
-            </div>
 
-            <div v-show="!horizontalView">
+            <div v-show="!horizontalView && !editView">
               <div
-                class="row mb-2"
+                class="row mb-2 text-center"
                 :id="'image-container-' + attachment.id"
                 v-for="attachment in petition_index_details.attachments"
                 :key="attachment"
@@ -62,9 +91,11 @@
                     class="img-fluid"
                     style="width: 90%"
                     :src="
-                      this.base_url + '/storage/attachments/' +
+                      this.base_url +
+                      '/storage/attachments/' +
                       '/' +
-                      this.$route.params.id + '/' +
+                      this.$route.params.id +
+                      '/' +
                       attachment.file_name
                     "
                   />
@@ -72,11 +103,51 @@
                 </div>
               </div>
             </div>
+
+            <div v-show="editView">
+              <div class="row">
+                <div class="col-12">
+                  <table class="table table-bordered">
+                    <thead>
+                      <th>Image</th>
+                      <th>Title</th>
+                      <th>Display Order</th>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="attachment in petition_index_details.attachments"
+                        :key="attachment"
+                      >
+                        <td>
+                          <img
+                            :class="
+                              activePage == attachment.id ? 'active-img' : ''
+                            "
+                            style="width: 80px"
+                            :src="
+                              this.base_url +
+                              '/storage/attachments/' +
+                              '/' +
+                              this.$route.params.id +
+                              '/' +
+                              attachment.file_name
+                            "
+                          />
+                        </td>
+                        <td>{{ attachment.file_name }}</td>
+                        <td>{{ attachment.display_order }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
-    <div v-show="!horizontalView" class="fixed-page-numbers">
+
+    <div v-show="(!horizontalView &&  !editView)" class="fixed-page-numbers">
       <ul
         class="list-group"
         v-for="attachment in petition_index_details.attachments"
@@ -92,7 +163,7 @@
       </ul>
     </div>
 
-    <div class="fixed-annexsures">
+    <div class="fixed-annexsures" @show="!editView">
       <div
         class="list-group"
         v-for="petition_index_single in petition_index"
@@ -134,6 +205,7 @@ export default {
   data() {
     return {
       isHidden: true,
+      editView: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
       petition: {},
       petition_index: [],
@@ -145,7 +217,6 @@ export default {
   },
   created() {
     this.getCaseDetails();
-    
   },
   methods: {
     scrollIntoView(id) {
