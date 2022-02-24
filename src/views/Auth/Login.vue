@@ -4,26 +4,29 @@
       <div class="row">
         <div class="col-md-4 offset-md-4">
           <div class="login-form bg-light mt-4 p-4">
-            <form @submit.prevent="submitForm($event)" class="row g-3">
+            <form @submit.prevent="submitForm($event)" class="row g-3" id="userlogin">
               <h4>Welcome Back</h4>
               <div class="col-12">
                 <label>Email</label>
-                <input
-                  type="text"
-                  name="email"
-                  class="form-control"
-                  placeholder="email"
+                <input                 
+                    v-model="email"
+                    type="text"
+                    name="email"
+                    class="form-control"
+                    placeholder="email"
                 />   
                 <span v-if="v$.email.$error" class="errorMessage">Email is Required.</span>             
               </div>
               <div class="col-12">
                 <label>Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  class="form-control"
-                  placeholder="Password"
+                <input                    
+                    v-model="password"
+                    type="password"
+                    name="password"
+                    class="form-control"
+                    placeholder="Password"
                 />
+                <span v-if="v$.password.$error" class="errorMessage">Password is Required.</span>            
               </div>
               <div class="col-12">
                 <div class="form-check">
@@ -59,7 +62,7 @@
 <script>
 import axios from "axios";
 import useVuelidate from "@vuelidate/core";
-import { required, email, helpers } from "@vuelidate/validators";
+import { required, email } from "@vuelidate/validators";
 
 export default {
   name: "Login",
@@ -76,7 +79,7 @@ export default {
   },
   validations() {
     return {
-        email:{ required },
+        email:{ required, email },
         password: { required },   
     };
   },
@@ -84,16 +87,16 @@ export default {
     submitForm: function (event) {       
       this.v$.$validate();
       if (!this.v$.$error) {
-        event.preventDefault();
-
-        var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
-        };
+         
+        let data = new FormData();
+        data.append("email", this.email);
+        data.append("password", this.password);
+       
+        event.preventDefault();        
 
         axios
-          .post("http://127.0.0.1:8000/api/petitions", this.petition, {
-            headers,
+          .post("http://127.0.0.1:8000/api/login",data,{
+            
           })
           .then(
             (response) => {
@@ -101,9 +104,9 @@ export default {
                 this.$notify({
                   type: "success",
                   title: "Success",
-                  text: "Saved Successfully!",
+                  text: "Login Successfully!",
                 });
-                this.$router.push({ path: "/petitions" });
+                this.$router.push({ path: "/" });
               }
               console.log(response);
             },
