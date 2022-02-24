@@ -182,6 +182,7 @@ export default {
   data() {
     return {
       page_title: "Add New Petition",
+      base_url: process.env.VUE_APP_SERVICE_URL,
       petition: {
         petitioners: [{
           user:{
@@ -212,6 +213,8 @@ export default {
     };
   },
   created() {
+
+    
     this.getUsers();
     this.getCourts();
     this.getPetitionTypes();
@@ -246,7 +249,7 @@ export default {
         };
 
         axios
-          .post("http://127.0.0.1:8000/api/petitions", this.petition, {
+          .post(this.base_url+"/petitions", this.petition, {
             headers,
           })
           .then(
@@ -273,7 +276,7 @@ export default {
       }
     },
     async getUsers() {
-      let url = "http://127.0.0.1:8000/api/clients";
+      let url = this.base_url + "/clients";
       await axios
         .get(url)
         .then((response) => {
@@ -285,7 +288,7 @@ export default {
         });
     },
     async getCourts() {
-      let url = "http://127.0.0.1:8000/api/courts";
+      let url = this.base_url + "/courts";
       await axios
         .get(url)
         .then((response) => {
@@ -297,7 +300,7 @@ export default {
         });
     },
     async getPetitionTypes() {
-      let url = "http://127.0.0.1:8000/api/petition_types";
+      let url = this.base_url + "/petition_types";
       await axios
         .get(url)
         .then((response) => {
@@ -310,7 +313,7 @@ export default {
     },
     getPetition() {
       if (this.$route.params.id) {
-        var url = "http://127.0.0.1:8000/api/petitions/" + this.$route.params.id;
+        var url = this.base_url + "/petitions/" + this.$route.params.id;
         axios
           .get(url)
           .then((response) => {
