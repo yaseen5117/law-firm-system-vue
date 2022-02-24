@@ -30,6 +30,12 @@ const routes = [
   },
 
   {
+    path: '/petitions/edit/:id',
+    name: 'edit-petition',    
+    component: CreatePetition
+  },
+
+  {
     path: '/petitions/:id',
     name: 'case-detail',    
     component: CaseDetail

@@ -62,8 +62,7 @@
                     class="img-fluid"
                     style="width: 90%"
                     :src="
-                      'http://127.0.0.1:8000/storage/attachments/' +
-                      this.$route.params.id +
+                      this.base_url + '/storage/attachments/' +
                       '/' +
                       attachment.file_name
                     "
@@ -134,6 +133,7 @@ export default {
   data() {
     return {
       isHidden: true,
+      base_url: process.env.VUE_APP_SERVICE_URL,
       petition: {},
       petition_index: [],
       petition_index_details: {},
@@ -144,6 +144,7 @@ export default {
   },
   created() {
     this.getCaseDetails();
+    
   },
   methods: {
     scrollIntoView(id) {
@@ -161,7 +162,7 @@ export default {
     },
     async getCaseDetails() {
       await axios
-        .get("http://127.0.0.1:8000/api/petitions_index/" + this.id)
+        .get(this.base_url + "/api/petitions_index/" + this.id)
         .then((response) => {
           this.petition_index_details = response.data.petition_index;
           this.petition = response.data.petition;
@@ -175,7 +176,7 @@ export default {
 
     async getPetitionAnnexure(petition_id) {
       await axios
-        .get("http://127.0.0.1:8000/api/petitions/" + petition_id)
+        .get(this.base_url + "/api/petitions/" + petition_id)
         .then((response) => {
           this.petition_index = response.data.petition_details;
           var arr = [];

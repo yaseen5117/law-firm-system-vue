@@ -5,7 +5,7 @@
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="col-12">
-            <form @submit.prevent="submitForm($event)"> 
+            <form @submit.prevent="submitForm($event)">
               <div class="form-group">
                 <div class="row">
                   <div class="col-3">
@@ -33,10 +33,14 @@
                         </option>
                       </template>
                     </select>
-                    <span v-if="v$.petition.petition_type_id.$error" class="errorMessage">Case Category field is required.</span>
+                    <span
+                      v-if="v$.petition.petition_type_id.$error"
+                      class="errorMessage"
+                      >Case Category field is required.</span
+                    >
                   </div>
 
-                  <div class="col-3">
+                  <div class="col-4">
                     <label>Court</label>
                     <select class="form-control" v-model="petition.court_id">
                       <option value="">--Select--</option>
@@ -55,7 +59,7 @@
 
               <div class="form-group">
                 <div class="row">
-                  <div class="col-9">
+                  <div class="col-10">
                     <label>Title <span style="color: red">*</span></label>
                     <input v-bind:class="{'error-boarder' : v$.petition.title.$error}" class="form-control" v-model="petition.title" @blur="v$.petition.title.$touch"/>
                     <span v-if="v$.petition.title.$error" class="errorMessage">Title field is required.</span>
@@ -76,7 +80,11 @@
                         <h4 class="card-title">
                           Petitioner
                           <small
-                            style="cursor: pointer;font-size:12px; text-decoration:underline"
+                            style="
+                              cursor: pointer;
+                              font-size: 12px;
+                              text-decoration: underline;
+                            "
                             @click="addMorePetitioner()"
                             class="pull-right"
                             >Add More</small
@@ -84,17 +92,15 @@
                         </h4>
                         <input
                           placeholder="Name"
-                          v-for="petitioner in petition.petitioner"
+                          v-for="petitioner in petition.petitioners"
                           :key="petitioner"
-                          v-model="petitioner.name"
+                          v-model="petitioner.user.name"
                           class="form-control mb-2"
                         />
                       </div>
                     </div>
                   </div>
-                  <div class="col-2">
-                    <h4 class="mx-auto text-center">VS</h4>
-                  </div>
+
                   <div class="col-5">
                     <div class="card">
                       <img
@@ -106,7 +112,11 @@
                         <h4 class="card-title">
                           Opponent
                           <small
-                            style="cursor: pointer;font-size:12px; text-decoration:underline"
+                            style="
+                              cursor: pointer;
+                              font-size: 12px;
+                              text-decoration: underline;
+                            "
                             @click="addMoreOpponent()"
                             class="pull-right"
                             >Add More</small
@@ -114,9 +124,9 @@
                         </h4>
                         <input
                           placeholder="Name"
-                          v-for="opponent in petition.opponent"
+                          v-for="opponent in petition.opponents"
                           :key="opponent"
-                          v-model="opponent.name"
+                          v-model="opponent.user.name"
                           class="form-control mb-2"
                         />
                       </div>
@@ -137,7 +147,7 @@
                   </div>
                 </div>
               </div>
-               
+
               <div class="form-group">
                 <button class="btn btn-success btn-sm mt-2">Save</button>
               </div>
@@ -153,56 +163,79 @@
 <script>
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
-import useVuelidate from '@vuelidate/core'
-import { required, email, helpers } from '@vuelidate/validators'
+import useVuelidate from "@vuelidate/core";
+import { required, email, helpers } from "@vuelidate/validators";
 
 export default {
   components: { PageHeader },
-  setup () {
+  setup() {
+    
     return {
-      v$: useVuelidate()
-    }
+      v$: useVuelidate(),
+    };
   },
   data() {
     return {
       page_title: "Add New Petition",
+      base_url: process.env.VUE_APP_SERVICE_URL,
       petition: {
-        
-        petitioner: [{}],
-        opponent: [{}],
+        petitioners: [{
+          user:{
+
+          }
+        }],
+        opponents: [{
+          user:{
+
+          }
+        }],
         petition_type_id: "",
+        id: this.$route.params.id, //this is the id from the browser
         court_id: "",
-        title: '',
-        
+        title: "",
       },
       clients: [],
       courts: [],
       petition_types: [],
     };
   },
-  validations () {
+  validations() {
     return {
       petition: {
         petition_type_id: { required },
         title: { required },
-      }
-    }
+      },
+    };
   },
   created() {
+
+    
     this.getUsers();
     this.getCourts();
     this.getPetitionTypes();
+    this.getPetition();
+    
+  },
+  activated() {
+    
+    
   },
   methods: {
     addMorePetitioner: function () {
-      this.petition.petitioner.push({});
+      var new_petitioner = {
+        user:{}
+      };
+      this.petition.petitioners.push(new_petitioner);
     },
     addMoreOpponent: function () {
-      this.petition.opponent.push({});
+      var new_opponent = {
+        user:{}
+      };
+      this.petition.opponents.push(new_opponent);
     },
     submitForm: function (event) {
       this.v$.$validate();
-    if (!this.v$.$error) {
+      if (!this.v$.$error) {
         event.preventDefault();
 
         var headers = {
@@ -211,7 +244,7 @@ export default {
         };
 
         axios
-          .post("http://127.0.0.1:8000/api/petitions", this.petition, {
+          .post(this.base_url +  "/api/petitions", this.petition, {
             headers,
           })
           .then(
@@ -238,7 +271,7 @@ export default {
       }
     },
     async getUsers() {
-      let url = "http://127.0.0.1:8000/api/clients";
+      let url = this.base_url + "/api/clients";
       await axios
         .get(url)
         .then((response) => {
@@ -250,7 +283,7 @@ export default {
         });
     },
     async getCourts() {
-      let url = "http://127.0.0.1:8000/api/courts";
+      let url = this.base_url + "/api/courts";
       await axios
         .get(url)
         .then((response) => {
@@ -262,7 +295,7 @@ export default {
         });
     },
     async getPetitionTypes() {
-      let url = "http://127.0.0.1:8000/api/petition_types";
+      let url = this.base_url + "/api/petition_types";
       await axios
         .get(url)
         .then((response) => {
@@ -272,6 +305,23 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    getPetition() {
+      if (this.$route.params.id) {
+        var url = this.base_url + "/api/petitions/" + this.$route.params.id;
+        axios
+          .get(url)
+          .then((response) => {
+            this.petition = response.data.petition;
+            this.opponents = [{}];
+            
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+        
+      
     },
   },
 };
@@ -284,7 +334,7 @@ export default {
 .form-group {
   margin-bottom: 5px;
 }
-.errorMessage{
+.errorMessage {
   color: red;
 }
 .error-boarder{
