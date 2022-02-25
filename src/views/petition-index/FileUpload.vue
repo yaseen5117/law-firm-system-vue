@@ -5,15 +5,16 @@
       <!-- <div v-if="success != ''" class="alert alert-success">
         {{ success }}
       </div> -->
-      <form @submit="formSubmit" enctype="multipart/form-data">
-        <input           
+      <form @submit="onUploadFile" enctype="multipart/form-data">
+        <input
           accept="image/png, image/jpeg, image/jpg"
           type="file"
+          id="file" 
           class="form-control"
-          v-on:change="onChange"
-          multiple 
+          @change="onChange"
+          multiple
         />
-        <span v-if="v$.file.$error" class="errorMessage"
+        <span v-if="v$.files.$error" class="errorMessage"
           >Select a File Before Uploading.</span
         ><br />
         <button class="btn btn-primary btn-sm">Upload</button>
@@ -26,6 +27,7 @@
 import axios from "axios";
 import useVuelidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
+
 export default {
   setup() {
     return {
@@ -33,26 +35,26 @@ export default {
     };
   },
   data() {
-    return {    
-      base_url: process.env.VUE_APP_SERVICE_URL,  
+    return {
+      base_url: process.env.VUE_APP_SERVICE_URL,
       name: "",
-      file: "",
+      files: "",
       attachmentable_id: this.$route.params.id, //this is the id from the browser
       success: "",
     };
   },
   validations() {
     return {
-      file: { required },
+      files: { required },
     };
   },
   methods: {
     onChange(e) {
-      this.file = e.target.files[0];
+      this.files = e.target.files;
     },
-    formSubmit(e) {
+    onUploadFile(e) {
       e.preventDefault();
-      let existingObj = this;
+      //let existingObj = this;
       const config = {
         headers: {
           "content-type": "multipart/form-data",
@@ -60,36 +62,40 @@ export default {
             `Bearer ` + localStorage.getItem("rezo_customers_user"),
         },
       };
-      let data = new FormData();
-      data.append("file", this.file);
+
+      let formData = new FormData();
+
+      for (var i = 0; i < this.files.length; i++) {
+        let file = this.files[i];
+        formData.append("files[" + i + "]", file);
+      }
+
       this.v$.$validate();
       if (!this.v$.$error) {
-        data.append("attachmentable_id", this.attachmentable_id);
-        axios
-          .post(this.base_url + "/api/attachments", data, config)
-          .then(
-            (response) => {
-              if (response.status === 200) {
-                this.$notify({
-                  type: "success",
-                  title: "Success",
-                  text: "File Uploaded Successfully!",
-                });
-                console.log(response.data);
-                this.$emit('afterUpload', response.data)
-                //this.$root.petition_index_details.attachments = response;
-                //attachmentToUpdate.editMode = false;
-              }
-            },
-            (error) => {
-              console.log(error.response.data.error);
+        formData.append("attachmentable_id", this.attachmentable_id);
+        axios.post(this.base_url + "/api/attachments", formData, config).then(
+          (response) => {
+            if (response.status === 200) {
               this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error.response.data.error,
+                type: "success",
+                title: "Success",
+                text: "Files Uploaded Successfully!",
               });
+              console.log(response.data);
+              this.$emit("afterUpload", response.data);
+              //this.$root.petition_index_details.attachments = response;
+              //attachmentToUpdate.editMode = false;
             }
-          )  
+          },
+          (error) => {
+            console.log(error.response.data.error);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.error,
+            });
+          }
+        );
       }
     },
   },
