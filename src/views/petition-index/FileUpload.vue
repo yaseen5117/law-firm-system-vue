@@ -2,16 +2,16 @@
   <div class="card">
     <div class="card-header">Upload New Files</div>
     <div class="card-body">
-      <div v-if="success != ''" class="alert alert-success">
+      <!-- <div v-if="success != ''" class="alert alert-success">
         {{ success }}
-      </div>
+      </div> -->
       <form @submit="formSubmit" enctype="multipart/form-data">
-        <input
-          @blur="v$.file.$touch"
+        <input           
           accept="image/png, image/jpeg, image/jpg"
           type="file"
           class="form-control"
           v-on:change="onChange"
+          multiple 
         />
         <span v-if="v$.file.$error" class="errorMessage"
           >Select a File Before Uploading.</span
@@ -33,7 +33,8 @@ export default {
     };
   },
   data() {
-    return {      
+    return {    
+      base_url: process.env.VUE_APP_SERVICE_URL,  
       name: "",
       file: "",
       attachmentable_id: this.$route.params.id, //this is the id from the browser
@@ -65,16 +66,30 @@ export default {
       if (!this.v$.$error) {
         data.append("attachmentable_id", this.attachmentable_id);
         axios
-          .post("http://127.0.0.1:8000/api/uploads", data, config)
-          .then(function (res) {
-            existingObj.success = res.data.success;
-            console.log(res.data.file_data);
-            window.location.reload();
-            //res.data.file_data.push(res.data.file_data);
-          })
-          .catch(function (err) {
-            existingObj.output = err;
-          });
+          .post(this.base_url + "/api/attachments", data, config)
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "File Uploaded Successfully!",
+                });
+                console.log(response.data);
+                this.$emit('afterUpload', response.data)
+                //this.$root.petition_index_details.attachments = response;
+                //attachmentToUpdate.editMode = false;
+              }
+            },
+            (error) => {
+              console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
+            }
+          )  
       }
     },
   },

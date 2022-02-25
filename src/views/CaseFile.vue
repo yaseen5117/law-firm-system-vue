@@ -83,6 +83,7 @@ export default {
     name: 'CaseFile',
     data(){
       return {
+        base_url: process.env.VUE_APP_SERVICE_URL,
         petitions: Array,                 
       }
     },
@@ -91,7 +92,7 @@ export default {
     },
     methods: {
       async getCaseFiles() {
-        let url = 'http://127.0.0.1:8000/api/petitions';
+        let url = this.base_url + "/api/petitions";
         await axios.get(url).then(response => {
           this.petitions = response.data.petitions;
           console.log(this.petitions);

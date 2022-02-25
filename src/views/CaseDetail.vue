@@ -199,6 +199,7 @@ export default {
   },
   data() {
     return {
+      base_url: process.env.VUE_APP_SERVICE_URL,
       petition: {},
       petition_details: [],
       id: this.$route.params.id, //this is the id from the browser
@@ -211,7 +212,7 @@ export default {
   methods: {
     getCaseDetails() {
       axios
-        .get("http://127.0.0.1:8000/api/petitions/" + this.id)
+        .get(this.base_url + "/api/petitions/" + this.id)
         .then((response) => {
           this.petition = response.data.petition;
           this.petition_details = response.data.petition_details;
@@ -231,7 +232,7 @@ export default {
         this.new_petition_index.petition_id = this.id;
         axios
           .post(
-            "http://127.0.0.1:8000/api/petitions_index",
+            this.base_url + "/api/petitions_index",
             this.new_petition_index,
             {
               headers,
@@ -268,7 +269,7 @@ export default {
         };
 
         axios
-          .post("http://127.0.0.1:8000/api/petitions_index", petitionToUpdate, {
+          .post(this.base_url + "/api/petitions_index", petitionToUpdate, {
             headers,
           })
           .then(
@@ -301,7 +302,7 @@ export default {
         };
        
         axios
-          .delete("http://127.0.0.1:8000/api/petitions_index/"+petitionId, {
+          .delete(this.base_url + "/api/petitions_index/"+petitionId, {
             headers,
           })
           .then(

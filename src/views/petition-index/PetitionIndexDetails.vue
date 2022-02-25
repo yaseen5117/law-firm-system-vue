@@ -9,18 +9,25 @@
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
 
-        <div class="row text-right">
+        <div class="row text-right mb-4">
           <div class="col-12">
 
             <button
-              v-if="isHidden"
-              type="button"
-              @click="showModal"
-              class="btn btn-success btn-sm"
-              style="margin-right:2px"
-              v-on:click="isHidden = !isHidden"
+              v-show="!showImgCard"
+              @click="showImgCard = true" 
+              class="btn btn-success btn-sm mb-2"
+              style="margin-right:2px"               
             >
               Upload New Image
+            </button>
+            <button
+               v-show="showImgCard"
+              @click="showImgCard = false"
+ 
+              class="btn btn-primary btn-sm mb-2"
+              style="margin-right:2px"               
+            >
+              Cancel Image Card
             </button>
 
             <button
@@ -30,7 +37,7 @@
                 horizontalView: true;
               "
               style="margin-right:2px"
-              class="btn btn-primary btn-sm"
+              class="btn btn-primary btn-sm mb-2"
             >
               Edit
             </button>
@@ -41,14 +48,14 @@
                 horizontalView: false;
               "
               style="margin-right:2px"
-              class="btn btn-success btn-sm"
+              class="btn btn-success btn-sm mb-2"
             >
               Cancel
             </button>
 
 
           </div>
-          <div class="col-md-12" v-if="!isHidden"><file-upload /></div>
+          <div class="col-md-12" @afterUpload="getCaseDetails" v-show="showImgCard"><file-upload /></div>
         </div>
 
         <div class="row">
@@ -92,8 +99,8 @@
                     style="width: 90%"
                     :src="
                       this.base_url +
-                      '/storage/attachments/' +
-                      '/' +
+                      '/storage/attachments/' 
+                      +                     
                       this.$route.params.id +
                       '/' +
                       attachment.file_name
@@ -109,15 +116,18 @@
                 <div class="col-12">
                   <table class="table table-bordered">
                     <thead>
+                      <th>Sr. #</th>
                       <th>Image</th>
                       <th>Title</th>
                       <th>Display Order</th>
                     </thead>
                     <tbody>
                       <tr
-                        v-for="attachment in petition_index_details.attachments"
+                        @dblclick="attachment.editMode = true"                         
+                        v-for="(attachment , attachmentIndex) in petition_index_details.attachments"
                         :key="attachment"
                       >
+                      <td style="type: hidden">{{ attachmentIndex+1 }}</td>
                         <td>
                           <img
                             :class="
@@ -134,8 +144,84 @@
                             "
                           />
                         </td>
-                        <td>{{ attachment.title }}</td>
-                        <td>{{ attachment.display_order }}</td>
+                        <td>
+                          <input
+                            v-show="attachment.editMode"
+                            class="form-control"
+                            v-model="attachment.title"
+                            v-on:keyup.enter="editPetitionAttachment(attachment)"
+                          />
+                          <router-link
+                            v-show="!attachment.editMode"
+                            :to="{
+                              name: 'petition-index-details',
+                              params: { id: attachment.id },
+                            }"
+                            >{{ attachment.title }}
+                          </router-link>
+                        </td> 
+
+                        <td>
+                          <input
+                            v-show="attachment.editMode"
+                            class="form-control"
+                            v-model="attachment.display_order"
+                            v-on:keyup.enter="editPetitionAttachment(attachment)"
+                          />
+                          <router-link
+                            v-show="!attachment.editMode"
+                            :to="{
+                              name: 'petition-index-details',
+                              params: { id: attachment.id },
+                            }"
+                            >{{ attachment.display_order }}
+                          </router-link>
+                        </td>                          
+                      <td>
+                      <a
+                      class="btn btn-sm btn-primary"
+                      v-show="!attachment.editMode"
+                      @click="attachment.editMode = true"
+                      href="javascript:void"
+                      style="margin-left:2px"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"
+                    >
+                      <i class="fa fa-edit"></i>
+                    </a>
+                    <a
+                      v-show="attachment.editMode"
+                      class="btn btn-sm btn-warning"
+                      @click="editPetitionAttachment(attachment)"
+                      href="javascript:void"
+                      style="margin-left:2px"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Update"
+                    >
+                      <i class="fa fa-save"></i>
+                    </a>
+                   
+                     <a
+                      v-show="attachment.editMode"
+                      @click="attachment.editMode=false"
+                      class="btn btn-sm btn-info"
+                      href="javascript:void"
+                      style="margin-left:2px"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Cacncel"
+                    >
+                      <i class="fa fa-remove"></i>
+                    </a>
+
+                    <a
+                    class="btn btn-sm btn-danger"
+
+                      v-show="!attachment.editMode"
+                      @click="deletePetitionAttachment(attachment.id,attachmentIndex)"
+                      href="javascript:void"
+                      style="margin-left:2px"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
+                    >
+                     <i class="fa fa-trash-o"></i>
+                    </a>
+                  </td>
                       </tr>
                     </tbody>
                   </table>
@@ -204,7 +290,7 @@ export default {
   },
   data() {
     return {
-      isHidden: true,
+      showImgCard: false,
       editView: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
       petition: {},
@@ -263,6 +349,73 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    editPetitionAttachment(attachmentToUpdate) {   
+      if (true) {
+        var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+        };
+    
+        axios
+          .put(this.base_url + "/api/attachments/"+attachmentToUpdate.id, attachmentToUpdate, {
+            headers,
+          })
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "Updated Successfully!",
+                });
+                attachmentToUpdate.editMode = false;
+              }
+            },
+            (error) => {
+              console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
+            }
+          );
+      }
+    },
+    deletePetitionAttachment(petitionId,attachmentIndex) {
+      if (confirm("Do you really want to delete?")) {
+        var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("rezo_customers_user"),           
+        };
+       
+        axios
+          .delete(this.base_url + "/api/attachments/"+petitionId, {
+            headers,
+          })
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "Deleted Successfully!",
+                }); 
+                //this.getCaseDetails()  
+                this.petition_index_details.attachments.splice(attachmentIndex,1);//removing record from list/index after deleting record from DB              
+              }
+            },
+            (error) => {
+              console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
+            }
+          );
+      }
     },
   },
 };

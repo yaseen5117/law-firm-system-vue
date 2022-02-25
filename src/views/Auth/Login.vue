@@ -73,6 +73,7 @@ export default {
     },
     data() {
     return {
+        base_url: process.env.VUE_APP_SERVICE_URL,
         email: "",
         password: "",    
     };
@@ -95,7 +96,7 @@ export default {
         event.preventDefault();        
 
         axios
-          .post("http://127.0.0.1:8000/api/login",data,{
+          .post(this.base_url + "/api/login",data,{
             
           })
           .then(
