@@ -115,7 +115,7 @@ export default {
                   text: "Login Successfully!",
                 });
                 localStorage.setItem("lfms_user", response.data.token);
-                this.$router.push({ path: "/" });
+                this.$router.push({ path: "/dashboard" });
               }
               console.log(response);
             },
