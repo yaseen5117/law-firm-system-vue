@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import DashBoard from '../views/DashBoard.vue'
 import Home from '../views/Home.vue'
 import CaseFile from '../views/CaseFile.vue'
 import CaseDetail from '../views/CaseDetail'
@@ -15,7 +16,12 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    component: Home
+  }, 
+  {
+    path: '/dashboard',
+    name: 'DashBoard',     
+    component: DashBoard,
     meta: { 
       auth: true ,
     },
