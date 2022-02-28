@@ -236,16 +236,15 @@
     <div v-show="(!horizontalView &&  !editView)" class="fixed-page-numbers">
       <ul
         class="list-group"
-        v-for="attachment in petition_index_details.attachments"
-        :key="attachment"
       >
-        <a
-          class="list-group-item"
-          :class="activePage == attachment.id ? 'active' : ''"
-          href="javascript:void"
-          @click="scrollIntoView(attachment.id)"
-          >{{ attachment.id }}</a
+      <li 
+        v-for="attachment in petition_index_details.attachments"
+        :key="attachment" :class="activePage == attachment.id ? 'active' : ''" class="list-group-item"
+        @click="scrollIntoView(attachment.id)"
+        style="cursor:pointer"
         >
+          {{ attachment.id }}
+        </li>
       </ul>
     </div>
 
