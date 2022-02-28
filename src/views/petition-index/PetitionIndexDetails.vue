@@ -27,7 +27,7 @@
               class="btn btn-primary btn-sm mb-2"
               style="margin-right:2px"               
             >
-              Cancel Image Card
+              Cancel Upload
             </button>
 
             <button
