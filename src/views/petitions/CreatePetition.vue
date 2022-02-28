@@ -8,7 +8,7 @@
             <form @submit.prevent="submitForm($event)">
               <div class="form-group">
                 <div class="row">
-                  <div class="col-3">
+                  <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                     <label>Case No.<span style="color: red">*</span></label>
                     <input class="form-control" v-model="petition.case_no" v-bind:class="{'error-boarder' : v$.petition.case_no.$error}" @blur="v$.petition.case_no.$touch" />
                     <span
@@ -18,7 +18,7 @@
                     >
                   </div>
 
-                  <div class="col-3">
+                  <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                     <label
                       >Case Category <span style="color: red">*</span></label
                     >
@@ -45,7 +45,7 @@
                     >
                   </div>
 
-                  <div class="col-4">
+                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <label>Court</label>
                     <select class="form-control" v-model="petition.court_id">
                       <option value="">--Select--</option>
@@ -64,7 +64,7 @@
 
               <div class="form-group">
                 <div class="row">
-                  <div class="col-10">
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <label>Title <span style="color: red">*</span></label>
                     <input v-bind:class="{'error-boarder' : v$.petition.title.$error}" class="form-control" v-model="petition.title" @blur="v$.petition.title.$touch"/>
                     <span v-if="v$.petition.title.$error" class="errorMessage">Title field is required.</span>
@@ -74,7 +74,7 @@
 
               <div class="form-group">
                 <div class="row">
-                  <div class="col-5">
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="card">
                       <img
                         class="card-img-top"
@@ -106,7 +106,7 @@
                     </div>
                   </div>
 
-                  <div class="col-5">
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt">
                     <div class="card">
                       <img
                         class="card-img-top"
@@ -142,7 +142,7 @@
 
               <div class="form-group">
                 <div class="row">
-                  <div class="col-3">
+                  <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                     <label>Date Of Institution</label>
                     <input
                       type="date"
@@ -346,5 +346,10 @@ export default {
 }
 .error-boarder{
   border: 1px solid red;
+}
+@media only screen and (max-width: 768px) {
+  .mt {
+    margin-top: 5px;
+  }
 }
 </style>

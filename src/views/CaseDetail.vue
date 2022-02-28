@@ -6,9 +6,9 @@
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="row">
-          <div class="col-12">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card-body align-center case_heading">
-              <div>
+             
                 <h6>
                   <u>BEFORE THE {{ petition.court.title }} <router-link style="    margin-right: 2px;" :to="{ name: 'edit-petition', params: {id: petition.id}}" class="" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-edit"></i></router-link></u>
                 </h6>
@@ -22,12 +22,13 @@
                 <p>
                   <u><strong>INDEX</strong></u>
                 </p>
-              </div>
+             
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-12">
+          <div class="table-responsive">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <table  class="table table-striped">
               <thead>
                 <th>Sr. #</th>
@@ -128,7 +129,7 @@
                     </a>
 
                     <a
-                    class="btn btn-sm btn-danger"
+                    class="btn btn-sm btn-danger mt"
 
                       v-show="!petition_detail.editMode"
                       @click="deletePetitionIndex(petition_detail.id,petitionIndex)"
@@ -179,6 +180,7 @@
                 </tr>
               </tbody>
             </table>
+          </div>
           </div>
         </div>
       </div>
@@ -338,5 +340,16 @@ export default {
 <style>
 .red{
   color:red;
+}
+@media only screen and (max-width: 926px) {
+  .mt {
+    margin-top: 5px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .case_heading span {
+    font-size: 12px !important;
+    line-height: 0px !important;
+  }  
 }
 </style>

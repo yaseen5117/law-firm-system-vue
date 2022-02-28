@@ -8,7 +8,7 @@
           <div class="row gy-4">
             <div class="col-12">
               <form class="row gy-2 gx-3 align-items-center">
-                <div class="col-auto">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                   <input
                     type="date"
                     v-model="filters.institution_date"
@@ -17,7 +17,7 @@
                     placeholder="Date of Institution"
                   />
                 </div>
-                <div class="col-auto">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                   <input
                     type="text"
                     id="Case"
@@ -27,8 +27,8 @@
                     aria-describedby="Case"
                   />
                 </div>
-                <div class="col-auto">
-                  <select class="form-control" v-model="filters.court_id">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                  <select class="form-control form-control-sm" v-model="filters.court_id">
                     <option value="">--Court--</option>
 
                     <option
@@ -40,7 +40,7 @@
                     </option>
                   </select>
                 </div>
-                <div class="col-auto">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                   <input
                     placeholder="Client Name"
                     v-model="filters.petitioner_id"
@@ -51,7 +51,7 @@
                   />
                 </div>
 
-                <div class="col-auto">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                   <button
                     type="button"
                     class="btn btn-danger btn-sm"
@@ -63,7 +63,7 @@
               </form>
             </div>
 
-            <div class="col-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div class="table-responsive">
                 <router-link
                   class="btn btn-success btn-sm mb-2"
@@ -231,4 +231,5 @@ export default {
 </script>
 
 <style>
+
 </style>
