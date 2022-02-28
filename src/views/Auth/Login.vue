@@ -1,10 +1,16 @@
 <template>
-  <div id="login">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4 offset-md-4">
-          <div class="login-form bg-light mt-4 p-4">
-            <form @submit.prevent="submitForm($event)" class="row g-3" id="userlogin">
+  <main id="main">
+    <page-header
+      :title="'LOGIN'"
+      :petition="null"
+      :hideBreadCrumbs="true"
+    />
+    <section id="services" class="services section-bg">
+      <div class="container" data-aos="fade-up">
+        <div class="row">         
+          <div class="col-4"></div>
+          <div class="col-3">
+              <form @submit.prevent="submitForm($event)" class="row g-3" id="userlogin">
               <h4>Welcome Back</h4>
               <div class="col-12">
                 <label>Email</label>
@@ -13,7 +19,8 @@
                     type="text"
                     name="email"
                     class="form-control"
-                    placeholder="email"
+                    placeholder="Enter your email"
+                    
                 />   
                 <span v-if="v$.email.$error" class="errorMessage">Email is Required.</span>             
               </div>
@@ -24,7 +31,8 @@
                     type="password"
                     name="password"
                     class="form-control"
-                    placeholder="Password"
+                    placeholder="Enter your password"
+                    
                 />
                 <span v-if="v$.password.$error" class="errorMessage">Password is Required.</span>            
               </div>
@@ -34,6 +42,7 @@
                     class="form-check-input"
                     type="checkbox"
                     id="rememberMe"
+                    
                   />
                   <label class="form-check-label" for="rememberMe">
                     Remember me</label
@@ -41,31 +50,29 @@
                 </div>
               </div>
               <div class="col-12">
-                <button type="submit" class="btn btn-dark float-end">
+                <button type="submit" class="btn btn-primary">
                   Login
                 </button>
               </div>
             </form>
-            <hr class="mt-4" />
-            <div class="col-12">
-              <p class="text-center mb-0">
-                Have not account yet? <a href="#">Signup</a>
-              </p>
-            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
+  <!-- End #main -->
 </template>
+
 
 <script>
 import axios from "axios";
 import useVuelidate from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
+import PageHeader from "../shared/PageHeader.vue";
 
 export default {
   name: "Login",
+  components: { PageHeader },
     setup() {
         return {
         v$: useVuelidate(),
@@ -107,6 +114,7 @@ export default {
                   title: "Success",
                   text: "Login Successfully!",
                 });
+                localStorage.setItem("lfms_user", response.data.token);
                 this.$router.push({ path: "/" });
               }
               console.log(response);
@@ -115,8 +123,8 @@ export default {
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",
-                title: "Something went wrong!",
-                text: error.response.data.error,
+                title: "Can't login",
+                text: error.response.data.message,
               });
             }
           );

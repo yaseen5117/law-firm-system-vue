@@ -5,7 +5,7 @@
         <h2 v-if="title">{{ title }}</h2>
           
         
-        <ol style="font-size:12px">
+        <ol v-if="!hideBreadCrumbs" style="font-size:12px">
           <li><router-link to="/">Home</router-link></li>
           <li><router-link to="/petitions">Case Files</router-link></li>
           <li>Case Details</li>
@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  props: ["title", "petition"],
+  props: ["title", "petition","hideBreadCrumbs"],
 };
 </script>
 
