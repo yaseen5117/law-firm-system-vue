@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-auto">
                   <select class="form-control" v-model="filters.court_id">
-                    <option value="">--Select--</option>
+                    <option value="">--Court--</option>
 
                     <option
                       v-for="court in courts"
