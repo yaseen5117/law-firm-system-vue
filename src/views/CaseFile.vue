@@ -28,14 +28,17 @@
                   />
                 </div>
                 <div class="col-auto">
-                  <input
-                    placeholder="Court"
-                    v-model="filters.court"
-                    type="text"
-                    id="Court"
-                    class="form-control form-control-sm"
-                    aria-describedby="Court"
-                  />
+                  <select class="form-control" v-model="filters.court_id">
+                    <option value="">--Select--</option>
+
+                    <option
+                      v-for="court in courts"
+                      :key="court.id"
+                      :value="court.id"
+                    >
+                      {{ court.title }}
+                    </option>
+                  </select>
                 </div>
                 <div class="col-auto">
                   <input
@@ -49,7 +52,11 @@
                 </div>
 
                 <div class="col-auto">
-                  <button type="button" class="btn btn-danger btn-sm" @click="reset()">
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                    @click="reset()"
+                  >
                     Reset
                   </button>
                 </div>
@@ -132,9 +139,9 @@
                         ></router-link>
                       </td>
                     </tr>
-                    <tr class="text-center" v-if="petitions.length==0">
+                    <tr class="text-center" v-if="petitions.length == 0">
                       <td colspan="7">No Record found.</td>
-                        </tr>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -160,13 +167,30 @@ export default {
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,
       petitions: Array,
-      filters: {},
+      filters: {
+        court_id : ""
+      },
+      courts: [],
     };
   },
   created() {
+    this.getCourts();
     this.getCaseFiles();
   },
   methods: {
+    getCourts() {
+      let url = this.base_url + "/api/courts";
+      axios
+        .get(url)
+        .then((response) => {
+          this.courts = response.data.courts;
+          console.log(this.courts);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     async getCaseFiles() {
       let url = this.base_url + "/api/petitions";
       var headers = {
@@ -188,7 +212,7 @@ export default {
     reset() {
       this.filters = {};
       this.getCaseFiles();
-    }
+    },
   },
   mounted() {
     console.log("Case File Component Mounted");
@@ -197,10 +221,9 @@ export default {
     filters: {
       deep: true,
       handler() {
-        
-          setTimeout(() => {
-            this.getCaseFiles();
-          }, 300); // 1 sec delay
+        setTimeout(() => {
+          this.getCaseFiles();
+        }, 300); // 1 sec delay
       },
     },
   },
