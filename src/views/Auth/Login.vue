@@ -8,11 +8,11 @@
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="row">         
-          <div class="col-4"></div>
-          <div class="col-3">
+          <div class="col-md-4"></div>
+          <div class="col-md-3">
               <form @submit.prevent="submitForm($event)" class="row g-3" id="userlogin">
               <h4>Welcome Back</h4>
-              <div class="col-12">
+              <div class="col-md-12 col-sm-12">
                 <label>Email</label>
                 <input                 
                     v-model="email"
@@ -24,7 +24,7 @@
                 />   
                 <span v-if="v$.email.$error" class="errorMessage">Email is Required.</span>             
               </div>
-              <div class="col-12">
+              <div class="col-md-12 col-sm-12">
                 <label>Password</label>
                 <input                    
                     v-model="password"
@@ -36,7 +36,7 @@
                 />
                 <span v-if="v$.password.$error" class="errorMessage">Password is Required.</span>            
               </div>
-              <div class="col-12">
+              <div class="col-md-12 col-sm-12">
                 <div class="form-check">
                   <input
                     class="form-check-input"
@@ -49,7 +49,7 @@
                   >
                 </div>
               </div>
-              <div class="col-12">
+              <div class="col-md-12 col-sm-12">
                 <button type="submit" class="btn btn-primary">
                   Login
                 </button>
