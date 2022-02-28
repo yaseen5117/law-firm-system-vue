@@ -15,36 +15,54 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: { 
+      auth: true ,
+    },
   },      
   {
     path: '/petitions',
     name: 'Petitions',    
-    component: CaseFile
+    component: CaseFile,
+    meta: { 
+      auth: true ,
+    },
   },
 
   {
     path: '/petitions/create',
     name: 'create-petition',    
-    component: CreatePetition
+    component: CreatePetition,
+    meta: { 
+      auth: true ,
+    },
   },
 
   {
     path: '/petitions/edit/:id',
     name: 'edit-petition',    
-    component: CreatePetition
+    component: CreatePetition,
+    meta: { 
+      auth: true ,
+    },
   },
 
   {
     path: '/petitions/:id',
     name: 'case-detail',    
-    component: CaseDetail
+    component: CaseDetail,
+    meta: { 
+      auth: true ,
+    },
   },
 
   {
     path: '/petition-index-details/:id',
     name: 'petition-index-details',    
-    component: PetitionIndexDetails
+    component: PetitionIndexDetails,
+    meta: { 
+      auth: true ,
+    },
   }
 ]
 
@@ -52,5 +70,21 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 });
+
+
+router.beforeEach((to, from, next) => {
+  var isloggedin= localStorage.getItem("lfms_user");
+  if (to.matched.some(record => record.meta.auth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!isloggedin) {
+      next({ name: 'Login' })
+    } else {
+      next() // go to wherever I'm going
+    }
+  } else {
+    next() // does not require auth, make sure to always call next()!
+  }
+})
 
 export default router
