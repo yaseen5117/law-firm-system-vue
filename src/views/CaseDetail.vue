@@ -95,7 +95,7 @@
                       petition_detail.page_info
                     }}</span>
                   </td>
-                  <td>
+                  <td width="15%">
                     <a
                       class="btn btn-sm btn-primary"
                       v-show="!petition_detail.editMode"
@@ -129,7 +129,7 @@
                     </a>
 
                     <a
-                    class="btn btn-sm btn-danger mt"
+                    class="btn btn-sm btn-danger"
 
                       v-show="!petition_detail.editMode"
                       @click="deletePetitionIndex(petition_detail.id,petitionIndex)"
@@ -340,16 +340,5 @@ export default {
 <style>
 .red{
   color:red;
-}
-@media only screen and (max-width: 926px) {
-  .mt {
-    margin-top: 5px;
-  }
-}
-@media only screen and (max-width: 500px) {
-  .case_heading span {
-    font-size: 12px !important;
-    line-height: 0px !important;
-  }  
-}
+} 
 </style>

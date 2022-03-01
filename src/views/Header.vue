@@ -9,7 +9,7 @@
 
         <nav id="navbar" class="navbar">
           <ul>
-            <li><a class="nav-link scrollto" href="/">Welcome Admin!</a></li>
+            <li><a class="nav-link scrollto" href="/dashboard">Welcome Admin!</a></li>
             <!-- <li><a class="nav-link scrollto" href="#">Link-1</a></li>
           <li><a class="nav-link scrollto" href="#">Link-2</a></li>           -->
             <li class="dropdown">

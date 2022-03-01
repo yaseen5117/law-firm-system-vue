@@ -6,7 +6,7 @@
           
         
         <ol v-if="!hideBreadCrumbs" style="font-size:12px">
-          <li><router-link to="/">Home</router-link></li>
+          <li><router-link to="/dashboard">Home</router-link></li>
           <li><router-link to="/petitions">Case Files</router-link></li>
           <li>Case Details</li>
         </ol>

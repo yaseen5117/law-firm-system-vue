@@ -55,7 +55,7 @@
 
 
           </div>
-          <div class="col-md-12" @afterUpload="getCaseDetails" v-show="showImgCard"><file-upload /></div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" @afterUpload="getCaseDetails" v-show="showImgCard"><file-upload /></div>
         </div>
 
         <div class="row">
@@ -113,7 +113,8 @@
 
             <div v-show="editView">
               <div class="row">
-                <div class="col-12">
+                <div class="table-responsive">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <table class="table table-bordered">
                     <thead>
                       <th>Sr. #</th>
@@ -177,7 +178,7 @@
                             >{{ attachment.display_order }}
                           </router-link>
                         </td>                          
-                      <td>
+                      <td width="15%">
                       <a
                       class="btn btn-sm btn-primary"
                       v-show="!attachment.editMode"
@@ -225,6 +226,7 @@
                       </tr>
                     </tbody>
                   </table>
+                </div>
                 </div>
               </div>
             </div>

@@ -100,7 +100,7 @@
                       </td>
                       <td>{{ petition.petitioner_names }}</td>
                       <td>{{ petition.institution_date }}</td>
-                      <td>
+                      <td width="15%">
                         <router-link
                           style="margin-right: 2px"
                           :to="{
@@ -231,5 +231,5 @@ export default {
 </script>
 
 <style>
-
+ 
 </style>
