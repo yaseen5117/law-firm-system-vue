@@ -16,7 +16,7 @@
                 <p>{{ petition.petitioner_names }}</p>
                 <p>VERSUS</p>
                 <p>{{ petition.opponent_names }}</p>
-                <p>
+                <p class="line-hight">
                   {{ petition.title }}
                 </p>
                 <p>
@@ -341,4 +341,10 @@ export default {
 .red{
   color:red;
 } 
+@media screen and (max-width: 768px) {
+  .case_heading .line-hight {
+    font-size: 12px !important;
+    line-height: normal !important;
+  }
+}
 </style>

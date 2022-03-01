@@ -62,14 +62,15 @@
                 </div>
               </form>
             </div>
-
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              <div class="table-responsive">
-                <router-link
+              <router-link
                   class="btn btn-success btn-sm mb-2"
                   :to="'/petitions/create'"
                   >New Case</router-link
                 >
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="table-responsive">                
                 <table class="table table-striped">
                   <thead>
                     <tr>
