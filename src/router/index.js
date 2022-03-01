@@ -6,6 +6,8 @@ import CaseDetail from '../views/CaseDetail'
 import PetitionIndexDetails from '../views/petition-index/PetitionIndexDetails'
 import CreatePetition from '../views/petitions/CreatePetition'
 import Login from '../views/Auth/Login'
+import PetitionReply from '../views/petition-replies/PetitionReply'
+import PetitionReplyDetails from '../views/petition-replies/PetitionReplyDetails'
 
 const routes = [
   {
@@ -69,7 +71,25 @@ const routes = [
     meta: { 
       auth: true ,
     },
+  },
+
+  {
+    path: '/petition-replies/:id',
+    name: 'petition-replies',    
+    component: PetitionReply,
+    meta: { 
+      auth: true ,
+    },
+  },
+  {
+    path: '/petition-reply-details/:id',
+    name: 'petition-reply-details',    
+    component: PetitionReplyDetails,
+    meta: { 
+      auth: true ,
+    },
   }
+
 ]
 
 const router = createRouter({

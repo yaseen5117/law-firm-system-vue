@@ -116,11 +116,11 @@
                 <div class="table-responsive">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <table class="table table-bordered">
-                    <thead>
-                      <th>Sr. #</th>
+                    <thead>                      
                       <th>Image</th>
                       <th>Title</th>
                       <th>Display Order</th>
+                      <th>Actions</th>
                     </thead>
                     <tbody>
                       <tr
@@ -128,7 +128,7 @@
                         v-for="(attachment , attachmentIndex) in petition_index_details.attachments"
                         :key="attachment"
                       >
-                      <td style="type: hidden">{{ attachmentIndex+1 }}</td>
+                       
                         <td>
                           <img
                             :class="

@@ -82,9 +82,7 @@ export default {
                 text: "Files Uploaded Successfully!",
               });
               console.log(response.data);
-              this.$emit("afterUpload", response.data);
-              //this.$root.petition_index_details.attachments = response;
-              //attachmentToUpdate.editMode = false;
+              this.$emit("afterUpload");                         
             }
           },
           (error) => {

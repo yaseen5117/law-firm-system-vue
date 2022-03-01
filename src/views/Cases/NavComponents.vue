@@ -11,24 +11,29 @@
           data-paginator-buttons-class="nav-link"
         >
           <li class="nav-item" role="presentation">
-            <button
+            <router-link
               class="nav-link active"
-              onclick="document.location='case_details'"
-              id="retition"
-              data-bs-toggle="tab"             
+              :to="{
+                name: 'case-detail',
+                params: { id: this.$route.params.id },
+              }"
+              id="petition"                           
             >
               Petition
-            </button>
+            </router-link>
           </li>
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
-              onclick="document.location='replies.html'"
+          <li class="nav-item" role="">
+            <router-link
+              class="nav-link"    
+              :to="{
+                name: 'petition-replies',
+                params: { id: this.$route.params.id },
+              }"                  
               id="replies"
-              data-bs-toggle="tab"             
+                          
             >
               Replies
-            </button>
+            </router-link>
           </li>
           <li class="nav-item" role="presentation">
             <button
