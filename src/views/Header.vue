@@ -8,6 +8,11 @@
 
       <nav id="navbar" class="navbar">
         <ul>
+          <li>
+            <router-link class="nav-link" to="/"
+              >Home</router-link
+            >
+          </li>
           <li v-if="this.user">
             <router-link class="nav-link" to="/dashboard"
               >Welcome {{ this.user.name }}!</router-link
@@ -65,8 +70,6 @@ export default {
   methods: {
     showMobileMenu(e) {
       document.querySelector("#navbar").classList.toggle("navbar-mobile");
-      this.classList.toggle("bi-list");
-      this.classList.toggle("bi-x");
     },
     logout() {
       localStorage.removeItem("lfms_user");
