@@ -9,9 +9,7 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li>
-            <router-link class="nav-link" to="/"
-              >Home</router-link
-            >
+            <router-link class="nav-link" to="/">Home</router-link>
           </li>
           <li v-if="this.user">
             <router-link class="nav-link" to="/dashboard"
@@ -54,7 +52,7 @@
             </ul>
           </li>
         </ul>
-        <i class="bi bi-list mobile-nav-toggle" @click="showMobileMenu(e)"></i>
+        <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
       <!-- .navbar -->
     </div>
@@ -68,14 +66,26 @@ export default {
   name: "Header",
   computed: mapState(["user"]),
   methods: {
-    showMobileMenu(e) {
-      document.querySelector("#navbar").classList.toggle("navbar-mobile");
-    },
     logout() {
       localStorage.removeItem("lfms_user");
       this.$store.dispatch("authUser");
       this.$router.push({ name: "Login" });
     },
+  },
+
+  mounted() {
+    document.querySelector(".mobile-nav-toggle").onclick = function () {
+      document.querySelector("#navbar").classList.toggle("navbar-mobile");
+    };
+
+    document.querySelector(".navbar .dropdown > a").onclick = function (e) {
+      if (
+        document.querySelector("#navbar").classList.contains("navbar-mobile")
+      ) {
+        e.preventDefault();
+        this.nextElementSibling.classList.toggle("dropdown-active");
+      }
+    };
   },
 };
 </script>
