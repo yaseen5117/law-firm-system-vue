@@ -1427,3 +1427,11 @@ section {
 .cursor-pointer{
   cursor: pointer;
 }
+
+.listing-cards .card-text{
+  font-size: 12px;
+}
+
+.listing-cards .p{
+  margin-bottom: 0px !important;
+}

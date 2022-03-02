@@ -28,7 +28,10 @@
                   />
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                  <select class="form-control form-control-sm" v-model="filters.court_id">
+                  <select
+                    class="form-control form-control-sm"
+                    v-model="filters.court_id"
+                  >
                     <option value="">--Court--</option>
 
                     <option
@@ -64,44 +67,26 @@
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <router-link
-                  class="btn btn-success btn-sm mb-2"
-                  :to="'/petitions/create'"
-                  >New Case</router-link
-                >
+                class="btn btn-success btn-sm mb-2"
+                :to="'/petitions/create'"
+                >New Case</router-link
+              >
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              <div class="table-responsive">                
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>Sr No</th>
-                      <th>Case #</th>
-                      <th>Case Title</th>
-                      <th>Court</th>
-                      <th>Client Name</th>
-                      <th>Date of Institution</th>
-                      <th width="10%">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="petition in petitions" :key="petition.id">
-                      <td>{{ petition.id }}</td>
-                      <td>{{ petition.case_no }}</td>
-                      <td>
-                        {{
-                          petition.title && petition.title.length > 15
-                            ? petition.title.substring(0, 47) + "..."
-                            : petition.title
-                        }}
-                      </td>
-                      <td>
-                        {{
-                          petition && petition.court ? petition.court.title : ""
-                        }}
-                      </td>
-                      <td>{{ petition.petitioner_names }}</td>
-                      <td>{{ petition.institution_date }}</td>
-                      <td width="15%">
+              <div class="row">
+                <div
+                  v-for="petition in petitions"
+                  :key="petition.id"
+                  class="col-lg-3 col-md-3 col-sm-6 col-xs-6  "
+                >
+                  <div class="card listing-cards bg-default d-flex align-items-stretch">
+                    <img
+                      class="card-img-top"
+                      src="holder.js/100px180/"
+                      alt=""
+                    />
+                    <div class="card-body">
+                      <div class="pull-right">
                         <router-link
                           style="margin-right: 2px"
                           :to="{
@@ -138,13 +123,64 @@
                           title="Alert"
                           ><i class="fa fa-bell"></i
                         ></router-link>
+                      </div>
+                      <h6 class="card-title">{{ petition.case_no }}</h6>
+                      <!-- <p class="card-text">{{
+                            petition.title && petition.title.length > 15
+                              ? petition.title.substring(0, 47) + "..."
+                              : petition.title
+                          }}</p> -->
+
+                      <p class="card-text">
+                        {{
+                          petition && petition.court ? petition.court.title : ""
+                        }}
+                      </p>
+
+                      <p class="card-text">{{ petition.petitioner_names }}</p>
+
+                      <p class="card-text">{{ petition.institution_date }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="table-responsive">
+                <!-- <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Sr No</th>
+                      <th>Case #</th>
+                      <th>Case Title</th>
+                      <th>Court</th>
+                      <th>Client Name</th>
+                      <th>Date of Institution</th>
+                      <th width="10%">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ petition.id }}</td>
+                      <td></td>
+                      <td>
+                        
+                      </td>
+                      <td>
+                        {{
+                          petition && petition.court ? petition.court.title : ""
+                        }}
+                      </td>
+                      <td></td>
+                      <td>{{ petition.institution_date }}</td>
+                      <td width="15%">
+                        
                       </td>
                     </tr>
                     <tr class="text-center" v-if="petitions.length == 0">
                       <td colspan="7">No Record found.</td>
                     </tr>
                   </tbody>
-                </table>
+                </table> -->
               </div>
             </div>
           </div>
@@ -169,7 +205,7 @@ export default {
       base_url: process.env.VUE_APP_SERVICE_URL,
       petitions: Array,
       filters: {
-        court_id : ""
+        court_id: "",
       },
       courts: [],
     };
@@ -232,5 +268,4 @@ export default {
 </script>
 
 <style>
- 
 </style>
