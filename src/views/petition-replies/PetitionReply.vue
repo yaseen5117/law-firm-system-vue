@@ -1,7 +1,7 @@
 <template>
   <main id="main">
     <page-header title="Petition Replies" />
-    <nav-components />
+    <nav-components activeNavPill = 'reply' />
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">        
@@ -190,9 +190,9 @@ export default {
   methods: {
     getPetitionReplyDetails() {
       axios
-        .get(this.base_url + "/api/petition_replies/" + this.id)
+        .get(this.base_url + "/api/petitions/" + this.id)
         .then((response) => {
-          this.petition_replies = response.data;                 
+          this.petition_replies = response.data.petition_reply_details;                 
         })
         .catch((error) => {
           console.log(error);

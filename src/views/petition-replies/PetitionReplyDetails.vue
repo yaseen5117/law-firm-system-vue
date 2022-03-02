@@ -1,36 +1,440 @@
 <template>
   <main id="main">
+    <!-- ======= Breadcrumbs ======= -->
     <page-header
-      :title="page_title"
-      :petition="null"
+      :title="petition_reply_details.document_description"
+      :petition="petition"
     />
+    <!-- End Breadcrumbs -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
-        <div class="row">         
+
+        <div class="row text-right mb-4">
           <div class="col-12">
-              <h1>Petition Reply Details</h1>
+
+            <button
+              v-show="!showImgCard"
+              @click="showImgCard = true" 
+              class="btn btn-success btn-sm mb-2"
+              style="margin-right:2px"               
+            >
+              Upload New Image
+            </button>
+            <button
+               v-show="showImgCard"
+              @click="showImgCard = false"
+ 
+              class="btn btn-primary btn-sm mb-2"
+              style="margin-right:2px"               
+            >
+              Cancel Upload
+            </button>
+
+            <button
+              v-show="!editView"
+              @click="
+                editView = true;
+                horizontalView: true;
+              "
+              style="margin-right:2px"
+              class="btn btn-primary btn-sm mb-2"
+            >
+              Edit
+            </button>
+            <button
+              v-show="editView"
+              @click="
+                editView = false;
+                horizontalView: false;
+              "
+              style="margin-right:2px"
+              class="btn btn-success btn-sm mb-2"
+            >
+              Cancel
+            </button>
+
+
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" v-show="showImgCard"><file-upload @afterUpload="getPetitionReplyDetails" type="App\Models\PetitionReply" /></div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <!-- <button
+              class="btn btn-primary btn-sm mb-3"
+              v-on:click="horizontalView = !horizontalView"
+            >
+              Slide/Horizontal View
+            </button> -->
+            <!-- <carousel :items-to-show="1" v-show="horizontalView">
+              <slide
+                v-for="attachment in petition_reply_details.attachments"
+                :key="attachment"
+              >
+                <img
+                  :src="
+                    'http://127.0.0.1:8000/storage/attachments/' +
+                    attachment.file_name
+                  "
+                />
+              </slide>
+
+              <template #addons>
+                <navigation />
+                <pagination />
+              </template>
+            </carousel> -->
+
+            <div v-show="!horizontalView && !editView">
+              <div
+                class="row mb-2 text-center"
+                :id="'image-container-' + attachment.id"
+                v-for="attachment in petition_reply_details.attachments"
+                :key="attachment"
+              >
+                <div class="col-12">
+                  <img
+                    :class="activePage == attachment.id ? 'active-img' : ''"
+                    class="img-fluid"
+                    style="width: 90%"
+                    :src="
+                      this.base_url +
+                      '/storage/attachments/' 
+                      +                     
+                      this.$route.params.id +
+                      '/' +
+                      attachment.file_name
+                    "
+                  />
+                  <hr class="mt-4 mb-4" style="border: solid 3px" />
+                </div>
+              </div>
+            </div>
+
+            <div v-show="editView">
+              <div class="row">
+                <div class="table-responsive">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <table class="table table-bordered">
+                    <thead>                      
+                      <th>Image</th>
+                      <th>Title</th>
+                      <th>Display Order</th>
+                      <th>Actions</th>
+                    </thead>
+                    <tbody>
+                      <tr
+                        @dblclick="attachment.editMode = true"                         
+                        v-for="(attachment , attachmentReplyIndex) in petition_reply_details.attachments"
+                        :key="attachment"
+                      >
+                       
+                        <td>
+                          <img
+                            :class="
+                              activePage == attachment.id ? 'active-img' : ''
+                            "
+                            style="width: 80px"
+                            :src="
+                              this.base_url +
+                              '/storage/attachments/' +
+                              '/' +
+                              this.$route.params.id +
+                              '/' +
+                              attachment.file_name
+                            "
+                          />
+                        </td>
+                        <td>
+                          <input
+                            v-show="attachment.editMode"
+                            class="form-control"
+                            v-model="attachment.title"
+                            v-on:keyup.enter="editPetitionReplyAttachment(attachment)"
+                          />
+                          <router-link
+                            v-show="!attachment.editMode"
+                            :to="{
+                              name: 'petition-reply-details',
+                              params: { id: attachment.id },
+                            }"
+                            >{{ attachment.title }}
+                          </router-link>
+                        </td> 
+
+                        <td>
+                          <input
+                            v-show="attachment.editMode"
+                            class="form-control"
+                            v-model="attachment.display_order"
+                            v-on:keyup.enter="editPetitionAttachment(attachment)"
+                          />
+                          <router-link
+                            v-show="!attachment.editMode"
+                            :to="{
+                              name: 'petition-reply-details',
+                              params: { id: attachment.id },
+                            }"
+                            >{{ attachment.display_order }}
+                          </router-link>
+                        </td>                          
+                      <td width="15%">
+                      <a
+                      class="btn btn-sm btn-primary"
+                      v-show="!attachment.editMode"
+                      @click="attachment.editMode = true"
+                      href="javascript:void"
+                      style="margin-left:2px"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"
+                    >
+                      <i class="fa fa-edit"></i>
+                    </a>
+                    <a
+                      v-show="attachment.editMode"
+                      class="btn btn-sm btn-warning"
+                      @click="editPetitionAttachment(attachment)"
+                      href="javascript:void"
+                      style="margin-left:2px"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Update"
+                    >
+                      <i class="fa fa-save"></i>
+                    </a>
+                   
+                     <a
+                      v-show="attachment.editMode"
+                      @click="attachment.editMode=false"
+                      class="btn btn-sm btn-info"
+                      href="javascript:void"
+                      style="margin-left:2px"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Cacncel"
+                    >
+                      <i class="fa fa-remove"></i>
+                    </a>
+
+                    <a
+                    class="btn btn-sm btn-danger"
+
+                      v-show="!attachment.editMode"
+                      @click="deletePetitionReplyAttachment(attachment.id,attachmentReplyIndex)"
+                      href="javascript:void"
+                      style="margin-left:2px"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
+                    >
+                     <i class="fa fa-trash-o"></i>
+                    </a>
+                  </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
+
+    <div v-show="(!horizontalView &&  !editView)" class="fixed-page-numbers">
+      <ul
+        class="list-group"
+      >
+      <li 
+        v-for="attachment in petition_reply_details.attachments"
+        :key="attachment" :class="activePage == attachment.id ? 'active' : ''" class="list-group-item"
+        @click="scrollIntoView(attachment.id)"
+        style="cursor:pointer"
+        >
+          {{ attachment.id }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="fixed-annexsures" @show="!editView">
+      <div
+        class="list-group"
+        v-for="petition_reply_index_single in petition_reply_index"
+        :key="petition_reply_index_single"
+      >
+        <router-link
+          class="list-group-item"
+          :class="id == petition_reply_index_single.id ? 'active' : ''"
+          :to="{
+            name: 'petition-reply-details',
+            params: { id: petition_reply_index_single.id },
+          }"
+          >{{ petition_reply_index_single.annexure }}</router-link
+        >
+      </div>
+      <!-- Prayers -->
+      <!-- Stay Order -->
+    </div>
   </main>
   <!-- End #main -->
 </template>
 
 <script>
+import axios from "axios";
+import "vue3-carousel/dist/carousel.css";
+import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 
 import PageHeader from "../shared/PageHeader.vue";
-
+import FileUpload from "../petition-index/FileUpload.vue";
 export default {
-    components: { PageHeader },
-    data(){
-        return {
-            'page_title':'Petition Reply Details'
-        }
-    } 
-}
+  components: {
+    PageHeader,
+    Carousel,
+    Slide,
+    Pagination,
+    Navigation,
+    FileUpload,
+  },
+  data() {
+    return {    
+      showImgCard: false,
+      editView: false,
+      base_url: process.env.VUE_APP_SERVICE_URL,
+      petition: {},
+      petition_reply_index: [],
+      petition_reply_details: {},
+      id: this.$route.params.id, //this is the id from the browser
+      horizontalView: false, //it will show vertical images by default
+      activePage: null,
+    };
+  },
+  created() {
+    this.getPetitionReplyDetails();
+  },
+  methods: {
+    scrollIntoView(id) {
+      // document
+      //   .getElementById("image-container-" + id)
+      //   .scrollIntoView({ duration: 2000 });
+
+      const yOffset = -200;
+      const element = document.getElementById("image-container-" + id);
+      const y =
+        element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+      //document.getElementById("image-container-" + id).style.border="solid 1px red"
+      this.activePage = id;
+    },
+    async getPetitionReplyDetails() {
+      await axios
+        .get(this.base_url + "/api/petition_replies/" + this.id)
+        .then((response) => {
+          this.petition_reply_details = response.data.petition_reply;
+          this.petition = response.data.petition;
+
+          this.getPetitionReplyAnnexure(response.data.petition.id);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    async getPetitionReplyAnnexure(petition_id) {
+      await axios
+        .get(this.base_url + "/api/petitions/" + petition_id)
+        .then((response) => {
+          this.petition_reply_index = response.data.petition_reply_details;
+          var arr = [];
+          this.petition_reply_index.forEach((element) => {
+            if (element.annexure) {
+              arr.push(element);
+            }
+          });
+          console.log("arr", arr);
+          this.petition_reply_index = arr;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    editPetitionReplyAttachment(attachmentToUpdate) {   
+      if (true) {
+        var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+        };
+    
+        axios
+          .put(this.base_url + "/api/attachments/"+attachmentToUpdate.id, attachmentToUpdate, {
+            headers,
+          })
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "Updated Successfully!",
+                });
+                attachmentToUpdate.editMode = false;
+              }
+            },
+            (error) => {
+              console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
+            }
+          );
+      }
+    },
+    deletePetitionReplyAttachment(attachmentId,attachmentReplyIndex) {
+      if (confirm("Do you really want to delete?")) {
+        var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("rezo_customers_user"),           
+        };
+       
+        axios
+          .delete(this.base_url + "/api/attachments/"+attachmentId, {
+            headers,
+          })
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "Deleted Successfully!",
+                }); 
+                //this.getPetitionReplyDetails()  
+                this.petition_reply_details.attachments.splice(attachmentReplyIndex,1);//removing record from list/index after deleting record from DB              
+              }
+            },
+            (error) => {
+              console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
+            }
+          );
+      }
+    },
+  },
+};
 </script>
 
 <style>
-
+.fixed-page-numbers {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  font-size: 12px;
+}
+.fixed-annexsures {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+}
+.active-img {
+  border: solid 1px red;
+}
 </style>
