@@ -1424,3 +1424,6 @@ section {
 	border:2px solid #dbdbdb;
 }
 
+.cursor-pointer{
+  cursor: pointer;
+}

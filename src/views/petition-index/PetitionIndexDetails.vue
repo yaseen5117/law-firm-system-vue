@@ -8,24 +8,21 @@
     <!-- End Breadcrumbs -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
-
         <div class="row text-right mb-4">
           <div class="col-12">
-
             <button
               v-show="!showImgCard"
-              @click="showImgCard = true" 
+              @click="showImgCard = true"
               class="btn btn-success btn-sm mb-2"
-              style="margin-right:2px"               
+              style="margin-right: 2px"
             >
               Upload New Image
             </button>
             <button
-               v-show="showImgCard"
+              v-show="showImgCard"
               @click="showImgCard = false"
- 
               class="btn btn-primary btn-sm mb-2"
-              style="margin-right:2px"               
+              style="margin-right: 2px"
             >
               Cancel Upload
             </button>
@@ -36,7 +33,7 @@
                 editView = true;
                 horizontalView: true;
               "
-              style="margin-right:2px"
+              style="margin-right: 2px"
               class="btn btn-primary btn-sm mb-2"
             >
               Edit
@@ -47,13 +44,11 @@
                 editView = false;
                 horizontalView: false;
               "
-              style="margin-right:2px"
+              style="margin-right: 2px"
               class="btn btn-success btn-sm mb-2"
             >
               Cancel
             </button>
-
-
           </div>
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" @afterUpload="getCaseDetails" v-show="showImgCard"><file-upload type="App\Models\PetitionIndex" /></div>
         </div>
@@ -99,8 +94,7 @@
                     style="width: 90%"
                     :src="
                       this.base_url +
-                      '/storage/attachments/' 
-                      +                     
+                      '/storage/attachments/' +
                       this.$route.params.id +
                       '/' +
                       attachment.file_name
@@ -114,119 +108,136 @@
             <div v-show="editView">
               <div class="row">
                 <div class="table-responsive">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <table class="table table-bordered">
-                    <thead>                      
-                      <th>Image</th>
-                      <th>Title</th>
-                      <th>Display Order</th>
-                      <th>Actions</th>
-                    </thead>
-                    <tbody>
-                      <tr
-                        @dblclick="attachment.editMode = true"                         
-                        v-for="(attachment , attachmentIndex) in petition_index_details.attachments"
-                        :key="attachment"
-                      >
-                       
-                        <td>
-                          <img
-                            :class="
-                              activePage == attachment.id ? 'active-img' : ''
-                            "
-                            style="width: 80px"
-                            :src="
-                              this.base_url +
-                              '/storage/attachments/' +
-                              '/' +
-                              this.$route.params.id +
-                              '/' +
-                              attachment.file_name
-                            "
-                          />
-                        </td>
-                        <td>
-                          <input
-                            v-show="attachment.editMode"
-                            class="form-control"
-                            v-model="attachment.title"
-                            v-on:keyup.enter="editPetitionAttachment(attachment)"
-                          />
-                          <router-link
-                            v-show="!attachment.editMode"
-                            :to="{
-                              name: 'petition-index-details',
-                              params: { id: attachment.id },
-                            }"
-                            >{{ attachment.title }}
-                          </router-link>
-                        </td> 
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <table class="table table-bordered">
+                      <thead>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Display Order</th>
+                        <th>Actions</th>
+                      </thead>
+                      <tbody>
+                        <tr
+                          @dblclick="attachment.editMode = true"
+                          v-for="(
+                            attachment, attachmentIndex
+                          ) in petition_index_details.attachments"
+                          :key="attachment"
+                        >
+                          <td>
+                            <img
+                              :class="
+                                activePage == attachment.id ? 'active-img' : ''
+                              "
+                              style="width: 80px"
+                              :src="
+                                this.base_url +
+                                '/storage/attachments/' +
+                                '/' +
+                                this.$route.params.id +
+                                '/' +
+                                attachment.file_name
+                              "
+                            />
+                          </td>
+                          <td>
+                            <input
+                              v-show="attachment.editMode"
+                              class="form-control"
+                              v-model="attachment.title"
+                              v-on:keyup.enter="
+                                editPetitionAttachment(attachment)
+                              "
+                            />
+                            <router-link
+                              v-show="!attachment.editMode"
+                              :to="{
+                                name: 'petition-index-details',
+                                params: { id: attachment.id },
+                              }"
+                              >{{ attachment.title }}
+                            </router-link>
+                          </td>
 
-                        <td>
-                          <input
-                            v-show="attachment.editMode"
-                            class="form-control"
-                            v-model="attachment.display_order"
-                            v-on:keyup.enter="editPetitionAttachment(attachment)"
-                          />
-                          <router-link
-                            v-show="!attachment.editMode"
-                            :to="{
-                              name: 'petition-index-details',
-                              params: { id: attachment.id },
-                            }"
-                            >{{ attachment.display_order }}
-                          </router-link>
-                        </td>                          
-                      <td width="15%">
-                      <a
-                      class="btn btn-sm btn-primary"
-                      v-show="!attachment.editMode"
-                      @click="attachment.editMode = true"
-                      href="javascript:void"
-                      style="margin-left:2px"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"
-                    >
-                      <i class="fa fa-edit"></i>
-                    </a>
-                    <a
-                      v-show="attachment.editMode"
-                      class="btn btn-sm btn-warning"
-                      @click="editPetitionAttachment(attachment)"
-                      href="javascript:void"
-                      style="margin-left:2px"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Update"
-                    >
-                      <i class="fa fa-save"></i>
-                    </a>
-                   
-                     <a
-                      v-show="attachment.editMode"
-                      @click="attachment.editMode=false"
-                      class="btn btn-sm btn-info"
-                      href="javascript:void"
-                      style="margin-left:2px"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Cacncel"
-                    >
-                      <i class="fa fa-remove"></i>
-                    </a>
+                          <td>
+                            <input
+                              v-show="attachment.editMode"
+                              class="form-control"
+                              v-model="attachment.display_order"
+                              v-on:keyup.enter="
+                                editPetitionAttachment(attachment)
+                              "
+                            />
+                            <router-link
+                              v-show="!attachment.editMode"
+                              :to="{
+                                name: 'petition-index-details',
+                                params: { id: attachment.id },
+                              }"
+                              >{{ attachment.display_order }}
+                            </router-link>
+                          </td>
+                          <td width="15%">
+                            <a
+                              class="btn btn-sm btn-primary"
+                              v-show="!attachment.editMode"
+                              @click="attachment.editMode = true"
+                              href="javascript:void"
+                              style="margin-left: 2px"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              title="Edit"
+                            >
+                              <i class="fa fa-edit"></i>
+                            </a>
+                            <a
+                              v-show="attachment.editMode"
+                              class="btn btn-sm btn-warning"
+                              @click="editPetitionAttachment(attachment)"
+                              href="javascript:void"
+                              style="margin-left: 2px"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              title="Update"
+                            >
+                              <i class="fa fa-save"></i>
+                            </a>
 
-                    <a
-                    class="btn btn-sm btn-danger"
+                            <a
+                              v-show="attachment.editMode"
+                              @click="attachment.editMode = false"
+                              class="btn btn-sm btn-info"
+                              href="javascript:void"
+                              style="margin-left: 2px"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              title="Cacncel"
+                            >
+                              <i class="fa fa-remove"></i>
+                            </a>
 
-                      v-show="!attachment.editMode"
-                      @click="deletePetitionAttachment(attachment.id,attachmentIndex)"
-                      href="javascript:void"
-                      style="margin-left:2px"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
-                    >
-                     <i class="fa fa-trash-o"></i>
-                    </a>
-                  </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                            <a
+                              class="btn btn-sm btn-danger"
+                              v-show="!attachment.editMode"
+                              @click="
+                                deletePetitionAttachment(
+                                  attachment.id,
+                                  attachmentIndex
+                                )
+                              "
+                              href="javascript:void"
+                              style="margin-left: 2px"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              title="Delete"
+                            >
+                              <i class="fa fa-trash-o"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
@@ -235,15 +246,15 @@
       </div>
     </section>
 
-    <div v-show="(!horizontalView &&  !editView)" class="fixed-page-numbers">
-      <ul
-        class="list-group"
-      >
-      <li 
-        v-for="attachment in petition_index_details.attachments"
-        :key="attachment" :class="activePage == attachment.id ? 'active' : ''" class="list-group-item"
-        @click="scrollIntoView(attachment.id)"
-        style="cursor:pointer"
+    <div v-show="!horizontalView && !editView" class="fixed-page-numbers">
+      <ul class="list-group">
+        <li
+          v-for="attachment in petition_index_details.attachments"
+          :key="attachment"
+          :class="activePage == attachment.id ? 'active' : ''"
+          class="list-group-item"
+          @click="scrollIntoView(attachment.id)"
+          style="cursor: pointer"
         >
           {{ attachment.id }}
         </li>
@@ -251,21 +262,19 @@
     </div>
 
     <div class="fixed-annexsures" @show="!editView">
-      <div
-        class="list-group"
-        v-for="petition_index_single in petition_index"
-        :key="petition_index_single"
-      >
+      <ul class="list-group">
         <router-link
-          class="list-group-item"
+          v-for="petition_index_single in petition_index"
+          :key="petition_index_single"
           :class="id == petition_index_single.id ? 'active' : ''"
+          class="list-group-item"
           :to="{
             name: 'petition-index-details',
             params: { id: petition_index_single.id },
           }"
           >{{ petition_index_single.annexure }}</router-link
         >
-      </div>
+      </ul>
       <!-- Prayers -->
       <!-- Stay Order -->
     </div>
@@ -351,17 +360,21 @@ export default {
           console.log(error);
         });
     },
-    editPetitionAttachment(attachmentToUpdate) {   
+    editPetitionAttachment(attachmentToUpdate) {
       if (true) {
         var headers = {
           Authorization:
             `Bearer ` + localStorage.getItem("rezo_customers_user"),
         };
-    
+
         axios
-          .put(this.base_url + "/api/attachments/"+attachmentToUpdate.id, attachmentToUpdate, {
-            headers,
-          })
+          .put(
+            this.base_url + "/api/attachments/" + attachmentToUpdate.id,
+            attachmentToUpdate,
+            {
+              headers,
+            }
+          )
           .then(
             (response) => {
               if (response.status === 200) {
@@ -384,15 +397,15 @@ export default {
           );
       }
     },
-    deletePetitionAttachment(petitionId,attachmentIndex) {
+    deletePetitionAttachment(petitionId, attachmentIndex) {
       if (confirm("Do you really want to delete?")) {
         var headers = {
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),           
+            `Bearer ` + localStorage.getItem("rezo_customers_user"),
         };
-       
+
         axios
-          .delete(this.base_url + "/api/attachments/"+petitionId, {
+          .delete(this.base_url + "/api/attachments/" + petitionId, {
             headers,
           })
           .then(
@@ -402,9 +415,12 @@ export default {
                   type: "success",
                   title: "Success",
                   text: "Deleted Successfully!",
-                }); 
-                //this.getCaseDetails()  
-                this.petition_index_details.attachments.splice(attachmentIndex,1);//removing record from list/index after deleting record from DB              
+                });
+                //this.getCaseDetails()
+                this.petition_index_details.attachments.splice(
+                  attachmentIndex,
+                  1
+                ); //removing record from list/index after deleting record from DB
               }
             },
             (error) => {
@@ -426,15 +442,29 @@ export default {
 .fixed-page-numbers {
   position: fixed;
   left: 0;
-  bottom: 0;
+  top: 18%;
   font-size: 12px;
 }
 .fixed-annexsures {
   position: fixed;
   right: 0;
-  bottom: 0;
+  top: 18%;
+  font-size: 12px;
 }
 .active-img {
   border: solid 1px red;
+}
+.list-group-item{
+  background-color: black;
+  color: grey;
+  font-weight: bold;
+}
+.list-group-item:hover{
+  background-color: rgb(117, 117, 117);
+  color: rgb(173, 173, 173);
+}
+.list-group-item+.list-group-item.active{
+  background-color: rgb(117, 117, 117);
+  color: rgb(173, 173, 173);
 }
 </style>

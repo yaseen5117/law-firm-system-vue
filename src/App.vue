@@ -7,6 +7,7 @@
 </template>
 
 <script>
+
 import Header from "./views/Header.vue";
 import Footer from "./views/Footer.vue";
 
@@ -16,6 +17,10 @@ export default {
     Header,
     Footer,     
   },
+  created(){
+    this.$store.dispatch("authUser");
+  },
+    
 };
 </script>
 

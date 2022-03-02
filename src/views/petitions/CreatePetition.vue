@@ -10,10 +10,15 @@
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                     <label>Case No.<span style="color: red">*</span></label>
-                    <input class="form-control" v-model="petition.case_no" v-bind:class="{'error-boarder' : v$.petition.case_no.$error}" @blur="v$.petition.case_no.$touch" />
-                    <span
-                      v-if="v$.petition.case_no.$error"
-                      class="errorMessage"
+                    <input
+                      class="form-control"
+                      v-model="petition.case_no"
+                      v-bind:class="{
+                        'error-boarder': v$.petition.case_no.$error,
+                      }"
+                      @blur="v$.petition.case_no.$touch"
+                    />
+                    <span v-if="v$.petition.case_no.$error" class="errorMessage"
                       >Case No field is required.</span
                     >
                   </div>
@@ -26,7 +31,9 @@
                       class="form-control"
                       v-model="petition.petition_type_id"
                       @blur="v$.petition.petition_type_id.$touch"
-                      v-bind:class="{'error-boarder' : v$.petition.petition_type_id.$error}"
+                      v-bind:class="{
+                        'error-boarder': v$.petition.petition_type_id.$error,
+                      }"
                     >
                       <option value="">--Select--</option>
                       <template
@@ -64,10 +71,19 @@
 
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                  <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
                     <label>Title <span style="color: red">*</span></label>
-                    <input v-bind:class="{'error-boarder' : v$.petition.title.$error}" class="form-control" v-model="petition.title" @blur="v$.petition.title.$touch"/>
-                    <span v-if="v$.petition.title.$error" class="errorMessage">Title field is required.</span>
+                    <input
+                      v-bind:class="{
+                        'error-boarder': v$.petition.title.$error,
+                      }"
+                      class="form-control"
+                      v-model="petition.title"
+                      @blur="v$.petition.title.$touch"
+                    />
+                    <span v-if="v$.petition.title.$error" class="errorMessage"
+                      >Title field is required.</span
+                    >
                   </div>
                 </div>
               </div>
@@ -95,13 +111,21 @@
                             >Add More</small
                           >
                         </h4>
-                        <input
-                          placeholder="Name"
-                          v-for="petitioner in petition.petitioners"
-                          :key="petitioner"
-                          v-model="petitioner.user.name"
-                          class="form-control mb-2"
+
+                        <div class="input-group mb-1" v-for="(petitioner,index) in petition.petitioners"
+                          :key="petitioner">
+                          <input
+                            placeholder="Name"
+                            v-model="petitioner.user.name"
+                            class="form-control mb-2"
                         />
+                          <div class="input-group-prepend">
+                            
+                            <span class="input-group-text cursor-pointer"  @click="removeInputRow(petition.petitioners , index)">Delete</span>
+                          </div>
+                          
+                        </div>
+
                       </div>
                     </div>
                   </div>
@@ -127,13 +151,21 @@
                             >Add More</small
                           >
                         </h4>
-                        <input
+
+                        <div class="input-group mb-1" v-for="(opponent,index) in petition.opponents"
+                          :key="opponent">
+                          <input
                           placeholder="Name"
-                          v-for="opponent in petition.opponents"
-                          :key="opponent"
                           v-model="opponent.user.name"
                           class="form-control mb-2"
                         />
+                          <div class="input-group-prepend">
+                            
+                            <span class="input-group-text cursor-pointer"  @click="removeInputRow(petition.opponents , index)">Delete</span>
+                          </div>
+                          
+                        </div> 
+                        
                       </div>
                     </div>
                   </div>
@@ -174,26 +206,25 @@ import { required, email, helpers } from "@vuelidate/validators";
 export default {
   components: { PageHeader },
   setup() {
-    
     return {
       v$: useVuelidate(),
     };
   },
   data() {
     return {
-      page_title: this.$route.params.id ?"Edit Petition":"Add New Petition",
+      page_title: this.$route.params.id ? "Edit Petition" : "Add New Petition",
       base_url: process.env.VUE_APP_SERVICE_URL,
       petition: {
-        petitioners: [{
-          user:{
-
-          }
-        }],
-        opponents: [{
-          user:{
-
-          }
-        }],
+        petitioners: [
+          {
+            user: {},
+          },
+        ],
+        opponents: [
+          {
+            user: {},
+          },
+        ],
         petition_type_id: "",
         id: this.$route.params.id, //this is the id from the browser
         court_id: "",
@@ -215,30 +246,27 @@ export default {
     };
   },
   created() {
-
-    
     this.getUsers();
     this.getCourts();
     this.getPetitionTypes();
     this.getPetition();
-    
   },
-  activated() {
-    
-    
-  },
+  activated() {},
   methods: {
     addMorePetitioner: function () {
       var new_petitioner = {
-        user:{}
+        user: {},
       };
       this.petition.petitioners.push(new_petitioner);
     },
     addMoreOpponent: function () {
       var new_opponent = {
-        user:{}
+        user: {},
       };
       this.petition.opponents.push(new_opponent);
+    },
+    removeInputRow: function (obj ,  index) {
+      obj.splice(index,1);          
     },
     submitForm: function (event) {
       this.v$.$validate();
@@ -251,7 +279,7 @@ export default {
         };
 
         axios
-          .post(this.base_url +  "/api/petitions", this.petition, {
+          .post(this.base_url + "/api/petitions", this.petition, {
             headers,
           })
           .then(
@@ -321,14 +349,11 @@ export default {
           .then((response) => {
             this.petition = response.data.petition;
             this.opponents = [{}];
-            
           })
           .catch((error) => {
             console.log(error);
           });
       }
-        
-      
     },
   },
 };
@@ -344,7 +369,7 @@ export default {
 .errorMessage {
   color: red;
 }
-.error-boarder{
+.error-boarder {
   border: 1px solid red;
 }
 @media only screen and (max-width: 768px) {
