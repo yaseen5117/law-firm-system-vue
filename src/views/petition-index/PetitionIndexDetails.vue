@@ -50,7 +50,7 @@
               Cancel
             </button>
           </div>
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" @afterUpload="getCaseDetails" v-show="showImgCard"><file-upload type="App\Models\PetitionIndex" /></div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" v-show="showImgCard"><file-upload @afterUpload="getCaseDetails" type="App\Models\PetitionIndex" /></div>
         </div>
 
         <div class="row">
@@ -308,7 +308,7 @@ export default {
       petition_index_details: {},
       id: this.$route.params.id, //this is the id from the browser
       horizontalView: false, //it will show vertical images by default
-      activePage: null,
+      activePage: null,      
     };
   },
   created() {
@@ -326,7 +326,7 @@ export default {
         element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
       //document.getElementById("image-container-" + id).style.border="solid 1px red"
-      this.activePage = id;
+      this.activePage = id;       
     },
     async getCaseDetails() {
       await axios

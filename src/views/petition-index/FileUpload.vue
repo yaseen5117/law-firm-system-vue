@@ -30,6 +30,7 @@ import useVuelidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
 
 export default {
+  emits: ["afterUpload"],
   props: {
     type: String
   },
@@ -86,9 +87,9 @@ export default {
                 type: "success",
                 title: "Success",
                 text: "Files Uploaded Successfully!",
-              });
+              });              
               console.log(response.data);
-              this.$emit("afterUpload");                         
+              this.$emit("afterUpload", "Reloading the Data of attachments");                         
             }
           },
           (error) => {

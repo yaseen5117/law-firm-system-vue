@@ -3,7 +3,7 @@
 
   <div class="container mrgn-top">
     <div class="row">
-      <div class="col-12">
+      <div class="col-12">       
         <ul 
           style="font-size:12.5px"
           class="nav nav-tabs nav-paginator"
@@ -12,7 +12,8 @@
         >
           <li class="nav-item" role="presentation">
             <router-link
-              class="nav-link active"
+              class="nav-link"
+              :class="activeNavPill == 'petition' ? 'active' : ''"
               :to="{
                 name: 'case-detail',
                 params: { id: this.$route.params.id },
@@ -25,6 +26,7 @@
           <li class="nav-item" role="">
             <router-link
               class="nav-link"    
+              :class="activeNavPill == 'reply' ? 'active' : ''"
               :to="{
                 name: 'petition-replies',
                 params: { id: this.$route.params.id },
@@ -38,6 +40,7 @@
           <li class="nav-item" role="presentation">
             <button
               class="nav-link"
+              :class="activeNavPill == 'order-sheet' ? 'active' : ''"
               id="contact-tab"
               data-bs-toggle="tab"             
             >
@@ -48,6 +51,7 @@
           <li class="nav-item" role="presentation">
             <button
               class="nav-link"
+              :class="activeNavPill == 'prayer' ? 'active' : ''"
               id="contact-tab"
               data-bs-toggle="tab"              
             >
@@ -58,6 +62,7 @@
           <li class="nav-item" role="presentation">
             <button
               class="nav-link"
+              :class="activeNavPill == 'cm' ? 'active' : ''"
               id="contact-tab"
               data-bs-toggle="tab"              
             >
@@ -68,6 +73,7 @@
           <li class="nav-item" role="presentation">
             <button
               class="nav-link"
+              :class="activeNavPill == 'naqal-form' ? 'active' : ''"
               id="contact-tab"
               data-bs-toggle="tab"
              
@@ -78,6 +84,7 @@
           <li class="nav-item" role="presentation">
             <button
               class="nav-link"
+              :class="activeNavPill == 'talbana' ? 'active' : ''"
               id="contact-tab"
               data-bs-toggle="tab"
               
@@ -89,6 +96,7 @@
           <li class="nav-item" role="presentation">
             <button
               class="nav-link"
+              :class="activeNavPill == 'case-law' ? 'active' : ''"
               id="contact-tab"
               data-bs-toggle="tab"
               
@@ -100,6 +108,7 @@
           <li class="nav-item" role="presentation">
             <button
               class="nav-link"
+              :class="activeNavPill == 'ex-doc' ? 'active' : ''"
               id="contact-tab"
               data-bs-toggle="tab"
               
@@ -110,6 +119,7 @@
           <li class="nav-item" role="presentation">
             <button
               class="nav-link"
+              :class="activeNavPill == 'oral-orgue' ? 'active' : ''"
               id="contact-tab"
               data-bs-toggle="tab"
               
@@ -120,6 +130,7 @@
           <li class="nav-item" role="presentation">
             <button
               class="nav-link"
+              :class="activeNavPill == 'synopsis' ? 'active' : ''"
               id="contact-tab"
               data-bs-toggle="tab"
              
@@ -131,6 +142,7 @@
           <li class="nav-item" role="presentation">
             <button
               class="nav-link"
+              :class="activeNavPill == 'judgement' ? 'active' : ''"
               id="contact-tab"
               data-bs-toggle="tab"
               
@@ -141,6 +153,7 @@
           <li class="nav-item" role="presentation">
             <button
               class="nav-link"
+              :class="activeNavPill == 'other' ? 'active' : ''"
               id="contact-tab"
               data-bs-toggle="tab"
               
@@ -156,8 +169,12 @@
 </template>
 
 <script>
+import { integer } from '@vuelidate/validators';
 
 export default {
+ props: {
+    activeNavPill: integer
+  },   
 
   mounted(){ 
     let recaptchaScript = document.createElement('script')

@@ -55,7 +55,7 @@
 
 
           </div>
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" @afterUpload="getCaseDetails" v-show="showImgCard"><file-upload type="App\Models\PetitionReply" /></div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" v-show="showImgCard"><file-upload @afterUpload="getPetitionReplyDetails" type="App\Models\PetitionReply" /></div>
         </div>
 
         <div class="row">
@@ -303,7 +303,7 @@ export default {
     };
   },
   created() {
-    this.getCaseDetails();
+    this.getPetitionReplyDetails();
   },
   methods: {
     scrollIntoView(id) {
@@ -319,7 +319,7 @@ export default {
       //document.getElementById("image-container-" + id).style.border="solid 1px red"
       this.activePage = id;
     },
-    async getCaseDetails() {
+    async getPetitionReplyDetails() {
       await axios
         .get(this.base_url + "/api/petition_replies/" + this.id)
         .then((response) => {
@@ -403,7 +403,7 @@ export default {
                   title: "Success",
                   text: "Deleted Successfully!",
                 }); 
-                //this.getCaseDetails()  
+                //this.getPetitionReplyDetails()  
                 this.petition_reply_details.attachments.splice(attachmentReplyIndex,1);//removing record from list/index after deleting record from DB              
               }
             },

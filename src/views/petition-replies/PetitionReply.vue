@@ -1,7 +1,7 @@
 <template>
   <main id="main">
     <page-header title="Petition Replies" />
-    <nav-components />
+    <nav-components activeNavPill = 'reply' />
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">        
