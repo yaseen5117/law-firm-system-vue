@@ -55,7 +55,7 @@
 
 
           </div>
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" @afterUpload="getCaseDetails" v-show="showImgCard"><file-upload /></div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" @afterUpload="getCaseDetails" v-show="showImgCard"><file-upload type="App\Models\PetitionIndex" /></div>
         </div>
 
         <div class="row">

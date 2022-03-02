@@ -5,6 +5,7 @@
       <!-- <div v-if="success != ''" class="alert alert-success">
         {{ success }}
       </div> -->
+       
       <form @submit="onUploadFile" enctype="multipart/form-data">
         <input
           accept="image/png, image/jpeg, image/jpg"
@@ -29,7 +30,10 @@ import useVuelidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
 
 export default {
-  setup() {
+  props: {
+    type: String
+  },
+  setup() {    
     return {
       v$: useVuelidate(),
     };
@@ -49,10 +53,11 @@ export default {
     };
   },
   methods: {
+
     onChange(e) {
       this.files = e.target.files;
     },
-    onUploadFile(e) {
+    onUploadFile(e) {       
       e.preventDefault();
       //let existingObj = this;
       const config = {
@@ -72,6 +77,7 @@ export default {
 
       this.v$.$validate();
       if (!this.v$.$error) {
+        formData.append("attachmentable_type", this.type);
         formData.append("attachmentable_id", this.attachmentable_id);
         axios.post(this.base_url + "/api/attachments", formData, config).then(
           (response) => {

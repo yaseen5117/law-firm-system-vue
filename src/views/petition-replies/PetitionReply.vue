@@ -190,9 +190,9 @@ export default {
   methods: {
     getPetitionReplyDetails() {
       axios
-        .get(this.base_url + "/api/petition_replies/" + this.id)
+        .get(this.base_url + "/api/petitions/" + this.id)
         .then((response) => {
-          this.petition_replies = response.data;                 
+          this.petition_replies = response.data.petition_reply_details;                 
         })
         .catch((error) => {
           console.log(error);
