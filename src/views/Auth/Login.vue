@@ -81,8 +81,8 @@ export default {
     data() {
     return {
         base_url: process.env.VUE_APP_SERVICE_URL,
-        email: "",
-        password: "",    
+        email: process.env.VUE_APP_ADMIN_EMAIL,
+        password: process.env.VUE_APP_ADMIN_PASSWORD,    
     };
   },
   validations() {
@@ -115,6 +115,7 @@ export default {
                   text: "Login Successfully!",
                 });
                 localStorage.setItem("lfms_user", response.data.token);
+                this.$store.dispatch("authUser");
                 this.$router.push({ path: "/dashboard" });
               }
               console.log(response);
