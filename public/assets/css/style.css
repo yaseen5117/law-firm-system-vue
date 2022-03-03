@@ -1435,3 +1435,13 @@ section {
 .listing-cards .p{
   margin-bottom: 0px !important;
 }
+.listing-cards .btn{
+  padding: 0px 7px;
+}
+.listing-cards{
+  cursor: pointer;
+}
+
+.icon-box{
+  width: 100%;
+}

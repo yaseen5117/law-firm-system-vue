@@ -8,7 +8,7 @@
           <div class="row gy-4">
             <div class="col-12">
               <form class="row gy-2 gx-3 align-items-center">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                   <input
                     type="date"
                     v-model="filters.institution_date"
@@ -17,7 +17,7 @@
                     placeholder="Date of Institution"
                   />
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                   <input
                     type="text"
                     id="Case"
@@ -43,7 +43,7 @@
                     </option>
                   </select>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                   <input
                     placeholder="Client Name"
                     v-model="filters.petitioner_id"
@@ -54,7 +54,7 @@
                   />
                 </div>
 
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
                   <button
                     type="button"
                     class="btn btn-danger btn-sm"
@@ -75,73 +75,88 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div class="row">
                 <div
+                  class="
+                    col-sm-12 col-md-3 col-lg-3 col-12
+                    d-flex
+                    align-self-stretch
+                  "
                   v-for="petition in petitions"
                   :key="petition.id"
-                  class="col-lg-3 col-md-3 col-sm-6 col-xs-6  "
                 >
-                  <div class="card listing-cards bg-default d-flex align-items-stretch">
-                    <img
-                      class="card-img-top"
-                      src="holder.js/100px180/"
-                      alt=""
-                    />
+                  <div
+                    class="card listing-cards shadow-sm mb-4"
+                    style="width: 100%"
+                    @click="goToDetails(petition.id)"
+                  >
                     <div class="card-body">
-                      <div class="pull-right">
-                        <router-link
-                          style="margin-right: 2px"
-                          :to="{
-                            name: 'case-detail',
-                            params: { id: petition.id },
-                          }"
-                          class="btn btn-success btn-sm"
-                          role="button"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="top"
-                          title="View"
-                          ><i class="fa fa-eye"></i
-                        ></router-link>
-                        <router-link
-                          style="margin-right: 2px"
-                          :to="{
-                            name: 'edit-petition',
-                            params: { id: petition.id },
-                          }"
-                          class="btn btn-primary btn-sm"
-                          role="button"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="top"
-                          title="View"
-                          ><i class="fa fa-edit"></i
-                        ></router-link>
-                        <router-link
-                          style="margin-right: 2px"
-                          to="#"
-                          class="btn btn-warning btn-sm"
-                          role="button"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="top"
-                          title="Alert"
-                          ><i class="fa fa-bell"></i
-                        ></router-link>
+                      <div class="row">
+                        <div class="col-md-5 col-5 col-sm-5">
+                          <h6 class="card-title">{{ petition.case_no }}</h6>
+                          <p class="card-text">
+                            {{ petition.institution_date }}
+                          </p>
+                        </div>
+
+                        <div class="col-md-7 col-7 col-sm-7">
+                          <p class="card-text pull-right">
+                            {{ petition.petitioner_names }}
+                          </p>
+                        </div>
+                        <div class="col-md-12">
+                          <p class="card-text">
+                            {{
+                              petition && petition.court
+                                ? petition.court.title
+                                : ""
+                            }}
+                          </p>
+                          <div class="mt-auto">
+                            <div class="pull-right">
+                              <router-link
+                                style="margin-right: 2px"
+                                :to="{
+                                  name: 'case-detail',
+                                  params: { id: petition.id },
+                                }"
+                                class="btn btn-success btn-sm"
+                                role="button"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                title="View"
+                                ><i class="fa fa-eye"></i
+                              ></router-link>
+                              <router-link
+                                style="margin-right: 2px"
+                                :to="{
+                                  name: 'edit-petition',
+                                  params: { id: petition.id },
+                                }"
+                                class="btn btn-primary btn-sm"
+                                role="button"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                title="View"
+                                ><i class="fa fa-edit"></i
+                              ></router-link>
+                              <router-link
+                                style="margin-right: 2px"
+                                to="#"
+                                class="btn btn-warning btn-sm"
+                                role="button"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                title="Alert"
+                                ><i class="fa fa-bell"></i
+                              ></router-link>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <h6 class="card-title">{{ petition.case_no }}</h6>
-                      <!-- <p class="card-text">{{
-                            petition.title && petition.title.length > 15
-                              ? petition.title.substring(0, 47) + "..."
-                              : petition.title
-                          }}</p> -->
-
-                      <p class="card-text">
-                        {{
-                          petition && petition.court ? petition.court.title : ""
-                        }}
-                      </p>
-
-                      <p class="card-text">{{ petition.petitioner_names }}</p>
-
-                      <p class="card-text">{{ petition.institution_date }}</p>
                     </div>
                   </div>
+                </div>
+                <div v-if="petitions.length == 0" class="col-md-12">
+                  <p class="alert alert-warning">No Records found.</p>
                 </div>
               </div>
 
@@ -227,7 +242,9 @@ export default {
           console.log(error);
         });
     },
-
+    goToDetails(petition_id) {
+      this.$router.push({ path: "/petitions/" + petition_id });
+    },
     async getCaseFiles() {
       let url = this.base_url + "/api/petitions";
       var headers = {
