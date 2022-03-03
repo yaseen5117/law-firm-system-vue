@@ -29,6 +29,7 @@
         <div class="row">
           <div class="table-responsive">
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            
             <table  class="table table-striped">
               <thead>
                 <th>Sr. #</th>
@@ -156,6 +157,7 @@
                     <input
                       class="form-control"
                       v-model="new_petition_index.document_description"
+                      v-on:keyup.enter="submitPetitionIndex()"
                     />
                   </td>
                   <td>
@@ -177,12 +179,14 @@
                     <input
                       class="form-control"
                       v-model="new_petition_index.annexure"
+                      v-on:keyup.enter="submitPetitionIndex()"
                     />
                   </td>
                   <td>
                     <input
                       class="form-control"
                       v-model="new_petition_index.page_info"
+                      v-on:keyup.enter="submitPetitionIndex()"
                     />
                   </td>
                   <td>

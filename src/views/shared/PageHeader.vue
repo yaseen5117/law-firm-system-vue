@@ -1,6 +1,8 @@
 <template>
-  <section id="breadcrumbs" class="breadcrumbs">
-    <div class="container">
+<Transition name="slide-fade">
+
+  <section id="breadcrumbs" class="breadcrumbs" v-if="!hide">
+    <div class="container" >
       <div class="d-flex justify-content-between align-items-center">
         <h2 v-if="title">{{ title }}</h2>
           
@@ -21,11 +23,12 @@
           </div>
     </div>
   </section>
+</Transition>
 </template>
 
 <script>
 export default {
-  props: ["title", "petition","hideBreadCrumbs"],
+  props: ["title", "petition","hideBreadCrumbs",'hide'],
 };
 </script>
 
