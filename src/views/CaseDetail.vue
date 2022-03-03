@@ -65,7 +65,7 @@
                     <datepicker
                     :enableTimePicker="false"                    
                     autoApply   
-                    format="dd/mm/yyyy"  
+                    format="dd/MM/yyyy"  
                     placeholder="dd/mm/yyyy"   
                     v-model="petition_detail.date"
                     v-on:keyup.enter="editPetitionIndex(petition_detail)"
@@ -159,11 +159,19 @@
                     />
                   </td>
                   <td>
-                    <input
+                    <datepicker
+                    :enableTimePicker="false"                    
+                    autoApply   
+                    format="dd/MM/yyyy"  
+                    placeholder="dd/mm/yyyy"  
+                    type="date" 
+                    v-model="new_petition_index.date"
+                    ></datepicker>
+                    <!-- <input
                       class="form-control"
                       type="date"
                       v-model="new_petition_index.date"
-                    />
+                    /> -->
                   </td>
                   <td>
                     <input
