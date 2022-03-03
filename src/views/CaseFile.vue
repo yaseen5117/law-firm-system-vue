@@ -7,7 +7,8 @@
         <div class="container" data-aos="fade-up">
           <div class="row gy-4">
             <div class="col-12">
-              <form class="row gy-2 gx-3 align-items-center">
+              <Transition name="fade">
+              <form v-if="showSearchForm"  class="row gy-2 gx-3 align-items-center">
                 <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                   <input
                     type="date"
@@ -64,13 +65,21 @@
                   </button>
                 </div>
               </form>
+              </Transition>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <router-link
-                class="btn btn-success btn-sm mb-2"
+                style="margin-right:2px"
+                class="btn btn-success btn-sm"
                 :to="'/petitions/create'"
                 >New Case</router-link
               >
+              
+              
+                <button class="btn btn-secondary btn-sm " v-if="showSearchForm" @click="showSearchForm=!showSearchForm" >Hide Filters</button>
+                <button class="btn btn-warning btn-sm" v-else-if="!showSearchForm" @click="showSearchForm=!showSearchForm">Show Filters</button>
+              
+            
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div class="row">
@@ -223,6 +232,7 @@ export default {
         court_id: "",
       },
       courts: [],
+      showSearchForm: false,
     };
   },
   created() {

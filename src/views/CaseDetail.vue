@@ -148,6 +148,7 @@
                     <input
                       class="form-control"
                       v-model="new_petition_index.document_description"
+                      v-on:keyup.enter="submitPetitionIndex()"
                     />
                   </td>
                   <td>
@@ -155,18 +156,21 @@
                       class="form-control"
                       type="date"
                       v-model="new_petition_index.date"
+                      v-on:keyup.enter="submitPetitionIndex()"
                     />
                   </td>
                   <td>
                     <input
                       class="form-control"
                       v-model="new_petition_index.annexure"
+                      v-on:keyup.enter="submitPetitionIndex()"
                     />
                   </td>
                   <td>
                     <input
                       class="form-control"
                       v-model="new_petition_index.page_info"
+                      v-on:keyup.enter="submitPetitionIndex()"
                     />
                   </td>
                   <td>

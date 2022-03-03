@@ -1,4 +1,6 @@
 <template>
+<Transition name="slide-fade">
+
   <section id="breadcrumbs" class="breadcrumbs" v-if="!hide">
     <div class="container" >
       <div class="d-flex justify-content-between align-items-center">
@@ -21,6 +23,7 @@
           </div>
     </div>
   </section>
+</Transition>
 </template>
 
 <script>
