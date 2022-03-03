@@ -39,13 +39,22 @@
                     </router-link>
                   </td>
                   <td>
-                    <input
+                    <datepicker
+                    v-show="petition_reply.editMode"
+                    :enableTimePicker="false"
+                    autoApply   
+                    format="dd/MM/yyyy"                                              
+                    v-model="petition_reply.date"
+                    v-on:keyup.enter="editPetitionReply(petition_reply)"
+                    >
+                     </datepicker>
+                    <!-- <input
                       v-show="petition_reply.editMode"
                       class="form-control"
                       type="date"
                       v-model="petition_reply.date"
                       v-on:keyup.enter="editPetitionReply(petition_reply)"
-                    />
+                    /> -->
                     <span v-show="!petition_reply.editMode">{{
                       petition_reply.date
                     }}</span>
@@ -127,11 +136,17 @@
                     />
                   </td>
                   <td>
-                    <input
+                    <datepicker
+                    :enableTimePicker="false"
+                    autoApply   
+                    format="dd/MM/yyyy"  
+                    placeholder="dd/mm/yyyy"      
+                     v-model="new_petition_reply.date"></datepicker>
+                    <!-- <input
                       class="form-control"
                       type="date"
                       v-model="new_petition_reply.date"
-                    />
+                    /> -->
                   </td>
                   <td>
                     <input
@@ -171,6 +186,7 @@
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
 import NavComponents from "../Cases/NavComponents.vue";
+
 
 export default {
     components: { PageHeader,NavComponents },

@@ -9,13 +9,24 @@
             <div class="col-12">
               <form class="row gy-2 gx-3 align-items-center">
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                  <input
+                  <datepicker                     
+                    :enableTimePicker="false"
+                    autoApply   
+                    format="dd/MM/yyyy"   
+                    id="date"            
+                    type="date" 
+                    placeholder="Date of Institution"                              
+                    v-model="filters.institution_date"
+                    class="form-control-sm"
+                    >
+                     </datepicker>
+                  <!-- <input
                     type="date"
                     v-model="filters.institution_date"
                     id="date"
                     class="form-control form-control-sm"
                     placeholder="Date of Institution"
-                  />
+                  /> -->
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                   <input

@@ -176,11 +176,19 @@
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                     <label>Date Of Institution</label>
-                    <input
+                    <datepicker                    
+                    :enableTimePicker="false"
+                    autoApply           
+                    format="dd/MM/yyyy"  
+                    placeholder="dd/mm/yyyy"          
+                    v-model="petition.institution_date"
+                    >
+                     </datepicker>
+                    <!-- <input
                       type="date"
                       class="form-control"
                       v-model="petition.institution_date"
-                    />
+                    /> -->
                   </div>
                 </div>
               </div>

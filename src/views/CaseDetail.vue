@@ -62,13 +62,22 @@
                     </router-link>
                   </td>
                   <td>
-                    <input
+                    <datepicker
+                    :enableTimePicker="false"                    
+                    autoApply   
+                    format="dd/mm/yyyy"  
+                    placeholder="dd/mm/yyyy"   
+                    v-model="petition_detail.date"
+                    v-on:keyup.enter="editPetitionIndex(petition_detail)"
+                    v-show="petition_detail.editMode"
+                    ></datepicker>
+                    <!-- <input
                       v-show="petition_detail.editMode"
                       class="form-control"
                       type="date"
                       v-model="petition_detail.date"
                       v-on:keyup.enter="editPetitionIndex(petition_detail)"
-                    />
+                    /> -->
                     <span v-show="!petition_detail.editMode">{{
                       petition_detail.date
                     }}</span>
