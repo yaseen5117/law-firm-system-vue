@@ -1,6 +1,6 @@
 <template>
-  <section id="breadcrumbs" class="breadcrumbs">
-    <div class="container">
+  <section id="breadcrumbs" class="breadcrumbs" v-if="!hide">
+    <div class="container" >
       <div class="d-flex justify-content-between align-items-center">
         <h2 v-if="title">{{ title }}</h2>
           
@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  props: ["title", "petition","hideBreadCrumbs"],
+  props: ["title", "petition","hideBreadCrumbs",'hide'],
 };
 </script>
 

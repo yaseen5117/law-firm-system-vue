@@ -4,12 +4,31 @@
     <page-header
       :title="petition_index_details.document_description"
       :petition="petition"
+      :hide="removePageHeader ? true : false"
     />
     <!-- End Breadcrumbs -->
-    <section id="services" class="services section-bg">
+    <section
+      id="services"
+      class="services section-bg"
+      :class="removePageHeader ? 'margintop85' : ''"
+    >
       <div class="container" data-aos="fade-up">
-        <div class="row text-right mb-4">
-          <div class="col-12">
+        <div class="row mb-2">
+          <div class="col-12 mb-1">
+            <div class="form-check form-switch">
+              <input
+                @change="removePageHeader = !removePageHeader"
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckDefault"
+              />
+              <label class="form-check-label" for="flexSwitchCheckDefault"
+                >Toggle Header</label
+              >
+            </div>
+          </div>
+          <div v-if="!removePageHeader" class="col-12">
             <button
               v-show="!showImgCard"
               @click="showImgCard = true"
@@ -50,7 +69,15 @@
               Cancel
             </button>
           </div>
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" v-show="showImgCard"><file-upload @afterUpload="getCaseDetails" type="App\Models\PetitionIndex" /></div>
+          <div
+            class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+            v-show="showImgCard"
+          >
+            <file-upload
+              @afterUpload="getCaseDetails"
+              type="App\Models\PetitionIndex"
+            />
+          </div>
         </div>
 
         <div class="row">
@@ -308,7 +335,8 @@ export default {
       petition_index_details: {},
       id: this.$route.params.id, //this is the id from the browser
       horizontalView: false, //it will show vertical images by default
-      activePage: null,      
+      activePage: null,
+      removePageHeader: true,
     };
   },
   created() {
@@ -326,7 +354,7 @@ export default {
         element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
       //document.getElementById("image-container-" + id).style.border="solid 1px red"
-      this.activePage = id;       
+      this.activePage = id;
     },
     async getCaseDetails() {
       await axios
@@ -454,16 +482,16 @@ export default {
 .active-img {
   border: solid 1px red;
 }
-.list-group-item{
+.list-group-item {
   background-color: black;
   color: grey;
   font-weight: bold;
 }
-.list-group-item:hover{
+.list-group-item:hover {
   background-color: rgb(117, 117, 117);
   color: rgb(173, 173, 173);
 }
-.list-group-item+.list-group-item.active{
+.list-group-item + .list-group-item.active {
   background-color: rgb(117, 117, 117);
   color: rgb(173, 173, 173);
 }
