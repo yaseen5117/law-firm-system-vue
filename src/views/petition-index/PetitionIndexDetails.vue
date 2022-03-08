@@ -5,7 +5,7 @@
       :title="petition_index_details.document_description"
       :petition="petition"
       :hide="removePageHeader ? true : false"
-    />
+    />   
     <!-- End Breadcrumbs -->
     <section
       id="services"
@@ -70,7 +70,7 @@
             </button>
           </div>
           <div
-            class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+            class="col-lg-12 col-md-12 col-sm-12"
             v-show="showImgCard"
           >
             <file-upload
@@ -78,8 +78,7 @@
               type="App\Models\PetitionIndex"
             />
           </div>
-        </div>
-
+        </div>        
         <div class="row">
           <div class="col-12">
             <!-- <button
@@ -135,7 +134,7 @@
             <div v-show="editView">
               <div class="row">
                 <div class="table-responsive">
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
                     <table class="table table-bordered">
                       <thead>
                         <th>Image</th>
@@ -316,6 +315,7 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 
 import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
+
 export default {
   components: {
     PageHeader,
@@ -323,7 +323,7 @@ export default {
     Slide,
     Pagination,
     Navigation,
-    FileUpload,
+    FileUpload,    
   },
   data() {
     return {
@@ -336,7 +336,7 @@ export default {
       id: this.$route.params.id, //this is the id from the browser
       horizontalView: false, //it will show vertical images by default
       activePage: null,
-      removePageHeader: true,
+      removePageHeader: true,      
     };
   },
   created() {

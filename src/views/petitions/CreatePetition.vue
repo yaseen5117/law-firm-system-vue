@@ -8,7 +8,7 @@
             <form @submit.prevent="submitForm($event)">
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                  <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Case No.<span style="color: red">*</span></label>
                     <input
                       class="form-control"
@@ -23,7 +23,17 @@
                     >
                   </div>
 
-                  <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                  <div class="col-lg-2 col-md-2 col-sm-12">
+                    <label>Year</label>
+                    <input
+                      type="number"
+                      min="0"
+                      class="form-control"
+                      v-model="petition.year"                     
+                    />                    
+                  </div>
+
+                  <div class="col-lg-3 col-md-3 col-sm-12">
                     <label
                       >Case Category <span style="color: red">*</span></label
                     >
@@ -52,7 +62,7 @@
                     >
                   </div>
 
-                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                  <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Court</label>
                     <select class="form-control" v-model="petition.court_id">
                       <option value="">--Select--</option>
@@ -71,7 +81,7 @@
 
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                  <div class="col-lg-10 col-md-10 col-sm-12">
                     <label>Title <span style="color: red">*</span></label>
                     <input
                       v-bind:class="{
@@ -90,7 +100,7 @@
 
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="card">
                       <img
                         class="card-img-top"
@@ -130,7 +140,7 @@
                     </div>
                   </div>
 
-                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt">
+                  <div class="col-lg-6 col-md-6 col-sm-12 mt">
                     <div class="card">
                       <img
                         class="card-img-top"
@@ -174,7 +184,7 @@
 
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                  <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Date Of Institution</label>
                     <datepicker                    
                     :enableTimePicker="false"

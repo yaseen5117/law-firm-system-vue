@@ -8,11 +8,9 @@
           <div class="row gy-4">
             <div class="col-12">
                
-                  
-                   
               <Transition name="fade">
               <form v-if="showSearchForm"  class="row gy-2 gx-3 align-items-center">
-                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <div class="col-lg-2 col-md-2 col-sm-12">
                   <datepicker                     
                     :enableTimePicker="false"
                     autoApply   
@@ -32,7 +30,7 @@
                     placeholder="Date of Institution"
                   />  -->
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <div class="col-lg-2 col-md-2 col-sm-12">
                   <input
                     type="text"
                     id="Case"
@@ -42,7 +40,7 @@
                     aria-describedby="Case"
                   />
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                <div class="col-lg-3 col-md-3 col-sm-12">
                   <select
                     class="form-control form-control-sm"
                     v-model="filters.court_id"
@@ -58,7 +56,7 @@
                     </option>
                   </select>
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <div class="col-lg-2 col-md-2 col-sm-12">
                   <input
                     placeholder="Client Name"
                     v-model="filters.petitioner_id"
@@ -69,7 +67,7 @@
                   />
                 </div>
 
-                <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+                <div class="col-lg-1 col-md-1 col-sm-12">
                   <button
                     type="button"
                     class="btn btn-danger btn-sm"
@@ -81,7 +79,7 @@
               </form>
               </Transition>
             </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12">
               <router-link
                 style="margin-right:2px"
                 class="btn btn-success btn-sm"
@@ -93,9 +91,15 @@
                 <button class="btn btn-secondary btn-sm " v-if="showSearchForm" @click="showSearchForm=!showSearchForm" >Hide Filters</button>
                 <button class="btn btn-warning btn-sm" v-else-if="!showSearchForm" @click="showSearchForm=!showSearchForm">Show Filters</button>
               
+              <button           
+                style="float: right"      
+                class="btn btn-success btn-sm"      
+                @click="ShowCalendar=!ShowCalendar"           
+                >Calendar</button
+              >
             
             </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12">
               <div class="row">
                 <div
                   class="
@@ -158,7 +162,7 @@
                                 role="button"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
-                                title="View"
+                                title="Edit"
                                 ><i class="fa fa-edit"></i
                               ></router-link>
                               <router-link
@@ -220,7 +224,11 @@
                   </tbody>
                 </table> -->
               </div>
-            </div>
+            </div>               
+            <pre>{{events}}</pre>
+            <div class="col-12">              
+              <FullCalendar v-if="ShowCalendar" :options="calendarOptions" />
+            </div>         
           </div>
         </div>
       </section>
@@ -233,9 +241,17 @@
 <script>
 import axios from "axios";
 import PageHeader from "../views/shared/PageHeader";
+import '@fullcalendar/core/vdom' // solves problem with Vite
+import FullCalendar from '@fullcalendar/vue3'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import listPlugin from '@fullcalendar/list'
+import interactionPlugin from '@fullcalendar/interaction'
+
 export default {
   components: {
     PageHeader,
+    FullCalendar,
   },
   name: "CaseFile",
   data() {
@@ -246,7 +262,15 @@ export default {
         court_id: "",
       },
       courts: [],
-      showSearchForm: false,
+      showSearchForm: false,     
+      calendarOptions: {
+        
+        plugins: [ dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin ],
+        initialView: 'dayGridMonth',      
+        //Dynamic Event Source
+         events: [],
+      },
+      ShowCalendar: false,
     };
   },
   created() {
@@ -273,7 +297,7 @@ export default {
       let url = this.base_url + "/api/petitions";
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-      };
+      };      
       await axios
         .get(url, {
           headers,
@@ -281,7 +305,9 @@ export default {
         })
         .then((response) => {
           this.petitions = response.data.petitions;
+          this.calendarOptions.events = response.data.events;          
           console.log(this.petitions);
+          console.log(this.calendarOptions.events);
         })
         .catch((error) => {
           console.log(error);

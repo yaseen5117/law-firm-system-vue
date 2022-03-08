@@ -55,7 +55,7 @@
 
 
           </div>
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" v-show="showImgCard"><file-upload @afterUpload="getPetitionReplyDetails" type="App\Models\PetitionReply" /></div>
+          <div class="col-lg-12 col-md-12 col-sm-12" v-show="showImgCard"><file-upload @afterUpload="getPetitionReplyDetails" type="App\Models\PetitionReply" /></div>
         </div>
 
         <div class="row">
@@ -114,7 +114,7 @@
             <div v-show="editView">
               <div class="row">
                 <div class="table-responsive">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
                   <table class="table table-bordered">
                     <thead>                      
                       <th>Image</th>

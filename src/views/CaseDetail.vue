@@ -6,7 +6,7 @@
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="card-body align-center case_heading">
              
                 <h6>
@@ -28,7 +28,7 @@
         </div>
         <div class="row">
           <div class="table-responsive">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="col-lg-12 col-md-12 col-sm-12">
             
             <table  class="table table-striped">
               <thead>
