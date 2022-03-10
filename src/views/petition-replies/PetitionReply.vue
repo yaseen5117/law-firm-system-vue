@@ -10,7 +10,7 @@
           <div class="col-lg-12 col-md-12 col-sm-12">
             <table  class="table table-striped">
               <thead>                 
-                <th>Description of Documents</th>
+                <th>Description</th>
                 <th>Date</th>
                 <th>Annexure</th>
                 <th>Page</th>

@@ -55,7 +55,7 @@
               id="contact-tab"
               data-bs-toggle="tab"              
             >
-              Prayers
+              Prayer
             </button>
           </li>
 
