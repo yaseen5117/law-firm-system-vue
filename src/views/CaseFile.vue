@@ -11,13 +11,14 @@
               <Transition name="fade">
               <form v-if="showSearchForm"  class="row gy-2 gx-3 align-items-center">
                 <div class="col-lg-2 col-md-2 col-sm-12">
+                  <label for="">Date</label>
                   <datepicker                     
                     :enableTimePicker="false"
                     autoApply   
                     format="dd/MM/yyyy"   
                     id="date"            
                     type="date" 
-                    placeholder="Date of Institution"                              
+                    
                     v-model="filters.institution_date"
                     class="form-control-sm"
                     >
@@ -31,21 +32,23 @@
                   />  -->
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-12">
+                  <label for="">Case #</label>
                   <input
                     type="text"
                     id="Case"
                     v-model="filters.case_no"
                     class="form-control form-control-sm"
-                    placeholder="Case #"
+                    
                     aria-describedby="Case"
                   />
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-12">
+                  <label for="">Court</label>
                   <select
                     class="form-control form-control-sm"
                     v-model="filters.court_id"
                   >
-                    <option value="">--Court--</option>
+                    <option value="">--All--</option>
 
                     <option
                       v-for="court in courts"
@@ -57,8 +60,9 @@
                   </select>
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-12">
+                  <label for="">Client Name</label>
                   <input
-                    placeholder="Client Name"
+                    
                     v-model="filters.petitioner_id"
                     type="text"
                     id="ClientName"
