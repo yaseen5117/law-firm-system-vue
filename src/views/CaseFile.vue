@@ -11,7 +11,7 @@
                
               <Transition name="fade">
               <form v-if="showSearchForm"  class="row mb-2">
-                <div class="col-lg-2 col-md-2 col-sm-12">
+                <div hidden class="col-lg-2 col-md-2 col-sm-12">
                   <label for="">Date</label>
                   <datepicker                     
                     :enableTimePicker="false"
@@ -72,9 +72,11 @@
                 </div>
 
                 <div class="col-lg-1 col-md-1 col-sm-12">
+                  
                   <button
+
                     type="button"
-                    class="btn btn-danger btn-sm"
+                    class="btn btn-danger btn-sm mt-lg-4 mt-md-4"
                     @click="reset()"
                   >
                     Reset
@@ -94,7 +96,7 @@
               
               
                 <button class="btn btn-secondary btn-sm " v-if="showSearchForm" @click="showSearchForm=!showSearchForm" >Hide Filters</button>
-                <button class="btn btn-warning btn-sm" v-else-if="!showSearchForm" @click="showSearchForm=!showSearchForm">Show Filters</button>
+                <button class="btn btn-warning btn-sm" v-else-if="!showSearchForm" @click="showSearchForm=!showSearchForm;">Show Filters</button>
               
           
             </div>
@@ -251,7 +253,7 @@ export default {
         court_id: "",
       },
       courts: [],
-      showSearchForm: false,         
+      showSearchForm: true,         
     };
   },
   created() {
