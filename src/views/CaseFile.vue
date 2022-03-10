@@ -5,11 +5,11 @@
       <!-- ======= Services Section ======= -->
       <section id="services" class="services section-bg">
         <div class="container" data-aos="fade-up">
-          <div class="row gy-4">
-            <div class="col-12">
+          <div class="row">
+            <div class="col-md-12 col-12">
                
               <Transition name="fade">
-              <form v-if="showSearchForm"  class="row gy-2 gx-3 align-items-center">
+              <form v-if="showSearchForm"  class="row mb-2">
                 <div class="col-lg-2 col-md-2 col-sm-12">
                   <label for="">Date</label>
                   <datepicker                     
@@ -96,7 +96,7 @@
               
           
             </div>
-            <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 mt-2">
               <div class="row">
                 <div
                   class="
