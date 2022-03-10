@@ -74,7 +74,7 @@
             <table  class="table table-striped">
               <thead> 
                 <th>Name</th>
-                <!-- <th>Role</th> -->
+                <th>Role</th>
                 <th>Email</th>
                  
                 <th width=10%>Actions</th>
@@ -98,18 +98,12 @@
                       >{{ user.name }}
                     </span>
                   </td>
-                  <!-- <td>
-                    <input
-                      v-show="user.editMode"
-                      class="form-control"
-                      v-model="user.roles"
-                      v-on:keyup.enter="editUser(user)"
-                    />
-                    <span
-                      v-show="!user.editMode"                      
-                      >{{ user.roles }}
+                  <td>                    
+                    <span v-for="(role,index) in user.roles"
+                          :key="role"                                       
+                      >{{ role.name }}
                     </span>
-                  </td> -->
+                  </td>
                    <td>
                     <input
                       v-show="user.editMode"
