@@ -26,6 +26,7 @@
     "core-js": "^3.6.4",
     "dotenv-webpack": "^7.0.3",
     "swiper": "^8.0.6",
+    "v-viewer": "^3.0.10",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vue-select2": "^0.2.6",

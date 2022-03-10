@@ -32,7 +32,7 @@
             
             <table  class="table table-striped">
               <thead>
-                <th>Sr. #</th>
+                
                 <th>Description of Documents</th>
                 <th>Date</th>
                 <th>Annexure</th>
@@ -45,7 +45,7 @@
                   v-for="(petition_detail , petitionIndex) in petition_details"
                   :key="petition_detail.id"
                 >
-                  <td>{{ petitionIndex+1 }}</td>
+                   
                   <td>
                     <input
                       v-show="petition_detail.editMode"

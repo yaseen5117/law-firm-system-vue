@@ -8,6 +8,8 @@ import CreatePetition from '../views/petitions/CreatePetition'
 import Login from '../views/Auth/Login'
 import PetitionReply from '../views/petition-replies/PetitionReply'
 import PetitionReplyDetails from '../views/petition-replies/PetitionReplyDetails'
+import UsersList from '../views/users/UsersList'
+import PetitionsCalendar from '../views/calendar/PetitionsCalendar'
 
 const routes = [
   {
@@ -88,7 +90,24 @@ const routes = [
     meta: { 
       auth: true ,
     },
-  }
+  },
+  {
+    path: '/petitions-calendar',
+    name: 'petitions-calendar',
+    component: PetitionsCalendar,
+    meta: { 
+      auth: true ,
+    },
+  },
+  //users list
+  {
+    path: '/users',
+    name: 'users-list',
+    component: UsersList,
+    meta: { 
+      auth: true ,
+    },
+  },
 
 ]
 

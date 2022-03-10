@@ -43,7 +43,7 @@
                   <i class="bi bi-chevron-right"></i
                 ></a>
                 <ul>
-                  <li><a href="#">System Setting 1</a></li>
+                  <li><router-link class="nav-link" to="/users">Users</router-link></li>
                   <li><a href="#">System Setting 2</a></li>
                   <li><a href="#">System Setting 3</a></li>
                   <li><a href="#">System Setting 4</a></li>

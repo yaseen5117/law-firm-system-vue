@@ -91,13 +91,7 @@
                 <button class="btn btn-secondary btn-sm " v-if="showSearchForm" @click="showSearchForm=!showSearchForm" >Hide Filters</button>
                 <button class="btn btn-warning btn-sm" v-else-if="!showSearchForm" @click="showSearchForm=!showSearchForm">Show Filters</button>
               
-              <button           
-                style="float: right"      
-                class="btn btn-success btn-sm"      
-                @click="ShowCalendar=!ShowCalendar"           
-                >Calendar</button
-              >
-            
+          
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12">
               <div class="row">
@@ -224,11 +218,7 @@
                   </tbody>
                 </table> -->
               </div>
-            </div>               
-            <pre>{{events}}</pre>
-            <div class="col-12">              
-              <FullCalendar v-if="ShowCalendar" :options="calendarOptions" />
-            </div>         
+            </div>                  
           </div>
         </div>
       </section>
@@ -241,17 +231,11 @@
 <script>
 import axios from "axios";
 import PageHeader from "../views/shared/PageHeader";
-import '@fullcalendar/core/vdom' // solves problem with Vite
-import FullCalendar from '@fullcalendar/vue3'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import listPlugin from '@fullcalendar/list'
-import interactionPlugin from '@fullcalendar/interaction'
+
 
 export default {
   components: {
-    PageHeader,
-    FullCalendar,
+    PageHeader,    
   },
   name: "CaseFile",
   data() {
@@ -262,15 +246,7 @@ export default {
         court_id: "",
       },
       courts: [],
-      showSearchForm: false,     
-      calendarOptions: {
-        
-        plugins: [ dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin ],
-        initialView: 'dayGridMonth',      
-        //Dynamic Event Source
-         events: [],
-      },
-      ShowCalendar: false,
+      showSearchForm: false,         
     };
   },
   created() {
@@ -304,10 +280,8 @@ export default {
           params: this.filters,
         })
         .then((response) => {
-          this.petitions = response.data.petitions;
-          this.calendarOptions.events = response.data.events;          
-          console.log(this.petitions);
-          console.log(this.calendarOptions.events);
+          this.petitions = response.data.petitions;                  
+          console.log(this.petitions);           
         })
         .catch((error) => {
           console.log(error);
