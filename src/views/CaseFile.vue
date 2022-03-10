@@ -6,6 +6,7 @@
       <section id="services" class="services section-bg">
         <div class="container" data-aos="fade-up">
           <div class="row">
+            <!-- search filters -->
             <div class="col-md-12 col-12">
                
               <Transition name="fade">
@@ -82,6 +83,7 @@
               </form>
               </Transition>
             </div>
+            <!-- search filters -->
             <div class="col-lg-12 col-md-12 col-sm-12">
               <router-link
                 style="margin-right:2px"
