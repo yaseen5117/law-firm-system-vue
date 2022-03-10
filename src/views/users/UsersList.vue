@@ -101,7 +101,7 @@
                   <td>                    
                     <span v-for="(role,index) in user.roles"
                           :key="role"                                       
-                      >{{ role.name }}
+                      >{{ capitalizeFirstLetter(role.name) }}
                     </span>
                   </td>
                    <td>
@@ -282,6 +282,9 @@ export default {
             }
           );
       }
+    },
+    capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     },
     reset() {
       this.filters = {};
