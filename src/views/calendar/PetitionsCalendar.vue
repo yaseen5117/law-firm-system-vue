@@ -6,7 +6,7 @@
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="row">         
-          <div class="col-12">              
+          <div class="col-12 col-md-8 offset-md-2">              
               <FullCalendar :options="calendarOptions" />
             </div>      
         </div>
