@@ -26,8 +26,8 @@
                   <div class="col-lg-2 col-md-2 col-sm-12">
                     <label>Year</label>
                     <input
-                      type="number"
-                      min="0"
+                      type="text"
+                      min="0"                     
                       class="form-control"
                       v-model="petition.year"                     
                     />                    
@@ -233,6 +233,7 @@ export default {
       page_title: this.$route.params.id ? "Edit Petition" : "Add New Petition",
       base_url: process.env.VUE_APP_SERVICE_URL,
       petition: {
+        year: 2022,
         petitioners: [
           {
             user: {},

@@ -17,8 +17,7 @@
                     autoApply   
                     format="dd/MM/yyyy"   
                     id="date"            
-                    type="date" 
-                    
+                    type="date"                     
                     v-model="filters.institution_date"
                     class="form-control-sm"
                     >
