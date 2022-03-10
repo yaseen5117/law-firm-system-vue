@@ -151,8 +151,7 @@
                     </a>
                   </td>
                 </tr>
-                <tr>
-                  <td></td>
+                <tr>                   
                   <td>
                     <input
                       class="form-control"
