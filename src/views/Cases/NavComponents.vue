@@ -197,10 +197,7 @@ export default {
   background-color: #0d6efd;
 }
 
-section {
-  padding: 40px 0 !important;
-  overflow: hidden !important;
-}
+
 
 h2 span {
   font-size: 16px;

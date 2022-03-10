@@ -4,7 +4,7 @@
   <section id="breadcrumbs" class="breadcrumbs" v-if="!hide">
     <div class="container" >
       <div class="d-flex justify-content-between align-items-center">
-        <h2 v-if="title">{{ title }}</h2>
+        <h4 v-if="title">{{ title }}</h4>
           
         
         <ol v-if="!hideBreadCrumbs" style="font-size:12px">
