@@ -36,7 +36,7 @@
               ><span>Settings</span> <i class="bi bi-chevron-down"></i
             ></a>
             <ul>
-              <li><a href="#">User</a></li>
+              <li><router-link class="nav-link" to="/users">Users</router-link></li>
               <li class="dropdown">
                 <a href="#"
                   ><span>System Settings</span>
