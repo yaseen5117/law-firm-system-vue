@@ -2,7 +2,7 @@
   
      <main id="main">
       <!-- ======= Services Section ======= -->
-      <section id="services" style="margin-top:80px" class="services section-bg">
+      <section id="services" style="margin-top:100px" class="services section-bg">
       <div class="container" data-aos="fade-up"> 
 
         <div class="row gy-4">

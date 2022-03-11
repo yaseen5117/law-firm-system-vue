@@ -1250,7 +1250,7 @@ section {
   }
 }
 .breadcrumbs h2 {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 300;
 }
 .breadcrumbs ol {
@@ -1271,6 +1271,10 @@ section {
   content: "/";
 }
 @media (max-width: 768px) {
+  .breadcrumbs {
+    margin-top: 65px;
+  }
+
   .breadcrumbs .d-flex {
     display: block !important;
   }
