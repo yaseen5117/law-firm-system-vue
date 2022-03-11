@@ -19,7 +19,7 @@
             <span><strong>Case Title:</strong> {{petition? petition.title :'Loading'}},</span>
             <span><strong>Case #:</strong> {{petition ?petition.writ_number :''}},</span>
             <span><strong>Client Name:</strong> {{petition.petitioner_names}}</span>
-            <span><strong>Court:</strong> {{petition? petition.court.title:''}}</span> )
+            <span><strong>Court:</strong> {{petition && petition.court? petition.court.title:''}}</span> )
           </div>
     </div>
   </section>
