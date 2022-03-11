@@ -10,6 +10,7 @@ import PetitionReply from '../views/petition-replies/PetitionReply'
 import PetitionReplyDetails from '../views/petition-replies/PetitionReplyDetails'
 import UsersList from '../views/users/UsersList'
 import PetitionsCalendar from '../views/calendar/PetitionsCalendar'
+import PetitionOrderSheetCreateUpdate from '../views/petition-order-sheets/CreateUpdate'
 
 const routes = [
   {
@@ -91,6 +92,26 @@ const routes = [
       auth: true ,
     },
   },
+
+  ////////////////Order Sheets/////////////
+  {
+    path: '/petition-order-sheets/:petition_id',
+    name: 'petition-order-sheets',    
+    component: PetitionOrderSheetCreateUpdate,
+    meta: { 
+      auth: true ,
+    },
+  },
+
+  // {
+  //   path: '/petition-order-sheets/:petition_id/:id',
+  //   name: 'petition-order-sheets',    
+  //   component: PetitionOrderSheetCreateUpdate,
+  //   meta: { 
+  //     auth: true ,
+  //   },
+  // },
+  ////////////////Order Sheets/////////////
   {
     path: '/petitions-calendar',
     name: 'petitions-calendar',
