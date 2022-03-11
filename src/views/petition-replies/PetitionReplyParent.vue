@@ -1,6 +1,6 @@
 <template>
   <main id="main">
-    <page-header title="Petition Replies" />
+    <page-header title="Petition Replies Parent" />
     <nav-components activeNavPill = 'reply' />
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
@@ -10,82 +10,38 @@
           <div class="col-lg-12 col-md-12 col-sm-12">
             <table  class="table table-striped">
               <thead>                 
-                <th>Description</th>
-                <th>Date</th>
-                <th>Annexure</th>
-                <th>Page</th>
+                <th>Title</th>
+                 
                 <th width=10%>Actions</th>
               </thead>
               <tbody>
                 <tr
-                  @dblclick="petition_reply.editMode = true"
-                  v-for="(petition_reply , petitionReplyIndex) in petition_replies"
-                  :key="petition_reply.id"
+                  @dblclick="petition_reply_parent.editMode = true"
+                  v-for="(petition_reply_parent , petitionReplyParentIndex) in petition_reply_parents"
+                  :key="petition_reply_parent.id"
                 >                   
                   <td>
                     <input
-                      v-show="petition_reply.editMode"
+                      v-show="petition_reply_parent.editMode"
                       class="form-control"
-                      v-model="petition_reply.document_description"
-                      v-on:keyup.enter="editPetitionReply(petition_reply)"
+                      v-model="petition_reply_parent.title"
+                      v-on:keyup.enter="editPetitionReplyParent(petition_reply_parent)"
                     />
                     <router-link
-                      v-show="!petition_reply.editMode"
+                      v-show="!petition_reply_parent.editMode"
                       :to="{
-                        name: 'petition-reply-details',
-                        params: { id: petition_reply.id },
+                        name: 'petition-replies',
+                        params: { id: petition_reply_parent.id },
                       }"
-                      >{{ petition_reply.document_description }}
+                      >{{ petition_reply_parent.title }}
                     </router-link>
                   </td>
-                  <td>
-                    <datepicker
-                    v-show="petition_reply.editMode"
-                    :enableTimePicker="false"
-                    autoApply   
-                    format="dd/MM/yyyy"                                              
-                    v-model="petition_reply.date"
-                    v-on:keyup.enter="editPetitionReply(petition_reply)"
-                    >
-                     </datepicker>
-                    <!-- <input
-                      v-show="petition_reply.editMode"
-                      class="form-control"
-                      type="date"
-                      v-model="petition_reply.date"
-                      v-on:keyup.enter="editPetitionReply(petition_reply)"
-                    /> -->
-                    <span v-show="!petition_reply.editMode">{{
-                      petition_reply.date
-                    }}</span>
-                  </td>
-                  <td>
-                    <input
-                      v-show="petition_reply.editMode"
-                      class="form-control"
-                      v-model="petition_reply.annexure"
-                      v-on:keyup.enter="editPetitionReply(petition_reply)"
-                    />
-                    <span v-show="!petition_reply.editMode">{{
-                      petition_reply.annexure
-                    }}</span>
-                  </td>
-                  <td>
-                    <input
-                      v-show="petition_reply.editMode"
-                      class="form-control"
-                      v-model="petition_reply.page_info"
-                      v-on:keyup.enter="editPetitionReply(petition_reply)"
-                    />
-                    <span v-show="!petition_reply.editMode">{{
-                      petition_reply.page_info
-                    }}</span>
-                  </td>
+                  
                   <td width="15%">
                     <a
                       class="btn btn-sm btn-primary"
-                      v-show="!petition_reply.editMode"
-                      @click="petition_reply.editMode = true"
+                      v-show="!petition_reply_parent.editMode"
+                      @click="petition_reply_parent.editMode = true"
                       href="javascript:void"
                       style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"
@@ -93,9 +49,9 @@
                       <i class="fa fa-edit"></i>
                     </a>
                     <a
-                      v-show="petition_reply.editMode"
+                      v-show="petition_reply_parent.editMode"
                       class="btn btn-sm btn-warning"
-                      @click="editPetitionReply(petition_reply)"
+                      @click="editPetitionReplyParent(petition_reply_parent)"
                       href="javascript:void"
                       style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Update"
@@ -104,8 +60,8 @@
                     </a>
 
                     <a
-                      v-show="petition_reply.editMode"
-                      @click="petition_reply.editMode=false"
+                      v-show="petition_reply_parent.editMode"
+                      @click="petition_reply_parent.editMode=false"
                       class="btn btn-sm btn-info"
                       href="javascript:void"
                       style="margin-left:2px"
@@ -117,8 +73,8 @@
                     <a
                     class="btn btn-sm btn-danger"
 
-                      v-show="!petition_reply.editMode"
-                      @click="deletePetitionReply(petition_reply.id,petitionReplyIndex)"
+                      v-show="!petition_reply_parent.editMode"
+                      @click="deletePetitionReply(petition_reply_parent.id,petitionReplyParentIndex)"
                       href="javascript:void"
                       style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
@@ -132,34 +88,10 @@
                   <td>
                     <input
                       class="form-control"
-                      v-model="new_petition_reply.document_description"
+                      v-model="new_petition_reply_parent.title"
+                      v-on:keyup.enter="submitPetitionReply()"
                     />
-                  </td>
-                  <td>
-                    <datepicker
-                    :enableTimePicker="false"
-                    autoApply   
-                    format="dd/MM/yyyy"  
-                    placeholder="dd/mm/yyyy"      
-                     v-model="new_petition_reply.date"></datepicker>
-                    <!-- <input
-                      class="form-control"
-                      type="date"
-                      v-model="new_petition_reply.date"
-                    /> -->
-                  </td>
-                  <td>
-                    <input
-                      class="form-control"
-                      v-model="new_petition_reply.annexure"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      class="form-control"
-                      v-model="new_petition_reply.page_info"
-                    />
-                  </td>
+                  </td>                  
                   <td>
                     <a
                       href="javascript:void"
@@ -195,26 +127,26 @@ export default {
     return {
       'page_title':'Petiton Replies',
       base_url: process.env.VUE_APP_SERVICE_URL,
-      petition_replies: [],       
+      petition_reply_parents: [],       
       id: this.$route.params.id, //this is the id from the browser 
-      new_petition_reply: {},      
+      new_petition_reply_parent: {},      
     };
   },
   created() {
-    this.getPetitionReplyDetails();
+    this.getPetitionReplyParents();
   },
   methods: {
-    getPetitionReplyDetails() {
+    getPetitionReplyParents() {
       axios
-        .get(this.base_url + "/api/petition_replies/" + this.id)
+        .get(this.base_url + "/api/petition_reply_parents/" + this.id)
         .then((response) => {
-          this.petition_replies = response.data.petition_replies;                 
+          this.petition_reply_parents = response.data.petition_reply_parents;                 
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    deletePetitionReply(petitionId,petitionReplyIndex) {
+    deletePetitionReply(petitionId,petitionReplyParentIndex) {
       if (confirm("Do you really want to delete?")) {
         var headers = {
           Authorization:
@@ -222,7 +154,7 @@ export default {
         };
        
         axios
-          .delete(this.base_url + "/api/petition_replies/"+petitionId, {
+          .delete(this.base_url + "/api/petition_reply_parents/"+petitionId, {
             headers,
           })
           .then(
@@ -235,7 +167,7 @@ export default {
                   text: "Deleted Successfully!",
                 }); 
                 //this.getCaseDetails()  
-                this.petition_replies.splice(petitionReplyIndex,1);//removing record from list/index after deleting record from DB              
+                this.petition_reply_parents.splice(petitionReplyParentIndex,1);//removing record from list/index after deleting record from DB              
               }
             },
             (error) => {
@@ -249,7 +181,7 @@ export default {
           );
       }
     },
-    editPetitionReply(petitionReplyToUpdate) {
+    editPetitionReplyParent(petitionReplyParentToUpdate) {
       if (true) {
         var headers = {
           Authorization:
@@ -257,7 +189,7 @@ export default {
         };
 
         axios
-          .post(this.base_url + "/api/petition_replies", petitionReplyToUpdate, {
+          .post(this.base_url + "/api/petition_reply_parents", petitionReplyParentToUpdate, {
             headers,
           })
           .then(
@@ -288,11 +220,11 @@ export default {
           Authorization:
             `Bearer ` + localStorage.getItem("rezo_customers_user"),
         };
-        this.new_petition_reply.petition_reply_parent_id = this.id;
+        this.new_petition_reply_parent.petition_id = this.id;
         axios
           .post(
-            this.base_url + "/api/petition_replies",
-            this.new_petition_reply,
+            this.base_url + "/api/petition_reply_parents",
+            this.new_petition_reply_parent,
             {
               headers,
             }
@@ -305,8 +237,8 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
-                this.new_petition_reply = {};
-                this.getPetitionReplyDetails();
+                this.new_petition_reply_parent = {};
+                this.getPetitionReplyParents();
               }
             },
             (error) => {

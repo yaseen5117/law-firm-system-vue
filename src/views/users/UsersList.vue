@@ -195,7 +195,7 @@ export default {
       users: [],
       id: this.$route.params.id, //this is the id from the browser
       new_petition_index: {},
-      showSearchForm: false,  
+      showSearchForm: true,  
       filters: {},       
     };
   },

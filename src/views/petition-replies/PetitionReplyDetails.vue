@@ -321,23 +321,25 @@ export default {
     },
     async getPetitionReplyDetails() {
       await axios
-        .get(this.base_url + "/api/petition_replies/" + this.id)
+        .post(this.base_url + "/api/petition_reply_details/" + this.id)
         .then((response) => {
           this.petition_reply_details = response.data.petition_reply;
-          this.petition = response.data.petition;
+          this.petition = response.data.petition_reply.petition_reply_parent.petition;
+          console.log("success");
+          console.log(this.petition);
 
-          this.getPetitionReplyAnnexure(response.data.petition.id);
+          this.getPetitionReplyAnnexure(response.data.petition_reply.petition_reply_parent.id);
         })
         .catch((error) => {
           console.log(error);
         });
     },
 
-    async getPetitionReplyAnnexure(petition_id) {
+    async getPetitionReplyAnnexure(parent_reply_id) {
       await axios
-        .get(this.base_url + "/api/petitions/" + petition_id)
+        .get(this.base_url + "/api/petition_replies/" + parent_reply_id)
         .then((response) => {
-          this.petition_reply_index = response.data.petition_reply_details;
+          this.petition_reply_index = response.data.petition_replies;
           var arr = [];
           this.petition_reply_index.forEach((element) => {
             if (element.annexure) {

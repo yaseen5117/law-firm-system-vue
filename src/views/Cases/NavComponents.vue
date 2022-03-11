@@ -28,7 +28,7 @@
               class="nav-link"    
               :class="activeNavPill == 'reply' ? 'active' : ''"
               :to="{
-                name: 'petition-replies',
+                name: 'petition-reply-parents',
                 params: { id: this.$route.params.id },
               }"                  
               id="replies"
