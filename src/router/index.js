@@ -10,6 +10,7 @@ import PetitionReply from '../views/petition-replies/PetitionReply'
 import PetitionReplyDetails from '../views/petition-replies/PetitionReplyDetails'
 import UsersList from '../views/users/UsersList'
 import PetitionsCalendar from '../views/calendar/PetitionsCalendar'
+import CreateUser from '../views/users/CreateUser'
 
 const routes = [
   {
@@ -104,6 +105,14 @@ const routes = [
     path: '/users',
     name: 'users-list',
     component: UsersList,
+    meta: { 
+      auth: true ,
+    },
+  },
+  {
+    path: '/users/create',
+    name: 'create-user',    
+    component: CreateUser,
     meta: { 
       auth: true ,
     },
