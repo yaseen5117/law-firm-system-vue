@@ -1,6 +1,6 @@
 <template>
   <main id="main">
-    <!-- ======= Breadcrumbs ======= -->
+    <!-- ======= Breadcrumbs ======= -->     
     <page-header
       :title="petition_reply_details.document_description"
       :petition="petition"
@@ -324,22 +324,21 @@ export default {
         .post(this.base_url + "/api/petition_reply_details/" + this.id)
         .then((response) => {
           this.petition_reply_details = response.data.petition_reply;
-          this.petition = response.data.petition_reply.petition_reply_parent.petition;
-          console.log("success");
-          console.log(this.petition);
-
-          this.getPetitionReplyAnnexure(response.data.petition_reply.petition_reply_parent.id);
+          this.petition = response.data.petition;           
+          //console.log("petition",  response.data.petition.petition_reply_parent.petition);
+          this.getPetitionReplyAnnexure(this.petition_reply_details.petition_reply_parent_id);
         })
         .catch((error) => {
           console.log(error);
         });
     },
 
-    async getPetitionReplyAnnexure(parent_reply_id) {
+    async getPetitionReplyAnnexure(petition_reply_parent_id) {
       await axios
-        .get(this.base_url + "/api/petition_replies/" + parent_reply_id)
+        .get(this.base_url + "/api/petition_replies/" + petition_reply_parent_id)
         .then((response) => {
           this.petition_reply_index = response.data.petition_replies;
+           
           var arr = [];
           this.petition_reply_index.forEach((element) => {
             if (element.annexure) {
