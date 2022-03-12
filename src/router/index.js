@@ -10,7 +10,14 @@ import PetitionReply from '../views/petition-replies/PetitionReply'
 import PetitionReplyDetails from '../views/petition-replies/PetitionReplyDetails'
 import UsersList from '../views/users/UsersList'
 import PetitionsCalendar from '../views/calendar/PetitionsCalendar'
+
 import PetitionOrderSheetCreateUpdate from '../views/petition-order-sheets/CreateUpdate'
+import OrderSheetIndex from '../views/petition-order-sheets/OrderSheetIndex'
+
+import CreateUser from '../views/users/CreateUser'
+import PetitionReplyParent from '../views/petition-replies/PetitionReplyParent'
+ 
+
 
 const routes = [
   {
@@ -84,6 +91,7 @@ const routes = [
       auth: true ,
     },
   },
+  //petition reply routes
   {
     path: '/petition-reply-details/:id',
     name: 'petition-reply-details',    
@@ -94,6 +102,14 @@ const routes = [
   },
 
   ////////////////Order Sheets/////////////
+  {
+    path: '/petition-order-sheets',
+    name: 'petition-order-sheets-index',    
+    component: OrderSheetIndex,
+    meta: { 
+      auth: true ,
+    },
+  },
   {
     path: '/petition-order-sheets/:petition_id',
     name: 'petition-order-sheets',    
@@ -113,6 +129,15 @@ const routes = [
   // },
   ////////////////Order Sheets/////////////
   {
+    path: '/petition-reply-parents/:id',
+    name: 'petition-reply-parents',    
+    component: PetitionReplyParent,
+    meta: { 
+      auth: true ,
+    },
+  },
+
+  {
     path: '/petitions-calendar',
     name: 'petitions-calendar',
     component: PetitionsCalendar,
@@ -125,6 +150,14 @@ const routes = [
     path: '/users',
     name: 'users-list',
     component: UsersList,
+    meta: { 
+      auth: true ,
+    },
+  },
+  {
+    path: '/users/create',
+    name: 'create-user',    
+    component: CreateUser,
     meta: { 
       auth: true ,
     },

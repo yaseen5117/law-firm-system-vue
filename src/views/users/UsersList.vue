@@ -62,7 +62,13 @@
               </Transition>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
-                   
+                    <router-link
+                      style="margin-right:2px"
+                      class="btn btn-success btn-sm"
+                      :to="'/users/create'"
+                      >New User</router-link
+                    >
+
                 <button class="btn btn-secondary btn-sm " v-if="showSearchForm" @click="showSearchForm=!showSearchForm" >Hide Filters</button>
                 <button class="btn btn-warning btn-sm" v-else-if="!showSearchForm" @click="showSearchForm=!showSearchForm">Show Filters</button>
               
@@ -189,7 +195,7 @@ export default {
       users: [],
       id: this.$route.params.id, //this is the id from the browser
       new_petition_index: {},
-      showSearchForm: false,  
+      showSearchForm: true,  
       filters: {},       
     };
   },
