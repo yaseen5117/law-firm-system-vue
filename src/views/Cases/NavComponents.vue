@@ -3,14 +3,9 @@
 
   <div class="container mrgn-top">
     <div class="row">
-      <div class="col-12">       
-        <ul 
-          style="font-size:12.5px"
-          class="nav nav-tabs nav-paginator"
-          data-paginator-item-count="6"
-          data-paginator-buttons-class="nav-link"
-        >
-          <li class="nav-item" role="presentation">
+<div class="col-12">
+<ul class="nav nav-tabs">
+  <li class="nav-item" role="presentation">
             <router-link
               class="nav-link"
               :class="activeNavPill == 'petition' ? 'active' : ''"
@@ -20,7 +15,7 @@
               }"
               id="petition"                           
             >
-              Petition
+              Petitions
             </router-link>
           </li>
           <li class="nav-item" role="">
@@ -37,7 +32,7 @@
               Replies
             </router-link>
           </li>
-          <li class="nav-item" role="presentation">
+           <li class="nav-item" role="presentation">
             <router-link
               class="nav-link"    
               :class="activeNavPill == 'order-sheet' ? 'active' : ''"
@@ -51,131 +46,61 @@
               Order Sheets
             </router-link>
           </li>
-
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
-              :class="activeNavPill == 'prayer' ? 'active' : ''"
-              id="contact-tab"
-              data-bs-toggle="tab"              
-            >
-              Prayer
-            </button>
-          </li>
-
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
-              :class="activeNavPill == 'cm' ? 'active' : ''"
-              id="contact-tab"
-              data-bs-toggle="tab"              
-            >
-              CM’s
-            </button>
-          </li>
-
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
-              :class="activeNavPill == 'naqal-form' ? 'active' : ''"
-              id="contact-tab"
-              data-bs-toggle="tab"
-             
-            >
-              Naqal Forms
-            </button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
-              :class="activeNavPill == 'talbana' ? 'active' : ''"
-              id="contact-tab"
-              data-bs-toggle="tab"
-              
-            >
-              Talbana
-            </button>
-          </li>
-
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
-              :class="activeNavPill == 'case-law' ? 'active' : ''"
-              id="contact-tab"
-              data-bs-toggle="tab"
-              
-            >
-              Case Laws
-            </button>
-          </li>
-
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
-              :class="activeNavPill == 'ex-doc' ? 'active' : ''"
-              id="contact-tab"
-              data-bs-toggle="tab"
-              
-            >
-              Extra Docs
-            </button>
-          </li>
           <li class="nav-item" role="presentation">
             <button
               class="nav-link"
               :class="activeNavPill == 'oral-orgue' ? 'active' : ''"
-              id="contact-tab"
+              id="pral-argument-tab"
               data-bs-toggle="tab"
               
             >
               Oral Arguments
             </button>
           </li>
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
-              :class="activeNavPill == 'synopsis' ? 'active' : ''"
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Others</a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item"      
+              :class="activeNavPill == 'naqal-form' ? 'active' : ''"
+              id="naqal-form-tab"
+              data-bs-toggle="tab" href="#">Naqal Forms</a>
+      </li>
+      <li>
+        <a class="dropdown-item"
+        :class="activeNavPill == 'talbana' ? 'active' : ''"
               id="contact-tab"
-              data-bs-toggle="tab"
-             
-            >
-              Synopsis
-            </button>
-          </li>
-
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
-              :class="activeNavPill == 'judgement' ? 'active' : ''"
+              data-bs-toggle="tab" href="#">Talbana</a>
+      </li>
+      <li><a class="dropdown-item"
+      :class="activeNavPill == 'case-law' ? 'active' : ''"
               id="contact-tab"
-              data-bs-toggle="tab"
-              
-            >
-              Judgment
-            </button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
-              :class="activeNavPill == 'other' ? 'active' : ''"
+              data-bs-toggle="tab" href="#">Case Laws</a></li>
+      <!-- <li><hr class="dropdown-divider"></li> -->
+      <li><a class="dropdown-item"
+       :class="activeNavPill == 'ex-doc' ? 'active' : ''"
               id="contact-tab"
-              data-bs-toggle="tab"
-              
-            >
-            
-              Others
-            </button>
-          </li>
-        </ul>
-      </div>
+              data-bs-toggle="tab" href="#">Extra Docs</a></li>
+      <li><a class="dropdown-item"
+      :class="activeNavPill == 'synopsis' ? 'active' : ''"
+              id="contact-tab"
+              data-bs-toggle="tab" href="#">Synopsis</a></li>
+      <li><a class="dropdown-item"
+      :class="activeNavPill == 'judgement' ? 'active' : ''"
+              id="contact-tab"
+              data-bs-toggle="tab" href="#">Judgment</a></li>    
+    </ul>
+  </li>   
+</ul>
+</div>
+ 
     </div>
   </div>
 </template>
 
 <script>
-import { integer } from '@vuelidate/validators';
-
-export default {
+import { integer } from '@vuelidate/validators'; 
+ 
+export default { 
  props: {
     activeNavPill: integer
   },   
@@ -189,18 +114,6 @@ export default {
 };
 </script>
 <style>
-.nav-pills .nav-link {
-  background-color: #f2f6f9;
-  color: black;
-  margin: 2px !important;
-}
-
-.nav-pills .nav-link.active,
-.nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #0d6efd;
-}
-
 
 
 h2 span {

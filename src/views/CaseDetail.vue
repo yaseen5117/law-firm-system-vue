@@ -114,7 +114,8 @@
                       style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"
                     >
-                      <i class="fa fa-edit"></i>
+                      Edit
+                      <!-- <i class="fa fa-edit"></i> -->
                     </a>
                     <a
                       v-show="petition_detail.editMode"
@@ -124,7 +125,8 @@
                       style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Update"
                     >
-                      <i class="fa fa-save"></i>
+                      Update
+                      <!-- <i class="fa fa-save"></i> -->
                     </a>
 
                     <a
@@ -135,7 +137,8 @@
                       style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Cacncel"
                     >
-                      <i class="fa fa-remove"></i>
+                      Cacncel
+                      <!-- <i class="fa fa-remove"></i> -->
                     </a>
 
                     <a
@@ -147,7 +150,8 @@
                       style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
                     >
-                     <i class="fa fa-trash-o"></i>
+                     Delete
+                     <!-- <i class="fa fa-trash-o"></i> -->
                     </a>
                   </td>
                 </tr>
@@ -194,7 +198,8 @@
                       @click="submitPetitionIndex()"
                       class="btn btn-sm btn-success"
                     >
-                      <i class="fa fa-save"></i>
+                      Save
+                      <!-- <i class="fa fa-save"></i> -->
                     </a>
                   </td>
                 </tr>

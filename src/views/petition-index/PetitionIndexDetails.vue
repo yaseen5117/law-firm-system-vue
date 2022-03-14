@@ -76,6 +76,7 @@
             <file-upload
               @afterUpload="getCaseDetails"
               type="App\Models\PetitionIndex"
+              :attachmentable_id= id
             />
           </div>
         </div>        
@@ -272,7 +273,7 @@
       </div>
     </section>
 
-    <div v-show="!horizontalView && !editView" class="fixed-page-numbers">
+    <div v-show="!horizontalView && !editView" class="fixed-page-numbers d-none d-md-block">
       <ul class="list-group">
         <li
           v-for="attachment in petition_index_details.attachments"

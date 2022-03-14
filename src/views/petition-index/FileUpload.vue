@@ -75,7 +75,7 @@ export default {
       }
 
       this.v$.$validate();
-      if (!this.v$.$error) {
+      if (!this.v$.$error) {        
         formData.append("attachmentable_type", this.type);
         formData.append("attachmentable_id", this.attachmentable_id);
         axios.post(this.base_url + "/api/attachments", formData, config).then(

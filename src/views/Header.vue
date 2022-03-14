@@ -24,14 +24,10 @@
           <li v-if="!this.user">
             <router-link class="nav-link" to="/login">Login</router-link>
           </li>
-          <li v-if="this.user">
-            <a class="nav-link" href="javascript:void" @click="logout()"
-              >Logout</a
-            >
-          </li>
+         
           <!-- <li><a class="nav-link scrollto" href="#">Link-1</a></li>
           <li><a class="nav-link scrollto" href="#">Link-2</a></li>           -->
-          <li class="dropdown">
+          <li class="dropdown" v-if="this.user">
             <a href="#"
               ><span>Settings</span> <i class="bi bi-chevron-down"></i
             ></a>
@@ -50,6 +46,11 @@
                 </ul>
               </li>
             </ul>
+          </li>
+           <li v-if="this.user">
+            <a class="nav-link" href="javascript:void" @click="logout()"
+              >Logout</a
+            >
           </li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
