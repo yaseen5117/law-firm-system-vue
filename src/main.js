@@ -9,5 +9,5 @@ import 'vue3-date-time-picker/dist/main.css'
 //app.component("hello-world", HelloWorld);
 
 
-createApp(App).use(store).use(router).use(Notifications).use('file-uploadxx', VueUploadComponent).component('datepicker',Datepicker).mount('#app')
+createApp(App).use(store).use(router).use(Notifications).use('file-upload', VueUploadComponent).component('datepicker',Datepicker).mount('#app')
 

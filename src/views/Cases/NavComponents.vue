@@ -38,14 +38,18 @@
             </router-link>
           </li>
           <li class="nav-item" role="presentation">
-            <button
-              class="nav-link"
+            <router-link
+              class="nav-link"    
               :class="activeNavPill == 'order-sheet' ? 'active' : ''"
-              id="contact-tab"
-              data-bs-toggle="tab"             
+              :to="{
+                name: 'petition-order-sheets-index',
+                params: { petition_id: this.$route.params.id },
+              }"                  
+              id="replies"
+                          
             >
               Order Sheets
-            </button>
+            </router-link>
           </li>
 
           <li class="nav-item" role="presentation">

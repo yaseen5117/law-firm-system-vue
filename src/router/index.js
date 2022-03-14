@@ -12,7 +12,7 @@ import UsersList from '../views/users/UsersList'
 import PetitionsCalendar from '../views/calendar/PetitionsCalendar'
 
 import PetitionOrderSheetCreateUpdate from '../views/petition-order-sheets/CreateUpdate'
-import OrderSheetIndex from '../views/petition-order-sheets/OrderSheetIndex'
+import OrderSheetIndex from '../views/petition-order-sheets/OrderSheetsIndex'
 
 import CreateUser from '../views/users/CreateUser'
 import PetitionReplyParent from '../views/petition-replies/PetitionReplyParent'
@@ -103,7 +103,7 @@ const routes = [
 
   ////////////////Order Sheets/////////////
   {
-    path: '/petition-order-sheets',
+    path: '/petition-order-sheets-index/:petition_id/:order_sheet_id?',
     name: 'petition-order-sheets-index',    
     component: OrderSheetIndex,
     meta: { 
@@ -111,8 +111,8 @@ const routes = [
     },
   },
   {
-    path: '/petition-order-sheets/:petition_id',
-    name: 'petition-order-sheets',    
+    path: '/petition-order-sheets-save/:petition_id',
+    name: 'petition-order-sheets-save',    
     component: PetitionOrderSheetCreateUpdate,
     meta: { 
       auth: true ,

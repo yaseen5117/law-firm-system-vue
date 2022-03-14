@@ -31,9 +31,7 @@ import { required, email, helpers } from "@vuelidate/validators";
 
 export default {
   emits: ["afterUpload"],
-  props: {
-    type: String
-  },
+  props: ['type','attachmentable_id'],
   setup() {    
     return {
       v$: useVuelidate(),
@@ -44,7 +42,7 @@ export default {
       base_url: process.env.VUE_APP_SERVICE_URL,
       name: "",
       files: "",
-      attachmentable_id: this.$route.params.id, //this is the id from the browser
+      //attachmentable_id: this.$route.params.id, //this is the id from the browser
       success: "",
     };
   },

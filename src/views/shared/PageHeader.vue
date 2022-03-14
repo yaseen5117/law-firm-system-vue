@@ -6,12 +6,18 @@
       <div class="d-flex justify-content-between align-items-center">
         <h4 v-if="title">{{ title }}</h4>
           
-        
-        <ol v-if="!hideBreadCrumbs" style="font-size:12px">
-          <li><router-link to="/dashboard">Home</router-link></li>
-          <li><router-link to="/petitions">Case Files</router-link></li>
-          <li>Case Details</li>
-        </ol>
+        <template v-if="!hideBreadCrumbs">
+
+          <ol  style="font-size:12px">
+            <li><router-link to="/dashboard">Home</router-link></li>
+            <li><router-link to="/petitions">Case Files</router-link></li>
+            <li v-if="petition"><router-link :to="{
+                                  name: 'case-detail',
+                                  params: { id: petition?petition.id:'#' },
+                                }">Case Files</router-link></li>
+            
+          </ol>
+        </template>
       </div>
     </div>
     <div class="container">

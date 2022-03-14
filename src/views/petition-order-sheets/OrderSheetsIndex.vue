@@ -2,10 +2,11 @@
   <main id="main">
     <!-- ======= Breadcrumbs ======= -->
     <page-header
-      :title="petition_index_details.document_description"
+      :title="'Order Sheets'"
       :petition="petition"
-      :hide="removePageHeader ? true : false"
-    />   
+      
+    />
+    <nav-components activeNavPill = 'reply' />
     <!-- End Breadcrumbs -->
     <section
       id="services"
@@ -13,104 +14,34 @@
       :class="removePageHeader ? 'margintop85' : ''"
     >
       <div class="container" data-aos="fade-up">
-        <div class="row mb-2">
-          <div class="col-12 mb-1">
-            <div class="form-check form-switch">
-              <input
-                @change="removePageHeader = !removePageHeader"
-                class="form-check-input"
-                type="checkbox"
-                role="switch"
-                id="flexSwitchCheckDefault"
-              />
-              <label class="form-check-label" for="flexSwitchCheckDefault"
-                >Toggle Header</label
-              >
-            </div>
-          </div>
-          <div v-if="!removePageHeader" class="col-12">
-            <button
-              v-show="!showImgCard"
-              @click="showImgCard = true"
-              class="btn btn-success btn-sm mb-2"
-              style="margin-right: 2px"
-            >
-              Upload New Image
-            </button>
-            <button
-              v-show="showImgCard"
-              @click="showImgCard = false"
-              class="btn btn-primary btn-sm mb-2"
-              style="margin-right: 2px"
-            >
-              Cancel Upload
-            </button>
-
-            <button
-              v-show="!editView"
-              @click="
-                editView = true;
-                horizontalView: true;
-              "
-              style="margin-right: 2px"
-              class="btn btn-primary btn-sm mb-2"
-            >
-              Edit
-            </button>
-            <button
-              v-show="editView"
-              @click="
-                editView = false;
-                horizontalView: false;
-              "
-              style="margin-right: 2px"
-              class="btn btn-success btn-sm mb-2"
-            >
-              Cancel
-            </button>
-          </div>
-          <div
-            class="col-lg-12 col-md-12 col-sm-12"
-            v-show="showImgCard"
-          >
-            <file-upload
-              @afterUpload="getCaseDetails"
-              type="App\Models\PetitionIndex"
-            />
-          </div>
-        </div>        
         <div class="row">
-          <div class="col-12">
-            <!-- <button
-              class="btn btn-primary btn-sm mb-3"
-              v-on:click="horizontalView = !horizontalView"
+          <div class="col-md-12">
+            
+            <router-link
+              class="btn btn-primary btn-sm"    
+              
+              :to="{
+                name: 'petition-order-sheets-save',
+                params: { petition_id: petition.id },
+              }"                  
             >
-              Slide/Horizontal View
-            </button> -->
-            <!-- <carousel :items-to-show="1" v-show="horizontalView">
-              <slide
-                v-for="attachment in petition_index_details.attachments"
-                :key="attachment"
-              >
-                <img
-                  :src="
-                    'http://127.0.0.1:8000/storage/attachments/' +
-                    attachment.file_name
-                  "
-                />
-              </slide>
+              Add New Order Sheet
+            </router-link>
+    
+            <p >
+              <strong>Title: </strong>{{ orderSheet.title }}
+              <strong>Description: </strong>{{ orderSheet.description }}
+              <strong>Order Sheet Date: </strong>{{ orderSheet.order_sheet_date }}
+              <file-upload
+                @afterUpload="getOrderSheets"
+                type="App\Models\PetitonOrderSheet"
+                :attachmentable_id="orderSheet.id"
+              />
 
-              <template #addons>
-                <navigation />
-                <pagination />
-              </template>
-            </carousel> -->
-
-            <div v-show="!horizontalView && !editView">
               <div
                 class="row mb-2 text-center"
                 :id="'image-container-' + attachment.id"
-                v-for="attachment in petition_index_details.attachments"
+                v-for="attachment in orderSheet.attachments"
                 :key="attachment"
               >
                 <div class="col-12">
@@ -121,7 +52,7 @@
                     :src="
                       this.base_url +
                       '/storage/attachments/' +
-                      this.$route.params.id +
+                      attachment.attachmentable_id +
                       '/' +
                       attachment.file_name
                     "
@@ -129,144 +60,7 @@
                   <hr class="mt-4 mb-4" style="border: solid 3px" />
                 </div>
               </div>
-            </div>
-
-            <div v-show="editView">
-              <div class="row">
-                <div class="table-responsive">
-                  <div class="col-lg-12 col-md-12 col-sm-12">
-                    <table class="table table-bordered">
-                      <thead>
-                        <th>Image</th>
-                        <th>Title</th>
-                        <th>Display Order</th>
-                        <th>Actions</th>
-                      </thead>
-                      <tbody>
-                        <tr
-                          @dblclick="attachment.editMode = true"
-                          v-for="(
-                            attachment, attachmentIndex
-                          ) in petition_index_details.attachments"
-                          :key="attachment"
-                        >
-                          <td>
-                            <img
-                              :class="
-                                activePage == attachment.id ? 'active-img' : ''
-                              "
-                              style="width: 80px"
-                              :src="
-                                this.base_url +
-                                '/storage/attachments/' +
-                                '/' +
-                                this.$route.params.id +
-                                '/' +
-                                attachment.file_name
-                              "
-                            />
-                          </td>
-                          <td>
-                            <input
-                              v-show="attachment.editMode"
-                              class="form-control"
-                              v-model="attachment.title"
-                              v-on:keyup.enter="
-                                editPetitionAttachment(attachment)
-                              "
-                            />
-                            <router-link
-                              v-show="!attachment.editMode"
-                              :to="{
-                                name: 'petition-index-details',
-                                params: { id: attachment.id },
-                              }"
-                              >{{ attachment.title }}
-                            </router-link>
-                          </td>
-
-                          <td>
-                            <input
-                              v-show="attachment.editMode"
-                              class="form-control"
-                              v-model="attachment.display_order"
-                              v-on:keyup.enter="
-                                editPetitionAttachment(attachment)
-                              "
-                            />
-                            <router-link
-                              v-show="!attachment.editMode"
-                              :to="{
-                                name: 'petition-index-details',
-                                params: { id: attachment.id },
-                              }"
-                              >{{ attachment.display_order }}
-                            </router-link>
-                          </td>
-                          <td width="15%">
-                            <a
-                              class="btn btn-sm btn-primary"
-                              v-show="!attachment.editMode"
-                              @click="attachment.editMode = true"
-                              href="javascript:void"
-                              style="margin-left: 2px"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              title="Edit"
-                            >
-                              <i class="fa fa-edit"></i>
-                            </a>
-                            <a
-                              v-show="attachment.editMode"
-                              class="btn btn-sm btn-warning"
-                              @click="editPetitionAttachment(attachment)"
-                              href="javascript:void"
-                              style="margin-left: 2px"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              title="Update"
-                            >
-                              <i class="fa fa-save"></i>
-                            </a>
-
-                            <a
-                              v-show="attachment.editMode"
-                              @click="attachment.editMode = false"
-                              class="btn btn-sm btn-info"
-                              href="javascript:void"
-                              style="margin-left: 2px"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              title="Cacncel"
-                            >
-                              <i class="fa fa-remove"></i>
-                            </a>
-
-                            <a
-                              class="btn btn-sm btn-danger"
-                              v-show="!attachment.editMode"
-                              @click="
-                                deletePetitionAttachment(
-                                  attachment.id,
-                                  attachmentIndex
-                                )
-                              "
-                              href="javascript:void"
-                              style="margin-left: 2px"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              title="Delete"
-                            >
-                              <i class="fa fa-trash-o"></i>
-                            </a>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </p>
           </div>
         </div>
       </div>
@@ -287,18 +81,18 @@
       </ul>
     </div>
 
-    <div class="fixed-annexsures" @show="!editView">
+    <div class="fixed-annexsures" >
       <ul class="list-group">
         <router-link
-          v-for="petition_index_single in petition_index"
-          :key="petition_index_single"
-          :class="id == petition_index_single.id ? 'active' : ''"
+          v-for="orderSheet in orderSheets"
+          :key="orderSheet"
+          :class="id == orderSheet.id ? 'active' : ''"
           class="list-group-item"
           :to="{
-            name: 'petition-index-details',
-            params: { id: petition_index_single.id },
+            name: 'petition-order-sheets-index',
+            params: { order_sheet_id: orderSheet.id ,  petition_id: petition.id },
           }"
-          >{{ petition_index_single.annexure }}</router-link
+          >{{ orderSheet.order_sheet_date }}</router-link
         >
       </ul>
       <!-- Prayers -->
@@ -323,24 +117,26 @@ export default {
     Slide,
     Pagination,
     Navigation,
-    FileUpload,    
+    FileUpload,
   },
   data() {
     return {
       showImgCard: false,
       editView: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
+      orderSheets: [],
       petition: {},
       petition_index: [],
       petition_index_details: {},
-      id: this.$route.params.id, //this is the id from the browser
+      order_sheet_id: this.$route.params.order_sheet_id, //this is the id from the browser
+      petition_id: this.$route.params.petition_id, //this is the id from the browser
       horizontalView: false, //it will show vertical images by default
       activePage: null,
-      removePageHeader: true,      
+      removePageHeader: true,
     };
   },
   created() {
-    this.getCaseDetails();
+    this.getOrderSheets();
   },
   methods: {
     scrollIntoView(id) {
@@ -356,21 +152,59 @@ export default {
       //document.getElementById("image-container-" + id).style.border="solid 1px red"
       this.activePage = id;
     },
-    async getCaseDetails() {
-      await axios
-        .get(this.base_url + "/api/petitions_index/" + this.id)
+    getOrderSheets() {
+      axios
+        .get(
+          this.base_url +
+            "/api/petition_order_sheets?petition_id=" +
+            this.petition_id
+        )
         .then((response) => {
-          this.petition_index_details = response.data.petition_index;
-          this.petition = response.data.petition;
+          this.orderSheets = response.data.records;
+          this.petition = response.data.records.petition;
 
-          this.getPetitionAnnexure(response.data.petition.id);
+          this.getCaseDetails();
+          this.getOrderSheet();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    
+    getOrderSheet() {
+      
+      if(this.order_sheet_id){
+        var activeOrderSheetId = this.order_sheet_id
+      }
+        axios
+        .get(
+          this.base_url +
+            "/api/petition_order_sheets/" +
+            this.order_sheet_id
+        )
+        .then((response) => {
+          this.orderSheet = response.data.record;
+          
+
+          this.getCaseDetails();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      
+    },
+
+    getCaseDetails() {
+      axios
+        .get(this.base_url + "/api/petitions/" + this.petition_id)
+        .then((response) => {
+          this.petition = response.data.petition;
         })
         .catch((error) => {
           console.log(error);
         });
     },
 
-    
     editPetitionAttachment(attachmentToUpdate) {
       if (true) {
         var headers = {
@@ -427,7 +261,7 @@ export default {
                   title: "Success",
                   text: "Deleted Successfully!",
                 });
-                //this.getCaseDetails()
+                //this.getOrderSheets()
                 this.petition_index_details.attachments.splice(
                   attachmentIndex,
                   1

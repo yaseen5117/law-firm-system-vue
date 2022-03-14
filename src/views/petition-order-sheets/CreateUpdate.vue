@@ -1,6 +1,6 @@
 <template>
   <main id="main">
-    <page-header :title="page_title" :order_sheet="null" />
+    <page-header :title="page_title" :order_sheet="null" :petition="petition" />
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="row">
@@ -86,7 +86,7 @@
               <div class="form-group">
                 <button class="btn btn-success btn-sm mt-2">Save</button>
               </div>
-              <pre>{{ order_sheet }}</pre>
+              
             </form>
           </div>
         </div>
@@ -122,6 +122,7 @@ export default {
         title: "",
         description: "",
       },
+      petition:{},
       petition_types: [],
       order_sheet_types: [
         {
@@ -181,7 +182,7 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
-                //this.$router.push({ path: "/petitions" });
+                this.$router.push({ path: "/petition-order-sheets-index" , params: { petition_id: this.petition_id }});
               }
               console.log(response);
             },
@@ -233,8 +234,8 @@ export default {
         });
     },
     getPetition() {
-      if (this.$route.params.id) {
-        var url = this.base_url + "/api/petitions/" + this.$route.params.id;
+      if (this.$route.params.petition_id) {
+        var url = this.base_url + "/api/petitions/" + this.$route.params.petition_id;
         axios
           .get(url)
           .then((response) => {
