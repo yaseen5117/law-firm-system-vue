@@ -161,7 +161,16 @@
                       class="form-control"
                       v-model="new_petition_index.document_description"
                       v-on:keyup.enter="submitPetitionIndex()"
+                      v-bind:class="{
+                        'error-boarder': v$.new_petition_index.document_description.$error,
+                      }"
+                      @blur="v$.new_petition_index.document_description.$touch"
                     />
+                     <span
+                      v-if="v$.new_petition_index.document_description.$error"
+                      class="errorMessage"
+                      >Description field is required.</span
+                    >
                   </td>
                   <td>
                     <datepicker
@@ -219,10 +228,18 @@
 import axios from "axios";
 import NavComponents from "./Cases/NavComponents.vue";
 import PageHeader from "../views/shared/PageHeader";
+import useVuelidate from "@vuelidate/core";
+import { required, email, helpers } from "@vuelidate/validators";
+
 export default {
   components: {
     NavComponents,
     PageHeader,
+  },
+  setup() {
+    return {
+      v$: useVuelidate(),
+    };
   },
   data() {
     return {
@@ -230,7 +247,17 @@ export default {
       petition: {},
       petition_details: [],
       id: this.$route.params.id, //this is the id from the browser
-      new_petition_index: {},
+      new_petition_index: {
+        document_description:"",
+      },
+      
+    };
+  },
+  validations() {
+    return {      
+        new_petition_index: {
+          document_description: { required },  
+        }       
     };
   },
   created() {
@@ -251,7 +278,8 @@ export default {
     },
 
     submitPetitionIndex() {
-      if (true) {
+      this.v$.$validate();
+      if (!this.v$.$error) {       
         var headers = {
           Authorization:
             `Bearer ` + localStorage.getItem("rezo_customers_user"),
