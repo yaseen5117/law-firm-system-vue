@@ -28,20 +28,20 @@
               Add New Order Sheet
             </router-link>
     
-            <p >
-              <strong>Title: </strong>{{ orderSheet.title }}
-              <strong>Description: </strong>{{ orderSheet.description }}
-              <strong>Order Sheet Date: </strong>{{ orderSheet.order_sheet_date }}
+            <div >
+              <strong>Title: </strong>{{ orderSheetsActive.title }}
+              <strong>Description: </strong>{{ orderSheetsActive.description }}
+              <strong>Order Sheet Date: </strong>{{ orderSheetsActive.order_sheet_date }}
               <file-upload
-                @afterUpload="getOrderSheets"
+                @afterUpload="orderSheetsActive"
                 type="App\Models\PetitonOrderSheet"
-                :attachmentable_id="orderSheet.id"
+                :attachmentable_id="orderSheetsActive.id"
               />
 
               <div
                 class="row mb-2 text-center"
                 :id="'image-container-' + attachment.id"
-                v-for="attachment in orderSheet.attachments"
+                v-for="attachment in orderSheetsActive.attachments"
                 :key="attachment"
               >
                 <div class="col-12">
@@ -60,7 +60,7 @@
                   <hr class="mt-4 mb-4" style="border: solid 3px" />
                 </div>
               </div>
-            </p>
+            </div>
           </div>
         </div>
       </div>
@@ -125,6 +125,7 @@ export default {
       editView: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
       orderSheets: [],
+      orderSheetsActive: {},
       petition: {},
       petition_index: [],
       petition_index_details: {},
@@ -183,7 +184,7 @@ export default {
             this.order_sheet_id
         )
         .then((response) => {
-          this.orderSheet = response.data.record;
+          this.orderSheetsActive = response.data.record;
           
 
           this.getCaseDetails();
