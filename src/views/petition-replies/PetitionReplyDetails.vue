@@ -4,13 +4,30 @@
     <page-header
       :title="petition_reply_details.document_description"
       :petition="petition"
+      :hide="removePageHeader ? true : false"
     />
     <!-- End Breadcrumbs -->
-    <section id="services" class="services section-bg">
+    <section id="services" class="services section-bg"
+    :class="removePageHeader ? 'margintop85' : ''"
+    >
       <div class="container" data-aos="fade-up">
 
         <div class="row text-right mb-4">
-          <div class="col-12">
+          <div class="col-12 mb-1">
+            <div class="form-check form-switch">
+              <input
+                @change="removePageHeader = !removePageHeader"
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckDefault"
+              />
+              <label class="form-check-label" for="flexSwitchCheckDefault"
+                >Toggle Header</label
+              >
+            </div>
+          </div>
+          <div v-if="!removePageHeader" class="col-12">
 
             <button
               v-show="!showImgCard"
@@ -55,7 +72,8 @@
 
 
           </div>
-          <div class="col-lg-12 col-md-12 col-sm-12" v-show="showImgCard"><file-upload @afterUpload="getPetitionReplyDetails" type="App\Models\PetitionReply" /></div>
+          <div class="col-lg-12 col-md-12 col-sm-12" v-show="showImgCard">
+            <file-upload @afterUpload="getPetitionReplyDetails" type="App\Models\PetitionReply" :attachmentable_id="attachmentable_id"/></div>
         </div>
 
         <div class="row">
@@ -297,9 +315,11 @@ export default {
       petition: {},
       petition_reply_index: [],
       petition_reply_details: {},
+      attachmentable_id: this.$route.params.id,
       id: this.$route.params.id, //this is the id from the browser
       horizontalView: false, //it will show vertical images by default
       activePage: null,
+      removePageHeader: true,
     };
   },
   created() {
