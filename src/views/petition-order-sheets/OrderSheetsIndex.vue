@@ -2,7 +2,7 @@
   <main id="main">
     <!-- ======= Breadcrumbs ======= -->
     <page-header :title="'Order Sheets'" :petition="petition" />
-    <nav-components activeNavPill="reply" />
+    <nav-components activeNavPill="reply" :petition_id="petition.id" />
     <!-- End Breadcrumbs -->
     <section
       id="services"
@@ -11,6 +11,7 @@
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="col-md-12">
+
             <router-link
               class="btn btn-primary btn-sm"
               :to="{

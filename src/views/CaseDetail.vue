@@ -1,7 +1,7 @@
 <template>
   <main id="main">
     <page-header title="Petition" />
-    <nav-components activeNavPill = 'petition' />
+    <nav-components activeNavPill = 'petition' :petition_id="petition.id"  />
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">

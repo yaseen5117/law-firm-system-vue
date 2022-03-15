@@ -14,7 +14,7 @@
             <li v-if="petition"><router-link :to="{
                                   name: 'case-detail',
                                   params: { id: petition?petition.id:'#' },
-                                }">Case Files</router-link></li>
+                                }">Case File ({{petition.case_no}})</router-link></li>
             
           </ol>
         </template>

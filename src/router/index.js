@@ -6,8 +6,10 @@ import CaseDetail from '../views/CaseDetail'
 import PetitionIndexDetails from '../views/petition-index/PetitionIndexDetails'
 import CreatePetition from '../views/petitions/CreatePetition'
 import Login from '../views/Auth/Login'
+
 import PetitionReply from '../views/petition-replies/PetitionReply'
 import PetitionReplyDetails from '../views/petition-replies/PetitionReplyDetails'
+
 import UsersList from '../views/users/UsersList'
 import PetitionsCalendar from '../views/calendar/PetitionsCalendar'
 
@@ -16,6 +18,9 @@ import OrderSheetIndex from '../views/petition-order-sheets/OrderSheetsIndex'
 
 import CreateUser from '../views/users/CreateUser'
 import PetitionReplyParent from '../views/petition-replies/PetitionReplyParent'
+
+import StandardIndex from '../views/StandardModules/StandardIndex'
+import StandardIndexDetails from '../views/StandardModules/StandardIndexDetails'
  
 
 
@@ -118,16 +123,32 @@ const routes = [
       auth: true ,
     },
   },
-
-  // {
-  //   path: '/petition-order-sheets/:petition_id/:id',
-  //   name: 'petition-order-sheets',    
-  //   component: PetitionOrderSheetCreateUpdate,
-  //   meta: { 
-  //     auth: true ,
-  //   },
-  // },
   ////////////////Order Sheets/////////////
+
+
+  
+  ////////////////Standard Modules for Same Pages/////////////
+  {
+    path: '/standard-index/:petition_id/:module_type',
+    name: 'standard-index',    
+    component: StandardIndex,
+    meta: { 
+      auth: true ,
+    },
+  },
+  {
+    path: '/standard-index-details/:module_id/:module_type',
+    name: 'standard-index-details',    
+    component: StandardIndexDetails,
+    meta: { 
+      auth: true ,
+    },
+  },
+
+  ////////////////Standard Modules for Same Pages/////////////
+
+
+
   {
     path: '/petition-reply-parents/:id',
     name: 'petition-reply-parents',    

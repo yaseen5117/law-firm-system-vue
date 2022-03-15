@@ -11,7 +11,7 @@
               :class="activeNavPill == 'petition' ? 'active' : ''"
               :to="{
                 name: 'case-detail',
-                params: { id: this.$route.params.id },
+                params: { id: petition_id },
               }"
               id="petition"
             >
@@ -24,7 +24,7 @@
               :class="activeNavPill == 'reply' ? 'active' : ''"
               :to="{
                 name: 'petition-reply-parents',
-                params: { id: this.$route.params.id },
+                params: { id: petition_id },
               }"
               id="replies"
             >
@@ -37,7 +37,7 @@
               :class="activeNavPill == 'order-sheet' ? 'active' : ''"
               :to="{
                 name: 'petition-order-sheets-index',
-                params: { petition_id: this.$route.params.id },
+                params: { petition_id: petition_id },
               }"
               id="replies"
             >
@@ -45,14 +45,20 @@
             </router-link>
           </li>
           <li class="nav-item" role="presentation">
-            <button
+            <router-link
               class="nav-link"
-              :class="activeNavPill == 'oral-orgue' ? 'active' : ''"
-              id="pral-argument-tab"
-              data-bs-toggle="tab"
+              :class="activeNavPill == 'oral_arguments' ? 'active' : ''"
+              :to="{
+                name: 'standard-index',
+                params: {
+                  petition_id: petition_id,
+                  module_type: 'oral_arguments',
+                },
+              }"
+              id="replies"
             >
               Oral Arguments
-            </button>
+            </router-link>
           </li>
           <li class="nav-item dropdown">
             <a
@@ -137,18 +143,9 @@
 import { integer } from "@vuelidate/validators";
 
 export default {
-  props: {
-    activeNavPill: integer,
-  },
+  props: ["activeNavPill", "petition_id"],
 
-  mounted() {
-    let recaptchaScript = document.createElement("script");
-    recaptchaScript.setAttribute(
-      "src",
-      "../../../public/js/bootstrap-nav-paginator.js"
-    );
-    document.head.appendChild(recaptchaScript);
-  },
+  mounted() {},
 };
 </script>
 <style>

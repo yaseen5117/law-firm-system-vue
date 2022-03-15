@@ -1,7 +1,7 @@
 <template>
   <main id="main">
     <page-header title="Petition Replies Parent" />
-    <nav-components activeNavPill = 'reply' />
+    <nav-components activeNavPill = 'reply' :petition_id="petition.id"  />
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg mt-3">
       <div class="container" data-aos="fade-up">        
@@ -132,15 +132,31 @@ export default {
     return {
       'page_title':'Petiton Replies',
       base_url: process.env.VUE_APP_SERVICE_URL,
-      petition_reply_parents: [],       
-      id: this.$route.params.id, //this is the id from the browser 
+      petition_reply_parents: [], 
+      petition:{},      
+      id: this.$route.params.id, 
+      petition_id: this.$route.params.id, 
       new_petition_reply_parent: {},      
     };
   },
   created() {
+    this.getCaseDetails();
     this.getPetitionReplyParents();
   },
   methods: {
+
+    getCaseDetails() {
+      axios
+        .get(this.base_url + "/api/petitions/" + this.petition_id)
+        .then((response) => {
+          this.petition = response.data.petition;
+
+          console.log(this.petition);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     getPetitionReplyParents() {
       axios
         .get(this.base_url + "/api/petition_reply_parents/" + this.id)
