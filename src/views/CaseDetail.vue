@@ -107,7 +107,7 @@
                   </td>
                   <td width="15%">
                     <a
-                      class="btn btn-sm btn-primary"
+                      class="btn btn-sm btn-primary action-btn"
                       v-show="!petition_detail.editMode"
                       @click="petition_detail.editMode = true"
                       href="javascript:void"
@@ -119,7 +119,7 @@
                     </a>
                     <a
                       v-show="petition_detail.editMode"
-                      class="btn btn-sm btn-warning"
+                      class="btn btn-sm btn-warning action-btn"
                       @click="editPetitionIndex(petition_detail)"
                       href="javascript:void"
                       style="margin-left:2px"
@@ -132,7 +132,7 @@
                     <a
                       v-show="petition_detail.editMode"
                       @click="petition_detail.editMode=false"
-                      class="btn btn-sm btn-info"
+                      class="btn btn-sm btn-info action-btn"
                       href="javascript:void"
                       style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Cacncel"
@@ -142,7 +142,7 @@
                     </a>
 
                     <a
-                    class="btn btn-sm btn-danger"
+                    class="btn btn-sm btn-danger action-btn"
 
                       v-show="!petition_detail.editMode"
                       @click="deletePetitionIndex(petition_detail.id,petitionIndex)"
@@ -196,7 +196,7 @@
                     <a
                       href="javascript:void"
                       @click="submitPetitionIndex()"
-                      class="btn btn-sm btn-success"
+                      class="btn btn-sm btn-success action-btn"
                     >
                       Save
                       <!-- <i class="fa fa-save"></i> -->

@@ -146,36 +146,35 @@
                                   name: 'case-detail',
                                   params: { id: petition.id },
                                 }"
-                                class="btn btn-success btn-sm"
+                                class="btn btn-success btn-sm action-btn"
                                 role="button"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
                                 title="View"
-                                ><i class="fa fa-eye"></i
-                              ></router-link>
+                                >View
+                              </router-link>
                               <router-link
                                 style="margin-right: 2px"
                                 :to="{
                                   name: 'edit-petition',
                                   params: { id: petition.id },
                                 }"
-                                class="btn btn-primary btn-sm"
+                                class="btn btn-primary btn-sm action-btn"
                                 role="button"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
                                 title="Edit"
-                                ><i class="fa fa-edit"></i
-                              ></router-link>
+                                >Edit
+                              </router-link>
                               <router-link
                                 style="margin-right: 2px"
                                 to="#"
-                                class="btn btn-warning btn-sm"
+                                class="btn btn-warning btn-sm action-btn"
                                 role="button"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
                                 title="Alert"
-                                ><i class="fa fa-bell"></i
-                              ></router-link>
+                                >Alert</router-link>
                             </div>
                           </div>
                         </div>
