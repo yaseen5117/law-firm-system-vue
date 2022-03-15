@@ -1,37 +1,31 @@
 <template>
   <main id="main">
     <!-- ======= Breadcrumbs ======= -->
-    <page-header
-      :title="'Order Sheets'"
-      :petition="petition"
-      
-    />
-    <nav-components activeNavPill = 'reply' />
+    <page-header :title="'Order Sheets'" :petition="petition" />
+    <nav-components activeNavPill="reply" />
     <!-- End Breadcrumbs -->
     <section
       id="services"
       class="services section-bg"
-      :class="removePageHeader ? 'margintop85' : ''"
     >
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="col-md-12">
-            
             <router-link
-              class="btn btn-primary btn-sm"    
-              
+              class="btn btn-primary btn-sm"
               :to="{
                 name: 'petition-order-sheets-save',
                 params: { petition_id: petition.id },
-              }"                  
+              }"
             >
               Add New Order Sheet
             </router-link>
-    
-            <div >
+
+            <div class="mt-4">
               <strong>Title: </strong>{{ orderSheetsActive.title }}
               <strong>Description: </strong>{{ orderSheetsActive.description }}
-              <strong>Order Sheet Date: </strong>{{ orderSheetsActive.order_sheet_date }}
+              <strong>Order Sheet Date: </strong
+              >{{ orderSheetsActive.order_sheet_date }}
               <file-upload
                 @afterUpload="orderSheetsActive"
                 type="App\Models\PetitonOrderSheet"
@@ -81,7 +75,7 @@
       </ul>
     </div>
 
-    <div class="fixed-annexsures" >
+    <div class="fixed-annexsures">
       <ul class="list-group">
         <router-link
           v-for="orderSheet in orderSheets"
@@ -90,7 +84,7 @@
           class="list-group-item"
           :to="{
             name: 'petition-order-sheets-index',
-            params: { order_sheet_id: orderSheet.id ,  petition_id: petition.id },
+            params: { order_sheet_id: orderSheet.id, petition_id: petition.id },
           }"
           >{{ orderSheet.order_sheet_date }}</router-link
         >
@@ -171,28 +165,32 @@ export default {
           console.log(error);
         });
     },
-    
+
     getOrderSheet() {
       
-      if(this.order_sheet_id){
-        var activeOrderSheetId = this.order_sheet_id
-      }
-        axios
-        .get(
-          this.base_url +
-            "/api/petition_order_sheets/" +
-            this.order_sheet_id
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("rezo_customers_user"),
+      };
+
+      axios
+        .post(
+          this.base_url + "/api/petition_order_sheets/by_petition",
+          {
+            petition_id: this.petition_id,
+            id: this.order_sheet_id,
+          },
+          {
+            headers,
+          }
         )
         .then((response) => {
           this.orderSheetsActive = response.data.record;
-          
 
           this.getCaseDetails();
         })
         .catch((error) => {
           console.log(error);
         });
-      
     },
 
     getCaseDetails() {

@@ -182,7 +182,7 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
-                this.$router.push({ path: "/petition-order-sheets-index" , params: { petition_id: this.petition_id }});
+                this.$router.push({ path: "/petition-order-sheets-index/"+ this.order_sheet.petition_id});
               }
               console.log(response);
             },
