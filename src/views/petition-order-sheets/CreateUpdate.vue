@@ -25,19 +25,33 @@
                     >
                   </div>
 
-                  <div class="col-lg-4 col-md-4 col-sm-12">
-                    <label>Type</label>
-                    <select
-                      :class="{
-                        'error-boarder':
-                          v$.order_sheet.order_sheet_type_id.$error,
+                   <div class="col-lg-3 col-md-3 col-sm-12">
+                    <label>Order Sheet Date<span style="color: red">*</span></label>
+                    <datepicker
+                    v-bind:class="{
+                        'error-boarder': v$.order_sheet.order_sheet_date.$error,
                       }"
-                      @blur="v$.order_sheet.order_sheet_type_id.$touch"
+                      @blur="v$.order_sheet.order_sheet_date.$touch"
+                      :enableTimePicker="false"
+                      autoApply
+                      format="dd/MM/yyyy"
+                      placeholder="dd/mm/yyyy"
+                      v-model="order_sheet.order_sheet_date"
+                    >
+                    </datepicker>
+                     <span
+                      v-if="v$.order_sheet.order_sheet_date.$error"
+                      class="errorMessage"
+                      >Date field is required.</span
+                    >
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-12">
+                    <label>Type</label>
+                    <select                     
                       class="form-control"
                       v-model="order_sheet.order_sheet_type_id"
                     >
                       <option value="">--Select--</option>
-
                       <option
                         v-for="order_sheet_type in this.order_sheet_types"
                         :key="order_sheet_type.id"
@@ -45,12 +59,7 @@
                       >
                         {{ order_sheet_type.title }}
                       </option>
-                    </select>
-                    <span
-                      v-if="v$.order_sheet.order_sheet_type_id.$error"
-                      class="errorMessage"
-                      >Type field is required.</span
-                    >
+                    </select>                    
                   </div>
                 </div>
               </div>
@@ -66,23 +75,7 @@
                   </div>
                 </div>
               </div>
-
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label>Order Sheet Date</label>
-                    <datepicker
-                      :enableTimePicker="false"
-                      autoApply
-                      format="dd/MM/yyyy"
-                      placeholder="dd/mm/yyyy"
-                      v-model="order_sheet.order_sheet_date"
-                    >
-                    </datepicker>
-                  </div>
-                </div>
-              </div>
-
+            
               <div class="form-group">
                 <button class="btn btn-success btn-sm mt-2">Save</button>
               </div>
@@ -143,7 +136,7 @@ export default {
   validations() {
     return {
       order_sheet: {
-        order_sheet_type_id: { required },
+        order_sheet_date: { required },
         title: { required },
       },
     };

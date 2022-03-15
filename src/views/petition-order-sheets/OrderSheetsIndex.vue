@@ -1,18 +1,37 @@
 <template>
   <main id="main">
     <!-- ======= Breadcrumbs ======= -->
-    <page-header :title="'Order Sheets'" :petition="petition" />
-    <nav-components activeNavPill="reply" :petition_id="petition.id" />
+    <page-header 
+    :title="'Order Sheets'" 
+    :petition="petition" 
+    :hide="removePageHeader ? true : false"
+    />
+    <nav-components activeNavPill="reply"  :petition_id="petition.id" />
     <!-- End Breadcrumbs -->
     <section
       id="services"
       class="services section-bg"
+      :class="removePageHeader ? 'margintop85' : ''"
     >
       <div class="container" data-aos="fade-up">
         <div class="row">
-          <div class="col-md-12">
-
-            <router-link
+          <div class="col-12 mb-1">
+            <div class="form-check form-switch">
+              <input
+                @change="removePageHeader = !removePageHeader"
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckDefault"
+              />
+              <label class="form-check-label" for="flexSwitchCheckDefault"
+                >Toggle Header</label
+              >
+            </div>
+          </div>
+          <div class="col-md-12 mb-4">
+            <router-link 
+              v-if="!removePageHeader"
               class="btn btn-primary btn-sm"
               :to="{
                 name: 'petition-order-sheets-save',
@@ -23,16 +42,17 @@
             </router-link>
 
             <div class="mt-4">
+              <div v-if="!removePageHeader" class="mb-4">
               <strong>Title: </strong>{{ orderSheetsActive.title }}
               <strong>Description: </strong>{{ orderSheetsActive.description }}
               <strong>Order Sheet Date: </strong
               >{{ orderSheetsActive.order_sheet_date }}
               <file-upload
-                @afterUpload="orderSheetsActive"
+                @afterUpload="getOrderSheet"
                 type="App\Models\PetitonOrderSheet"
                 :attachmentable_id="orderSheetsActive.id"
-              />
-
+              /> 
+              </div>
               <div
                 class="row mb-2 text-center"
                 :id="'image-container-' + attachment.id"
@@ -64,7 +84,7 @@
     <div v-show="!horizontalView && !editView" class="fixed-page-numbers">
       <ul class="list-group">
         <li
-          v-for="attachment in petition_index_details.attachments"
+          v-for="attachment in orderSheetsActive.attachments"
           :key="attachment"
           :class="activePage == attachment.id ? 'active' : ''"
           class="list-group-item"
