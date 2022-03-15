@@ -83,39 +83,42 @@
                   </td>
                   <td width="15%">
                     <a
-                      class="btn btn-sm btn-primary"
+                      class="btn btn-sm btn-primary action-btn"
                       v-show="!petition_reply.editMode"
                       @click="petition_reply.editMode = true"
                       href="javascript:void"
                       style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"
                     >
-                      <i class="fa fa-edit"></i>
+                    Edit
+                      <!-- <i class="fa fa-edit"></i> -->
                     </a>
                     <a
                       v-show="petition_reply.editMode"
-                      class="btn btn-sm btn-warning"
+                      class="btn btn-sm btn-warning action-btn"
                       @click="editPetitionReply(petition_reply)"
                       href="javascript:void"
                       style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Update"
                     >
-                      <i class="fa fa-save"></i>
+                    Update
+                      <!-- <i class="fa fa-save"></i> -->
                     </a>
 
                     <a
                       v-show="petition_reply.editMode"
                       @click="petition_reply.editMode=false"
-                      class="btn btn-sm btn-info"
+                      class="btn btn-sm btn-info action-btn"
                       href="javascript:void"
                       style="margin-left:2px"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Cacncel"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel"
                     >
-                      <i class="fa fa-remove"></i>
+                    Cancel
+                      <!-- <i class="fa fa-remove"></i> -->
                     </a>
 
                     <a
-                    class="btn btn-sm btn-danger"
+                    class="btn btn-sm btn-danger action-btn"
 
                       v-show="!petition_reply.editMode"
                       @click="deletePetitionReply(petition_reply.id,petitionReplyIndex)"
@@ -123,7 +126,8 @@
                       style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
                     >
-                     <i class="fa fa-trash-o"></i>
+                    Delete
+                     <!-- <i class="fa fa-trash-o"></i> -->
                     </a>
                   </td>
                 </tr>
@@ -164,9 +168,10 @@
                     <a
                       href="javascript:void"
                       @click="submitPetitionReply()"
-                      class="btn btn-sm btn-success"
+                      class="btn btn-sm btn-success action-btn"
                     >
-                      <i class="fa fa-save"></i>
+                    Save
+                      <!-- <i class="fa fa-save"></i> -->
                     </a>
                   </td>
                 </tr>

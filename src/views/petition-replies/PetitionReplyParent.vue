@@ -39,7 +39,7 @@
                   
                   <td width="15%">
                     <a
-                      class="btn btn-sm btn-primary"
+                      class="btn btn-sm btn-primary action-btn"
                       v-show="!petition_reply_parent.editMode"
                       @click="petition_reply_parent.editMode = true"
                       href="javascript:void"
@@ -51,7 +51,7 @@
                     </a>
                     <a
                       v-show="petition_reply_parent.editMode"
-                      class="btn btn-sm btn-warning"
+                      class="btn btn-sm btn-warning action-btn"
                       @click="editPetitionReplyParent(petition_reply_parent)"
                       href="javascript:void"
                       style="margin-left:2px"
@@ -64,7 +64,7 @@
                     <a
                       v-show="petition_reply_parent.editMode"
                       @click="petition_reply_parent.editMode=false"
-                      class="btn btn-sm btn-info"
+                      class="btn btn-sm btn-info action-btn"
                       href="javascript:void"
                       style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Cacncel"
@@ -74,7 +74,7 @@
                     </a>
 
                     <a
-                    class="btn btn-sm btn-danger"
+                    class="btn btn-sm btn-danger action-btn"
 
                       v-show="!petition_reply_parent.editMode"
                       @click="deletePetitionReply(petition_reply_parent.id,petitionReplyParentIndex)"
@@ -100,7 +100,7 @@
                     <a
                       href="javascript:void"
                       @click="submitPetitionReply()"
-                      class="btn btn-sm btn-success"
+                      class="btn btn-sm btn-success action-btn"
                     >
                     Save
                       <!-- <i class="fa fa-save"></i> -->

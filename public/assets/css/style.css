@@ -1501,5 +1501,11 @@ section {
     transform: scale(1);
   }
 }
-
-
+/* for all action buttons on index pages */
+.action-btn{
+  padding: 1px 8px;
+  font-size: .875rem;
+  border-radius: 0.2rem;
+  font-size: 13px;
+  font-weight: 700;
+}
