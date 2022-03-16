@@ -30,7 +30,7 @@
             </div>
           </div>
           <div class="col-md-12 mb-4">
-            <router-link 
+            <router-link
               v-if="!removePageHeader"
               class="btn btn-primary btn-sm"
               :to="{
@@ -41,38 +41,43 @@
               Add New Order Sheet
             </router-link>
 
-            <div class="mt-4">
+            <div class="mt-4" v-if="orderSheetsActive">
               <div v-if="!removePageHeader" class="mb-4">
-              <strong>Title: </strong>{{ orderSheetsActive.title }}
-              <strong>Description: </strong>{{ orderSheetsActive.description }}
-              <strong>Order Sheet Date: </strong
-              >{{ orderSheetsActive.order_sheet_date }}
-              <file-upload
-                @afterUpload="getOrderSheet"
-                type="App\Models\PetitonOrderSheet"
-                :attachmentable_id="orderSheetsActive.id"
-              /> 
+                <strong>Title: </strong>{{ orderSheetsActive.title }}
+                <strong>Description: </strong
+                >{{ orderSheetsActive.description }}
+                <strong>Order Sheet Date: </strong
+                >{{ orderSheetsActive.order_sheet_date }}
+
+                <file-upload
+                  @afterUpload="getOrderSheet"
+                  type="App\Models\PetitonOrderSheet"
+                  :attachmentable_id="orderSheetsActive.id"
+                />
               </div>
-              <div
-                class="row mb-2 text-center"
-                :id="'image-container-' + attachment.id"
-                v-for="attachment in orderSheetsActive.attachments"
-                :key="attachment"
-              >
-                <div class="col-12">
-                  <img
-                    :class="activePage == attachment.id ? 'active-img' : ''"
-                    class="img-fluid"
-                    style="width: 90%"
-                    :src="
-                      this.base_url +
-                      '/storage/attachments/' +
-                      attachment.attachmentable_id +
-                      '/' +
-                      attachment.file_name
-                    "
-                  />
-                  <hr class="mt-4 mb-4" style="border: solid 3px" />
+              
+              <div >
+                <div
+                  class="row mb-2 text-center"
+                  :id="'image-container-' + attachment.id"
+                  v-for="attachment in orderSheetsActive.attachments"
+                  :key="attachment"
+                >
+                  <div class="col-12">
+                    <img
+                      :class="activePage == attachment.id ? 'active-img' : ''"
+                      class="img-fluid"
+                      style="width: 90%"
+                      :src="
+                        this.base_url +
+                        '/storage/attachments/' +
+                        attachment.attachmentable_id +
+                        '/' +
+                        attachment.file_name
+                      "
+                    />
+                    <hr class="mt-4 mb-4" style="border: solid 3px" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -80,21 +85,6 @@
         </div>
       </div>
     </section>
-
-    <div v-show="!horizontalView && !editView" class="fixed-page-numbers">
-      <ul class="list-group">
-        <li
-          v-for="attachment in orderSheetsActive.attachments"
-          :key="attachment"
-          :class="activePage == attachment.id ? 'active' : ''"
-          class="list-group-item"
-          @click="scrollIntoView(attachment.id)"
-          style="cursor: pointer"
-        >
-          {{ attachment.id }}
-        </li>
-      </ul>
-    </div>
 
     <div class="fixed-annexsures">
       <ul class="list-group">
@@ -149,7 +139,7 @@ export default {
       petition_id: this.$route.params.petition_id, //this is the id from the browser
       horizontalView: false, //it will show vertical images by default
       activePage: null,
-      removePageHeader: true,
+      removePageHeader: false,
     };
   },
   created() {
@@ -189,7 +179,6 @@ export default {
     },
 
     getOrderSheet() {
-      
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("rezo_customers_user"),
       };
