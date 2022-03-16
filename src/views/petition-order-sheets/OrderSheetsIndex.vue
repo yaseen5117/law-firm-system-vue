@@ -53,7 +53,9 @@
                 :attachmentable_id="orderSheetsActive.id"
               /> 
               </div>
+              <div v-if="orderSheetsActive ">
               <div
+              
                 class="row mb-2 text-center"
                 :id="'image-container-' + attachment.id"
                 v-for="attachment in orderSheetsActive.attachments"
@@ -74,6 +76,7 @@
                   />
                   <hr class="mt-4 mb-4" style="border: solid 3px" />
                 </div>
+              </div>
               </div>
             </div>
           </div>
@@ -148,7 +151,7 @@ export default {
       petition_id: this.$route.params.petition_id, //this is the id from the browser
       horizontalView: false, //it will show vertical images by default
       activePage: null,
-      removePageHeader: true,
+      removePageHeader: false,
     };
   },
   created() {
