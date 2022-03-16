@@ -5,7 +5,7 @@
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
-        <div class="row">
+        <div class="row">          
           <div class="table-responsive">
             <div class="col-lg-12 col-md-12 col-sm-12">
               <table class="table table-striped">
@@ -29,11 +29,15 @@
                         v-model="index_data_single.document_description"
                         v-on:keyup.enter="editStandardIndex(index_data_single)"
                       />
+                      
                       <router-link
                         v-show="!index_data_single.editMode"
                         :to="{
-                          name: 'petition-index-details',
-                          params: { id: index_data_single.id },
+                          name: 'standard-index-details',
+                          params: { 
+                              module_id: index_data_single.id,
+                              module_type: module_type 
+                            },
                         }"
                         >{{ index_data_single.document_description }}
                       </router-link>
@@ -238,6 +242,7 @@ export default {
         .then((response) => {
           this.index_data = response.data.index_data;
           this.page_title = response.data.page_title;
+          console.log(this.index_data);
         })
         .catch((error) => {
           console.log(error);

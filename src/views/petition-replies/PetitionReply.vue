@@ -202,7 +202,8 @@ export default {
       base_url: process.env.VUE_APP_SERVICE_URL,
       petition_replies: [],       
       id: this.$route.params.id, //this is the id from the browser 
-      new_petition_reply: {},      
+      new_petition_reply: {},     
+      petition: {}, 
     };
   },
   created() {
@@ -213,7 +214,8 @@ export default {
       axios
         .get(this.base_url + "/api/petition_replies/" + this.id)
         .then((response) => {
-          this.petition_replies = response.data.petition_replies;                 
+          this.petition_replies = response.data.petition_replies; 
+          this.petition = response.data.petition;
         })
         .catch((error) => {
           console.log(error);
