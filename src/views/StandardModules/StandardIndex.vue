@@ -3,7 +3,7 @@
     <page-header :title="page_title" :petition="petition" />
     <nav-components :activeNavPill="module_type" :petition_id="petition.id" />
     <!-- ======= Services Section ======= -->
-    <section id="services" class="services section-bg">
+    <section id="services" class="services section-bg mt-3">
       <div class="container" data-aos="fade-up">
         <div class="row">          
           <div class="table-responsive">
@@ -114,9 +114,9 @@
                         style="margin-left: 2px"
                         data-bs-toggle="tooltip"
                         data-bs-placement="top"
-                        title="Cacncel"
+                        title="Cancel"
                       >
-                        Cacncel
+                        Cancel
                         <!-- <i class="fa fa-remove"></i> -->
                       </a>
 

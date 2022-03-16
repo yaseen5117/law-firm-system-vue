@@ -8,7 +8,12 @@
         <div class="col-xl-5 col-lg-6 pt-3 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
           <h1>Welcome to <br> E-Law Firm</h1>
           <!-- <h2>We are team of talented designers making websites with Bootstrap</h2> -->
-          <div v-if="this.user"><a href="#about" class="btn-get-started scrollto">Login</a></div>
+          <div v-if="!this.user"><router-link :to="{
+                          name: 'Login',                           
+                        }" class="btn-get-started scrollto">Login</router-link></div>
+          <div v-if="this.user"><router-link :to="{
+              name: 'DashBoard',                           
+            }" class="btn-get-started scrollto">Dashboard</router-link></div>
         </div>
         <div class="col-xl-4 col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="150">
           <img src="assets/img/hero-img.png" class="img-fluid animated" alt="">

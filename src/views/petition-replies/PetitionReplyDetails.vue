@@ -10,7 +10,8 @@
     <section id="services" class="services section-bg"
     :class="removePageHeader ? 'margintop85' : ''"
     >
-      <div class="container" data-aos="fade-up">
+    <nav-components activeNavPill = 'reply' :petition_id="petition.id"  />
+      <div class="container mt-4" data-aos="fade-up">
 
         <div class="row text-right mb-4">
           <div class="col-12 mb-1">
@@ -224,7 +225,7 @@
                       class="btn btn-sm btn-info"
                       href="javascript:void"
                       style="margin-left:2px"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Cacncel"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel"
                     >
                       <i class="fa fa-remove"></i>
                     </a>
@@ -295,7 +296,7 @@
 import axios from "axios";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
-
+import NavComponents from "../Cases/NavComponents.vue";
 import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
 export default {
@@ -306,6 +307,7 @@ export default {
     Pagination,
     Navigation,
     FileUpload,
+    NavComponents,
   },
   data() {
     return {    

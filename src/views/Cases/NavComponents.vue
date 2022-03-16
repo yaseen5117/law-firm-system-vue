@@ -34,7 +34,7 @@
           <li class="nav-item" role="presentation">
             <router-link
               class="nav-link"
-              :class="activeNavPill == 'order-sheet' ? 'active' : ''"
+              :class="activeNavPill == 'order_sheet' ? 'active' : ''"
               :to="{
                 name: 'petition-order-sheets-index',
                 params: { petition_id: petition_id },

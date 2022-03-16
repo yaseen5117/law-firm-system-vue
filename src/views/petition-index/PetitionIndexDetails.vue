@@ -5,15 +5,16 @@
       :title="petition_index_details.document_description"
       :petition="petition"
       :hide="removePageHeader ? true : false"
-    />   
+    />    
     <!-- End Breadcrumbs -->
     <section
       id="services"
       class="services section-bg"
       :class="removePageHeader ? 'margintop85' : ''"
     >
-      <div class="container" data-aos="fade-up">
-        <div class="row mb-2">
+    <nav-components activeNavPill = 'petition' :petition_id="petition.id"  />
+      <div class="container mt-4" data-aos="fade-up">
+        <div class="row mb-2">             
           <div class="col-12 mb-1">
             <div class="form-check form-switch">
               <input
@@ -238,7 +239,7 @@
                               style="margin-left: 2px"
                               data-bs-toggle="tooltip"
                               data-bs-placement="top"
-                              title="Cacncel"
+                              title="Cancel"
                             >
                               <i class="fa fa-remove"></i>
                             </a>
@@ -313,7 +314,7 @@
 import axios from "axios";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
-
+import NavComponents from "../Cases/NavComponents.vue";
 import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
 
@@ -325,6 +326,7 @@ export default {
     Pagination,
     Navigation,
     FileUpload,    
+    NavComponents
   },
   data() {
     return {

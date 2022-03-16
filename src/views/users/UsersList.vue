@@ -152,9 +152,9 @@
                       class="btn btn-sm btn-info action-btn"
                       href="javascript:void"
                       style="margin-left:2px"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Cacncel"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel"
                     >
-                    Cacncel
+                    Cancel
                       <!-- <i class="fa fa-remove"></i> -->
                     </a>
 

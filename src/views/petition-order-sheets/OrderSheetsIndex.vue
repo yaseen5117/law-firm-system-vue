@@ -5,15 +5,15 @@
     :title="'Order Sheets'" 
     :petition="petition" 
     :hide="removePageHeader ? true : false"
-    />
-    <nav-components activeNavPill="reply"  :petition_id="petition.id" />
+    />     
     <!-- End Breadcrumbs -->
     <section
       id="services"
       class="services section-bg"
       :class="removePageHeader ? 'margintop85' : ''"
     >
-      <div class="container" data-aos="fade-up">
+    <nav-components activeNavPill = 'order_sheet' :petition_id="petition.id"  />
+      <div class="container mt-4" data-aos="fade-up">
         <div class="row">
           <div class="col-12 mb-1">
             <div class="form-check form-switch">
@@ -121,7 +121,7 @@
 import axios from "axios";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
-
+import NavComponents from "../Cases/NavComponents.vue";
 import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
 
@@ -133,6 +133,7 @@ export default {
     Pagination,
     Navigation,
     FileUpload,
+    NavComponents,
   },
   data() {
     return {
