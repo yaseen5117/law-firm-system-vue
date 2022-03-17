@@ -19,6 +19,9 @@ import OrderSheetIndex from '../views/petition-order-sheets/OrderSheetsIndex'
 import PetitionTalbanaCreateUpdate from '../views/petition-talbana/CreateUpdate'
 import TalbanaIndex from '../views/petition-talbana/TalbanaIndex'
 
+import PetitionNaqalFormCreateUpdate from '../views/petition-naqal-forms/CreateUpdate'
+import NaqalFormIndex from '../views/petition-naqal-forms/NaqalFormIndex'
+
 import CreateUser from '../views/users/CreateUser'
 import PetitionReplyParent from '../views/petition-replies/PetitionReplyParent'
 
@@ -146,6 +149,25 @@ const routes = [
     },
   },
   //////////////// TALBANA ROUTES /////////////
+
+  //////////////// NAQAL FORMS ROUTES /////////////
+  {
+    path: '/petition-naqal-forms-index/:petition_id/:naqal_form_id?',
+    name: 'petition-naqal-forms-index',    
+    component: NaqalFormIndex,
+    meta: { 
+      auth: true ,
+    },
+  },
+  {
+    path: '/petition-naqal-forms-save/:petition_id',
+    name: 'petition-naqal-forms-save',    
+    component: PetitionNaqalFormCreateUpdate,
+    meta: { 
+      auth: true ,
+    },
+  },
+  //////////////// NAQAL FORMS ROUTES /////////////
 
   
   ////////////////Standard Modules for Same Pages/////////////

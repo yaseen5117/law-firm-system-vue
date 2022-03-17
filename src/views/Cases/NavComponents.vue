@@ -71,13 +71,17 @@
             >
             <ul class="dropdown-menu" style="position: relative !important;">
               <li>
-                <a
+                <router-link
                   class="dropdown-item"
-                  :class="activeNavPill == 'naqal-form' ? 'active' : ''"
+                  :class="activeNavPill == 'naqal_forms' ? 'active' : ''"
                   id="naqal-form-tab"
-                  data-bs-toggle="tab"
-                  href="#"
-                  >Naqal Forms</a
+                  :to="{
+                    name: 'petition-naqal-forms-index',
+                    params: { petition_id: petition_id },
+                  }"
+                  >
+                  Naqal Forms
+                  </router-link
                 >
               </li>
               <li>
