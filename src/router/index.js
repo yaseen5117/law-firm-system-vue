@@ -16,6 +16,9 @@ import PetitionsCalendar from '../views/calendar/PetitionsCalendar'
 import PetitionOrderSheetCreateUpdate from '../views/petition-order-sheets/CreateUpdate'
 import OrderSheetIndex from '../views/petition-order-sheets/OrderSheetsIndex'
 
+import PetitionTalbanaCreateUpdate from '../views/petition-talbana/CreateUpdate'
+import TalbanaIndex from '../views/petition-talbana/TalbanaIndex'
+
 import CreateUser from '../views/users/CreateUser'
 import PetitionReplyParent from '../views/petition-replies/PetitionReplyParent'
 
@@ -125,6 +128,24 @@ const routes = [
   },
   ////////////////Order Sheets/////////////
 
+  //////////////// TALBANA ROUTES /////////////
+  {
+    path: '/petition-talbana-index/:petition_id/:talbana_id?',
+    name: 'petition-talbana-index',    
+    component: TalbanaIndex,
+    meta: { 
+      auth: true ,
+    },
+  },
+  {
+    path: '/petition-talbana-save/:petition_id',
+    name: 'petition-talbana-save',    
+    component: PetitionTalbanaCreateUpdate,
+    meta: { 
+      auth: true ,
+    },
+  },
+  //////////////// TALBANA ROUTES /////////////
 
   
   ////////////////Standard Modules for Same Pages/////////////

@@ -81,13 +81,17 @@
                 >
               </li>
               <li>
-                <a
+                <router-link
                   class="dropdown-item"
                   :class="activeNavPill == 'talbana' ? 'active' : ''"
-                  id="contact-tab"
-                  data-bs-toggle="tab"
-                  href="#"
-                  >Talbana</a
+                  id="talbana"                  
+                  :to="{
+                    name: 'petition-talbana-index',
+                    params: { petition_id: petition_id },
+                  }"
+                  >
+                  Talbana
+                  </router-link
                 >
               </li>
               <li>
