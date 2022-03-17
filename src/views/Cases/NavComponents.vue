@@ -136,13 +136,18 @@
                 >
               </li>
               <li>
-                <a
+                <router-link
                   class="dropdown-item"
-                  :class="activeNavPill == 'judgement' ? 'active' : ''"
-                  id="contact-tab"
-                  data-bs-toggle="tab"
-                  href="#"
-                  >Judgment</a
+                  :class="activeNavPill == 'judgements' ? 'active' : ''"
+                  id="judgements"
+                  :to="{
+                    name: 'standard-index',
+                    params: {
+                      petition_id: petition_id,
+                      module_type: 'judgements',
+                    },
+                  }"
+                  >Judgment</router-link
                 >
               </li>
             </ul>
