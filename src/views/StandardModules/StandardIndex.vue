@@ -15,6 +15,7 @@
                   <th>Annexure</th>
                   <th>Page</th>
                   <th width="10%">Actions</th>
+                  <th :class="ShowOnOralArgument ? '' : 'display'">Image Upload</th>
                 </thead>
                 <tbody>
                   <tr
@@ -134,7 +135,16 @@
                       >
                         Delete
                         <!-- <i class="fa fa-trash-o"></i> -->
-                      </a>
+                      </a>                       
+                    </td>                                                     
+                    <td :class="ShowOnOralArgument ? '' : 'display'">
+                       <file-upload
+                          @afterUpload="getModuleIndexDetails"
+                          :type="model_type"
+                          :attachmentable_id="index_data_single.id"
+                          :compactInlineView="compactInlineView"   
+                          class="mt-1"                      
+                        />
                     </td>
                   </tr>
                   <tr>
@@ -201,10 +211,13 @@
 import axios from "axios";
 import NavComponents from "../Cases/NavComponents.vue";
 import PageHeader from "../shared/PageHeader.vue";
+import FileUpload from "../petition-index/FileUpload.vue";
+
 export default {
   components: {
     NavComponents,
     PageHeader,
+    FileUpload
   },
   data() {
     return {
@@ -214,7 +227,10 @@ export default {
       module_type: this.$route.params.module_type,
       petition_id: this.$route.params.petition_id,
       new_standard_index: {},
-      index_data: [],
+      index_data: [],   
+      compactInlineView: "",    
+      ShowOnOralArgument: "",
+      model_type: "",
     };
   },
   created() {
@@ -242,6 +258,9 @@ export default {
         .then((response) => {
           this.index_data = response.data.index_data;
           this.page_title = response.data.page_title;
+          this.compactInlineView = response.data.compactInlineView;
+          this.ShowOnOralArgument = response.data.ShowOnOralArgument;
+          this.model_type = response.data.model_type;
           console.log(this.index_data);
         })
         .catch((error) => {
@@ -374,5 +393,8 @@ export default {
     font-size: 12px !important;
     line-height: normal !important;
   }
+}
+.display{
+  display: none;
 }
 </style>

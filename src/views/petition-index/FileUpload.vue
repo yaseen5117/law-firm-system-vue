@@ -1,11 +1,10 @@
-<template>
-  <div class="card">
-    <div class="card-header">Upload New Files</div>
-    <div class="card-body">
+<template> 
+  <div class="" :class="compactInlineView ? '' : 'card'">
+    <div :class="compactInlineView ? 'display' : 'card-header'" class="">Upload New Files</div>
+    <div class="" :class="compactInlineView ? '' : 'card-body'">
       <!-- <div v-if="success != ''" class="alert alert-success">
         {{ success }}
-      </div> -->
-       
+      </div> -->       
       <form @submit="onUploadFile" enctype="multipart/form-data">
         <input
           accept="image/png, image/jpeg, image/jpg"
@@ -13,12 +12,13 @@
           id="file" 
           class="form-control"
           @change="onChange"
-          multiple
+          multiple     
+          :class="compactInlineView ? 'width-p' : ''"
         />
         <span v-if="v$.files.$error" class="errorMessage"
           >Select a File Before Uploading.</span
         ><br />
-        <button class="btn btn-primary btn-sm">Upload</button>
+        <button :class="compactInlineView ? 'display' : ''" class="btn btn-primary btn-sm">Upload</button>
         <input type="hidden" />
       </form>
     </div>
@@ -31,7 +31,7 @@ import { required, email, helpers } from "@vuelidate/validators";
 
 export default {
   emits: ["afterUpload"],
-  props: ['type','attachmentable_id'],
+  props: ['type','attachmentable_id','compactInlineView'],
   setup() {    
     return {
       v$: useVuelidate(),
@@ -55,25 +55,30 @@ export default {
 
     onChange(e) {
       this.files = e.target.files;
+      if(this.compactInlineView){                
+        this.onUploadFile();
+      }
     },
-    onUploadFile(e) {       
-      e.preventDefault();
+    onUploadFile(e) {   
+       if(!this.compactInlineView){                
+         e.preventDefault();  
+      }             
       //let existingObj = this;
+      
       const config = {
         headers: {
           "content-type": "multipart/form-data",
           Authorization:
             `Bearer ` + localStorage.getItem("rezo_customers_user"),
         },
-      };
-
+      };   
       let formData = new FormData();
 
       for (var i = 0; i < this.files.length; i++) {
         let file = this.files[i];
         formData.append("files[" + i + "]", file);
       }
-
+      
       this.v$.$validate();
       if (!this.v$.$error) {        
         formData.append("attachmentable_type", this.type);
@@ -107,5 +112,11 @@ export default {
 <style>
 .errorMessage {
   color: red;
+}
+.width-p{
+  width: 115px !important;
+}
+.display{
+  display: none;
 }
 </style>

@@ -24,6 +24,9 @@
           <li v-if="!this.user">
             <router-link class="nav-link" to="/login">Login</router-link>
           </li>
+          <li v-if="!this.user">
+            <router-link class="nav-link" to="/sign-up">Sign Up</router-link>
+          </li>
          
           <!-- <li><a class="nav-link scrollto" href="#">Link-1</a></li>
           <li><a class="nav-link scrollto" href="#">Link-2</a></li>           -->

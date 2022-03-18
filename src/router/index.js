@@ -6,6 +6,7 @@ import CaseDetail from '../views/CaseDetail'
 import PetitionIndexDetails from '../views/petition-index/PetitionIndexDetails'
 import CreatePetition from '../views/petitions/CreatePetition'
 import Login from '../views/Auth/Login'
+import SignUp from '../views/Auth/SignUp'
 
 import PetitionReply from '../views/petition-replies/PetitionReply'
 import PetitionReplyDetails from '../views/petition-replies/PetitionReplyDetails'
@@ -35,6 +36,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/sign-up',
+    name: 'SignUp',
+    component: SignUp
   },
   {
     path: '/',
