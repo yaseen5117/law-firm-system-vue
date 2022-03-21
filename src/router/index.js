@@ -20,6 +20,9 @@ import OrderSheetIndex from '../views/petition-order-sheets/OrderSheetsIndex'
 import PetitionTalbanaCreateUpdate from '../views/petition-talbana/CreateUpdate'
 import TalbanaIndex from '../views/petition-talbana/TalbanaIndex'
 
+import PetitionSynopsisCreateUpdate from '../views/petition-synopsis/CreateUpdate'
+import SynopsisIndex from '../views/petition-synopsis/SynopsisIndex'
+
 import PetitionNaqalFormCreateUpdate from '../views/petition-naqal-forms/CreateUpdate'
 import NaqalFormIndex from '../views/petition-naqal-forms/NaqalFormIndex'
 
@@ -155,6 +158,25 @@ const routes = [
     },
   },
   //////////////// TALBANA ROUTES /////////////
+
+  //////////////// SYNOPSIS ROUTES /////////////
+  {
+    path: '/petition-synopsis-index/:petition_id/:synopsis_id?',
+    name: 'petition-synopsis-index',    
+    component: SynopsisIndex,
+    meta: { 
+      auth: true ,
+    },
+  },
+  {
+    path: '/petition-synopsis-save/:petition_id',
+    name: 'petition-synopsis-save',    
+    component: PetitionSynopsisCreateUpdate,
+    meta: { 
+      auth: true ,
+    },
+  },
+  //////////////// SYNOPSIS ROUTES /////////////
 
   //////////////// NAQAL FORMS ROUTES /////////////
   {

@@ -134,13 +134,17 @@
                 >
               </li>
               <li>
-                <a
+                <router-link
                   class="dropdown-item"
-                  :class="activeNavPill == 'synopsis' ? 'active' : ''"
-                  id="contact-tab"
-                  data-bs-toggle="tab"
-                  href="#"
-                  >Synopsis</a
+                  :class="activeNavPill == 'petition_synopsis' ? 'active' : ''"
+                  id="petition_synopsis"                  
+                  :to="{
+                    name: 'petition-synopsis-index',
+                    params: { petition_id: petition_id },
+                  }"
+                  >
+                  Synopsis
+                  </router-link
                 >
               </li>
               <li>
