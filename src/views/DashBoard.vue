@@ -6,7 +6,7 @@
       <div class="container" data-aos="fade-up"> 
 
         <div class="row gy-4">
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+          <div  @click="gotoLink('petitions-calendar')"  class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
             <div class="icon-box iconbox-blue border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -19,7 +19,7 @@
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
+          <div @click="gotoLink('petitions')" class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
             <div class="icon-box iconbox-orange border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -124,7 +124,11 @@
 
 export default {
   name: 'DashBoard',
-   
+  methods:{
+    gotoLink(path) {
+      this.$router.push({ path: path  });
+    }
+  },
 }
 </script>
 
