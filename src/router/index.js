@@ -6,6 +6,7 @@ import CaseDetail from '../views/CaseDetail'
 import PetitionIndexDetails from '../views/petition-index/PetitionIndexDetails'
 import CreatePetition from '../views/petitions/CreatePetition'
 import Login from '../views/Auth/Login'
+import SignUp from '../views/Auth/SignUp'
 
 import PetitionReply from '../views/petition-replies/PetitionReply'
 import PetitionReplyDetails from '../views/petition-replies/PetitionReplyDetails'
@@ -15,6 +16,15 @@ import PetitionsCalendar from '../views/calendar/PetitionsCalendar'
 
 import PetitionOrderSheetCreateUpdate from '../views/petition-order-sheets/CreateUpdate'
 import OrderSheetIndex from '../views/petition-order-sheets/OrderSheetsIndex'
+
+import PetitionTalbanaCreateUpdate from '../views/petition-talbana/CreateUpdate'
+import TalbanaIndex from '../views/petition-talbana/TalbanaIndex'
+
+import PetitionSynopsisCreateUpdate from '../views/petition-synopsis/CreateUpdate'
+import SynopsisIndex from '../views/petition-synopsis/SynopsisIndex'
+
+import PetitionNaqalFormCreateUpdate from '../views/petition-naqal-forms/CreateUpdate'
+import NaqalFormIndex from '../views/petition-naqal-forms/NaqalFormIndex'
 
 import CreateUser from '../views/users/CreateUser'
 import PetitionReplyParent from '../views/petition-replies/PetitionReplyParent'
@@ -29,6 +39,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/sign-up',
+    name: 'SignUp',
+    component: SignUp
   },
   {
     path: '/',
@@ -125,6 +140,62 @@ const routes = [
   },
   ////////////////Order Sheets/////////////
 
+  //////////////// TALBANA ROUTES /////////////
+  {
+    path: '/petition-talbana-index/:petition_id/:talbana_id?',
+    name: 'petition-talbana-index',    
+    component: TalbanaIndex,
+    meta: { 
+      auth: true ,
+    },
+  },
+  {
+    path: '/petition-talbana-save/:petition_id',
+    name: 'petition-talbana-save',    
+    component: PetitionTalbanaCreateUpdate,
+    meta: { 
+      auth: true ,
+    },
+  },
+  //////////////// TALBANA ROUTES /////////////
+
+  //////////////// SYNOPSIS ROUTES /////////////
+  {
+    path: '/petition-synopsis-index/:petition_id/:synopsis_id?',
+    name: 'petition-synopsis-index',    
+    component: SynopsisIndex,
+    meta: { 
+      auth: true ,
+    },
+  },
+  {
+    path: '/petition-synopsis-save/:petition_id',
+    name: 'petition-synopsis-save',    
+    component: PetitionSynopsisCreateUpdate,
+    meta: { 
+      auth: true ,
+    },
+  },
+  //////////////// SYNOPSIS ROUTES /////////////
+
+  //////////////// NAQAL FORMS ROUTES /////////////
+  {
+    path: '/petition-naqal-forms-index/:petition_id/:naqal_form_id?',
+    name: 'petition-naqal-forms-index',    
+    component: NaqalFormIndex,
+    meta: { 
+      auth: true ,
+    },
+  },
+  {
+    path: '/petition-naqal-forms-save/:petition_id',
+    name: 'petition-naqal-forms-save',    
+    component: PetitionNaqalFormCreateUpdate,
+    meta: { 
+      auth: true ,
+    },
+  },
+  //////////////// NAQAL FORMS ROUTES /////////////
 
   
   ////////////////Standard Modules for Same Pages/////////////

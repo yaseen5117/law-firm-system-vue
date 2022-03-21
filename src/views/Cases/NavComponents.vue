@@ -8,7 +8,7 @@
           <li class="nav-item" role="presentation">
             <router-link
               class="nav-link"
-              :class="activeNavPill == 'petition' ? 'active' : ''"
+              :class="activeNavPill ==module_type ? 'active' : ''"
               :to="{
                 name: 'case-detail',
                 params: { id: petition_id },
@@ -69,66 +69,97 @@
               aria-expanded="false"
               >Others</a
             >
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" style="position: relative !important;">
               <li>
-                <a
+                <router-link
                   class="dropdown-item"
-                  :class="activeNavPill == 'naqal-form' ? 'active' : ''"
+                  :class="activeNavPill == 'naqal_forms' ? 'active' : ''"
                   id="naqal-form-tab"
-                  data-bs-toggle="tab"
-                  href="#"
-                  >Naqal Forms</a
+                  :to="{
+                    name: 'petition-naqal-forms-index',
+                    params: { petition_id: petition_id },
+                  }"
+                  >
+                  Naqal Forms
+                  </router-link
                 >
               </li>
               <li>
-                <a
+                <router-link
                   class="dropdown-item"
                   :class="activeNavPill == 'talbana' ? 'active' : ''"
-                  id="contact-tab"
-                  data-bs-toggle="tab"
-                  href="#"
-                  >Talbana</a
+                  id="talbana"                  
+                  :to="{
+                    name: 'petition-talbana-index',
+                    params: { petition_id: petition_id },
+                  }"
+                  >
+                  Talbana
+                  </router-link
                 >
               </li>
               <li>
-                <a
+                <router-link
                   class="dropdown-item"
-                  :class="activeNavPill == 'case-law' ? 'active' : ''"
-                  id="contact-tab"
-                  data-bs-toggle="tab"
-                  href="#"
-                  >Case Laws</a
+                  :class="activeNavPill == 'case_laws' ? 'active' : ''"
+                  id="case-law"                                    
+                  :to="{
+                    name: 'standard-index',
+                    params: {
+                      petition_id: petition_id,
+                      module_type: 'case_laws',
+                    },
+                  }"                  
+                  >
+                  Case Laws
+                  </router-link
                 >
               </li>
               <!-- <li><hr class="dropdown-divider"></li> -->
               <li>
-                <a
+                <router-link
                   class="dropdown-item"
-                  :class="activeNavPill == 'ex-doc' ? 'active' : ''"
-                  id="contact-tab"
-                  data-bs-toggle="tab"
-                  href="#"
-                  >Extra Docs</a
+                  :class="activeNavPill == 'extra_documents' ? 'active' : ''"
+                  id="extra-docs"
+                  :to="{
+                    name: 'standard-index',
+                    params: {
+                      petition_id: petition_id,
+                      module_type: 'extra_documents',
+                    },
+                  }"    
+                  >
+                  Extra Doc
+                  </router-link
                 >
               </li>
               <li>
-                <a
+                <router-link
                   class="dropdown-item"
-                  :class="activeNavPill == 'synopsis' ? 'active' : ''"
-                  id="contact-tab"
-                  data-bs-toggle="tab"
-                  href="#"
-                  >Synopsis</a
+                  :class="activeNavPill == 'petition_synopsis' ? 'active' : ''"
+                  id="petition_synopsis"                  
+                  :to="{
+                    name: 'petition-synopsis-index',
+                    params: { petition_id: petition_id },
+                  }"
+                  >
+                  Synopsis
+                  </router-link
                 >
               </li>
               <li>
-                <a
+                <router-link
                   class="dropdown-item"
-                  :class="activeNavPill == 'judgement' ? 'active' : ''"
-                  id="contact-tab"
-                  data-bs-toggle="tab"
-                  href="#"
-                  >Judgment</a
+                  :class="activeNavPill == 'judgements' ? 'active' : ''"
+                  id="judgements"
+                  :to="{
+                    name: 'standard-index',
+                    params: {
+                      petition_id: petition_id,
+                      module_type: 'judgements',
+                    },
+                  }"
+                  >Judgment</router-link
                 >
               </li>
             </ul>

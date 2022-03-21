@@ -12,7 +12,7 @@
       class="services section-bg"
       :class="removePageHeader ? 'margintop85' : ''"
     >
-    <nav-components activeNavPill = 'oral_arguments' :petition_id="petition.id"  />
+    <nav-components :activeNavPill="module_type" :petition_id="petition.id"  />
       <div class="container mt-4" data-aos="fade-up">
         <div class="row mb-2">
           <div class="col-12 mb-1">
@@ -371,9 +371,9 @@ export default {
       //document.getElementById("image-container-" + id).style.border="solid 1px red"
       this.activePage = id;
     },
-    async getModuleIndexDetails() {
+    async getModuleIndexDetails() {       
       await axios
-        .post(this.base_url + "/api/module_index_details/" + this.module_id)
+        .post(this.base_url + "/api/module_index_details_"+this.module_type+"/" + this.module_id)
         .then((response) => {             
           this.index_detail_data = response.data.index_detail_data;
           this.petition = response.data.petition;
