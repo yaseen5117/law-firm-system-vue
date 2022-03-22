@@ -32,6 +32,7 @@
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Email</label>
                     <input
+                      type="email"
                       class="form-control"
                       v-model="user.email"
                       v-bind:class="{
@@ -175,7 +176,8 @@ export default {
                   title: "Success",
                   text: "Account Created Successfully!",
                 });           
-                this.user = {};     
+                this.user = {};    
+                setTimeout(() => { this.v$.$reset() }, 0) 
                  this.msgAfterSignUp = "Account Created Successfully. After Admin Verification You Can Logged Into Your Account. Thanks.";
               }
               console.log(response);
