@@ -174,7 +174,8 @@ export default {
                   title: "Success",
                   text: "Account Created Successfully!",
                 });           
-                this.user = {};     
+                this.user = {};    
+                setTimeout(() => { this.v$.$reset() }, 0) 
                  this.msgAfterSignUp = "Account Created Successfully. After Admin Verification You Can Logged Into Your Account. Thanks.";
               }
               console.log(response);

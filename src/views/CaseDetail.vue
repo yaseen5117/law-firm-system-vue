@@ -302,6 +302,7 @@ export default {
                   text: "Saved Successfully!",
                 });
                 this.new_petition_index = {};
+                setTimeout(() => { this.v$.$reset() }, 0)
                 this.getCaseDetails();
               }
             },
