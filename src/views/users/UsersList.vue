@@ -125,7 +125,7 @@
                   </td>
                   <td width="15%">
                     
-                    <button :class="!user.is_approved?'btn-warning':'btn-success'" class="btn btn-sm  action-btn" @click="isApprovedToggle(user, !user.is_approved)">{{user.is_approved?'Unapprove':'Approve'}}</button>
+                    <button :class="user.is_approved?'btn-warning':'btn-success'" class="btn btn-sm  action-btn" @click="isApprovedToggle(user, !user.is_approved)">{{user.is_approved?'Block':'Approve'}}</button>
 
                     <router-link
                       class="btn btn-sm btn-primary action-btn"
