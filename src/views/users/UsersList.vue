@@ -22,22 +22,23 @@
                     aria-describedby="Name"
                   />
                 </div>
-                <!-- <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="col-lg-3 col-md-3 col-sm-12">                              
                   <select
-                    class="form-control form-control-sm"
-                    v-model="filters.role"
+                    class="form-control form-control-sm"                   
+                    aria-describedby="Role"
+                    v-model="filters.role_id"
                   >
-                    <option value="">--Court--</option>
+                    <option value="">--Roles--</option>
 
                     <option
                       v-for="role in roles"
                       :key="role.id"
                       :value="role.id"
                     >
-                      {{ role.title }}
+                      {{ role.name }}
                     </option>
                   </select>
-                </div> -->
+                </div>
                 <div class="col-lg-4 col-md-4 col-sm-4">
                   <input
                     placeholder="Email"
@@ -197,10 +198,13 @@ export default {
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,       
       users: [],
+      roles: [],
       id: this.$route.params.id, //this is the id from the browser
       new_petition_index: {},
       showSearchForm: true,  
-      filters: {},       
+      filters: {
+        role_id: ""
+      },       
     };
   },
   created() {
@@ -218,7 +222,8 @@ export default {
           params: this.filters,
         })
         .then((response) => {           
-          this.users = response.data.users;           
+          this.users = response.data.users;  
+          this.roles = response.data.roles;         
         })
         .catch((error) => {
           console.log(error);
@@ -297,7 +302,9 @@ export default {
         return string.charAt(0).toUpperCase() + string.slice(1);
     },
     reset() {
-      this.filters = {};
+      this.filters = {
+        role_id: ""
+      };
       this.getUsers();
     },
   },
