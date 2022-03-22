@@ -254,6 +254,14 @@ const routes = [
       auth: true ,
     },
   },
+  {
+    path: '/users/edit/:id',
+    name: 'edit-user',    
+    component: CreateUser,
+    meta: { 
+      auth: true ,
+    },
+  },
 
 ]
 

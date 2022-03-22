@@ -165,17 +165,17 @@ export default {
         };
 
         axios
-          .post(this.base_url + "/api/users", this.user, {
+          .post(this.base_url + "/api/signup", this.user, {
             headers,
           })
           .then(
             (response) => {
               if (response.status === 200) {
-                this.$notify({
-                  type: "success",
-                  title: "Success",
-                  text: "Account Created Successfully!",
-                });           
+                // this.$notify({
+                //   type: "success",
+                //   title: "Success",
+                //   text: "Account Created Successfully!",
+                // });           
                 this.user = {};    
                 setTimeout(() => { this.v$.$reset() }, 0) 
                  this.msgAfterSignUp = "Account Created Successfully. After Admin Verification You Can Logged Into Your Account. Thanks.";

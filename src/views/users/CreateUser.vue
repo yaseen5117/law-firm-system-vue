@@ -20,6 +20,7 @@
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Email</label>
                     <input
+                      type="email"
                       class="form-control"
                       v-model="user.email"
                                         
@@ -29,6 +30,7 @@
                      <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Password</label>
                     <input
+                      type="password"
                       class="form-control"
                       v-model="user.password"
                                              
@@ -56,27 +58,29 @@
                 </div>
                 <div class="row">
                       
-                  <div class="col-lg-3 col-md-3 col-sm-12">
+                  <!-- <div class="col-lg-3 col-md-3 col-sm-12">
                         <label>Country</label>
                         <input
                         class="form-control"
                         v-model="user.country"                                             
                         />                     
-                  </div> 
-                  <div class="col-lg-3 col-md-3 col-sm-12">
+                  </div>  -->
+                   <div class="col-lg-3 col-md-3 col-sm-12">
                         <label>City</label>
                         <input
                         class="form-control"
                         v-model="user.city"                                             
                         />                     
                   </div> 
+
                   <div class="col-lg-3 col-md-3 col-sm-12">
-                        <label>State</label>
+                        <label>Province</label>
                         <input
                         class="form-control"
-                        v-model="user.state"                                             
+                        v-model="user.province"                                             
                         />                     
-                  </div> 
+                  </div>                  
+                  
                   <div class="col-lg-3 col-md-3 col-sm-12">
                         <label>Zip</label>
                         <input
@@ -84,18 +88,14 @@
                         v-model="user.zip"                                             
                         />                     
                   </div> 
-                </div>
-                <div class="row">
-                     
-                  <div class="col-lg-3 col-md-3 col-sm-12">
+                   <div class="col-lg-3 col-md-3 col-sm-12">
                         <label>Phone</label>
                         <input
                         class="form-control"
                         v-model="user.phone"                                             
                         />                     
                   </div> 
-                  
-                </div>
+                </div>                
                 <div class="row">
                      <div class="col-lg-3 col-md-3 col-sm-12">
                         <label>Profile Image</label>
@@ -131,9 +131,9 @@ import { required, email, helpers } from "@vuelidate/validators";
 export default {
   components: { PageHeader },
   setup() {
-    // return {
-    //   v$: useVuelidate(),
-    // };
+    return {
+      v$: useVuelidate(),
+    };
   },
   data() {
     return {
@@ -155,15 +155,13 @@ export default {
     };
   },
   validations() {
-    // return {
-    //   petition: {         
-    //     name: { required },
-    //     email: { required, email },
-    //     company_name: { required },
-    //     password: { required },
-    //     address: { required }       
-    //   },
-    // };
+    return {
+      user: {         
+        name: { required },
+        email: { required, email },
+        password: { required },             
+      },
+    };
   },
   created() {
      

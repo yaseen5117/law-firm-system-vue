@@ -124,17 +124,20 @@
                     </span>
                   </td>
                   <td width="15%">
-                    <a
+                    <router-link
                       class="btn btn-sm btn-primary action-btn"
                       v-show="!user.editMode"
-                      @click="user.editMode = true"
+                      :to="{
+                        name: 'edit-user',
+                        params: { id: user.id },
+                      }"
                       href="javascript:void"
                       style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"
                     >
                     Edit
                       <!-- <i class="fa fa-edit"></i> -->
-                    </a>
+                    </router-link>
                     <a
                       v-show="user.editMode"
                       class="btn btn-sm btn-warning action-btn"

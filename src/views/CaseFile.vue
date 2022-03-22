@@ -164,6 +164,7 @@
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
                                 title="Edit"
+                                v-on:click.stop
                                 >Edit
                               </router-link>
                               <router-link
