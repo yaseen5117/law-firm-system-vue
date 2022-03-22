@@ -3,18 +3,24 @@
     <page-header :title="page_title" :petition="null" />
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
-        <div class="row">
+        <div class="row">      
           <div class="col-12">
             <form @submit.prevent="submitForm($event)">
               <div class="form-group">
-                <div class="row">
+                <div class="row">                 
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Name</label>
                     <input
                       class="form-control"
                       v-model="user.name"
-                                       
-                    />                    
+                      v-bind:class="{
+                        'error-boarder': v$.user.name.$error,
+                      }"  
+                      @blur="v$.user.name.$touch"
+                    />    
+                    <span v-if="v$.user.name.$error" class="errorMessage"
+                      >Name field is required.</span
+                    >                
                   </div>
 
                   <div class="col-lg-6 col-md-6 col-sm-12">
@@ -23,8 +29,14 @@
                       type="email"
                       class="form-control"
                       v-model="user.email"
-                                        
-                    />                   
+                      v-bind:class="{
+                        'error-boarder': v$.user.email.$error,
+                      }"  
+                      @blur="v$.user.email.$touch"                                        
+                    />  
+                    <span v-if="v$.user.email.$error" class="errorMessage"
+                      >Email field is required.</span
+                    >                  
                   </div>
 
                      <div class="col-lg-6 col-md-6 col-sm-12">
@@ -33,8 +45,14 @@
                       type="password"
                       class="form-control"
                       v-model="user.password"
-                                             
-                    />                     
+                      v-bind:class="{
+                        'error-boarder': v$.user.password.$error,
+                      }"  
+                      @blur="v$.user.password.$touch"                       
+                    />    
+                      <span v-if="v$.user.password.$error" class="errorMessage"
+                      >Password field is required.</span
+                    >             
                   </div> 
 
                    <div class="col-lg-6 col-md-6 col-sm-12">
@@ -48,13 +66,35 @@
  
                 </div>
                 <div class="row">
-                     <div class="col-lg-12 col-md-12 col-sm-12">
+                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <label>Address</label>
                         <input
                         class="form-control"
                         v-model="user.address"                                             
                         />                     
                   </div> 
+                  <div class="col-lg-6 col-md-6 col-sm-12">                    
+                    <label
+                      >Roles <span style="color: red">*</span></label
+                    >
+                    <select
+                      class="form-control"
+                      v-model="roles.id"                   
+                    >
+                      <option value="">--Select--</option>
+                      <template
+                        v-for="role in roles"
+                        :key="role.id"
+                      >
+                        <option :value="role.id">
+                          {{ role.name }}
+                        </option>
+                      </template>
+                    </select>
+                    
+                  </div>
+
+                  
                 </div>
                 <div class="row">
                       
@@ -139,19 +179,8 @@ export default {
     return {
       page_title: this.$route.params.id ? "Edit User" : "Add New User",
       base_url: process.env.VUE_APP_SERVICE_URL,
-      user: {
-        name: "",         
-        email: "", 
-        company_name: "",
-        password: "", 
-        address: "",
-        country: "",
-        city: "",
-        state: "",
-        zip: "",
-        phone: "",
-        file: ""    
-      },      
+      user: {},
+      roles: [],      
     };
   },
   validations() {
@@ -159,12 +188,14 @@ export default {
       user: {         
         name: { required },
         email: { required, email },
-        password: { required },             
+        password: { required },   
+                  
       },
     };
   },
   created() {
-     
+     this.getUser();
+     this.getRoles();
   },
  
   methods: {
@@ -172,8 +203,8 @@ export default {
       this.file = e.target.file;
     },
     submitForm: function (event) {
-       
-      if (true) {
+      this.v$.$validate();
+      if (!this.v$.$error) {
         event.preventDefault();
 
         var headers = {          
@@ -207,7 +238,31 @@ export default {
             }
           );
       }
-    },      
+    },    
+    getUser() {
+      if (this.$route.params.id) {
+        var url = this.base_url + "/api/users/" + this.$route.params.id;
+        axios
+          .get(url)
+          .then((response) => {
+            this.user = response.data.user;            
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    }, 
+    async getRoles() {
+      let url = this.base_url + "/api/roles";
+      await axios
+        .post(url)
+        .then((response) => {
+          this.roles = response.data.roles;          
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }, 
   },
 };
 </script>

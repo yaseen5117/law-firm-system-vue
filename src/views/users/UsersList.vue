@@ -22,6 +22,17 @@
                     aria-describedby="Name"
                   />
                 </div>
+               
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                  <input
+                    placeholder="Email"
+                    v-model="filters.email"
+                    type="email"
+                    id="email"
+                    class="form-control form-control-sm"
+                    aria-describedby="Email"
+                  />
+                </div>
                 <div class="col-lg-3 col-md-3 col-sm-12">                              
                   <select
                     class="form-control form-control-sm"                   
@@ -39,17 +50,6 @@
                     </option>
                   </select>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-4">
-                  <input
-                    placeholder="Email"
-                    v-model="filters.email"
-                    type="email"
-                    id="email"
-                    class="form-control form-control-sm"
-                    aria-describedby="Email"
-                  />
-                </div>
-
                 <div class="col-lg-1 col-md-1 col-sm-12">
                   <button
                     type="button"
