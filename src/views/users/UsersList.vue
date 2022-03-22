@@ -84,7 +84,7 @@
                 <th>Role</th>
                 <th>Email</th>
                  
-                <th width=10%>Actions</th>
+                <th width=20%>Actions</th>
               </thead>
               <tbody>
                 <tr
@@ -124,6 +124,9 @@
                     </span>
                   </td>
                   <td width="15%">
+                    
+                    <button :class="!user.is_approved?'btn-warning':'btn-success'" class="btn btn-sm  action-btn" @click="isApprovedToggle(user, !user.is_approved)">{{user.is_approved?'Unapprove':'Approve'}}</button>
+
                     <router-link
                       class="btn btn-sm btn-primary action-btn"
                       v-show="!user.editMode"
@@ -214,6 +217,12 @@ export default {
     this.getUsers();
   },
   methods: {
+
+    isApprovedToggle(user, param){
+      user.is_approved = param;
+      this.editUser(user);
+    },
+    
     getUsers() {
        let url = this.base_url + "/api/users";
       var headers = {

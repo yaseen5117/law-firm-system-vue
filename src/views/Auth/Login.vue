@@ -81,8 +81,8 @@ export default {
     data() {
     return {
         base_url: process.env.VUE_APP_SERVICE_URL,
-        email: process.env.VUE_APP_ADMIN_EMAIL,
-        password: process.env.VUE_APP_ADMIN_PASSWORD,    
+        email: "",
+        password: "",    
     };
   },
   validations() {
