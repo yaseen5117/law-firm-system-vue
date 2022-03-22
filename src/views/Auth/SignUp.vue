@@ -31,6 +31,7 @@
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Email</label>
                     <input
+                      type="email"
                       class="form-control"
                       v-model="user.email"
                       v-bind:class="{
