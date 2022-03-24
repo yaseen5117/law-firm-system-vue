@@ -14,6 +14,7 @@
           @change="onChange"
           multiple     
           :class="compactInlineView ? 'width-p' : ''"
+          ref="fileupload"
         />
         <span v-if="v$.files.$error" class="errorMessage"
           >Select a File Before Uploading.</span
@@ -90,7 +91,8 @@ export default {
                 type: "success",
                 title: "Success",
                 text: "Files Uploaded Successfully!",
-              });              
+              });  
+              this.$refs.fileupload.value=null;            
               console.log(response.data);
               this.$emit("afterUpload", "Reloading the Data of attachments");                         
             }

@@ -14,7 +14,7 @@
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     
-                    <label>Name</label>
+                    <label>Name<span style="color: red">*</span></label>
                     <input
                       class="form-control"
                       v-model="user.name"
@@ -30,7 +30,7 @@
                 </div>
                 <div class="row mt-2">
                   <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Email</label>
+                    <label>Email<span style="color: red">*</span></label>
                     <input
                       type="email"
                       class="form-control"
@@ -48,7 +48,7 @@
 
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-12 mt-2">
-                    <label>Password</label>
+                    <label>Password<span style="color: red">*</span></label>
                     <input
                       type="password"
                       v-bind:class="{
@@ -64,7 +64,7 @@
                   </div>
 
                   <div class="col-lg-3 col-md-3 col-sm-12 mt-2">
-                    <label>Confirm Password</label>
+                    <label>Confirm Password<span style="color: red">*</span></label>
                     <input
                       type="password"
                       v-bind:class="{
