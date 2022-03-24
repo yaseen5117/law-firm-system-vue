@@ -54,7 +54,23 @@
                       >Password field is required.</span
                     >             
                   </div> 
-
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                    <label>Confirm Password<span style="color: red">*</span></label>
+                    <input
+                      type="password"
+                      v-bind:class="{
+                        'error-boarder': v$.user.confirm_password.$error,
+                      }"
+                      @blur="v$.user.confirm_password.$touch"
+                      class="form-control"
+                      v-model="user.confirm_password"
+                    />
+                    <span
+                      v-if="v$.user.confirm_password.$error"
+                      class="errorMessage"
+                      >Password and Confirm Password should be same.</span
+                    >
+                  </div>
                    <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Company Name</label>
                     <input
@@ -73,13 +89,17 @@
                         v-model="user.address"                                             
                         />                     
                   </div> 
-                  <div class="col-lg-6 col-md-6 col-sm-12">                    
+                  <div class="col-lg-3 col-md-3 col-sm-12">                    
                     <label
                       >Roles <span style="color: red">*</span></label
                     >
                     <select
                       class="form-control"
-                      v-model="user.role_id"                   
+                      v-model="user.role_id"       
+                      v-bind:class="{
+                        'error-boarder': v$.user.role_id.$error,
+                      }"
+                      @blur="v$.user.role_id.$touch"            
                     >
                       <option value="">--Select--</option>
                       <template
@@ -91,7 +111,9 @@
                         </option>
                       </template>
                     </select>
-                    
+                    <span v-if="v$.user.role_id.$error" class="errorMessage"
+                      >Role field is required.</span
+                    >    
                   </div>
 
                   
@@ -166,7 +188,7 @@
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
 import useVuelidate from "@vuelidate/core";
-import { required, email, helpers } from "@vuelidate/validators";
+import { required, email, helpers, sameAs } from "@vuelidate/validators";
 
 export default {
   components: { PageHeader },
@@ -180,7 +202,9 @@ export default {
       page_title: this.$route.params.id ? "Edit User" : "Add New User",
       base_url: process.env.VUE_APP_SERVICE_URL,
       user: {
-        role_id: ""
+        password: "",
+        role_id: "",
+        confirm_password: "",
       },
       roles: [],      
     };
@@ -191,7 +215,10 @@ export default {
         name: { required },
         email: { required, email },
         password: { required },   
-                  
+        confirm_password: {
+            sameAs: sameAs(this.user.password),         
+        },
+        role_id:{ required },
       },
     };
   },
