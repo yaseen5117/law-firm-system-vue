@@ -39,7 +39,7 @@
                     </router-link>
                   </td>
                   <td>
-                    <datepicker
+                    <!-- <datepicker
                     v-show="petition_reply.editMode"
                     :enableTimePicker="false"
                     autoApply   
@@ -47,14 +47,15 @@
                     v-model="petition_reply.date"
                     v-on:keyup.enter="editPetitionReply(petition_reply)"
                     >
-                     </datepicker>
-                    <!-- <input
+                     </datepicker> -->
+                    <input
                       v-show="petition_reply.editMode"
                       class="form-control"
-                      type="date"
+                      type="text"
+                      placeholder="yyyy/mm/dd"
                       v-model="petition_reply.date"
                       v-on:keyup.enter="editPetitionReply(petition_reply)"
-                    /> -->
+                    />
                     <span v-show="!petition_reply.editMode">{{
                       petition_reply.date
                     }}</span>
@@ -141,18 +142,19 @@
                     />
                   </td>
                   <td>
-                    <datepicker
+                    <!-- <datepicker
                     v-on:keyup.enter="submitPetitionReply()"
                     :enableTimePicker="false"
                     autoApply   
                     format="dd/MM/yyyy"  
                     placeholder="dd/mm/yyyy"      
-                     v-model="new_petition_reply.date"></datepicker>
-                    <!-- <input
+                     v-model="new_petition_reply.date"></datepicker> -->
+                    <input
                       class="form-control"
-                      type="date"
+                      type="text"
+                      placeholder="yyyy/mm/dd"
                       v-model="new_petition_reply.date"
-                    /> -->
+                    />
                   </td>
                   <td>
                     <input
