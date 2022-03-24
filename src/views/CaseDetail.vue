@@ -12,7 +12,7 @@
                 <h6>
                   <u>BEFORE THE {{ petition.court.title }} <router-link style="    margin-right: 2px;" :to="{ name: 'edit-petition', params: {id: petition.id}}" class="" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-edit"></i></router-link></u>
                 </h6>
-                <p>Writ Petition No. {{ petition.writ_number }}</p>
+                <p>Writ Petition No. {{ petition.case_no }}</p>
                 <p>{{ petition.petitioner_names }}</p>
                 <p>VERSUS</p>
                 <p>{{ petition.opponent_names }}</p>
@@ -41,7 +41,7 @@
               </thead>
               <tbody>
                 <tr
-                  @dblclick="petition_detail.editMode = true"
+                  @dblclick="petition_detail.editMode = false"
                   v-for="(petition_detail , petitionIndex) in petition_details"
                   :key="petition_detail.id"
                 >
