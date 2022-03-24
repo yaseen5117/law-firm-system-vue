@@ -38,7 +38,10 @@
                       >Email field is required.</span
                     >                  
                   </div>
-
+                </div>
+              </div>
+                <div class="form-group">
+                <div class="row">      
                      <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Password<span style="color: red">*</span></label>
                     <input
@@ -71,6 +74,10 @@
                       >Password and Confirm Password should be same.</span
                     >
                   </div>
+              </div>
+              </div>
+<div class="form-group">
+                <div class="row"> 
                    <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Company Name</label>
                     <input
@@ -80,8 +87,8 @@
                     />                    
                   </div>
  
-                </div>
-                <div class="row">
+                 
+                
                      <div class="col-lg-6 col-md-6 col-sm-12">
                         <label>Address</label>
                         <input
@@ -89,6 +96,11 @@
                         v-model="user.address"                                             
                         />                     
                   </div> 
+              </div>
+              </div>
+
+<div class="form-group">
+                <div class="row"> 
                   <div class="col-lg-3 col-md-3 col-sm-12">                    
                     <label
                       >Roles <span style="color: red">*</span></label
@@ -117,8 +129,7 @@
                   </div>
 
                   
-                </div>
-                <div class="row">
+                
                       
                   <!-- <div class="col-lg-3 col-md-3 col-sm-12">
                         <label>Country</label>
@@ -157,7 +168,10 @@
                         v-model="user.phone"                                             
                         />                     
                   </div> 
-                </div>                
+                </div>   
+</div>         
+
+<div class="form-group">
                 <div class="row">
                      <div class="col-lg-3 col-md-3 col-sm-12">
                         <label>Profile Image</label>
