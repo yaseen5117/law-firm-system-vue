@@ -41,7 +41,7 @@
               </thead>
               <tbody>
                 <tr
-                  @dblclick="petition_detail.editMode = false"
+                  @dblclick="petition_detail.editMode = true"
                   v-for="(petition_detail , petitionIndex) in petition_details"
                   :key="petition_detail.id"
                 >
