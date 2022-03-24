@@ -27,7 +27,7 @@
 
                    <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Synopsis Date<span style="color: red">*</span></label>
-                    <datepicker
+                    <!-- <datepicker
                     v-bind:class="{
                         'error-boarder': v$.synopsis.synopsis_date.$error,
                       }"
@@ -38,7 +38,18 @@
                       placeholder="dd/mm/yyyy"
                       v-model="synopsis.synopsis_date"
                     >
-                    </datepicker>
+                    </datepicker> -->
+
+                    <input
+                      class="form-control"
+                      type="text"
+                      placeholder="yyyy/mm/dd"
+                      v-model="synopsis.synopsis_date"
+                      v-bind:class="{
+                        'error-boarder': v$.synopsis.synopsis_date.$error,
+                      }"
+                      @blur="v$.synopsis.synopsis_date.$touch"
+                    />
                      <span
                       v-if="v$.synopsis.synopsis_date.$error"
                       class="errorMessage"
