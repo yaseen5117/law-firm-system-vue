@@ -9,7 +9,7 @@
               <div class="form-group">
                 <div class="row">                 
                   <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Name</label>
+                    <label>Name<span style="color: red">*</span></label>
                     <input
                       class="form-control"
                       v-model="user.name"
@@ -24,7 +24,7 @@
                   </div>
 
                   <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Email</label>
+                    <label>Email<span style="color: red">*</span></label>
                     <input
                       type="email"
                       class="form-control"
@@ -40,7 +40,7 @@
                   </div>
 
                      <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Password</label>
+                    <label>Password<span style="color: red">*</span></label>
                     <input
                       type="password"
                       class="form-control"
@@ -79,7 +79,7 @@
                     >
                     <select
                       class="form-control"
-                      v-model="roles.id"                   
+                      v-model="user.role_id"                   
                     >
                       <option value="">--Select--</option>
                       <template
@@ -179,7 +179,9 @@ export default {
     return {
       page_title: this.$route.params.id ? "Edit User" : "Add New User",
       base_url: process.env.VUE_APP_SERVICE_URL,
-      user: {},
+      user: {
+        role_id: ""
+      },
       roles: [],      
     };
   },

@@ -137,10 +137,12 @@
                     <input
                       class="form-control"
                       v-model="new_petition_reply.document_description"
+                      v-on:keyup.enter="submitPetitionReply()"
                     />
                   </td>
                   <td>
                     <datepicker
+                    v-on:keyup.enter="submitPetitionReply()"
                     :enableTimePicker="false"
                     autoApply   
                     format="dd/MM/yyyy"  
@@ -156,12 +158,14 @@
                     <input
                       class="form-control"
                       v-model="new_petition_reply.annexure"
+                      v-on:keyup.enter="submitPetitionReply()"
                     />
                   </td>
                   <td>
                     <input
                       class="form-control"
                       v-model="new_petition_reply.page_info"
+                      v-on:keyup.enter="submitPetitionReply()"
                     />
                   </td>
                   <td>

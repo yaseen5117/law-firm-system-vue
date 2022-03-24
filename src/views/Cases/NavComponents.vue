@@ -8,7 +8,7 @@
           <li class="nav-item" role="presentation">
             <router-link
               class="nav-link"
-              :class="activeNavPill ==module_type ? 'active' : ''"
+              :class="activeNavPill == 'petition' ? 'active' : ''"
               :to="{
                 name: 'case-detail',
                 params: { id: petition_id },
