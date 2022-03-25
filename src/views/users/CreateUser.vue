@@ -36,7 +36,8 @@
                     />  
                     <span v-if="v$.user.email.$error" class="errorMessage"
                       >Email field is required.</span
-                    >                  
+                    > 
+                    <small class="text-danger">{{ error_email }} </small>                 
                   </div>
                 </div>
               </div>
@@ -99,7 +100,7 @@
               </div>
               </div>
 
-<div class="form-group">
+              <div class="form-group">
                 <div class="row"> 
                   <div class="col-lg-3 col-md-3 col-sm-12">                    
                     <label
@@ -118,7 +119,7 @@
                         v-for="role in roles"
                         :key="role.id"
                       >
-                        <option :value="role.id">
+                        <option :selected= "user.role_id == role.id" class="text-capitalize" :value="role.id">
                           {{ role.name }}
                         </option>
                       </template>
@@ -220,7 +221,8 @@ export default {
         role_id: "",
         confirm_password: "",
       },
-      roles: [],      
+      roles: [],  
+      error_email: "",    
     };
   },
   validations() {
@@ -249,7 +251,7 @@ export default {
       this.v$.$validate();
       if (!this.v$.$error) {
         event.preventDefault();
-
+        this.error_email = "";
         var headers = {          
           Authorization:
             `Bearer ` + localStorage.getItem("rezo_customers_user"),
@@ -272,6 +274,7 @@ export default {
               console.log(response);
             },
             (error) => {
+              this.error_email = error.response.data.error.email[0]    
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",
@@ -288,7 +291,8 @@ export default {
         axios
           .get(url)
           .then((response) => {
-            this.user = response.data.user;            
+            this.user = response.data.user;
+            this.user.role_id = response.data.user.roles[0].id
           })
           .catch((error) => {
             console.log(error);

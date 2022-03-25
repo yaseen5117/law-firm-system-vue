@@ -43,6 +43,7 @@
                     <span v-if="v$.user.email.$error" class="errorMessage"
                       >Email field is required.</span
                     >
+                    <small class="text-danger">{{ error_email }} </small>
                   </div>
                 </div>
 
@@ -132,7 +133,8 @@ export default {
         confirm_password: "",
         phone: "",
       },
-      msgAfterSignUp: "",       
+      msgAfterSignUp: "",    
+      error_email: "",   
     };
   },
   validations() {
@@ -144,7 +146,7 @@ export default {
         confirm_password: {
             sameAs: sameAs(this.user.password),         
         },
-        phone: { required },
+        phone: { required },        
       },
     };
   },
@@ -182,7 +184,9 @@ export default {
               }
               console.log(response);
             },
-            (error) => {
+            (error) => {     
+              this.error_email = error.response.data.error.email[0]     
+                 
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",

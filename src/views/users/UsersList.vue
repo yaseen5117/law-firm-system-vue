@@ -42,6 +42,7 @@
                     <option value="">--Roles--</option>
 
                     <option
+                      class="text-capitalize"
                       v-for="role in roles"
                       :key="role.id"
                       :value="role.id"
@@ -106,9 +107,9 @@
                     </span>
                   </td>
                   <td>                    
-                    <span v-for="(role,index) in user.roles"
+                    <span class="text-capitalize" v-for="(role,index) in user.roles"
                           :key="role"                                       
-                      >{{ capitalizeFirstLetter(role.name) }}
+                      >{{ role.name }}
                     </span>
                   </td>
                    <td>
@@ -309,10 +310,7 @@ export default {
             }
           );
       }
-    },
-    capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    },
+    },   
     reset() {
       this.filters = {
         role_id: ""

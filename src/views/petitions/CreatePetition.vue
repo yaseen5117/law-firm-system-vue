@@ -50,7 +50,7 @@
                         v-for="petition_type in petition_types"
                         :key="petition_type.id"
                       >
-                        <option :value="petition_type.id">
+                        <option :selected = "petition.petition_type_id==petition_type.id" :value="petition_type.id">
                           {{ petition_type.title }}
                         </option>
                       </template>
@@ -68,9 +68,11 @@
                       <option value="">--Select--</option>
 
                       <option
+                        
                         v-for="court in courts"
                         :key="court.id"
                         :value="court.id"
+                        :selected= "petition.court_id == court.id"
                       >
                         {{ court.title }}
                       </option>
