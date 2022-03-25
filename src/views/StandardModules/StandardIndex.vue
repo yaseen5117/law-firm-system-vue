@@ -44,7 +44,7 @@
                       </router-link>
                     </td>
                     <td>
-                      <datepicker
+                      <!-- <datepicker
                         :enableTimePicker="false"
                         autoApply
                         format="dd/MM/yyyy"
@@ -52,7 +52,16 @@
                         v-model="index_data_single.date"
                         v-on:keyup.enter="editStandardIndex(index_data_single)"
                         v-show="index_data_single.editMode"
-                      ></datepicker>
+                      ></datepicker> -->
+                       <input
+                      class="form-control"
+                      type="text"
+                      placeholder="yyyy/mm/dd"
+                      v-model="index_data_single.date"
+                        v-on:keyup.enter="editStandardIndex(index_data_single)"
+                        v-show="index_data_single.editMode"
+                    />
+
                       <span v-show="!index_data_single.editMode">{{
                         index_data_single.date
                       }}</span>
@@ -156,19 +165,21 @@
                       />
                     </td>
                     <td>
-                      <datepicker
+                      <!-- <datepicker
                         :enableTimePicker="false"
                         autoApply
                         format="dd/MM/yyyy"
                         placeholder="dd/mm/yyyy"
                         type="date"
                         v-model="new_standard_index.date"
-                      ></datepicker>
-                      <!-- <input
+                      ></datepicker> -->
+                      <input
                       class="form-control"
-                      type="date"
+                      type="text"
+                      placeholder="yyyy/mm/dd"
                       v-model="new_standard_index.date"
-                    /> -->
+                      v-on:keyup.enter="submitPetitionIndex()"
+                    />
                     </td>
                     <td>
                       <input

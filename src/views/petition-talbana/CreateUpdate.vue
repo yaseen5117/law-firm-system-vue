@@ -27,7 +27,7 @@
 
                    <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Talbana Date<span style="color: red">*</span></label>
-                    <datepicker
+                    <!-- <datepicker
                     v-bind:class="{
                         'error-boarder': v$.talbana.talbana_date.$error,
                       }"
@@ -38,7 +38,18 @@
                       placeholder="dd/mm/yyyy"
                       v-model="talbana.talbana_date"
                     >
-                    </datepicker>
+                    </datepicker> -->
+
+                     <input
+                      class="form-control"
+                      type="text"
+                     placeholder="yyyy/mm/dd"
+                      v-model="talbana.talbana_date"
+                      v-bind:class="{
+                        'error-boarder': v$.talbana.talbana_date.$error,
+                      }"
+                      @blur="v$.talbana.talbana_date.$touch"
+                    />
                      <span
                       v-if="v$.talbana.talbana_date.$error"
                       class="errorMessage"

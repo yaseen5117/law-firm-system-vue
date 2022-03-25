@@ -41,7 +41,7 @@
               </thead>
               <tbody>
                 <tr
-                  @dblclick="petition_detail.editMode = false"
+                  @dblclick="petition_detail.editMode = true"
                   v-for="(petition_detail , petitionIndex) in petition_details"
                   :key="petition_detail.id"
                 >
@@ -63,7 +63,8 @@
                     </router-link>
                   </td>
                   <td>
-                    <datepicker
+                   
+                    <!-- <datepicker
                     :enableTimePicker="false"                    
                     autoApply   
                     format="dd/MM/yyyy"  
@@ -71,14 +72,15 @@
                     v-model="petition_detail.date"
                     v-on:keyup.enter="editPetitionIndex(petition_detail)"
                     v-show="petition_detail.editMode"
-                    ></datepicker>
-                    <!-- <input
+                    ></datepicker> -->
+                    <input
                       v-show="petition_detail.editMode"
                       class="form-control"
-                      type="date"
+                      type="text"
+                      placeholder="yyyy/mm/dd"
                       v-model="petition_detail.date"
                       v-on:keyup.enter="editPetitionIndex(petition_detail)"
-                    /> -->
+                    />
                     <span v-show="!petition_detail.editMode">{{
                       petition_detail.date
                     }}</span>
@@ -173,19 +175,20 @@
                     >
                   </td>
                   <td>
-                    <datepicker
+                    <!-- <datepicker
                     :enableTimePicker="false"                    
                     autoApply   
                     format="dd/MM/yyyy"  
                     placeholder="dd/mm/yyyy"  
                     type="date" 
                     v-model="new_petition_index.date"
-                    ></datepicker>
-                    <!-- <input
+                    ></datepicker> -->
+                    <input
                       class="form-control"
-                      type="date"
+                      type="text"
+                      placeholder="yyyy/mm/dd"
                       v-model="new_petition_index.date"
-                    /> -->
+                    />
                   </td>
                   <td>
                     <input

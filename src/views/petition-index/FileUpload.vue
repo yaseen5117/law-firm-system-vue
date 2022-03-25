@@ -7,7 +7,7 @@
       </div> -->       
       <form @submit="onUploadFile" enctype="multipart/form-data">
         <input
-          accept="image/png, image/jpeg, image/jpg"
+          accept="image/png, image/jpeg, image/jpg, application/pdf"
           type="file"
           id="file" 
           class="form-control"

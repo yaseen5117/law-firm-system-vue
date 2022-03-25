@@ -27,7 +27,7 @@
 
                    <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Naqal Form Date<span style="color: red">*</span></label>
-                    <datepicker
+                    <!-- <datepicker
                     v-bind:class="{
                         'error-boarder': v$.naqal_form.naqal_form_date.$error,
                       }"
@@ -38,7 +38,18 @@
                       placeholder="dd/mm/yyyy"
                       v-model="naqal_form.naqal_form_date"
                     >
-                    </datepicker>
+                    </datepicker> -->
+
+                     <input
+                      class="form-control"
+                      type="text"
+                     placeholder="yyyy/mm/dd"
+                      v-model="naqal_form.naqal_form_date"
+                      v-bind:class="{
+                        'error-boarder': v$.naqal_form.naqal_form_date.$error,
+                      }"
+                      @blur="v$.naqal_form.naqal_form_date.$touch"
+                    />
                      <span
                       v-if="v$.naqal_form.naqal_form_date.$error"
                       class="errorMessage"

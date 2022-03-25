@@ -42,6 +42,17 @@
                     aria-describedby="Case"
                   />
                 </div>
+                 <div class="col-lg-2 col-md-2 col-sm-12">
+                  <label for="">Year</label>
+                  <input
+                    type="text"
+                    id="year"
+                    v-model="filters.year"
+                    class="form-control form-control-sm"
+                    
+                    aria-describedby="year"
+                  />
+                </div>
                 <div class="col-lg-3 col-md-3 col-sm-12">
                   <label for="">Court</label>
                   <select
