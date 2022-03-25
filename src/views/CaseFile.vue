@@ -130,7 +130,7 @@
                     <div class="card-body">
                       <div class="row">
                         <div class="col-md-5 col-5 col-sm-5">
-                          <h6 class="card-title">{{ petition.case_no }}</h6>
+                          <h6 class="card-title">{{ petition.case_no }}-{{petition.year}}</h6>
                           <p class="card-text">
                             {{ petition.institution_date }}
                           </p>

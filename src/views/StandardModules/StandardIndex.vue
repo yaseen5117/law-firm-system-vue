@@ -152,8 +152,8 @@
                           :type="model_type"
                           :attachmentable_id="index_data_single.id"
                           :compactInlineView="compactInlineView"   
-                          class="mt-1"                      
-                        />
+                          class="mt-1"                                          
+                        />                        
                     </td>
                   </tr>
                   <tr>
@@ -241,7 +241,7 @@ export default {
       index_data: [],   
       compactInlineView: "",    
       ShowOnOralArgument: "",
-      model_type: "",
+      model_type: "",      
     };
   },
   created() {

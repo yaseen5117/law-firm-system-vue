@@ -16,6 +16,9 @@
           :class="compactInlineView ? 'width-p' : ''"
           ref="fileupload"
         />
+        <span class="" v-if="beforUploading" role="alert">
+          {{ beforUploading }}
+        </span>
         <span v-if="v$.files.$error" class="errorMessage"
           >Select a File Before Uploading.</span
         ><br />
@@ -32,7 +35,7 @@ import { required, email, helpers } from "@vuelidate/validators";
 
 export default {
   emits: ["afterUpload"],
-  props: ['type','attachmentable_id','compactInlineView'],
+  props: ['type','attachmentable_id','compactInlineView','isOral'],
   setup() {    
     return {
       v$: useVuelidate(),
@@ -44,7 +47,8 @@ export default {
       name: "",
       files: "",
       //attachmentable_id: this.$route.params.id, //this is the id from the browser
-      success: "",
+      success: "",   
+      beforUploading: "",    
     };
   },
   validations() {
@@ -63,7 +67,9 @@ export default {
     onUploadFile(e) {   
        if(!this.compactInlineView){                
          e.preventDefault();  
-      }             
+      }           
+       
+      this.beforUploading = "Please Wait..!";
       //let existingObj = this;
       
       const config = {
@@ -92,6 +98,7 @@ export default {
                 title: "Success",
                 text: "Files Uploaded Successfully!",
               });  
+              this.beforUploading = "";
               this.$refs.fileupload.value=null;            
               console.log(response.data);
               this.$emit("afterUpload", "Reloading the Data of attachments");                         
