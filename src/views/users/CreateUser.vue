@@ -48,15 +48,9 @@
                     <input
                       type="password"
                       class="form-control"
-                      v-model="user.password"
-                      v-bind:class="{
-                        'error-boarder': v$.user.password.$error,
-                      }"  
-                      @blur="v$.user.password.$touch"                       
+                      v-model="user.password"                                            
                     />    
-                      <span v-if="v$.user.password.$error" class="errorMessage"
-                      >Password field is required.</span
-                    >             
+                    <small class="text-danger">{{ error_password }} </small>  
                   </div> 
                     <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Confirm Password<span style="color: red">*</span></label>
@@ -222,15 +216,15 @@ export default {
         confirm_password: "",
       },
       roles: [],  
-      error_email: "",    
+      error_email: "",  
+      error_password: ""  
     };
   },
   validations() {
     return {
       user: {         
         name: { required },
-        email: { required, email },
-        password: { required },   
+        email: { required, email },        
         confirm_password: {
             sameAs: sameAs(this.user.password),         
         },
@@ -274,7 +268,8 @@ export default {
               console.log(response);
             },
             (error) => {
-              this.error_email = error.response.data.error.email[0]    
+              this.error_email = error.response.data.error.email[0] 
+              this.error_password = error.response.data.error.password[0] 
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",
