@@ -4,9 +4,9 @@
       <!-- ======= Services Section ======= -->
       <section id="services" style="margin-top:100px" class="services section-bg">
       <div class="container" data-aos="fade-up"> 
-
-        <div class="row gy-4">
-          <div  @click="gotoLink('petitions-calendar')"  class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+        
+        <div class="row gy-4"  >
+          <div v-if="this.user.is_admin" @click="gotoLink('petitions-calendar')"  class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
             <div class="icon-box iconbox-blue border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -14,7 +14,7 @@
                 </svg>
                 <i class="bx bx-calendar"></i>
               </div>
-              <h4><router-link to='petitions-calendar'>Calendar</router-link></h4>
+              <h4><router-link to='petitions-calendar'>Calendar {{this.user.is_admin}}</router-link></h4>
               <p>Contains all Details of Calender. Click to Open all Details. </p>
             </div>
           </div>
@@ -32,7 +32,7 @@
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="300">
+          <div  v-if="this.user.is_admin" class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="300">
             <div class="icon-box iconbox-pink border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -45,7 +45,7 @@
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+          <div v-if="this.user.is_admin" class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
             <div class="icon-box iconbox-yellow border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -58,7 +58,7 @@
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
+          <div  v-if="this.user.is_admin" class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
             <div class="icon-box iconbox-red border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -71,7 +71,7 @@
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="300">
+          <div  v-if="this.user.is_admin" class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="300">
             <div class="icon-box iconbox-teal border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -84,7 +84,7 @@
             </div>
           </div>
 			
-			 <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+			 <div  v-if="this.user.is_admin" class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
             <div class="icon-box iconbox-blue border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -97,7 +97,7 @@
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
+          <div  v-if="this.user.is_admin" class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
             <div class="icon-box iconbox-orange border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -121,9 +121,12 @@
 <script>
 // @ is an alias to /src 
 //import CaseDetail from "./CaseDetail.vue";
+import { mapState } from "vuex";
+
 
 export default {
   name: 'DashBoard',
+  computed: mapState(["user"]),
   methods:{
     gotoLink(path) {
       this.$router.push({ path: path  });

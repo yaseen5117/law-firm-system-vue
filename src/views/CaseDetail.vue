@@ -37,7 +37,7 @@
                 <th>Date</th>
                 <th>Annexure</th>
                 <th>Page</th>
-                <th width=10%>Actions</th>
+                <th  v-if="this.user.is_admin"  width=10%>Actions</th>
               </thead>
               <tbody>
                 <tr
@@ -107,7 +107,7 @@
                       petition_detail.page_info
                     }}</span>
                   </td>
-                  <td width="15%">
+                  <td width="15%"  v-if="this.user.is_admin" >
                     <a
                       class="btn btn-sm btn-primary action-btn"
                       v-show="!petition_detail.editMode"
@@ -157,7 +157,7 @@
                     </a>
                   </td>
                 </tr>
-                <tr>                   
+                <tr  v-if="this.user.is_admin" >                   
                   <td>
                     <input
                       class="form-control"
@@ -233,12 +233,14 @@ import NavComponents from "./Cases/NavComponents.vue";
 import PageHeader from "../views/shared/PageHeader";
 import useVuelidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
+import { mapState } from "vuex";
 
 export default {
   components: {
     NavComponents,
     PageHeader,
   },
+    computed: mapState(["user"]),
   setup() {
     return {
       v$: useVuelidate(),
