@@ -50,7 +50,7 @@ export default createStore({
       var headers = { Authorization: `Bearer `+localStorage.getItem("lfms_user") };
       axios.get(process.env.VUE_APP_SERVICE_URL + '/api/user', {headers})
       .then(response => {
-        console.log("Loged in user load from Database -->", response.data)
+        console.log("Loged in user load from Database -->", response.data);
         commit('authUser', response.data);
       }).catch(error=>{
         commit('authUser', null);
