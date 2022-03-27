@@ -27,10 +27,10 @@
                     <label>Year</label>
                     <input
                       type="text"
-                      min="0"                     
+                      min="0"
                       class="form-control"
-                      v-model="petition.year"                     
-                    />                    
+                      v-model="petition.year"
+                    />
                   </div>
 
                   <div class="col-lg-3 col-md-3 col-sm-12">
@@ -50,7 +50,12 @@
                         v-for="petition_type in petition_types"
                         :key="petition_type.id"
                       >
-                        <option :selected = "petition.petition_type_id==petition_type.id" :value="petition_type.id">
+                        <option
+                          :selected="
+                            petition.petition_type_id == petition_type.id
+                          "
+                          :value="petition_type.id"
+                        >
                           {{ petition_type.title }}
                         </option>
                       </template>
@@ -68,11 +73,10 @@
                       <option value="">--Select--</option>
 
                       <option
-                        
                         v-for="court in courts"
                         :key="court.id"
                         :value="court.id"
-                        :selected= "petition.court_id == court.id"
+                        :selected="petition.court_id == court.id"
                       >
                         {{ court.title }}
                       </option>
@@ -124,20 +128,26 @@
                           >
                         </h4>
 
-                        <div class="input-group mb-1" v-for="(petitioner,index) in petition.petitioners"
-                          :key="petitioner">
+                        <div
+                          class="input-group mb-1"
+                          v-for="(petitioner, index) in petition.petitioners"
+                          :key="petitioner"
+                        >
                           <input
                             placeholder="Name"
                             v-model="petitioner.user.name"
                             class="form-control mb-2"
-                        />
+                          />
                           <div class="input-group-prepend">
-                            
-                            <span class="input-group-text cursor-pointer"  @click="removeInputRow(petition.petitioners , index)">Delete</span>
+                            <span
+                              class="input-group-text cursor-pointer"
+                              @click="
+                                removeInputRow(petition.petitioners, index)
+                              "
+                              >Delete</span
+                            >
                           </div>
-                          
                         </div>
-
                       </div>
                     </div>
                   </div>
@@ -164,20 +174,24 @@
                           >
                         </h4>
 
-                        <div class="input-group mb-1" v-for="(opponent,index) in petition.opponents"
-                          :key="opponent">
+                        <div
+                          class="input-group mb-1"
+                          v-for="(opponent, index) in petition.opponents"
+                          :key="opponent"
+                        >
                           <input
-                          placeholder="Name"
-                          v-model="opponent.user.name"
-                          class="form-control mb-2"
-                        />
+                            placeholder="Name"
+                            v-model="opponent.user.name"
+                            class="form-control mb-2"
+                          />
                           <div class="input-group-prepend">
-                            
-                            <span class="input-group-text cursor-pointer"  @click="removeInputRow(petition.opponents , index)">Delete</span>
+                            <span
+                              class="input-group-text cursor-pointer"
+                              @click="removeInputRow(petition.opponents, index)"
+                              >Delete</span
+                            >
                           </div>
-                          
-                        </div> 
-                        
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -207,7 +221,7 @@
               </div>
 
               <div class="form-group">
-                <button class="btn btn-success btn-sm mt-2">Save</button>
+                <button :disabled="saving" class="btn btn-success btn-sm mt-2">Save</button>
               </div>
             </form>
           </div>
@@ -233,6 +247,7 @@ export default {
   },
   data() {
     return {
+      saving:false,
       page_title: this.$route.params.id ? "Edit Petition" : "Add New Petition",
       base_url: process.env.VUE_APP_SERVICE_URL,
       petition: {
@@ -287,17 +302,17 @@ export default {
       };
       this.petition.opponents.push(new_opponent);
     },
-    removeInputRow: function (obj ,  index) {
-      obj.splice(index,1);          
+    removeInputRow: function (obj, index) {
+      obj.splice(index, 1);
     },
     submitForm: function (event) {
       this.v$.$validate();
       if (!this.v$.$error) {
         event.preventDefault();
 
+        this.saving =true;
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
@@ -315,8 +330,10 @@ export default {
                 this.$router.push({ path: "/petitions" });
               }
               console.log(response);
+              this.saving =false;
             },
             (error) => {
+              this.saving =false;
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",
@@ -365,9 +382,12 @@ export default {
     },
     getPetition() {
       if (this.$route.params.id) {
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
         var url = this.base_url + "/api/petitions/" + this.$route.params.id;
         axios
-          .get(url)
+          .get(url, { headers })
           .then((response) => {
             this.petition = response.data.petition;
             this.opponents = [{}];

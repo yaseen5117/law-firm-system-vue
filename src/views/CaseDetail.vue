@@ -41,7 +41,7 @@
               </thead>
               <tbody>
                 <tr
-                  @dblclick="petition_detail.editMode = true"
+                  @dblclick="petition_detail.editMode = false"
                   v-for="(petition_detail , petitionIndex) in petition_details"
                   :key="petition_detail.id"
                 >
@@ -63,6 +63,7 @@
                     </router-link>
                   </td>
                   <td>
+                    
                    
                     <!-- <datepicker
                     :enableTimePicker="false"                    
@@ -111,7 +112,7 @@
                     <a
                       class="btn btn-sm btn-primary action-btn"
                       v-show="!petition_detail.editMode"
-                      @click="petition_detail.editMode = true"
+                      @click="petition_detail.editMode = true; "
                       href="javascript:void"
                       style="margin-left:2px"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"
@@ -270,8 +271,13 @@ export default {
   },
   methods: {
     getCaseDetails() {
+      
+      var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       axios
-        .get(this.base_url + "/api/petitions/" + this.id)
+        .get(this.base_url + "/api/petitions/" + this.id , {headers})
         .then((response) => {
           this.petition = response.data.petition;
           this.petition_details = response.data.petition_details;
@@ -287,7 +293,7 @@ export default {
       if (!this.v$.$error) {       
         var headers = {
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+            `Bearer ` + localStorage.getItem("lfms_user"),
         };
         this.new_petition_index.petition_id = this.id;
         axios
@@ -326,7 +332,7 @@ export default {
       if (true) {
         var headers = {
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+            `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios

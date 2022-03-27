@@ -112,8 +112,9 @@
           
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 mt-2">
-              <div class="row">
+              <div v-if="isLoaded" class="row">
                 <div
+                  
                   class="
                     col-sm-12 col-md-3 col-lg-3 col-12
                     d-flex
@@ -129,8 +130,8 @@
                   >
                     <div class="card-body">
                       <div class="row">
+                        <h6 class="card-title">{{ petition.case_no }}-{{petition.year}}</h6>
                         <div class="col-md-5 col-5 col-sm-5">
-                          <h6 class="card-title">{{ petition.case_no }}-{{petition.year}}</h6>
                           <p class="card-text">
                             {{ petition.institution_date }}
                           </p>
@@ -198,6 +199,9 @@
                   <p class="alert alert-warning">No Records found.</p>
                 </div>
               </div>
+              <div v-if="!isLoaded" class="col-md-12">
+                  <p class="alert alert-warning">Loading....</p>
+                </div>
 
               <div class="table-responsive">
                 <!-- <table class="table table-striped">
@@ -264,7 +268,8 @@ export default {
         court_id: "",
       },
       courts: [],
-      showSearchForm: true,         
+      showSearchForm: true,    
+      isLoaded:false     
     };
   },
   created() {
@@ -288,6 +293,7 @@ export default {
       this.$router.push({ path: "/petitions/" + petition_id });
     },
     async getCaseFiles() {
+      this.isLoaded =false;
       let url = this.base_url + "/api/petitions";
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
@@ -299,7 +305,8 @@ export default {
         })
         .then((response) => {
           this.petitions = response.data.petitions;                  
-          console.log(this.petitions);           
+          console.log(this.petitions); 
+          this.isLoaded=true;          
         })
         .catch((error) => {
           console.log(error);
