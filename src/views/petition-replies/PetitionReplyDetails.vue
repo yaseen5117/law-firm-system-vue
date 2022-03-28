@@ -356,8 +356,12 @@ export default {
     },
 
     async getPetitionReplyAnnexure(petition_reply_parent_id) {
+      var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       await axios
-        .get(this.base_url + "/api/petition_replies/" + petition_reply_parent_id)
+        .get(this.base_url + "/api/petition_replies/" + petition_reply_parent_id,{headers})
         .then((response) => {
           this.petition_reply_index = response.data.petition_replies;
            
@@ -378,7 +382,7 @@ export default {
       if (true) {
         var headers = {
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+            `Bearer ` + localStorage.getItem("lfms_user"),
         };
     
         axios
@@ -411,7 +415,7 @@ export default {
       if (confirm("Do you really want to delete?")) {
         var headers = {
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),           
+            `Bearer ` + localStorage.getItem("lfms_user"),           
         };
        
         axios
