@@ -31,7 +31,7 @@
          
           <!-- <li><a class="nav-link scrollto" href="#">Link-1</a></li>
           <li><a class="nav-link scrollto" href="#">Link-2</a></li>           -->
-          <li class="dropdown" v-if="this.user && this.user.is_admin">
+          <li class="dropdown" v-show="this.user && this.user.is_admin">
             <a href="javascript:void"
               ><span>Settings</span> <i class="bi bi-chevron-down"></i
             ></a>
