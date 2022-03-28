@@ -37,6 +37,7 @@
             ></a>
             <ul>
               <li><router-link class="nav-link" to="/users">Users</router-link></li>
+              <li><router-link class="nav-link" to="/my-profile">My Profile</router-link></li>
               <li class="dropdown">
                 <a href="#"
                   ><span>System Settings</span>

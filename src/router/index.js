@@ -262,7 +262,15 @@ const routes = [
       auth: true ,
     },
   },
-
+  //user profile route
+  {
+    path: '/my-profile',
+    name: 'my-profile',    
+    component: CreateUser,
+    meta: { 
+      auth: true ,
+    },
+  },
 ]
 
 const router = createRouter({
