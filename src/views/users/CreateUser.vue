@@ -248,7 +248,7 @@ export default {
         this.error_email = "";
         var headers = {          
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+            `Bearer ` + localStorage.getItem("lfms_user"),
         };        
 
         axios
@@ -282,9 +282,14 @@ export default {
     },    
     getUser() {
       if (this.$route.params.id) {
+        var headers = {          
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };  
+
         var url = this.base_url + "/api/users/" + this.$route.params.id;
         axios
-          .get(url)
+          .get(url,{headers})
           .then((response) => {
             this.user = response.data.user;
             this.user.role_id = response.data.user.roles[0].id

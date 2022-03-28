@@ -1,7 +1,7 @@
 <template>
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top">
-    
+    <PageLoader />
     <div class="container d-flex align-items-center justify-content-between">
       <h1 class="logo"><router-link to="/">LFMS</router-link></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
@@ -31,20 +31,19 @@
          
           <!-- <li><a class="nav-link scrollto" href="#">Link-1</a></li>
           <li><a class="nav-link scrollto" href="#">Link-2</a></li>           -->
-          <li class="dropdown" v-show="this.user && this.user.is_admin">
+          <li class="dropdown">
             <a href="javascript:void"
               ><span>Settings</span> <i class="bi bi-chevron-down"></i
             ></a>
             <ul>
+              <li v-if="this.user && this.user.is_admin"><router-link class="nav-link" to="/users">Users</router-link></li>
               <li><router-link class="nav-link" 
               :to="{
                 name: 'edit-user',
                 params: { id: this.user.id },
-              }">
-              Users
-              </router-link></li>
-              <li><router-link class="nav-link" to="/my-profile">My Profile</router-link></li>
-              <li class="dropdown">
+              }"
+              >My Profile</router-link></li>
+              <li class="dropdown" v-if="this.user && this.user.is_admin">
                 <a href="#"
                   ><span>System Settings</span>
                   <i class="bi bi-chevron-right"></i
