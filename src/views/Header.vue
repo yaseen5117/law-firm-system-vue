@@ -37,7 +37,7 @@
             ></a>
             <ul>
               <li v-show="this.user && this.user.is_admin"><router-link class="nav-link" to="/users">Users</router-link></li>
-              <!-- <li>
+              <li v-if="this.user && this.user.id>0">
                 <router-link class="nav-link" 
                   :to="{
                     name: 'edit-user',
@@ -46,7 +46,7 @@
                 >
                 My Profile
                 </router-link>
-              </li> -->
+              </li>
               <li class="dropdown" v-show="this.user && this.user.is_admin">
                 <a href="#"
                   ><span>System Settings</span>
