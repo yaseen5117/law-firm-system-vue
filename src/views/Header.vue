@@ -48,15 +48,15 @@
                 </router-link>
               </li>
               <li class="dropdown" v-show="this.user && this.user.is_admin">
-                <a href="#"
+                <!-- <a href="#"
                   ><span>System Settings</span>
                   <i class="bi bi-chevron-right"></i
-                ></a>
+                ></a> -->
                 <ul>
                   <li><router-link class="nav-link" to="/users">Users</router-link></li>
-                  <li><a href="#">System Setting 2</a></li>
+                  <!-- <li><a href="#">System Setting 2</a></li>
                   <li><a href="#">System Setting 3</a></li>
-                  <li><a href="#">System Setting 4</a></li>
+                  <li><a href="#">System Setting 4</a></li> -->
                 </ul>
               </li>
             </ul>
