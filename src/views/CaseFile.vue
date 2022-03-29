@@ -74,7 +74,7 @@
                   <label for="">Client Name</label>
                   <input
                     
-                    v-model="filters.petitioner_id"
+                    v-model="filters.petitioner_name"
                     type="text"
                     id="ClientName"
                     class="form-control form-control-sm"

@@ -98,7 +98,7 @@
                 </thead>
                 <tbody>
                   <tr
-                    @dblclick="user.editMode = true"
+                    @dblclick="user.editMode = false"
                     v-for="(user, userIndex) in users"
                     :key="user.id"
                   >

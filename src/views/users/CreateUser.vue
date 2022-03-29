@@ -300,9 +300,13 @@ export default {
       }
     }, 
     async getRoles() {
+      var headers = {          
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };  
       let url = this.base_url + "/api/roles";
       await axios
-        .post(url)
+        .post(url, {headers})
         .then((response) => {
           this.roles = response.data.roles;          
         })

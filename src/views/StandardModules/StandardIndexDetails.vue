@@ -146,7 +146,7 @@
                       </thead>
                       <tbody>
                         <tr
-                          @dblclick="attachment.editMode = true"
+                          @dblclick="attachment.editMode = false"
                           v-for="(
                             attachment, attachmentIndex
                           ) in index_detail_data.attachments"
