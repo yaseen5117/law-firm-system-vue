@@ -1544,3 +1544,58 @@ section {
   color: rgb(173, 173, 173);
 }
 /*  */
+
+/* START CSS FOR CREATE PAGES */
+
+.card {
+  background: #f7f7f7;
+}
+.form-group {
+  margin-bottom: 5px;
+}
+.errorMessage {
+  color: red;
+}
+.error-boarder {
+  border: 1px solid red;
+}
+@media only screen and (max-width: 768px) {
+  .mt {
+    margin-top: 5px;
+  }
+}
+/* END CSS FOR CREATE PAGES */
+
+/* START CSS FOR NAvcomponents */
+h2 span {
+  font-size: 16px;
+}
+.mrgn-top {
+  margin-top: 15px;
+}
+
+.align-center {
+  text-align: center;
+}
+/* END CSS FOR NAvcomponents */
+
+/* START CSS FOR STANDARD INDEX */
+.red {
+  color: red;
+}
+@media screen and (max-width: 768px) {
+  .case_heading .line-hight {
+    font-size: 12px !important;
+    line-height: normal !important;
+  }
+}
+.display{
+  display: none;
+}
+/* END CSS FOR DASHBOARD */
+
+/* START CSS FOR STANDARD INDEX */
+.m-top{
+  margin-top: 60px;
+}
+/* END CSS FOR DASHBOARD */

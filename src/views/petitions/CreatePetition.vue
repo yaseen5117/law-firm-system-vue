@@ -401,22 +401,5 @@ export default {
 };
 </script>
 
-<style>
-.card {
-  background: #f7f7f7;
-}
-.form-group {
-  margin-bottom: 5px;
-}
-.errorMessage {
-  color: red;
-}
-.error-boarder {
-  border: 1px solid red;
-}
-@media only screen and (max-width: 768px) {
-  .mt {
-    margin-top: 5px;
-  }
-}
+<style> 
 </style>

@@ -113,6 +113,7 @@
               >
                 <div class="col-12">
                   <img
+                    v-if="attachment.mime_type != 'application/pdf'"
                     :class="activePage == attachment.id ? 'active-img' : ''"
                     class="img-fluid"
                     style="width: 90%"
@@ -124,7 +125,14 @@
                       '/' +
                       attachment.file_name
                     "
-                  />
+                  />                         
+                  <a :class="activePage == attachment.id ? 'active-img' : ''"
+                   v-if="attachment.mime_type == 'application/pdf'" :href="this.base_url +
+                      '/storage/attachments/' 
+                      +                     
+                      this.$route.params.id +
+                      '/' +
+                      attachment.file_name" target="_blank"><u><span>Click to Open: </span>{{ attachment.title }}</u></a>             
                   <hr class="mt-4 mb-4" style="border: solid 3px" />
                 </div>
               </div>
@@ -161,8 +169,8 @@
                               this.$route.params.id +
                               '/' +
                               attachment.file_name
-                            "
-                          />
+                            "                            
+                          />                          
                         </td>
                         <td>
                           <input
@@ -453,19 +461,5 @@ export default {
 };
 </script>
 
-<style>
-.fixed-page-numbers {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  font-size: 12px;
-}
-.fixed-annexsures {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-}
-.active-img {
-  border: solid 1px red;
-}
+<style> 
 </style>

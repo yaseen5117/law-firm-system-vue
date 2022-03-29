@@ -180,14 +180,4 @@ export default {
 };
 </script>
 <style>
-h2 span {
-  font-size: 16px;
-}
-.mrgn-top {
-  margin-top: 15px;
-}
-
-.align-center {
-  text-align: center;
-}
 </style>

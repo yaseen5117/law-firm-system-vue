@@ -297,33 +297,5 @@ export default {
 };
 </script>
 
-<style>
-.fixed-page-numbers {
-  position: fixed;
-  left: 0;
-  top: 18%;
-  font-size: 12px;
-}
-.fixed-annexsures {
-  position: fixed;
-  right: 0;
-  top: 18%;
-  font-size: 12px;
-}
-.active-img {
-  border: solid 1px red;
-}
-.list-group-item {
-  background-color: black;
-  color: grey;
-  font-weight: bold;
-}
-.list-group-item:hover {
-  background-color: rgb(117, 117, 117);
-  color: rgb(173, 173, 173);
-}
-.list-group-item + .list-group-item.active {
-  background-color: rgb(117, 117, 117);
-  color: rgb(173, 173, 173);
-}
+<style> 
 </style>

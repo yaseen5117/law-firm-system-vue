@@ -3,11 +3,11 @@
     <page-header :title="page_title" :petition="null" />
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
-        <div class="row">      
+        <div class="row">
           <div class="col-12">
             <form @submit.prevent="submitForm($event)">
               <div class="form-group">
-                <div class="row">                 
+                <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Name<span style="color: red">*</span></label>
                     <input
@@ -15,12 +15,12 @@
                       v-model="user.name"
                       v-bind:class="{
                         'error-boarder': v$.user.name.$error,
-                      }"  
+                      }"
                       @blur="v$.user.name.$touch"
-                    />    
+                    />
                     <span v-if="v$.user.name.$error" class="errorMessage"
                       >Name field is required.</span
-                    >                
+                    >
                   </div>
 
                   <div class="col-lg-6 col-md-6 col-sm-12">
@@ -31,29 +31,39 @@
                       v-model="user.email"
                       v-bind:class="{
                         'error-boarder': v$.user.email.$error,
-                      }"  
-                      @blur="v$.user.email.$touch"                                        
-                    />  
+                      }"
+                      @blur="v$.user.email.$touch"
+                    />
                     <span v-if="v$.user.email.$error" class="errorMessage"
                       >Email field is required.</span
-                    > 
-                    <small class="text-danger">{{ error_email }} </small>                 
+                    >
+                    <small class="text-danger">{{ error_email }} </small>
                   </div>
                 </div>
               </div>
-                <div class="form-group">
-                <div class="row">      
-                     <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Password<span style="color: red">*</span></label>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <label
+                      >Password<span v-show="!user.id" style="color: red"
+                        >*</span
+                      ></label
+                    >
                     <input
                       type="password"
                       class="form-control"
-                      v-model="user.password"                                            
-                    />    
-                    <small class="text-danger">{{ error_password }} </small>  
-                  </div> 
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Confirm Password<span style="color: red">*</span></label>
+                      v-model="user.password"
+                    />
+                    <small class="text-danger">{{ error_password }} </small>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <label
+                      >Confirm Password<span
+                        v-show="!user.id"
+                        style="color: red"
+                        >*</span
+                      ></label
+                    >
                     <input
                       type="password"
                       v-bind:class="{
@@ -69,63 +79,53 @@
                       >Password and Confirm Password should be same.</span
                     >
                   </div>
+                </div>
               </div>
-              </div>
-<div class="form-group">
-                <div class="row"> 
-                   <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Company Name</label>
-                    <input
-                      class="form-control"
-                      v-model="user.company_name"
-                                          
-                    />                    
-                  </div>
- 
-                 
-                
-                     <div class="col-lg-6 col-md-6 col-sm-12">
-                        <label>Address</label>
-                        <input
-                        class="form-control"
-                        v-model="user.address"                                             
-                        />                     
-                  </div> 
-              </div>
-              </div>
-
               <div class="form-group">
-                <div class="row"> 
-                  <div class="col-lg-3 col-md-3 col-sm-12">                    
-                    <label
-                      >Roles <span style="color: red">*</span></label
-                    >
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <label>Role <span style="color: red">*</span></label>
                     <select
-                      class="form-control"
-                      v-model="user.role_id"       
+                      class="form-control text-capitalize"
+                      v-model="user.role_id"
                       v-bind:class="{
                         'error-boarder': v$.user.role_id.$error,
                       }"
-                      @blur="v$.user.role_id.$touch"            
+                      @blur="v$.user.role_id.$touch"
                     >
                       <option value="">--Select--</option>
-                      <template
-                        v-for="role in roles"
-                        :key="role.id"
-                      >
-                        <option :selected= "user.role_id == role.id" class="text-capitalize" :value="role.id">
+                      <template v-for="role in roles" :key="role.id">
+                        <option
+                          :selected="user.role_id == role.id"
+                          class="text-capitalize"
+                          :value="role.id"
+                        >
                           {{ role.name }}
                         </option>
                       </template>
                     </select>
                     <span v-if="v$.user.role_id.$error" class="errorMessage"
                       >Role field is required.</span
-                    >    
+                    >
                   </div>
 
-                  
-                
-                      
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <label>Company Name</label>
+                    <input class="form-control" v-model="user.company_name" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <label>Address</label>
+                    <input class="form-control" v-model="user.address" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
                   <!-- <div class="col-lg-3 col-md-3 col-sm-12">
                         <label>Country</label>
                         <input
@@ -133,54 +133,59 @@
                         v-model="user.country"                                             
                         />                     
                   </div>  -->
-                   <div class="col-lg-3 col-md-3 col-sm-12">
-                        <label>City</label>
-                        <input
-                        class="form-control"
-                        v-model="user.city"                                             
-                        />                     
-                  </div> 
+                  <div class="col-lg-3 col-md-3 col-sm-12">
+                    <label>City</label>
+                    <input class="form-control" v-model="user.city" />
+                  </div>
 
                   <div class="col-lg-3 col-md-3 col-sm-12">
-                        <label>Province</label>
-                        <input
-                        class="form-control"
-                        v-model="user.province"                                             
-                        />                     
-                  </div>                  
-                  
-                  <div class="col-lg-3 col-md-3 col-sm-12">
-                        <label>Zip</label>
-                        <input
-                        class="form-control"
-                        v-model="user.zip"                                             
-                        />                     
-                  </div> 
-                   <div class="col-lg-3 col-md-3 col-sm-12">
-                        <label>Phone</label>
-                        <input
-                        class="form-control"
-                        v-model="user.phone"                                             
-                        />                     
-                  </div> 
-                </div>   
-</div>         
+                    <label>Province</label>
+                    <input class="form-control" v-model="user.province" />
+                  </div>
 
-<div class="form-group">
-                <div class="row">
-                     <div class="col-lg-3 col-md-3 col-sm-12">
-                        <label>Profile Image</label>
-                          <input
-                          accept="image/png, image/jpeg, image/jpg"
-                          type="file"
-                          id="file" 
-                          class="form-control"
-                          @change="onChange"                          
-                        />     
-                  </div> 
+                  <div class="col-lg-3 col-md-3 col-sm-12">
+                    <label>Zip</label>
+                    <input class="form-control" v-model="user.zip" />
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-12">
+                    <label>Phone</label>
+                    <input class="form-control" v-model="user.phone" />
+                  </div>
                 </div>
               </div>
-    
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-3 col-md-3 col-sm-12">
+                    <label>Profile Image</label>
+                    <input
+                      accept="image/png, image/jpeg, image/jpg"
+                      type="file"
+                      id="file"
+                      class="form-control"
+                      @change="onChange"
+                      ref="fileInput"
+                      @input="pickFile"
+                    />
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-12">
+                      <div class="imagePreviewWrapper" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage">
+
+                      </div> 
+                      <!-- <div v-if="user.id" class="imagePreviewWrapper" :src="
+                      this.base_url +
+                      '/storage/users/' +
+                      this.$route.params.id +
+                      '/' +
+                      user.file_name
+                    " 
+                    @click="selectImage">
+
+                      </div>                        -->
+                  </div>
+                </div>
+              </div>
+
               <div class="form-group">
                 <button class="btn btn-success btn-sm mt-2">Save</button>
               </div>
@@ -215,41 +220,56 @@ export default {
         role_id: "",
         confirm_password: "",
       },
-      roles: [],  
-      error_email: "",  
-      error_password: ""  
+      roles: [],
+      error_email: "",
+      error_password: "",
+      previewImage: null
     };
   },
   validations() {
     return {
-      user: {         
+      user: {
         name: { required },
-        email: { required, email },        
+        email: { required, email },
         confirm_password: {
-            sameAs: sameAs(this.user.password),         
+          sameAs: sameAs(this.user.password),
         },
-        role_id:{ required },
+        role_id: { required },
       },
     };
   },
   created() {
-     this.getUser();
-     this.getRoles();
+    this.getUser();
+    this.getRoles();
   },
- 
+
   methods: {
     onChange(e) {
       this.file = e.target.file;
     },
+    pickFile () {
+        let input = this.$refs.fileInput
+        let file = input.files
+        if (file && file[0]) {
+          let reader = new FileReader
+          reader.onload = e => {
+            this.previewImage = e.target.result
+          }
+          reader.readAsDataURL(file[0])
+          this.$emit('input', file[0])
+        }
+      },
+      selectImage () {
+          this.$refs.fileInput.click()
+      },
     submitForm: function (event) {
       this.v$.$validate();
       if (!this.v$.$error) {
         event.preventDefault();
         this.error_email = "";
-        var headers = {          
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };        
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
 
         axios
           .post(this.base_url + "/api/users", this.user, {
@@ -268,8 +288,8 @@ export default {
               console.log(response);
             },
             (error) => {
-              this.error_email = error.response.data.error.email[0] 
-              this.error_password = error.response.data.error.password[0] 
+              this.error_email = error.response.data.error.email[0];
+              this.error_password = error.response.data.error.password[0];
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",
@@ -279,61 +299,52 @@ export default {
             }
           );
       }
-    },    
+    },
     getUser() {
       if (this.$route.params.id) {
-        var headers = {          
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };  
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
 
         var url = this.base_url + "/api/users/" + this.$route.params.id;
         axios
-          .get(url,{headers})
+          .get(url, { headers })
           .then((response) => {
             this.user = response.data.user;
-            this.user.role_id = response.data.user.roles[0].id
+            this.user.role_id = response.data.user.roles[0].id;
           })
           .catch((error) => {
             console.log(error);
           });
       }
-    }, 
+    },
     async getRoles() {
-      var headers = {          
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };  
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       let url = this.base_url + "/api/roles";
       await axios
-        .post(url, {headers})
+        .post(url, { headers })
         .then((response) => {
-          this.roles = response.data.roles;          
+          this.roles = response.data.roles;
         })
         .catch((error) => {
           console.log(error);
         });
-    }, 
+    },
   },
 };
 </script>
 
 <style>
-.card {
-  background: #f7f7f7;
-}
-.form-group {
-  margin-bottom: 5px;
-}
-.errorMessage {
-  color: red;
-}
-.error-boarder {
-  border: 1px solid red;
-}
-@media only screen and (max-width: 768px) {
-  .mt {
-    margin-top: 5px;
-  }
+.imagePreviewWrapper {
+  background-repeat: no-repeat;
+    width: 100px;
+    height: 100px;
+    display: block;
+    cursor: pointer;
+    margin: 0 auto 0px;
+    background-size: contain;
+    background-position: center center;
 }
 </style>

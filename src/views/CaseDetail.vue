@@ -403,13 +403,5 @@ export default {
 </script>
 
 <style>
-.red{
-  color:red;
-} 
-@media screen and (max-width: 768px) {
-  .case_heading .line-hight {
-    font-size: 12px !important;
-    line-height: normal !important;
-  }
-}
+ 
 </style>

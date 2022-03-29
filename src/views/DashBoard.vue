@@ -136,7 +136,5 @@ export default {
 </script>
 
 <style>
-.m-top{
-  margin-top: 60px;
-}
+
 </style>
