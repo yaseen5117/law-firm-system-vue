@@ -146,8 +146,12 @@ export default {
   methods: {
 
     getCaseDetails() {
+      var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       axios
-        .get(this.base_url + "/api/petitions/" + this.petition_id)
+        .get(this.base_url + "/api/petitions/" + this.petition_id, {headers})
         .then((response) => {
           this.petition = response.data.petition;
 
@@ -158,8 +162,12 @@ export default {
         });
     },
     getPetitionReplyParents() {
+      var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       axios
-        .get(this.base_url + "/api/petition_reply_parents/" + this.id)
+        .get(this.base_url + "/api/petition_reply_parents/" + this.id, {headers})
         .then((response) => {
           this.petition_reply_parents = response.data.petition_reply_parents;                 
         })
@@ -171,7 +179,7 @@ export default {
       if (confirm("Do you really want to delete?")) {
         var headers = {
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),           
+            `Bearer ` + localStorage.getItem("lfms_user"),           
         };
        
         axios
@@ -206,7 +214,7 @@ export default {
       if (true) {
         var headers = {
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+            `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
@@ -239,7 +247,7 @@ export default {
       if (true) {
         var headers = {
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+            `Bearer ` + localStorage.getItem("lfms_user"),
         };
         this.new_petition_reply_parent.petition_id = this.id;
         axios

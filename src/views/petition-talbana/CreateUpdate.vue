@@ -165,7 +165,7 @@ export default {
 
         var headers = {
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+            `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
@@ -201,9 +201,13 @@ export default {
     },    
     
     async getPetitionTypes() {
+      var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       let url = this.base_url + "/api/petition_types";
       await axios
-        .get(url)
+        .get(url, {headers})
         .then((response) => {
           this.petition_types = response.data.petition_types;
           console.log(this.petition_types);
@@ -213,10 +217,14 @@ export default {
         });
     },
     getPetition() {
+      var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       if (this.$route.params.petition_id) {
         var url = this.base_url + "/api/petitions/" + this.$route.params.petition_id;
         axios
-          .get(url)
+          .get(url, {headers})
           .then((response) => {
             this.petition = response.data.petition;
             this.opponents = [{}];

@@ -283,7 +283,7 @@ export default {
       if (true) {
         var headers = {
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+            `Bearer ` + localStorage.getItem("lfms_user"),
         };
         this.new_standard_index.petition_id = this.petition_id;
         axios
@@ -321,7 +321,7 @@ export default {
       if (true) {
         var headers = {
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+            `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
@@ -358,7 +358,7 @@ export default {
       if (confirm("Do you really want to delete?")) {
         var headers = {
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+            `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
