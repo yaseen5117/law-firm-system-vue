@@ -1531,20 +1531,18 @@ section {
   border: solid 1px red;
 }
 .list-group-item {
-  background-color: black;
-  color: grey;
+  background-color:#ffffff00;
+  color: black;
+  border: solid 1px black;
   font-weight: bold;
 }
 .list-group-item:hover {
-  background-color: rgb(117, 117, 117);
-  color: rgb(173, 173, 173);
+  background-color: rgb(92, 116, 255);
+  color: black;
 }
-.list-group-item + .list-group-item.active {
-  background-color: rgb(117, 117, 117);
-  color: rgb(173, 173, 173);
+.list-group-item.active {
+  background-color: rgb(92, 116, 255);
 }
-/*  */
-
 /* START CSS FOR CREATE PAGES */
 
 .card {
