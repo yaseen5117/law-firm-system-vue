@@ -139,7 +139,16 @@
                       class="form-control"
                       v-model="new_petition_reply.document_description"
                       v-on:keyup.enter="submitPetitionReply()"
-                    />
+                      v-bind:class="{
+                          'error-boarder': v$.new_petition_reply.document_description.$error,
+                        }"
+                        @blur="v$.new_petition_reply.document_description.$touch"
+                      />
+                     <span
+                      v-if="v$.new_petition_reply.document_description.$error"
+                      class="errorMessage"
+                      >Description field is required.</span
+                    >
                   </td>
                   <td>
                     <!-- <datepicker
@@ -197,11 +206,16 @@
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
 import NavComponents from "../Cases/NavComponents.vue";
-
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 
 export default {
     components: { PageHeader,NavComponents },
-     
+    setup() {
+      return {
+        v$: useVuelidate(),
+      };
+    },
     data() {
     return {
       'page_title':'Petiton Replies',
@@ -211,6 +225,13 @@ export default {
       new_petition_reply: {},     
       petition: {}, 
       saving: false,
+    };
+  },
+  validations() {
+    return {      
+        new_petition_reply: {
+          document_description: { required },  
+        }       
     };
   },
   created() {
@@ -297,7 +318,8 @@ export default {
       }
     },
     submitPetitionReply() {
-      if (true) {
+      this.v$.$validate();
+      if (!this.v$.$error) { 
         var headers = {
           Authorization:
             `Bearer ` + localStorage.getItem("lfms_user"),
@@ -322,6 +344,7 @@ export default {
                 });
                 this.saving = false;
                 this.new_petition_reply = {};
+                setTimeout(() => { this.v$.$reset() }, 0)
                 this.getPetitionReplyDetails();
               }
             },

@@ -94,7 +94,16 @@
                       class="form-control"
                       v-model="new_petition_reply_parent.title"
                       v-on:keyup.enter="submitPetitionReply()"
+                      v-bind:class="{
+                        'error-boarder': v$.new_petition_reply_parent.title.$error,
+                      }"
+                      @blur="v$.new_petition_reply_parent.title.$touch"
                     />
+                     <span
+                      v-if="v$.new_petition_reply_parent.title.$error"
+                      class="errorMessage"
+                      >Title field is required.</span
+                    >
                   </td>                  
                   <td>
                     <button
@@ -123,11 +132,16 @@
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
 import NavComponents from "../Cases/NavComponents.vue";
-
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 
 export default {
     components: { PageHeader,NavComponents },
-     
+     setup() {
+      return {
+        v$: useVuelidate(),
+      };
+    },
     data() {
     return {
       'page_title':'Petiton Replies',
@@ -138,6 +152,13 @@ export default {
       petition_id: this.$route.params.id, 
       new_petition_reply_parent: {},   
       saving: false,   
+    };
+  },
+  validations() {
+    return {      
+        new_petition_reply_parent: {
+          title: { required },  
+        }       
     };
   },
   created() {
@@ -245,7 +266,8 @@ export default {
       }
     },
     submitPetitionReply() {
-      if (true) {
+      this.v$.$validate();
+      if (!this.v$.$error) { 
         var headers = {
           Authorization:
             `Bearer ` + localStorage.getItem("lfms_user"),
@@ -269,7 +291,8 @@ export default {
                   text: "Saved Successfully!",
                 });
                 this.saving = false;
-                this.new_petition_reply_parent = {};
+                this.new_petition_reply_parent = {};              
+                setTimeout(() => { this.v$.$reset() }, 0)
                 this.getPetitionReplyParents();
               }
             },
