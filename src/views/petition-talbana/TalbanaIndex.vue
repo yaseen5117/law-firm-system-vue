@@ -160,11 +160,16 @@ export default {
       this.activePage = id;
     },
     getTalbanas() {
+      var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       axios
         .get(
           this.base_url +
             "/api/petition_talbana?petition_id=" +
-            this.petition_id
+            this.petition_id,
+            {headers}
         )
         .then((response) => {
           this.talbanas = response.data.records;
@@ -180,7 +185,7 @@ export default {
 
     getTalbana() {
       var headers = {
-        Authorization: `Bearer ` + localStorage.getItem("rezo_customers_user"),
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
 
       axios
@@ -205,8 +210,12 @@ export default {
     },
 
     getCaseDetails() {
+      var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       axios
-        .get(this.base_url + "/api/petitions/" + this.petition_id)
+        .get(this.base_url + "/api/petitions/" + this.petition_id, {headers})
         .then((response) => {
           this.petition = response.data.petition;
         })
@@ -219,7 +228,7 @@ export default {
       if (true) {
         var headers = {
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+            `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
@@ -256,7 +265,7 @@ export default {
       if (confirm("Do you really want to delete?")) {
         var headers = {
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+            `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios

@@ -76,7 +76,7 @@ export default {
         headers: {
           "content-type": "multipart/form-data",
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+            `Bearer ` + localStorage.getItem("lfms_user"),
         },
       };   
       let formData = new FormData();

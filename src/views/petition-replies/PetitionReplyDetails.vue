@@ -342,8 +342,12 @@ export default {
       this.activePage = id;
     },
     async getPetitionReplyDetails() {
+      var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       await axios
-        .post(this.base_url + "/api/petition_reply_details/" + this.id)
+        .post(this.base_url + "/api/petition_reply_details/" + this.id, {headers})
         .then((response) => {
           this.petition_reply_details = response.data.petition_reply;
           this.petition = response.data.petition;           

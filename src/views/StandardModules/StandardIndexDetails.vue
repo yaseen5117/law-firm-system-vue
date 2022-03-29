@@ -372,8 +372,12 @@ export default {
       this.activePage = id;
     },
     async getModuleIndexDetails() {       
+      var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       await axios
-        .post(this.base_url + "/api/module_index_details_"+this.module_type+"/" + this.module_id)
+        .post(this.base_url + "/api/module_index_details_"+this.module_type+"/" + this.module_id, {headers})
         .then((response) => {             
           this.index_detail_data = response.data.index_detail_data;
           this.petition = response.data.petition;
@@ -387,8 +391,12 @@ export default {
     },
 
     async getModuleAnnexure(petition_id) {
+      var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       await axios
-        .get(this.base_url + "/api/"+this.module_type+"/" + petition_id)
+        .get(this.base_url + "/api/"+this.module_type+"/" + petition_id, {headers})
         .then((response) => {            
           this.module_index_data = response.data.index_annexure_data;
           var arr = [];
@@ -408,7 +416,7 @@ export default {
       if (true) {
         var headers = {
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+            `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios

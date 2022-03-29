@@ -360,8 +360,12 @@ export default {
       this.activePage = id;
     },
     async getCaseDetails() {
+      var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       await axios
-        .get(this.base_url + "/api/petitions_index/" + this.id)
+        .get(this.base_url + "/api/petitions_index/" + this.id, {headers})
         .then((response) => {
           this.petition_index_details = response.data.petition_index;
           this.petition = response.data.petition;
@@ -374,8 +378,12 @@ export default {
     },
 
     async getPetitionAnnexure(petition_id) {
+      var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       await axios
-        .get(this.base_url + "/api/petitions/" + petition_id)
+        .get(this.base_url + "/api/petitions/" + petition_id, {headers})
         .then((response) => {
           this.petition_index = response.data.petition_details;
           var arr = [];
@@ -395,7 +403,7 @@ export default {
       if (true) {
         var headers = {
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+            `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
@@ -432,7 +440,7 @@ export default {
       if (confirm("Do you really want to delete?")) {
         var headers = {
           Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+            `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
