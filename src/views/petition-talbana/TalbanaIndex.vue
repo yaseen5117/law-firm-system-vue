@@ -210,8 +210,12 @@ export default {
     },
 
     getCaseDetails() {
+      var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       axios
-        .get(this.base_url + "/api/petitions/" + this.petition_id)
+        .get(this.base_url + "/api/petitions/" + this.petition_id, {headers})
         .then((response) => {
           this.petition = response.data.petition;
         })

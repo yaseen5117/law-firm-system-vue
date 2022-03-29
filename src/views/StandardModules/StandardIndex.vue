@@ -250,8 +250,12 @@ export default {
   },
   methods: {
     getCaseDetails() {
+      var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       axios
-        .get(this.base_url + "/api/petitions/" + this.petition_id)
+        .get(this.base_url + "/api/petitions/" + this.petition_id, {headers})
         .then((response) => {
           this.petition = response.data.petition;
 
@@ -262,9 +266,14 @@ export default {
         });
     },
     getModuleIndex() {
+       var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       axios
         .get(
-          this.base_url + "/api/" + this.module_type + "/" + this.petition_id
+          this.base_url + "/api/" + this.module_type + "/" + this.petition_id,
+          {headers}
         )
         .then((response) => {
           this.index_data = response.data.index_data;
