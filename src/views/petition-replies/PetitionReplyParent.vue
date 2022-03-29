@@ -97,14 +97,14 @@
                     />
                   </td>                  
                   <td>
-                    <a
-                      href="javascript:void"
+                    <button
+                      :disabled="saving"                      
                       @click="submitPetitionReply()"
                       class="btn btn-sm btn-success action-btn"
                     >
                     Save
                       <!-- <i class="fa fa-save"></i> -->
-                    </a>
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -136,7 +136,8 @@ export default {
       petition:{},      
       id: this.$route.params.id, 
       petition_id: this.$route.params.id, 
-      new_petition_reply_parent: {},      
+      new_petition_reply_parent: {},   
+      saving: false,   
     };
   },
   created() {
@@ -249,6 +250,7 @@ export default {
           Authorization:
             `Bearer ` + localStorage.getItem("lfms_user"),
         };
+        this.saving = true;
         this.new_petition_reply_parent.petition_id = this.id;
         axios
           .post(
@@ -266,11 +268,13 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
+                this.saving = false;
                 this.new_petition_reply_parent = {};
                 this.getPetitionReplyParents();
               }
             },
             (error) => {
+              this.saving = false;
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",

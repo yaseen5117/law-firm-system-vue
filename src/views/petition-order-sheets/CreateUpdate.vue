@@ -87,7 +87,7 @@
               </div>
             
               <div class="form-group">
-                <button class="btn btn-success btn-sm mt-2">Save</button>
+                <button :disabled="saving" class="btn btn-success btn-sm mt-2">Save</button>
               </div>
               
             </form>
@@ -141,6 +141,7 @@ export default {
           title: "Type 3",
         },
       ],
+      saving: false,
     };
   },
   validations() {
@@ -163,7 +164,7 @@ export default {
       this.v$.$validate();
       if (!this.v$.$error) {
         event.preventDefault();
-
+        this.saving = true;
         var headers = {
           Authorization:
             `Bearer ` + localStorage.getItem("lfms_user"),
@@ -185,11 +186,13 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
+                this.saving = false;
                 this.$router.push({ path: "/petition-order-sheets-index/"+ this.order_sheet.petition_id});
               }
               console.log(response);
             },
             (error) => {
+              this.saving = false;
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",

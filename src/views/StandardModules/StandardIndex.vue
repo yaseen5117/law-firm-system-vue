@@ -196,14 +196,14 @@
                       />
                     </td>
                     <td>
-                      <a
-                        href="javascript:void"
+                      <button
+                        :disabled="saving"
                         @click="submitPetitionIndex()"
                         class="btn btn-sm btn-success action-btn"
                       >
                         Save
                         <!-- <i class="fa fa-save"></i> -->
-                      </a>
+                      </button>
                     </td>
                   </tr>
                 </tbody>
@@ -241,7 +241,8 @@ export default {
       index_data: [],   
       compactInlineView: "",    
       ShowOnOralArgument: "",
-      model_type: "",      
+      model_type: "",  
+      saving: false,    
     };
   },
   created() {
@@ -294,6 +295,7 @@ export default {
           Authorization:
             `Bearer ` + localStorage.getItem("lfms_user"),
         };
+        this.saving = true;
         this.new_standard_index.petition_id = this.petition_id;
         axios
           .post(
@@ -311,11 +313,13 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
+                this.saving = false;
                 this.new_standard_index = {};
                 this.getModuleIndex();
               }
             },
             (error) => {
+              this.saving = false;
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",

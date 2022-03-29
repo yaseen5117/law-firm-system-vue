@@ -171,14 +171,14 @@
                     />
                   </td>
                   <td>
-                    <a
-                      href="javascript:void"
+                    <button
+                      :disabled="saving"
                       @click="submitPetitionReply()"
                       class="btn btn-sm btn-success action-btn"
                     >
                     Save
                       <!-- <i class="fa fa-save"></i> -->
-                    </a>
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -210,6 +210,7 @@ export default {
       id: this.$route.params.id, //this is the id from the browser 
       new_petition_reply: {},     
       petition: {}, 
+      saving: false,
     };
   },
   created() {
@@ -301,6 +302,7 @@ export default {
           Authorization:
             `Bearer ` + localStorage.getItem("lfms_user"),
         };
+        this.saving = true;
         this.new_petition_reply.petition_reply_parent_id = this.id;
         axios
           .post(
@@ -318,11 +320,13 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
+                this.saving = false;
                 this.new_petition_reply = {};
                 this.getPetitionReplyDetails();
               }
             },
             (error) => {
+              this.saving = false;
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",

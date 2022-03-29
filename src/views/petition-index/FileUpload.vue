@@ -22,7 +22,7 @@
         <span v-if="v$.files.$error" class="errorMessage"
           >Select a File Before Uploading.</span
         ><br />
-        <button :class="compactInlineView ? 'display' : ''" class="btn btn-primary btn-sm">Upload</button>
+        <button :disabled="saving" :class="compactInlineView ? 'display' : ''" class="btn btn-primary btn-sm">Upload</button>
         <input type="hidden" />
       </form>
     </div>
@@ -49,6 +49,7 @@ export default {
       //attachmentable_id: this.$route.params.id, //this is the id from the browser
       success: "",   
       beforUploading: "",    
+      saving: false,
     };
   },
   validations() {
@@ -70,6 +71,7 @@ export default {
       }           
        
       this.beforUploading = "Please Wait..!";
+      this.saving = true;
       //let existingObj = this;
       
       const config = {
@@ -98,6 +100,7 @@ export default {
                 title: "Success",
                 text: "Files Uploaded Successfully!",
               });  
+              this.saving = false;
               this.beforUploading = "";
               this.$refs.fileupload.value=null;            
               console.log(response.data);
@@ -105,6 +108,7 @@ export default {
             }
           },
           (error) => {
+            this.saving = false;
             console.log(error.response.data.error);
             this.$notify({
               type: "error",

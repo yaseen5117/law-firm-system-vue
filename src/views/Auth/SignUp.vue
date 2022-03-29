@@ -92,7 +92,7 @@
               </div>
 
               <div class="form-group">
-                <button class="btn btn-success btn-sm mt-2">Sign Up</button>
+                <button :disabled="saving" class="btn btn-success btn-sm mt-2">Sign Up</button>
               </div>
             </form>
           </div>
@@ -135,6 +135,7 @@ export default {
       },
       msgAfterSignUp: "",    
       error_email: "",   
+      saving: false,
     };
   },
   validations() {
@@ -160,7 +161,7 @@ export default {
       this.v$.$validate();
       if (!this.v$.$error) {
         event.preventDefault();
-
+        this.saving = true;
         var headers = {
           Authorization:
             `Bearer ` + localStorage.getItem("lfms_user"),
@@ -186,7 +187,7 @@ export default {
             },
             (error) => {     
               this.error_email = error.response.data.error.email[0]     
-                 
+              this.saving = false;
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",

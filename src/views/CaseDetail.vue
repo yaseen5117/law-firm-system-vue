@@ -206,14 +206,14 @@
                     />
                   </td>
                   <td>
-                    <a
-                      href="javascript:void"
+                    <button
+                      :disabled="saving"                       
                       @click="submitPetitionIndex()"
-                      class="btn btn-sm btn-success action-btn"
+                      class="btn btn-sm btn-success action-btn"                      
                     >
                       Save
                       <!-- <i class="fa fa-save"></i> -->
-                    </a>
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -256,6 +256,7 @@ export default {
       new_petition_index: {
         document_description:"",
       },
+      saving: false,
       
     };
   },
@@ -296,6 +297,7 @@ export default {
             `Bearer ` + localStorage.getItem("lfms_user"),
         };
         this.new_petition_index.petition_id = this.id;
+        this.saving = true;
         axios
           .post(
             this.base_url + "/api/petitions_index",
@@ -312,12 +314,14 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
+                this.saving = false;
                 this.new_petition_index = {};
                 setTimeout(() => { this.v$.$reset() }, 0)
                 this.getCaseDetails();
               }
             },
             (error) => {
+              this.saving = false;
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",
