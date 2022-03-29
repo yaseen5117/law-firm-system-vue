@@ -12,20 +12,20 @@
           <li>
             <router-link class="nav-link" to="/">Home</router-link>
           </li>
-          <li v-if="this.user">
+          <li v-show="this.user">
             <router-link class="nav-link" to="/dashboard"
               >Welcome {{ this.user.name }}!</router-link
             >
           </li>
-          <li v-if="this.user">
+          <li v-show="this.user">
             <router-link class="nav-link" to="/dashboard"
               >Dashboard</router-link
             >
           </li>
-          <li v-if="!this.user">
+          <li v-show="!this.user">
             <router-link class="nav-link" to="/login">Login</router-link>
           </li>
-          <li v-if="!this.user">
+          <li v-show="!this.user">
             <router-link class="nav-link" to="/sign-up">Sign Up</router-link>
           </li>
          
@@ -36,8 +36,8 @@
               ><span>Settings</span> <i class="bi bi-chevron-down"></i
             ></a>
             <ul>
-              <li v-if="this.user && this.user.is_admin"><router-link class="nav-link" to="/users">Users</router-link></li>
-              <li>
+              <li v-show="this.user && this.user.is_admin"><router-link class="nav-link" to="/users">Users</router-link></li>
+              <!-- <li>
                 <router-link class="nav-link" 
                   :to="{
                     name: 'edit-user',
@@ -46,8 +46,8 @@
                 >
                 My Profile
                 </router-link>
-              </li>
-              <li class="dropdown" v-if="this.user && this.user.is_admin">
+              </li> -->
+              <li class="dropdown" v-show="this.user && this.user.is_admin">
                 <a href="#"
                   ><span>System Settings</span>
                   <i class="bi bi-chevron-right"></i
