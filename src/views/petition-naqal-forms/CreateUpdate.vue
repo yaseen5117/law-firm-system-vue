@@ -43,7 +43,7 @@
                      <input
                       class="form-control"
                       type="text"
-                     placeholder="yyyy/mm/dd"
+                     placeholder="dd/mm/yyyy"
                       v-model="naqal_form.naqal_form_date"
                       v-bind:class="{
                         'error-boarder': v$.naqal_form.naqal_form_date.$error,

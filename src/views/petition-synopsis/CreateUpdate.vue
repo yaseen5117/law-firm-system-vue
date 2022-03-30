@@ -43,7 +43,7 @@
                     <input
                       class="form-control"
                       type="text"
-                      placeholder="yyyy/mm/dd"
+                      placeholder="dd/mm/yyyy"
                       v-model="synopsis.synopsis_date"
                       v-bind:class="{
                         'error-boarder': v$.synopsis.synopsis_date.$error,

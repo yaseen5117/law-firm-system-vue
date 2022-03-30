@@ -56,7 +56,7 @@
                        <input
                       class="form-control"
                       type="text"
-                      placeholder="yyyy/mm/dd"
+                      placeholder="dd/mm/yyyy"
                       v-model="index_data_single.date"
                         v-on:keyup.enter="editStandardIndex(index_data_single)"
                         v-show="index_data_single.editMode"
@@ -176,7 +176,7 @@
                       <input
                       class="form-control"
                       type="text"
-                      placeholder="yyyy/mm/dd"
+                      placeholder="dd/mm/yyyy"
                       v-model="new_standard_index.date"
                       v-on:keyup.enter="submitPetitionIndex()"
                     />

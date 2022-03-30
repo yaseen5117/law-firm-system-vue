@@ -161,8 +161,9 @@
                     <input
                       class="form-control"
                       type="text"
-                      placeholder="yyyy/mm/dd"
+                      placeholder="dd/mm/yyyy"
                       v-model="new_petition_reply.date"
+                      v-on:keyup.enter="submitPetitionReply()"
                     />
                   </td>
                   <td>

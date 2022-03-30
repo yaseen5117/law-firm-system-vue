@@ -42,7 +42,7 @@
                      <input
                       class="form-control"
                       type="text"
-                      placeholder="yyyy/mm/dd"
+                      placeholder="dd/mm/yyyy"
                       v-model="order_sheet.order_sheet_date"
                       v-bind:class="{
                         'error-boarder': v$.order_sheet.order_sheet_date.$error,
