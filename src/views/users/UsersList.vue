@@ -93,6 +93,7 @@
                   <th>Name</th>
                   <th>Role</th>
                   <th>Email</th>
+                  <th>Status</th>
 
                   <th width="20%">Actions</th>
                 </thead>
@@ -128,6 +129,10 @@
                       />
                       <span v-show="!user.editMode">{{ user.email }} </span>
                     </td>
+                    <td><button :class="
+                          user.is_approved ? 'btn-success' : 'btn-danger'
+                        "
+                        class="btn btn-sm action-btn">{{user.is_approved?"Approved":"Pending Approval"}}</button></td>
                     <td width="15%">
                       <button
                         :class="
