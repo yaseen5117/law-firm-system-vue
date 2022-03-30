@@ -94,17 +94,26 @@
                       class="form-control"
                       v-model="new_petition_reply_parent.title"
                       v-on:keyup.enter="submitPetitionReply()"
+                      v-bind:class="{
+                        'error-boarder': v$.new_petition_reply_parent.title.$error,
+                      }"
+                      @blur="v$.new_petition_reply_parent.title.$touch"
                     />
+                     <span
+                      v-if="v$.new_petition_reply_parent.title.$error"
+                      class="errorMessage"
+                      >Title field is required.</span
+                    >
                   </td>                  
                   <td>
-                    <a
-                      href="javascript:void"
+                    <button
+                      :disabled="saving"                      
                       @click="submitPetitionReply()"
                       class="btn btn-sm btn-success action-btn"
                     >
                     Save
                       <!-- <i class="fa fa-save"></i> -->
-                    </a>
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -123,11 +132,16 @@
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
 import NavComponents from "../Cases/NavComponents.vue";
-
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 
 export default {
     components: { PageHeader,NavComponents },
-     
+     setup() {
+      return {
+        v$: useVuelidate(),
+      };
+    },
     data() {
     return {
       'page_title':'Petiton Replies',
@@ -136,7 +150,15 @@ export default {
       petition:{},      
       id: this.$route.params.id, 
       petition_id: this.$route.params.id, 
-      new_petition_reply_parent: {},      
+      new_petition_reply_parent: {},   
+      saving: false,   
+    };
+  },
+  validations() {
+    return {      
+        new_petition_reply_parent: {
+          title: { required },  
+        }       
     };
   },
   created() {
@@ -244,11 +266,13 @@ export default {
       }
     },
     submitPetitionReply() {
-      if (true) {
+      this.v$.$validate();
+      if (!this.v$.$error) { 
         var headers = {
           Authorization:
             `Bearer ` + localStorage.getItem("lfms_user"),
         };
+        this.saving = true;
         this.new_petition_reply_parent.petition_id = this.id;
         axios
           .post(
@@ -266,11 +290,14 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
-                this.new_petition_reply_parent = {};
+                this.saving = false;
+                this.new_petition_reply_parent = {};              
+                setTimeout(() => { this.v$.$reset() }, 0)
                 this.getPetitionReplyParents();
               }
             },
             (error) => {
+              this.saving = false;
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",

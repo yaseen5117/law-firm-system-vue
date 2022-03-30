@@ -139,7 +139,16 @@
                       class="form-control"
                       v-model="new_petition_reply.document_description"
                       v-on:keyup.enter="submitPetitionReply()"
-                    />
+                      v-bind:class="{
+                          'error-boarder': v$.new_petition_reply.document_description.$error,
+                        }"
+                        @blur="v$.new_petition_reply.document_description.$touch"
+                      />
+                     <span
+                      v-if="v$.new_petition_reply.document_description.$error"
+                      class="errorMessage"
+                      >Description field is required.</span
+                    >
                   </td>
                   <td>
                     <!-- <datepicker
@@ -152,8 +161,9 @@
                     <input
                       class="form-control"
                       type="text"
-                      placeholder="yyyy/mm/dd"
+                      placeholder="dd/mm/yyyy"
                       v-model="new_petition_reply.date"
+                      v-on:keyup.enter="submitPetitionReply()"
                     />
                   </td>
                   <td>
@@ -171,14 +181,14 @@
                     />
                   </td>
                   <td>
-                    <a
-                      href="javascript:void"
+                    <button
+                      :disabled="saving"
                       @click="submitPetitionReply()"
                       class="btn btn-sm btn-success action-btn"
                     >
                     Save
                       <!-- <i class="fa fa-save"></i> -->
-                    </a>
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -197,11 +207,16 @@
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
 import NavComponents from "../Cases/NavComponents.vue";
-
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 
 export default {
     components: { PageHeader,NavComponents },
-     
+    setup() {
+      return {
+        v$: useVuelidate(),
+      };
+    },
     data() {
     return {
       'page_title':'Petiton Replies',
@@ -210,6 +225,14 @@ export default {
       id: this.$route.params.id, //this is the id from the browser 
       new_petition_reply: {},     
       petition: {}, 
+      saving: false,
+    };
+  },
+  validations() {
+    return {      
+        new_petition_reply: {
+          document_description: { required },  
+        }       
     };
   },
   created() {
@@ -296,11 +319,13 @@ export default {
       }
     },
     submitPetitionReply() {
-      if (true) {
+      this.v$.$validate();
+      if (!this.v$.$error) { 
         var headers = {
           Authorization:
             `Bearer ` + localStorage.getItem("lfms_user"),
         };
+        this.saving = true;
         this.new_petition_reply.petition_reply_parent_id = this.id;
         axios
           .post(
@@ -318,11 +343,14 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
+                this.saving = false;
                 this.new_petition_reply = {};
+                setTimeout(() => { this.v$.$reset() }, 0)
                 this.getPetitionReplyDetails();
               }
             },
             (error) => {
+              this.saving = false;
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",

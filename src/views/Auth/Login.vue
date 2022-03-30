@@ -50,7 +50,7 @@
                 </div>
               </div>
               <div class="col-md-12 col-sm-12">
-                <button type="submit" class="btn btn-primary">
+                <button :disabled="saving" type="submit" class="btn btn-primary">
                   Login
                 </button>
               </div>
@@ -82,7 +82,8 @@ export default {
     return {
         base_url: process.env.VUE_APP_SERVICE_URL,
         email: "",
-        password: "",    
+        password: "",  
+        saving: false,  
     };
   },
   validations() {
@@ -101,7 +102,7 @@ export default {
         data.append("password", this.password);
        
         event.preventDefault();        
-
+        this.saving = true;
         axios
           .post(this.base_url + "/api/login",data,{
             
@@ -121,6 +122,7 @@ export default {
               console.log(response);
             },
             (error) => {
+              this.saving = false;
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",

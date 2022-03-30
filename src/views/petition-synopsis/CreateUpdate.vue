@@ -43,7 +43,7 @@
                     <input
                       class="form-control"
                       type="text"
-                      placeholder="yyyy/mm/dd"
+                      placeholder="dd/mm/yyyy"
                       v-model="synopsis.synopsis_date"
                       v-bind:class="{
                         'error-boarder': v$.synopsis.synopsis_date.$error,
@@ -88,7 +88,7 @@
               </div>
             
               <div class="form-group">
-                <button class="btn btn-success btn-sm mt-2">Save</button>
+                <button :disabled="saving" class="btn btn-success btn-sm mt-2">Save</button>
               </div>
               
             </form>
@@ -142,6 +142,7 @@ export default {
           title: "Type 3",
         },
       ],
+      saving: false,
     };
   },
   validations() {
@@ -162,7 +163,7 @@ export default {
       this.v$.$validate();
       if (!this.v$.$error) {
         event.preventDefault();
-
+        this.saving = true;
         var headers = {
           Authorization:
             `Bearer ` + localStorage.getItem("lfms_user"),
@@ -184,11 +185,13 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
+                this.saving = false;
                 this.$router.push({ path: "/petition-synopsis-index/"+ this.synopsis.petition_id});
               }
               console.log(response);
             },
             (error) => {
+              this.saving = false;
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",

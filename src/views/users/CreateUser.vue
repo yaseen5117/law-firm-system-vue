@@ -187,7 +187,7 @@
               </div>
 
               <div class="form-group">
-                <button class="btn btn-success btn-sm mt-2">Save</button>
+                <button :disabled="saving" class="btn btn-success btn-sm mt-2">Save</button>
               </div>
             </form>
           </div>
@@ -223,7 +223,8 @@ export default {
       roles: [],
       error_email: "",
       error_password: "",
-      previewImage: null
+      previewImage: null,
+      saving: false,
     };
   },
   validations() {
@@ -267,6 +268,7 @@ export default {
       if (!this.v$.$error) {
         event.preventDefault();
         this.error_email = "";
+        this.saving = true;
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
@@ -283,13 +285,15 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
+                this.saving = false;
                 this.$router.push({ path: "/users" });
               }
               console.log(response);
             },
             (error) => {
-              this.error_email = error.response.data.error.email[0];
-              this.error_password = error.response.data.error.password[0];
+              this.saving = false;
+              this.error_email = error.response.data.validation_error.email[0];
+              this.error_password = error.response.data.validation_error.password[0];
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",
