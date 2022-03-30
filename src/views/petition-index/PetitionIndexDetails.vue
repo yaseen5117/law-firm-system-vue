@@ -347,7 +347,7 @@ export default {
       id: this.$route.params.id, //this is the id from the browser
       horizontalView: false, //it will show vertical images by default
       activePage: null,
-      removePageHeader: true,      
+      removePageHeader: false,      
     };
   },
   created() {
