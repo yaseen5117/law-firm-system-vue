@@ -292,8 +292,8 @@ export default {
             },
             (error) => {
               this.saving = false;
-              this.error_email = error.response.data.error.email[0];
-              this.error_password = error.response.data.error.password[0];
+              this.error_email = error.response.data.validation_error.email[0];
+              this.error_password = error.response.data.validation_error.password[0];
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",

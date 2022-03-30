@@ -179,14 +179,15 @@ export default {
                 //   title: "Success",
                 //   text: "Account Created Successfully!",
                 // });           
-                this.user = {};    
+                this.user = {};  
+                this.saving = false;  
                 setTimeout(() => { this.v$.$reset() }, 0) 
-                 this.msgAfterSignUp = "Account Created Successfully. After Admin Verification You Can Logged Into Your Account. Thanks.";
+                 this.msgAfterSignUp = "Account created successfully. After admin verification you can login into your account. Thanks.";
               }
               console.log(response);
             },
             (error) => {     
-              this.error_email = error.response.data.error.email[0]     
+              this.error_email = error.response.data.validation_error.email[0]     
               this.saving = false;
               console.log(error.response.data.error);
               this.$notify({
