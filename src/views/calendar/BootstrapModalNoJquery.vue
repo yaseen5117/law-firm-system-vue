@@ -1,12 +1,12 @@
 <template>
   <!-- The Modal -->
   <div class="bootstrap-modal-no-jquery">
-    <div class="modal" id="myModal">
+    <div class="modal" id="myModal" style="    background: #2c49646b;">
       <div class="modal-dialog">
         <div class="modal-content">
           <!-- Modal Header -->
           <div class="modal-header">
-            <h4 class="modal-title">Modal Heading</h4>
+            <h4 class="modal-title">Add Petition Hearing Event</h4>
             <button
               type="button"
               class="btn-close"
@@ -14,11 +14,43 @@
             ></button>
           </div>
           <!-- Modal body -->
-          <div class="modal-body">{{ name }}</div>
+          <div class="modal-body">
+            <form action="">
+              <div class="form-group">
+                <label for="">Date</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  readonly
+                  v-model="petition_hearing_event.hearing_date"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="">Petition</label>
+                <select class="form-control" v-model="petition_hearing_event.petition_id" >
+                  <option value="1">Case # 1</option>
+                  <option value="2">Case # 2</option>
+                  <option value="3">Case # 3</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="">Notes</label>
+                <textarea
+                  class="form-control"
+                  type="text"
+                  v-model="petition_hearing_event.hearing_summary"
+                ></textarea>
+              </div>
+
+
+            </form>
+          </div>
           <!-- Modal footer -->
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" @click="saveChanges">
-              Save changes
+              Create Event
             </button>
             <button type="button" class="btn btn-secondary" @click="closeModal">
               Close
@@ -31,28 +63,49 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  data() {
+  props: ["selected_date"],
+  data(){
     return {
-      name: null,
-    };
+      base_url: process.env.VUE_APP_SERVICE_URL,
+      petition_hearing_event:{
+        hearing_date:this.selected_date,
+        petition_id:"1",
+        hearing_summary:"",
+      }
+    }
   },
+
   methods: {
     closeModal() {
       this.$emit("close-modal-event");
+      
     },
     saveChanges() {
-      this.closeModal();
-    },
-    getName(value) {
-      console.log("called in modal");
-      this.name = value;
+      this.savePetitionHearing();
     },
 
-    updateMyVar(val) {
-      console.log("called in modal");
-      this.name = "vsdafsadfalue";
+    savePetitionHearing() {
+      let url = this.base_url + "/api/petition_hearing";
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      axios
+        .post(url, this.petition_hearing_event , {
+          headers
+          
+        })
+        .then((response) => {
+          this.$emit("triggerGetEvents");
+          this.closeModal();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
+
+    
   },
 };
 </script>

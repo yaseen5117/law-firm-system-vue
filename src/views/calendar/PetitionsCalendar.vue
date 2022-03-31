@@ -6,13 +6,19 @@
         <div class="row">
           <div class="col-12 col-md-8 offset-md-2">
             <FullCalendar :options="calendarOptions" />
+
+            <p><small>(Server Time: {{server_time}})</small></p>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-   <bootstrap-modal-no-jquery  v-if="displayModal" @close-modal-event="hideModal" @myVarChanged="updateMyVar" />
+   <bootstrap-modal-no-jquery 
+   :selected_date="selected_date" 
+   v-if="displayModal" 
+   @close-modal-event="hideModal" 
+   @triggerGetEvents="getEvents" />
 
   <!-- End #main -->
 </template>
@@ -40,11 +46,13 @@ export default {
         dateClick: this.handleDateClick,
         //Dynamic Event Source
         events: [],
+        
       },
+        server_time:null
     };
   },
   created() {
-    this.getCaseFiles();
+    this.getEvents();
   },
   methods: {
     showModal() {
@@ -58,8 +66,8 @@ export default {
       this.$emit("close-modal-event");
     },
 
-    async getCaseFiles() {
-      let url = this.base_url + "/api/petitions";
+    async getEvents() {
+      let url = this.base_url + "/api/petition_hearing";
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
@@ -70,6 +78,7 @@ export default {
         })
         .then((response) => {
           this.calendarOptions.events = response.data.events;
+          this.server_time = response.data.server_time;
           console.log(this.calendarOptions.events);
         })
         .catch((error) => {
@@ -80,7 +89,8 @@ export default {
     handleDateClick(arg) {
       this.showModal();
       //this.$emit('name', "Raja Tamil");
-      this.$emit('myVarChanged', "asdasdasdasd");
+      console.log("arg",arg)
+      this.selected_date = arg.dateStr;
 
       console.log("called");
     },
