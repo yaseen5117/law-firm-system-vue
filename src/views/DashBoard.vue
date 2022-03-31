@@ -14,7 +14,7 @@
                 </svg>
                 <i class="bx bx-calendar"></i>
               </div>
-              <h4><router-link to='petitions-calendar'>Calendar {{this.user.is_admin}}</router-link></h4>
+              <h4><router-link to='petitions-calendar'>Calendar</router-link></h4>
               <p>Contains all Details of Calender. Click to Open all Details. </p>
             </div>
           </div>
