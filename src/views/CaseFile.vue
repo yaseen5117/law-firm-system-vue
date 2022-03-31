@@ -99,6 +99,7 @@
             <!-- search filters -->
             <div class="col-lg-12 col-md-12 col-sm-12">
               <router-link
+                v-if="this.user.is_admin"
                 style="margin-right:2px"
                 class="btn btn-success btn-sm"
                 :to="'/petitions/create'"
@@ -253,7 +254,7 @@
 <script>
 import axios from "axios";
 import PageHeader from "../views/shared/PageHeader";
-
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -276,6 +277,7 @@ export default {
     this.getCourts();
     this.getCaseFiles();
   },
+  computed: mapState(["user"]),
   methods: {
     getCourts() {
       let url = this.base_url + "/api/courts";

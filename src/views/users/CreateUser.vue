@@ -344,7 +344,7 @@ export default {
 .imagePreviewWrapper {
   background-repeat: no-repeat;
     width: 100px;
-    height: 100px;
+    height: 60px;
     display: block;
     cursor: pointer;
     margin: 0 auto 0px;
