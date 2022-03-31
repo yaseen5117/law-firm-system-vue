@@ -88,7 +88,7 @@
           </div>
           <div class="table-responsive">
             <div class="col-lg-12 col-md-12 col-sm-12">
-              <table class="table table-striped">
+              <table class="table table-hover">
                 <thead>
                   <th>Name</th>
                   <th>Role</th>

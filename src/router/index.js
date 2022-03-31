@@ -32,6 +32,7 @@ import PetitionReplyParent from '../views/petition-replies/PetitionReplyParent'
 import StandardIndex from '../views/StandardModules/StandardIndex'
 import StandardIndexDetails from '../views/StandardModules/StandardIndexDetails'
  
+import GeneralCaseLawIndex from '../views/general-case-laws/GeneralCaseLawIndex'
 
 
 const routes = [
@@ -218,7 +219,16 @@ const routes = [
 
   ////////////////Standard Modules for Same Pages/////////////
 
-
+////////////////GENERAL CASE LAW/////////////
+{
+  path: '/petition-general-case-law',
+  name: 'petition-general-case-law',    
+  component: GeneralCaseLawIndex,
+  meta: { 
+    auth: true ,
+  },
+}, 
+////////////////GENERAL CASE LAW/////////////
 
   {
     path: '/petition-reply-parents/:id',

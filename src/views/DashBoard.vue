@@ -66,7 +66,14 @@
                 </svg>
                 <i class="bx bx-slideshow"></i>
               </div>
-              <h4><a href="">Case Law Library</a></h4>
+              <h4>
+                <router-link
+                :to="{
+                  name: 'petition-general-case-law',
+                  params: { petition_id: 1 },
+                }"
+                >Case Law Library</router-link>
+                </h4>
               <p>Contains all Details of Case Law Library. Click to Open all Details.</p>
             </div>
           </div>
