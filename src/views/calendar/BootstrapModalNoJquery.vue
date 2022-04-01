@@ -29,9 +29,13 @@
               <div class="form-group">
                 <label for="">Petition</label>
                 <select class="form-control" v-model="petition_hearing_event.petition_id" >
-                  <option value="1">Case # 1</option>
-                  <option value="2">Case # 2</option>
-                  <option value="3">Case # 3</option>
+                  <option value="">--Select--</option>
+                  <option v-for="petition in petitions"
+                        :key="petition.id"
+                        :value="petition.id"                         
+                      >
+                        {{ petition.case_no }}
+                  </option>
                 </select>
               </div>
 
@@ -73,10 +77,13 @@ export default {
         hearing_date:this.selected_date,
         petition_id:"1",
         hearing_summary:"",
-      }
+      },
+      petitions: [],
     }
   },
-
+  created() {      
+      this.getPetitions();       
+    },
   methods: {
     closeModal() {
       this.$emit("close-modal-event");
@@ -103,6 +110,20 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    getPetitions() {       
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+        var url = this.base_url + "/api/petitions";
+        axios
+          .get(url, { headers })
+          .then((response) => {
+            this.petitions = response.data.petitions;                                  
+          })
+          .catch((error) => {
+            console.log(error);
+          });      
     },
 
     
