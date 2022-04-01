@@ -65,7 +65,7 @@
 <script>
 import axios from "axios";
 export default {
-  props: ["selected_date"],
+  props: ["selected_date","eventToUpdateProp"],
   data(){
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,
@@ -76,7 +76,11 @@ export default {
       }
     }
   },
-
+  watch: {
+    eventToUpdateProp: function(newVal, oldVal) { // watch it
+          console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+        }
+  },
   methods: {
     closeModal() {
       this.$emit("close-modal-event");

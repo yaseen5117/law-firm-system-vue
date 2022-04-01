@@ -8,6 +8,7 @@
             <FullCalendar :options="calendarOptions" />
 
             <p><small>(Server Time: {{server_time}})</small></p>
+            <pre>{{eventToUpdate}}</pre>
           </div>
         </div>
       </div>
@@ -15,7 +16,8 @@
   </main>
 
    <bootstrap-modal-no-jquery 
-   :selected_date="selected_date" 
+   :selected_date = "selected_date" 
+   :eventToUpdateProp = "eventToUpdate" 
    v-if="displayModal" 
    @close-modal-event="hideModal" 
    @triggerGetEvents="getEvents" />
@@ -44,11 +46,13 @@ export default {
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
         initialView: "dayGridMonth",
         dateClick: this.handleDateClick,
+        eventClick: this.handleEventClick,
         //Dynamic Event Source
         events: [],
         
       },
-        server_time:null
+      eventToUpdate: {},
+      server_time:null
     };
   },
   created() {
@@ -89,10 +93,19 @@ export default {
     handleDateClick(arg) {
       this.showModal();
       //this.$emit('name', "Raja Tamil");
-      console.log("arg",arg)
+      
       this.selected_date = arg.dateStr;
-
-      console.log("called");
+      
+    },
+    handleEventClick(info) {
+      this.showModal();
+      /* console.log('Event: ' + info.event.title);
+      console.log('Event: ' + info.event.id);
+      console.log('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+      console.log('View: ' + info.view.type); */
+      this.eventToUpdate = info.event;
+      // change the border color just for fun
+      info.el.style.borderColor = 'red';
     },
   },
 };
