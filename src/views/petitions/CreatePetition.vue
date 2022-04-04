@@ -84,35 +84,7 @@
                   </div>
                 </div>
               </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-lg-5 col-md-5 col-sm-12">
-                    <label>Layer</label>
-                    <Multiselect
-                      placeholder="--Select--"
-                      class="text-capitalize"
-                      mode="tags"
-                      :close-on-select="false"
-                      :searchable="true"
-                      v-model="petition.lawyer_ids"
-                      :options="lawyers"
-                      :value="petition.lawyer_ids"
-                    />
-                    <!-- <select class="form-control" v-model="petition.court_id">
-                      <option value="">--Select--</option>
-
-                      <option
-                        v-for="layer in lawyers"
-                        :key="layer.id"
-                        :value="layer.id"
-                        :selected="petition.court_id == layer.id"
-                      >
-                        {{ layer.name }}
-                      </option>
-                    </select> -->
-                  </div>
-                </div>
-              </div>
+             
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-10 col-md-10 col-sm-12">
@@ -128,17 +100,6 @@
                     <span v-if="v$.petition.title.$error" class="errorMessage"
                       >Title field is required.</span
                     >
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-lg-10 col-md-10 col-sm-12">
-                    <label for="dropdown"
-                      >Autocomplete <span style="color: red">*</span></label
-                    >
-                    <Dropdown v-model="selectedCity" :options="cities" optionLabel="dropdown" placeholder="Select a City" />
-
                   </div>
                 </div>
               </div>
@@ -267,6 +228,24 @@
                 </div>
               </div>
 
+               <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-3 col-md-3 col-sm-12">
+                    <label>Layer</label>
+                    <Multiselect
+                      placeholder="--Select--"
+                      class="text-capitalize"
+                      mode="tags"
+                      :close-on-select="false"
+                      :searchable="true"
+                      v-model="petition.lawyer_ids"
+                      :options="lawyers"
+                      :value="petition.lawyer_ids"
+                    />
+                  </div>
+                </div>
+              </div>
+
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-12">
@@ -280,31 +259,21 @@
                     >
                      </datepicker> -->
 
-                    <Calendar
-                      v-tooltip="'Click to open Calendar'"
-                      v-model="petition.institution_date"
-                      dateFormat="dd-mm-yy"
-                    />
-
+                   
+                    <br>
                     <InputMask
-                      v-model="value"
-                      mask="99-99-9999"
+                      v-model="petition.institution_date"
+                      mask="99/99/9999"
                       aria-placeholder=""
                       placeholder="dd/mm/yyyy "
                     />
 
-                    <input
-                      type="hidden"
-                      class="form-control"
-                      placeholder="dd/mm/yyyy"
-                      v-model="petition.institution_date"
-                    />
                   </div>
                 </div>
               </div>
 
               <div class="form-group">
-                <button :disabled="saving" class="btn btn-success btn-sm mt-2">
+                <button  :disabled="saving" class="btn btn-success btn-sm mt-2">
                   Save
                 </button>
               </div>
@@ -325,7 +294,7 @@ import { required, email, helpers } from "@vuelidate/validators";
 import Multiselect from "@vueform/multiselect";
 import AutoComplete from "primevue/autocomplete";
 
-import Calendar from "primevue/calendar";
+
 
 export default {
   components: {
@@ -333,7 +302,6 @@ export default {
     AutoComplete,
     PageHeader,
     Multiselect,
-    Calendar,
   },
   setup() {
     return {

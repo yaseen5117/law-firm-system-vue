@@ -14,7 +14,7 @@ import 'primeicons/primeicons.css';
 import Tooltip from 'primevue/tooltip';
 import InputMask from 'primevue/inputmask';
 import Dropdown from "primevue/autocomplete";
-
+import Calendar from "primevue/calendar";
 
 //app.component("hello-world", HelloWorld);
 
@@ -25,5 +25,6 @@ createApp(App).use(store).use(router).use(PrimeVue).use(Notifications)
 .component('Dropdown',Dropdown)
 .component('datepicker',Datepicker)
 .component('InputMask',InputMask)
+.component('Calendar',Calendar)
 .mount('#app')
 
