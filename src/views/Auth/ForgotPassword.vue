@@ -1,7 +1,7 @@
 <template>
   <main id="main">
     <page-header
-      :title="'LOGIN'"
+      :title="'Password Reset'"
       :petition="null"
       :hideBreadCrumbs="true"
     />
@@ -10,8 +10,8 @@
         <div class="row">         
           <div class="col-md-4"></div>
           <div class="col-md-3">
-              <form @submit.prevent="submitForm($event)" class="row g-3" id="userlogin">
-              <h4>Welcome Back</h4>
+              <form @submit.prevent="submitForm($event)" class="row g-3">
+               
               <div class="col-md-12 col-sm-12">
                 <label>Email</label>
                 <input                 
@@ -23,42 +23,12 @@
                     
                 />   
                 <span v-if="v$.email.$error" class="errorMessage">Email is Required.</span>             
-              </div>
-              <div class="col-md-12 col-sm-12">
-                <label>Password</label>
-                <input                    
-                    v-model="password"
-                    type="password"
-                    name="password"
-                    class="form-control"
-                    placeholder="Enter your password"
-                    
-                />
-                <span v-if="v$.password.$error" class="errorMessage">Password is Required.</span>            
-              </div>
-              <div class="col-md-12 col-sm-12">
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="rememberMe"
-                    
-                  />
-                  <label class="form-check-label" for="rememberMe">
-                    Remember me</label
-                  >
-                </div>
-              </div>
+              </div>             
               <div class="col-md-12 col-sm-12">
                 <button :disabled="saving" type="submit" class="btn btn-primary">
-                  Login
+                  Send Password Reset Link
                 </button>
-              </div>
-              <div class="col-md-12 col-sm-12">
-                <router-link to="/forgot-password">
-                  Forgotten password?
-                </router-link>
-              </div>
+              </div>             
             </form>
           </div>
         </div>
@@ -86,15 +56,13 @@ export default {
     data() {
     return {
         base_url: process.env.VUE_APP_SERVICE_URL,
-        email: "",
-        password: "",  
-        saving: false,  
+        email: "",  
+        saving: false,        
     };
   },
   validations() {
     return {
-        email:{ required, email },
-        password: { required },   
+        email:{ required, email },        
     };
   },
   methods: {
@@ -103,13 +71,12 @@ export default {
       if (!this.v$.$error) {
          
         let data = new FormData();
-        data.append("email", this.email);
-        data.append("password", this.password);
+        data.append("email", this.email);       
        
         event.preventDefault();        
         this.saving = true;
         axios
-          .post(this.base_url + "/api/login",data,{
+          .post(this.base_url + "/password.email",data,{
             
           })
           .then(
@@ -118,11 +85,10 @@ export default {
                 this.$notify({
                   type: "success",
                   title: "Success",
-                  text: "Login Successfully!",
-                });
-                localStorage.setItem("lfms_user", response.data.token);
-                this.$store.dispatch("authUser");
-                this.$router.push({ path: "/dashboard" });
+                  text: "Link send successfully, Check Email.",
+                });             
+                this.saving = false;   
+                this.$router.push({ path: "/login" });
               }
               console.log(response);
             },
@@ -131,7 +97,7 @@ export default {
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",
-                title: "Can't login",
+                title: "Something went wrong!",
                 text: error.response.data.message,
               });
             }
