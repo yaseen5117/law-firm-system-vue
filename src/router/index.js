@@ -38,11 +38,18 @@ import CourtList from '../views/courts/CourtList'
 
 import PetitionTypes from '../views/petition-types/PetitionTypesList'
 
+import ForgotPassword from '../views/Auth/ForgotPassword'
+
 const routes = [
   {
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/forgot-password',
+    name: 'forgot-password',
+    component: ForgotPassword
   },
   {
     path: '/sign-up',
