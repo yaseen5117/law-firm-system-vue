@@ -27,6 +27,7 @@
     "core-js": "^3.6.4",
     "dotenv-webpack": "^7.0.3",
     "moment": "^2.29.1",
+    "primevue": "^3.12.4",
     "swiper": "^8.0.6",
     "v-viewer": "^3.0.10",
     "vue": "^3.0.0",
