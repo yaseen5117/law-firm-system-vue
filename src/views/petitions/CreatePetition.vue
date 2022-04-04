@@ -84,7 +84,7 @@
                   </div>
                 </div>
               </div>
-             
+
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-10 col-md-10 col-sm-12">
@@ -228,7 +228,7 @@
                 </div>
               </div>
 
-               <div class="form-group">
+              <div class="form-group">
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Layer</label>
@@ -249,31 +249,21 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-12">
+                    
                     <label>Date Of Institution</label>
-                    <!-- <datepicker                    
-                    :enableTimePicker="false"
-                    autoApply           
-                    format="dd/MM/yyyy"  
-                    placeholder="dd/mm/yyyy"          
-                    v-model="petition.institution_date"
-                    >
-                     </datepicker> -->
-
-                   
-                    <br>
+                    <br />
                     <InputMask
                       v-model="petition.institution_date"
                       mask="99/99/9999"
                       aria-placeholder=""
                       placeholder="dd/mm/yyyy "
                     />
-
                   </div>
                 </div>
               </div>
 
               <div class="form-group">
-                <button  :disabled="saving" class="btn btn-success btn-sm mt-2">
+                <button :disabled="saving" class="btn btn-success btn-sm mt-2">
                   Save
                 </button>
               </div>
@@ -292,14 +282,11 @@ import PageHeader from "../shared/PageHeader.vue";
 import useVuelidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
 import Multiselect from "@vueform/multiselect";
-import AutoComplete from "primevue/autocomplete";
-
 
 
 export default {
   components: {
     
-    AutoComplete,
     PageHeader,
     Multiselect,
   },
@@ -315,9 +302,7 @@ export default {
       base_url: process.env.VUE_APP_SERVICE_URL,
       petition: {
         year: 2022,
-        selectedCountry: null,
-        filteredCountries: null,
-        filteredCountriesBasic: ["Pakistan", "England", "India", "Srilanka"],
+
         petitioners: [
           {
             user: {},
@@ -339,14 +324,6 @@ export default {
       lawyers: [],
       courts: [],
       petition_types: [],
-      selectedCity: null,
-      cities: [
-        { name: "New York", code: "NY" },
-        { name: "Rome", code: "RM" },
-        { name: "London", code: "LDN" },
-        { name: "Istanbul", code: "IST" },
-        { name: "Paris", code: "PRS" },
-      ],
     };
   },
   validations() {
@@ -420,6 +397,19 @@ export default {
             }
           );
       }
+    },
+    searchCountry(event) {
+      setTimeout(() => {
+        if (!event.query.trim().length) {
+          this.filteredCountries = this.countries;
+        } else {
+          this.filteredCountries = this.countries.filter((country) => {
+            return country
+              .toLowerCase()
+              .startsWith(event.query.toLowerCase());
+          });
+        }
+      }, 250);
     },
     async getUsers() {
       let url = this.base_url + "/api/clients";

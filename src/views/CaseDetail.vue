@@ -41,7 +41,7 @@
               </thead>
               <tbody>
                 <tr
-                  @dblclick="petition_detail.editMode = false"
+                  
                   v-for="(petition_detail , petitionIndex) in petition_details"
                   :key="petition_detail.id"
                 >
@@ -64,24 +64,16 @@
                   </td>
                   <td>
                     
-                   
-                    <!-- <datepicker
-                    :enableTimePicker="false"                    
-                    autoApply   
-                    format="dd/MM/yyyy"  
-                    placeholder="dd/mm/yyyy"   
-                    v-model="petition_detail.date"
-                    v-on:keyup.enter="editPetitionIndex(petition_detail)"
+                    <InputMask
                     v-show="petition_detail.editMode"
-                    ></datepicker> -->
-                    <input
-                      v-show="petition_detail.editMode"
-                      class="form-control"
-                      type="text"
-                      placeholder="yyyy/mm/dd"
                       v-model="petition_detail.date"
                       v-on:keyup.enter="editPetitionIndex(petition_detail)"
+                      mask="99/99/9999"
+                      aria-placeholder=""
+                      placeholder="dd/mm/yyyy "
                     />
+
+                    
                     <span v-show="!petition_detail.editMode">{{
                       petition_detail.date
                     }}</span>
@@ -160,14 +152,20 @@
                 </tr>
                 <tr  v-if="this.user.is_admin" >                   
                   <td>
-                    <input
-                      class="form-control"
+
+                    <AutoComplete
+                      :delay="1"
                       v-model="new_petition_index.document_description"
-                      v-on:keyup.enter="submitPetitionIndex()"
+                      :suggestions="filteredDocumentDiscriptions"
+                      @complete="searchForAutocomplete($event)"
                       v-bind:class="{
                         'error-boarder': v$.new_petition_index.document_description.$error,
+                        
                       }"
+                      :style="'width:100%'"
+                      :inputStyle="'width:100%'"
                       @blur="v$.new_petition_index.document_description.$touch"
+
                     />
                      <span
                       v-if="v$.new_petition_index.document_description.$error"
@@ -176,20 +174,15 @@
                     >
                   </td>
                   <td>
-                    <!-- <datepicker
-                    :enableTimePicker="false"                    
-                    autoApply   
-                    format="dd/MM/yyyy"  
-                    placeholder="dd/mm/yyyy"  
-                    type="date" 
-                    v-model="new_petition_index.date"
-                    ></datepicker> -->
-                    <input
-                      class="form-control"
-                      type="text"
-                      placeholder="dd/mm/yyyy"
+                    
+                    
+                    <InputMask
+                    
                       v-model="new_petition_index.date"
                       v-on:keyup.enter="submitPetitionIndex()"
+                      mask="99/99/9999"
+                      aria-placeholder=""
+                      placeholder="dd/mm/yyyy "
                     />
                   </td>
                   <td>
@@ -258,6 +251,8 @@ export default {
         document_description:"",
       },
       saving: false,
+      defaultDocumentDiscriptions:["Power of Attorney","Writ Petition along with Affidavit","Application for stay cm","Application for Exemption"],
+      filteredDocumentDiscriptions: null,
       
     };
   },
@@ -272,6 +267,20 @@ export default {
     this.getCaseDetails();
   },
   methods: {
+
+    searchForAutocomplete(event) {
+      setTimeout(() => {
+        if (!event.query.trim().length) {
+          this.filteredDocumentDiscriptions = this.defaultDocumentDiscriptions;
+        } else {
+          this.filteredDocumentDiscriptions = this.defaultDocumentDiscriptions.filter((country) => {
+            return country
+              .toLowerCase()
+              .startsWith(event.query.toLowerCase());
+          });
+        }
+      }, 250);
+    },
     getCaseDetails() {
       
       var headers = {
