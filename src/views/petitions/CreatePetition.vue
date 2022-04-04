@@ -84,7 +84,35 @@
                   </div>
                 </div>
               </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-5 col-md-5 col-sm-12">
+                    <label>Layer</label>
+                    <Multiselect
+                      placeholder="--Select--"
+                      class="text-capitalize"
+                      mode="tags"
+                      :close-on-select="false"
+                      :searchable="true"
+                      v-model="petition.lawyer_ids"
+                      :options="lawyers"
+                      :value="petition.lawyer_ids"
+                    />
+                    <!-- <select class="form-control" v-model="petition.court_id">
+                      <option value="">--Select--</option>
 
+                      <option
+                        v-for="layer in lawyers"
+                        :key="layer.id"
+                        :value="layer.id"
+                        :selected="petition.court_id == layer.id"
+                      >
+                        {{ layer.name }}
+                      </option>
+                    </select> -->
+                  </div>
+                </div>
+              </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-10 col-md-10 col-sm-12">
@@ -100,6 +128,17 @@
                     <span v-if="v$.petition.title.$error" class="errorMessage"
                       >Title field is required.</span
                     >
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-10 col-md-10 col-sm-12">
+                    <label for="dropdown"
+                      >Autocomplete <span style="color: red">*</span></label
+                    >
+                    <Dropdown v-model="selectedCity" :options="cities" optionLabel="dropdown" placeholder="Select a City" />
+
                   </div>
                 </div>
               </div>
@@ -147,6 +186,21 @@
                               >Delete</span
                             >
                           </div>
+                          <div
+                            v-if="petitioner.user.id"
+                            class="input-group-prepend"
+                          >
+                            <span class="input-group-text cursor-pointer">
+                              <router-link
+                                :to="{
+                                  name: 'edit-user',
+                                  params: { id: petitioner.user.id },
+                                }"
+                              >
+                                View
+                              </router-link>
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -191,6 +245,21 @@
                               >Delete</span
                             >
                           </div>
+                          <div
+                            v-if="opponent.user.id"
+                            class="input-group-prepend"
+                          >
+                            <span class="input-group-text cursor-pointer"
+                              ><router-link
+                                :to="{
+                                  name: 'edit-user',
+                                  params: { id: opponent.user.id },
+                                }"
+                              >
+                                View
+                              </router-link></span
+                            >
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -210,10 +279,24 @@
                     v-model="petition.institution_date"
                     >
                      </datepicker> -->
+
+                    <Calendar
+                      v-tooltip="'Click to open Calendar'"
+                      v-model="petition.institution_date"
+                      dateFormat="dd-mm-yy"
+                    />
+
+                    <InputMask
+                      v-model="value"
+                      mask="99-99-9999"
+                      aria-placeholder=""
+                      placeholder="dd/mm/yyyy "
+                    />
+
                     <input
-                      type="text"
+                      type="hidden"
                       class="form-control"
-                      placeholder="yyyy/mm/dd"
+                      placeholder="dd/mm/yyyy"
                       v-model="petition.institution_date"
                     />
                   </div>
@@ -221,7 +304,9 @@
               </div>
 
               <div class="form-group">
-                <button :disabled="saving" class="btn btn-success btn-sm mt-2">Save</button>
+                <button :disabled="saving" class="btn btn-success btn-sm mt-2">
+                  Save
+                </button>
               </div>
             </form>
           </div>
@@ -237,9 +322,19 @@ import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
 import useVuelidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
+import Multiselect from "@vueform/multiselect";
+import AutoComplete from "primevue/autocomplete";
+
+import Calendar from "primevue/calendar";
 
 export default {
-  components: { PageHeader },
+  components: {
+    
+    AutoComplete,
+    PageHeader,
+    Multiselect,
+    Calendar,
+  },
   setup() {
     return {
       v$: useVuelidate(),
@@ -247,11 +342,14 @@ export default {
   },
   data() {
     return {
-      saving:false,
+      saving: false,
       page_title: this.$route.params.id ? "Edit Petition" : "Add New Petition",
       base_url: process.env.VUE_APP_SERVICE_URL,
       petition: {
         year: 2022,
+        selectedCountry: null,
+        filteredCountries: null,
+        filteredCountriesBasic: ["Pakistan", "England", "India", "Srilanka"],
         petitioners: [
           {
             user: {},
@@ -267,10 +365,20 @@ export default {
         court_id: "",
         title: "",
         case_no: "",
+        lawyer_ids: [],
       },
       clients: [],
+      lawyers: [],
       courts: [],
       petition_types: [],
+      selectedCity: null,
+      cities: [
+        { name: "New York", code: "NY" },
+        { name: "Rome", code: "RM" },
+        { name: "London", code: "LDN" },
+        { name: "Istanbul", code: "IST" },
+        { name: "Paris", code: "PRS" },
+      ],
     };
   },
   validations() {
@@ -287,6 +395,7 @@ export default {
     this.getCourts();
     this.getPetitionTypes();
     this.getPetition();
+    this.getLawyers();
   },
   activated() {},
   methods: {
@@ -310,7 +419,7 @@ export default {
       if (!this.v$.$error) {
         event.preventDefault();
 
-        this.saving =true;
+        this.saving = true;
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
@@ -330,10 +439,10 @@ export default {
                 this.$router.push({ path: "/petitions" });
               }
               console.log(response);
-              this.saving =false;
+              this.saving = false;
             },
             (error) => {
-              this.saving =false;
+              this.saving = false;
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",
@@ -351,6 +460,21 @@ export default {
         .then((response) => {
           this.clients = response.data.users;
           console.log(this.users);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getLawyers() {
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      let url = this.base_url + "/api/lawyers";
+      axios
+        .get(url, { headers })
+        .then((response) => {
+          this.lawyers = response.data.lawyers;
+          console.log(this.lawyers);
         })
         .catch((error) => {
           console.log(error);
@@ -390,7 +514,10 @@ export default {
           .get(url, { headers })
           .then((response) => {
             this.petition = response.data.petition;
+            this.lawyers = response.data.petition.lawyers;
             this.opponents = [{}];
+
+            this.petition.lawyer_ids = response.data.petition.lawyer_ids_array;
           })
           .catch((error) => {
             console.log(error);
@@ -401,5 +528,5 @@ export default {
 };
 </script>
 
-<style> 
+<style src="@vueform/multiselect/themes/default.css">
 </style>

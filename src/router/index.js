@@ -34,6 +34,9 @@ import StandardIndexDetails from '../views/StandardModules/StandardIndexDetails'
  
 import GeneralCaseLawIndex from '../views/general-case-laws/GeneralCaseLawIndex'
 
+import CourtList from '../views/courts/CourtList'
+
+import PetitionTypes from '../views/petition-types/PetitionTypesList'
 
 const routes = [
   {
@@ -229,6 +232,28 @@ const routes = [
   },
 }, 
 ////////////////GENERAL CASE LAW/////////////
+
+//////////////// COURTS /////////////
+{
+  path: '/courts',
+  name: 'courts',    
+  component: CourtList,
+  meta: { 
+    auth: true ,
+  },
+}, 
+//////////////// COURTS /////////////
+
+//////////////// PETITION TYPES /////////////
+{
+  path: '/petition-types',
+  name: 'petition-types',    
+  component: PetitionTypes,
+  meta: { 
+    auth: true ,
+  },
+}, 
+//////////////// PETITION TYPES /////////////
 
   {
     path: '/petition-reply-parents/:id',

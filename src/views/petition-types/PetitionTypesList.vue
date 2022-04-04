@@ -7,69 +7,34 @@
         <div class="row">                
           <div class="table-responsive">
             <div class="col-lg-12 col-md-12 col-sm-12">
-              <table class="table table-striped">
+              <table class="table table-hover">
                 <thead>
-                  <th>Case Title</th>
-                  <th>Situation</th>
-                  <th>Keyword</th>                   
+                  <th>Title</th>                                  
                   <th width="10%">Actions</th>                   
                 </thead>
                 <tbody>
                   <tr
-                    @dblclick="general_case_law.editMode = false"
-                    v-for="(general_case_law, row_index) in general_case_laws"
-                    :key="general_case_law.id"
-                  >
+                    @dblclick="petition_type.editMode = false"
+                    v-for="(petition_type, row_index) in petition_types"
+                    :key="petition_type.id"
+                  >                      
                     <td>
                       <input
-                        v-show="general_case_law.editMode"
+                        v-show="petition_type.editMode"
                         class="form-control"
-                        v-model="general_case_law.case_title"
-                        v-on:keyup.enter="editGeneralLawIndex(general_case_law)"
+                        v-model="petition_type.title"
+                        v-on:keyup.enter="editPetitionType(petition_type)"
                       />
-                      <router-link to="#">
-                        {{ general_case_law.case_title }}
-                      </router-link>
-                      <!-- <router-link
-                        v-show="!general_case_law.editMode"
-                        :to="{
-                          name: 'standard-index-details',
-                          params: { 
-                              module_id: general_case_law.id,                               
-                            },
-                        }"
-                        >
-                        {{ general_case_law.case_title }}
-                      </router-link> -->
-                    </td>
-                   
-                    <td>
-                      <input
-                        v-show="general_case_law.editMode"
-                        class="form-control"
-                        v-model="general_case_law.situation"
-                        v-on:keyup.enter="editGeneralLawIndex(general_case_law)"
-                      />
-                      <span v-show="!general_case_law.editMode">{{
-                        general_case_law.situation
+                      <span v-show="!petition_type.editMode">{{
+                        petition_type.title
                       }}</span>
                     </td>
-                    <td>
-                      <input
-                        v-show="general_case_law.editMode"
-                        class="form-control"
-                        v-model="general_case_law.keywords"
-                        v-on:keyup.enter="editGeneralLawIndex(general_case_law)"
-                      />
-                      <span v-show="!general_case_law.editMode">{{
-                        general_case_law.keywords
-                      }}</span>
-                    </td>
+                     
                     <td width="15%">
-                      <button
+                      <a
                         class="btn btn-sm btn-primary action-btn"
-                        v-show="!general_case_law.editMode"
-                        @click="general_case_law.editMode = true"
+                        v-show="!petition_type.editMode"
+                        @click="petition_type.editMode = true"
                         href="javascript:void"
                         style="margin-left: 2px"
                         data-bs-toggle="tooltip"
@@ -78,12 +43,12 @@
                       >
                         Edit
                         <!-- <i class="fa fa-edit"></i> -->
-                      </button>
-                      <button
-                        v-show="general_case_law.editMode"
+                      </a>
+                      <a
+                        v-show="petition_type.editMode"
                         class="btn btn-sm btn-warning action-btn"
-                        @click="editGeneralLawIndex(general_case_law)"
-                        :disabled="saving"
+                        @click="editPetitionType(petition_type)"
+                        href="javascript:void"
                         style="margin-left: 2px"
                         data-bs-toggle="tooltip"
                         data-bs-placement="top"
@@ -91,11 +56,11 @@
                       >
                         Update
                         <!-- <i class="fa fa-save"></i> -->
-                      </button>
+                      </a>
 
-                      <button
-                        v-show="general_case_law.editMode"
-                        @click="general_case_law.editMode = false"
+                      <a
+                        v-show="petition_type.editMode"
+                        @click="petition_type.editMode = false"
                         class="btn btn-sm btn-info action-btn"
                         href="javascript:void"
                         style="margin-left: 2px"
@@ -105,15 +70,15 @@
                       >
                         Cancel
                         <!-- <i class="fa fa-remove"></i> -->
-                      </button>
+                      </a>
 
-                      <button
+                      <a
                         class="btn btn-sm btn-danger action-btn"
-                        v-show="!general_case_law.editMode"
+                        v-show="!petition_type.editMode"
                         @click="
-                          deleteGeneralLawIndex(general_case_law.id, row_index)
+                          deletePetitionType(petition_type.id, row_index)
                         "
-                        :disabled="saving"
+                        href="javascript:void"
                         style="margin-left: 2px"
                         data-bs-toggle="tooltip"
                         data-bs-placement="top"
@@ -121,7 +86,7 @@
                       >
                         Delete
                         <!-- <i class="fa fa-trash-o"></i> -->
-                      </button>                       
+                      </a>                       
                     </td>                                                    
                     
                   </tr>
@@ -129,29 +94,24 @@
                     <td>
                       <input
                         class="form-control"
-                        v-model="new_standard_index.case_title"
-                        v-on:keyup.enter="submitGeneralCaseLaw()"
+                        v-model="new_petition_type.title"
+                        v-on:keyup.enter="submitPetitionType()"
+                        v-bind:class="{
+                          'error-boarder': v$.new_petition_type.title.$error,
+                        }"
+                        @blur="v$.new_petition_type.title.$touch"
                       />
-                    </td>
-                    
-                    <td>
-                      <input
-                        class="form-control"
-                        v-model="new_standard_index.situation"
-                        v-on:keyup.enter="submitGeneralCaseLaw()"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        class="form-control"
-                        v-model="new_standard_index.keywords"
-                        v-on:keyup.enter="submitGeneralCaseLaw()"
-                      />
-                    </td>
+                     <span
+                      v-if="v$.new_petition_type.title.$error"
+                      class="errorMessage"
+                      >Title field is required.</span
+                    >
+                    </td> 
+                   
                     <td>
                       <button
                         :disabled="saving"
-                        @click="submitGeneralCaseLaw()"
+                        @click="submitPetitionType()"
                         class="btn btn-sm btn-success action-btn"
                       >
                         Save
@@ -174,48 +134,62 @@
 <script>
 import axios from "axios"; 
 import PageHeader from "../shared/PageHeader";
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 
 export default {
   components: {
      PageHeader
   },
+  setup() {
+      return {
+        v$: useVuelidate(),
+      };
+    },
   data() {
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,
       page_title: "...",
       petition: {},       
-      new_standard_index: {},
-      general_case_laws: [],       
+      new_petition_type: {},
+      petition_types: [],       
       saving: false,    
     };
   },
-  created() { 
-    this.getModuleIndex();
+  validations() {
+    return {      
+        new_petition_type: {
+          title: { required },  
+        }       
+    };
+  },
+  created() {   
+    this.getPetitionTypes();
   },
   methods: {    
-    getModuleIndex() {
+    getPetitionTypes() {
        var headers = {
           Authorization:
             `Bearer ` + localStorage.getItem("lfms_user"),
         };
       axios
         .get(
-          this.base_url + "/api/general_case_laws",
+          this.base_url + "/api/petition_types",
           {headers}
         )
         .then((response) => {
-          this.general_case_laws = response.data.general_case_Laws;
+          this.petition_types = response.data.petition_types;
           this.page_title = response.data.page_title;
-          console.log(response.data.page_title);
-          console.log(response.data.general_case_Laws);
+          console.log(response.data.page_title);           
         })
         .catch((error) => {
           console.log(error);
         });
     },
 
-    submitGeneralCaseLaw() {
-      if (true) {
+    submitPetitionType() {
+      this.v$.$validate();
+      if (!this.v$.$error) { 
         var headers = {
           Authorization:
             `Bearer ` + localStorage.getItem("lfms_user"),
@@ -223,8 +197,8 @@ export default {
         this.saving = true;        
         axios
           .post(
-            this.base_url + "/api/general_case_laws",
-            this.new_standard_index,
+            this.base_url + "/api/petition_types",
+            this.new_petition_type,
             {
               headers,
             }
@@ -238,9 +212,9 @@ export default {
                   text: "Saved Successfully!",
                 });
                 this.saving = false;
-                this.new_standard_index = {};
+                this.new_petition_type = {};
                 setTimeout(() => { this.v$.$reset() }, 0)
-                this.getModuleIndex();
+                this.getPetitionTypes();
               }
             },
             (error) => {
@@ -255,16 +229,16 @@ export default {
           );
       }
     },
-    editGeneralLawIndex(standardIndexToUpdate) {
+    editPetitionType(standardIndexToUpdate) {
       if (true) {
         var headers = {
           Authorization:
             `Bearer ` + localStorage.getItem("lfms_user"),
         };
-        this.saving = true;  
+
         axios
           .post(
-            this.base_url + "/api/general_case_laws",
+            this.base_url + "/api/petition_types",
             standardIndexToUpdate,
             {
               headers,
@@ -273,7 +247,6 @@ export default {
           .then(
             (response) => {
               if (response.status === 200) {
-                this.saving = false;  
                 this.$notify({
                   type: "success",
                   title: "Success",
@@ -283,7 +256,6 @@ export default {
               }
             },
             (error) => {
-              this.saving = false;  
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",
@@ -294,15 +266,15 @@ export default {
           );
       }
     },
-    deleteGeneralLawIndex(caseId, row_index) {
+    deletePetitionType(caseId, row_index) {
       if (confirm("Do you really want to delete?")) {
         var headers = {
           Authorization:
             `Bearer ` + localStorage.getItem("lfms_user"),
         };
-        this.saving = true;
+
         axios
-          .delete(this.base_url + "/api/general_case_laws/" + caseId, {
+          .delete(this.base_url + "/api/petition_types/" + caseId, {
             headers,
           })
           .then(
@@ -312,13 +284,11 @@ export default {
                   type: "success",
                   title: "Success",
                   text: "Deleted Successfully!",
-                });   
-                this.saving = false;              
-                this.general_case_laws.splice(row_index, 1); //removing record from list/index after deleting record from DB
+                });                
+                this.petition_types.splice(row_index, 1); //removing record from list/index after deleting record from DB
               }
             },
             (error) => {
-              this.saving = false;
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",
@@ -331,7 +301,7 @@ export default {
     },
   },
   mounted() {
-    console.log("Case Details Component Mounted");
+    console.log("Petition Types List Component Mounted");
   },
 };
 </script>

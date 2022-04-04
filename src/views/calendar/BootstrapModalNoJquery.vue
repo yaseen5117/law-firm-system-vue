@@ -6,8 +6,9 @@
         <div class="modal-content">
           <!-- Modal Header -->
           <div class="modal-header">
-            <h4 class="modal-title">Add Petition Hearing Event</h4>
+            <h4 class="modal-title">{{title}} Event</h4>
             <button
+            @click="closeModal"
               type="button"
               class="btn-close"
               data-bs-dismiss="modal"
@@ -15,13 +16,13 @@
           </div>
           <!-- Modal body -->
           <div class="modal-body">
-            <form action="">
+            <form @submit.prevent="saveChanges" action="">
               <div class="form-group">
                 <label for="">Date</label>
                 <input
                   class="form-control"
                   type="text"
-                  readonly
+                  
                   v-model="petition_hearing_event.hearing_date"
                 />
               </div>
@@ -29,9 +30,13 @@
               <div class="form-group">
                 <label for="">Petition</label>
                 <select class="form-control" v-model="petition_hearing_event.petition_id" >
-                  <option value="1">Case # 1</option>
-                  <option value="2">Case # 2</option>
-                  <option value="3">Case # 3</option>
+                  <option value="">--Select--</option>
+                  <option v-for="petition in petitions"
+                        :key="petition.id"
+                        :value="petition.id"                         
+                      >
+                        {{ petition.case_no }}
+                  </option>
                 </select>
               </div>
 
@@ -44,15 +49,19 @@
                 ></textarea>
               </div>
 
+              
 
             </form>
           </div>
           <!-- Modal footer -->
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" @click="saveChanges">
-              Create Event
+            <!-- <button @click="gotoLink('petitions/'+petition_hearing_event.petition_id)"  >Open Case File</button> -->
+            <button type="button" :disabled="saving_event" class="float-lg-left btn btn-danger btn-sm " v-show="petition_hearing_event.id" @click="deleteEvent(petition_hearing_event.id)">Delete Event</button>
+
+            <button type="button" :disabled="saving_event" class="btn btn-primary btn-sm" @click="saveChanges">
+              {{title}} Event
             </button>
-            <button type="button" class="btn btn-secondary" @click="closeModal">
+            <button type="button"  :disabled="saving_event" class="btn btn-secondary btn-sm" @click="closeModal">
               Close
             </button>
           </div>
@@ -64,16 +73,22 @@
 
 <script>
 import axios from "axios";
+import moment from 'moment';
 export default {
-  props: ["selected_date","eventToUpdateProp"],
+  props: ["selected_date","eventToUpdateProp","title"],
   data(){
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,
+      title : this.title,
       petition_hearing_event:{
-        hearing_date:this.selected_date,
-        petition_id:"1",
-        hearing_summary:"",
-      }
+        hearing_date:this.eventToUpdateProp && this.eventToUpdateProp.extendedProps? this.dateTime(this.eventToUpdateProp.extendedProps.hearing_date) :this.selected_date,
+        petition_id:this.eventToUpdateProp && this.eventToUpdateProp.extendedProps? this.eventToUpdateProp.extendedProps.petition_id : "",
+        hearing_summary:this.eventToUpdateProp && this.eventToUpdateProp.extendedProps? this.eventToUpdateProp.extendedProps.hearing_summary : "",
+        id:this.eventToUpdateProp ? this.eventToUpdateProp.id : null,
+        
+      },
+      petitions: [],
+      saving_event: false,
     }
   },
   watch: {
@@ -81,13 +96,62 @@ export default {
           console.log('Prop changed: ', newVal, ' | was: ', oldVal)
         }
   },
+  created() {      
+      this.getPetitions();       
+    },
   methods: {
     closeModal() {
       this.$emit("close-modal-event");
       
     },
     saveChanges() {
+      this.saving_event = true;
       this.savePetitionHearing();
+    },
+
+
+    deleteEvent(id) {
+      
+      if (confirm("Do you really want to delete?")) {
+        this.saving_event = true;
+        var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+
+        axios
+          .delete(this.base_url + "/api/petition_hearing/" + id, {
+            headers,
+          })
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "Deleted Successfully!",
+                });
+                //this.getUsers()
+                this.closeModal();
+                this.$emit("triggerGetEvents");
+              }
+            },
+            (error) => {
+              this.saving_event = false;
+              console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
+            }
+          );
+      }
+    },
+
+    
+    dateTime(value) {
+      return moment(value).format('DD-MM-YYYY');
     },
 
     savePetitionHearing() {
@@ -102,12 +166,40 @@ export default {
         })
         .then((response) => {
           this.$emit("triggerGetEvents");
+          this.saving_event = false;
           this.closeModal();
+          this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "Event saved Successfully!",
+                });
+          
         })
         .catch((error) => {
           console.log(error);
+          this.saving_event = false;
         });
     },
+    getPetitions() {       
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+        var url = this.base_url + "/api/petitions";
+        axios
+          .get(url, { headers })
+          .then((response) => {
+            this.petitions = response.data.petitions;     
+            this.petition_hearing_event.petition_id = this.eventToUpdateProp && this.eventToUpdateProp.extendedProps? this.eventToUpdateProp.extendedProps.petition_id : "";                             
+          })
+          .catch((error) => {
+            this.saving_event = false;
+            console.log(error);
+          });      
+    },
+    gotoLink(path) {
+      alert(path)
+      this.$router.push({ path: path  });
+    }
 
     
   },
