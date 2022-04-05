@@ -30,17 +30,22 @@
                 
               </div>
 
-              <div class="form-group">
-                <label for="">Petition</label>
-                <select class="form-control" v-model="petition_hearing_event.petition_id" >
-                  <option value="">--Select--</option>
-                  <option v-for="petition in petitions"
-                        :key="petition.id"
-                        :value="petition.id"                         
-                      >
-                        {{ petition.case_no }}
-                  </option>
-                </select>
+              <div class="form-group form-group-dropdown">
+                
+                <label for="">Case</label>
+                <Dropdown v-model="petition_hearing_event.petition_id" 
+                :class="'form-control'"
+                :options="petitions" 
+                optionLabel="case_no" 
+                optionValue="id" 
+                placeholder="Select a Case" 
+                :filter="true" 
+                :showClear="true" 
+                appendTo="self"
+                required
+                filterPlaceholder="Find by Case No "/>
+      
+               
               </div>
 
               <div class="form-group">
@@ -90,7 +95,7 @@ export default {
         id:this.eventToUpdateProp ? this.eventToUpdateProp.id : null,
         
       },
-      petitions: [],
+      petitions:  [],
       saving_event: false,
     }
   },
