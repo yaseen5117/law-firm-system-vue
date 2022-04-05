@@ -1,135 +1,265 @@
 <template>
-<main id="main" class="margintop85">  
-      <page-header :title="page_title" :hideBreadCrumbs="true" />       
+  <main id="main">
+    <page-header title="Opinions" :hideBreadCrumbs="true"/>
     <!-- ======= Services Section ======= -->
-    <section id="services" class="services section-bg mt-3">
+    <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
-        <DataTable :value="opinions" :paginator="true" :rows="10"
-            dataKey="id" :rowHover="true" v-model:filters="filters" filterDisplay="menu" :loading="loading"
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            :globalFilterFields="['client_id','reference_no','issuance_date','subject']" responsiveLayout="scroll">
-            <template #header>
-                 <div class="flex justify-content-center align-items-center">                    
-                     <span class="p-input-icon-left">
-                        <i class="pi pi-search" />
-                        <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
-                    </span>
-                 </div>
-            </template>
-            <template #empty>
-                No customers found.
-            </template>
-            <template #loading>
-                Loading customers data. Please wait.
-            </template>
-            <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-            <Column field="client_id" header="Client" sortable style="min-width: 14rem">
-                <template #body="{data}">
-                    {{data.client_id}}
-                </template>                
-            </Column> 
-            <Column field="reference_no" header="Reference No." sortable style="min-width: 14rem">
-                <template #body="{data}">
-                    {{data.reference_no}}
-                </template>                
-            </Column>  
-            <Column field="subject" header="Subject" sortable style="min-width: 14rem">
-                <template #body="{data}">
-                    {{data.subject}}
-                </template>                
-            </Column> 
-            <Column field="issuance_date" header="Date Of Issuance" sortable style="min-width: 14rem">
-                <template #body="{data}">
-                    {{data.issuance_date}}
-                </template>                
-            </Column>  
-            <Column field="Action" header="Action" style="min-width: 14rem">
-                <template #body="{data}">
-                 
-                    <Button @click="deleteOpinion(data.id)" icon="pi pi-times" label="Delete" class="p-button-danger p-button-outlined"></Button>
-                </template>                
-            </Column>    
-          
-        </DataTable> 
+        <div class="row">
+          <div class="table-responsive">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <table class="table table-striped">
+                <thead>
+                  <th>Client</th>
+                  <th>Reference No.</th>
+                  <th>Subject</th>
+                  <th>Date Of Issuance</th>
+                  <th width="10%">Actions</th>
+                </thead>
+                <tbody>
+                  <tr
+                    @dblclick="opinion.editMode = false"
+                    v-for="(opinion, opinionIndex) in opinions"
+                    :key="opinion.id"
+                  >
+                    <td>
+                      <select
+                        class="form-control"
+                        v-model="opinion.client_id"
+                      >
+                        <option value="">--Select Client--</option>
+
+                        <option
+                          v-for="client in clients"
+                          :key="client.id"
+                          :value="client.id"
+                          :selected="opinion.client_id == client.id"
+                        >
+                          {{ client.name }}
+                        </option>
+                      </select>
+                                   
+                    </td>
+                    <td>
+                      <input
+                        v-show="opinion.editMode"
+                        class="form-control"
+                        type="text"
+                        v-model="opinion.reference_no"
+                        v-on:keyup.enter="editOpinion(opinion)"
+                      />
+                      <span v-show="!opinion.editMode">{{
+                        opinion.reference_no
+                      }}</span>
+                    </td>
+                    <td>
+                      <input
+                        v-show="opinion.editMode"
+                        class="form-control"
+                        v-model="opinion.subject"
+                        v-on:keyup.enter="editOpinion(opinion)"
+                      />
+                      <span v-show="!opinion.editMode">{{
+                        opinion.subject
+                      }}</span>
+                    </td>
+                    <td>
+                      <input
+                        v-show="opinion.editMode"
+                        class="form-control"
+                        v-model="opinion.issuance_date"
+                        v-on:keyup.enter="editOpinion(opinion)"
+                      />
+                      <span v-show="!opinion.editMode">{{
+                        opinion.issuance_date
+                      }}</span>
+                    </td>
+                    <td width="15%">
+                      <a
+                        class="btn btn-sm btn-primary action-btn"
+                        v-show="!opinion.editMode"
+                        @click="opinion.editMode = true"
+                        href="javascript:void"
+                        style="margin-left: 2px"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Edit"
+                      >
+                        Edit
+                        <!-- <i class="fa fa-edit"></i> -->
+                      </a>
+                      <a
+                        v-show="opinion.editMode"
+                        class="btn btn-sm btn-warning action-btn"
+                        @click="editOpinion(opinion)"
+                        href="javascript:void"
+                        style="margin-left: 2px"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Update"
+                      >
+                        Update
+                        <!-- <i class="fa fa-save"></i> -->
+                      </a>
+
+                      <a
+                        v-show="opinion.editMode"
+                        @click="opinion.editMode = false"
+                        class="btn btn-sm btn-info action-btn"
+                        href="javascript:void"
+                        style="margin-left: 2px"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Cancel"
+                      >
+                        Cancel
+                        <!-- <i class="fa fa-remove"></i> -->
+                      </a>
+
+                      <a
+                        class="btn btn-sm btn-danger action-btn"
+                        v-show="!opinion.editMode"
+                        @click="deleteOpinion(opinion.id, opinionIndex)"
+                        href="javascript:void"
+                        style="margin-left: 2px"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Delete"
+                      >
+                        Delete
+                        <!-- <i class="fa fa-trash-o"></i> -->
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <select
+                        class="form-control"
+                        v-model="new_opinion.client_id"
+                      >
+                        <option value="">--Select Client--</option>
+
+                        <option
+                          v-for="client in clients"
+                          :key="client.id"
+                          :value="client.id"
+                        >
+                          {{ client.name }}
+                        </option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="text"
+                        v-model="new_opinion.reference_no"
+                        v-on:keyup.enter="submitOpinion()"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        class="form-control"
+                        v-model="new_opinion.subject"
+                        v-on:keyup.enter="submitOpinion()"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        class="form-control"
+                        placeholder="dd/mm/yyyy"
+                        v-model="new_opinion.issuance_date"
+                        v-on:keyup.enter="submitOpinion()"
+                      />
+                    </td>
+                    <td>
+                      <button
+                        :disabled="saving"
+                        @click="submitOpinion()"
+                        class="btn btn-sm btn-success action-btn"
+                      >
+                        Save
+                        <!-- <i class="fa fa-save"></i> -->
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
-</main>
- 
+    <!-- End Services Section -->
+  </main>
+  <!-- End #main -->
 </template>
 
 <script>
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
+import NavComponents from "../Cases/NavComponents.vue";
 import useVuelidate from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
-//Data table
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
-import ColumnGroup from 'primevue/columngroup';     //optional for column grouping
-import Row from 'primevue/row';                     //optional for row
-import Button from 'primevue/button';
-import {FilterMatchMode,FilterOperator} from 'primevue/api';
-import InputText from 'primevue/inputtext';
-import ConfirmPopup from 'primevue/confirmpopup';
-
+ 
 export default {
-  components: { PageHeader,DataTable, Column, ColumnGroup, Row, Button, InputText },
-  setup() {
-    return {
-      v$: useVuelidate(),
-    };
-  },
+  components: { PageHeader, NavComponents },
+ 
   data() {
     return {
-        page_title: 'Opinions',      
-        base_url: process.env.VUE_APP_SERVICE_URL, 
-        saving: false,        
-        opinions: [],
-        filters: {
-                'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
-                //'name': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-                'reference_no': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-                'subject': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-                'issuance_date': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.DATE_IS}]},       
-           },
+      page_title: "Opinions",
+      base_url: process.env.VUE_APP_SERVICE_URL,
+      opinions: [],
+      //id: this.$route.params.id, //this is the id from the browser
+      new_opinion: {},
+      petition: {},
+      clients: [],
+      saving: false,
     };
-  },  
-  created() { 
-    this.getOpinionIndex();
-  }, 
+  },
+
+  created() {
+    this.getOpinionsDetail();
+    this.getClients();
+  },
   methods: {
-      getOpinionIndex() {
-       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+    getOpinionsDetail() {
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       axios
-        .get(
-          this.base_url + "/api/opinions",
-          {headers}
-        )
+        .get(this.base_url + "/api/opinions", { headers })
         .then((response) => {
-          this.opinions = response.data.opinions;          
-          console.log(this.opinions);
+          this.opinions = response.data.opinions;
+          //this.petition = response.data.petition;
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    deleteOpinion(opinionId) {       
-            if (confirm("Do you really want to delete?")) {
-              var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+    getClients() {
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      axios
+        .get(this.base_url + "/api/clients", { headers })
+        .then((response) => {
+          this.clients = response.data.clients;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    deleteOpinion(opinionId, opinionIndex) {
+      if (confirm("Do you really want to delete?")) {
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
-          .delete(this.base_url + "/api/opinions/"+ opinionId, {
+          .delete(this.base_url + "/api/opinions/" + opinionId, {
             headers,
           })
           .then(
             (response) => {
+              console.log(response);
               if (response.status === 200) {
                 this.$notify({
                   type: "success",
@@ -137,7 +267,7 @@ export default {
                   text: "Deleted Successfully!",
                 });
                 //this.getCaseDetails()
-                //this.index_data.splice(row_index, 1); //removing record from list/index after deleting record from DB
+                this.opinions.splice(opinionIndex, 1); //removing record from list/index after deleting record from DB
               }
             },
             (error) => {
@@ -149,11 +279,81 @@ export default {
               });
             }
           );
+      }
+    },
+    editOpinion(OpinionToUpdate) {
+      if (true) {
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+
+        axios
+          .post(this.base_url + "/api/opinions", OpinionToUpdate, {
+            headers,
+          })
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "Update Successfully!",
+                });
+                OpinionToUpdate.editMode = false;
+              }
+            },
+            (error) => {
+              console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
             }
-        },
-  }
+          );
+      }
+    },
+    submitOpinion() {
+      if (true) {
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+        this.saving = true;         
+        axios
+          .post(this.base_url + "/api/opinions", this.new_opinion, {
+            headers,
+          })
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "Saved Successfully!",
+                });
+                this.saving = false;
+                this.new_opinion = {};
+                // setTimeout(() => {
+                //   this.v$.$reset();
+                // }, 0);
+                this.getOpinionsDetail();
+              }
+            },
+            (error) => {
+              this.saving = false;
+              console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
+            }
+          );
+      }
+    },
+  },
 };
 </script>
 
-<style> 
+<style>
 </style>
