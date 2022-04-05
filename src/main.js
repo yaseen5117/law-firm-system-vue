@@ -16,6 +16,8 @@ import InputMask from 'primevue/inputmask';
 import AutoComplete from "primevue/autocomplete";
 import Calendar from "primevue/calendar";
 import Dropdown from 'primevue/dropdown';
+import Image from 'primevue/image';
+
 
 
 //app.component("hello-world", HelloWorld);
@@ -25,7 +27,7 @@ createApp(App).use(store).use(router).use(PrimeVue).use(Notifications)
 .use('file-upload', VueUploadComponent)
 .directive('tooltip', Tooltip)
 .component('AutoComplete',AutoComplete)
-.component('AutoComplete',AutoComplete)
+.component('Image',Image)
 .component('Dropdown',Dropdown)
 .component('datepicker',Datepicker)
 .component('InputMask',InputMask)

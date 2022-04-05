@@ -116,7 +116,28 @@
                 :key="attachment"
               >
                 <div class="col-12">
-                  <img
+
+                  <Image 
+
+                  v-if="attachment.mime_type != 'application/pdf'"
+                  :class="activePage == attachment.id ? 'active-img' : ''"
+                  imageClass="img-fluid"
+                  imageStyle="width: 90%"
+                  :preview="true"
+                  :src="
+                      this.base_url +
+                      '/storage/attachments/' +
+                      this.$route.params.id +
+                      '/' +
+                      attachment.file_name
+                    " 
+                    :alt="attachment.file_name">
+                      <template #indicator>
+                          Preview Content
+                      </template>
+                  </Image>
+
+                   <!-- <img
                     v-if="attachment.mime_type != 'application/pdf'"
                     :class="activePage == attachment.id ? 'active-img' : ''"
                     class="img-fluid"
@@ -128,7 +149,9 @@
                       '/' +
                       attachment.file_name
                     "
-                  />
+                  /> -->
+
+                
                   <a :class="activePage == attachment.id ? 'active-img' : ''"
                    v-if="attachment.mime_type == 'application/pdf'" :href="this.base_url +
                       '/storage/attachments/' 
