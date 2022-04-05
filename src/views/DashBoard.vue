@@ -40,7 +40,15 @@
                 </svg>
                 <i class="bx bx-tachometer"></i>
               </div>
-              <h4><a href="">Opinions</a></h4>
+              <h4> 
+                  <router-link class="nav-link" 
+                    :to="{
+                      name: 'opinions',                       
+                    }"
+                  >
+                  Opinions
+                  </router-link>
+                </h4>
               <p>Contains all Details of Opinions. Click to Open all Details.</p>
             </div>
           </div>
