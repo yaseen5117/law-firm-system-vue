@@ -1517,6 +1517,7 @@ section {
 /* CSS FOR SIDE PAGE NUMBER AND ANNESURES */
 .fixed-page-numbers {
   position: fixed;
+  z-index: 2000;
   left: 0;
   top: 18%;
   font-size: 12px;
