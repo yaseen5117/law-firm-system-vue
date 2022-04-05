@@ -19,12 +19,15 @@
             <form @submit.prevent="saveChanges" action="">
               <div class="form-group">
                 <label for="">Date</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  
-                  v-model="petition_hearing_event.hearing_date"
-                />
+                <InputMask
+                    :class="'form-control'"
+                      v-model="petition_hearing_event.hearing_date"
+                      v-on:keyup.enter="submitPetitionIndex()"
+                      mask="99/99/9999"
+                      aria-placeholder=""
+                      placeholder="dd/mm/yyyy "
+                    />
+                
               </div>
 
               <div class="form-group">
