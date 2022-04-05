@@ -40,6 +40,8 @@ import PetitionTypes from '../views/petition-types/PetitionTypesList'
 
 import ForgotPassword from '../views/Auth/ForgotPassword'
 
+import OpinionIndex from '../views/opinions/OpinionIndex'
+
 const routes = [
   {
     path: '/login',
@@ -261,6 +263,17 @@ const routes = [
   },
 }, 
 //////////////// PETITION TYPES /////////////
+
+//////////////// OPINIONS /////////////
+{
+  path: '/opinions',
+  name: 'opinions',    
+  component: OpinionIndex,
+  meta: { 
+    auth: true ,
+  },
+}, 
+//////////////// OPINIONS /////////////
 
   {
     path: '/petition-reply-parents/:id',

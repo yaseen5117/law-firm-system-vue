@@ -10,8 +10,9 @@
               <table class="table table-striped">
                 <thead>
                   <th>Case Title</th>
-                  <th>Situation</th>
+                  <th>Citation</th>
                   <th>Keyword</th>                   
+                   <th>Legal Provisions</th>     
                   <th width="10%">Actions</th>                   
                 </thead>
                 <tbody>
@@ -47,11 +48,11 @@
                       <input
                         v-show="general_case_law.editMode"
                         class="form-control"
-                        v-model="general_case_law.situation"
+                        v-model="general_case_law.citation"
                         v-on:keyup.enter="editGeneralLawIndex(general_case_law)"
                       />
                       <span v-show="!general_case_law.editMode">{{
-                        general_case_law.situation
+                        general_case_law.citation
                       }}</span>
                     </td>
                     <td>
@@ -65,6 +66,18 @@
                         general_case_law.keywords
                       }}</span>
                     </td>
+                    <td>
+                      <input
+                        v-show="general_case_law.editMode"
+                        class="form-control"
+                        v-model="general_case_law.legal_provisions"
+                        v-on:keyup.enter="editGeneralLawIndex(general_case_law)"
+                      />
+                      <span v-show="!general_case_law.editMode">{{
+                        general_case_law.legal_provisions
+                      }}</span>
+                    </td>
+
                     <td width="15%">
                       <button
                         class="btn btn-sm btn-primary action-btn"
@@ -131,15 +144,33 @@
                         class="form-control"
                         v-model="new_standard_index.case_title"
                         v-on:keyup.enter="submitGeneralCaseLaw()"
+                        v-bind:class="{
+                          'error-boarder': v$.case_title.$error,
+                        }"
+                        @blur="v$.case_title.$touch"
                       />
+                      <span
+                        v-if="v$.case_title.$error"
+                        class="errorMessage"
+                        >Case Title field is required.</span
+                      >
                     </td>
                     
                     <td>
                       <input
                         class="form-control"
-                        v-model="new_standard_index.situation"
+                        v-model="new_standard_index.citation"
                         v-on:keyup.enter="submitGeneralCaseLaw()"
+                        v-bind:class="{
+                          'error-boarder': v$.citation.$error,
+                        }"
+                        @blur="v$.citation.$touch"
                       />
+                      <span
+                        v-if="v$.citation.$error"
+                        class="errorMessage"
+                        >Citation field is required.</span
+                      >
                     </td>
                     <td>
                       <input
@@ -147,6 +178,13 @@
                         v-model="new_standard_index.keywords"
                         v-on:keyup.enter="submitGeneralCaseLaw()"
                       />
+                    </td>
+                    <td>
+                      <input
+                        class="form-control"
+                        v-model="new_standard_index.legal_provisions"
+                        v-on:keyup.enter="submitGeneralCaseLaw()"                        
+                      />                      
                     </td>
                     <td>
                       <button
@@ -174,10 +212,17 @@
 <script>
 import axios from "axios"; 
 import PageHeader from "../shared/PageHeader";
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 
 export default {
   components: {
      PageHeader
+  },
+  setup() {
+    return {
+      v$: useVuelidate(),
+    };
   },
   data() {
     return {
@@ -187,6 +232,13 @@ export default {
       new_standard_index: {},
       general_case_laws: [],       
       saving: false,    
+    };
+  },
+  validations() {
+    return {     
+        case_title: { required },
+        citation: { required },
+     
     };
   },
   created() { 
@@ -215,7 +267,8 @@ export default {
     },
 
     submitGeneralCaseLaw() {
-      if (true) {
+      this.v$.$validate();
+      if (!this.v$.$error) {
         var headers = {
           Authorization:
             `Bearer ` + localStorage.getItem("lfms_user"),
