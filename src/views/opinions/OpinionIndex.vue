@@ -16,8 +16,7 @@
                     class="form-control form-control-sm"
                     v-model="filters.client_id"
                   >
-                    <option value="">--All--</option>
-
+                    <option value="">--All--</option> 
                     <option
                       v-for="client in clients"
                       :key="client.id"
@@ -30,25 +29,19 @@
                  <div class="col-lg-2 col-md-2 col-sm-12">
                   <label for="">Reference No</label>
                   <input
-                    type="text"
-                    id="year"
+                    type="text"                    
                     v-model="filters.reference_no"
-                    class="form-control form-control-sm"
-                    
-                    aria-describedby="year"
+                    class="form-control form-control-sm"                     
                   />
                 </div>                   
                 <div class="col-lg-2 col-md-2 col-sm-12">
                   <label for="">Subject</label>
-                  <input
-                    
+                  <input 
                     v-model="filters.subject"
-                    type="text"
-                    id="ClientName"
-                    class="form-control form-control-sm"
-                    aria-describedby="ClientName"
+                    type="text"                     
+                    class="form-control form-control-sm"                     
                   />
-                </div>              
+                </div>             
 
                 <div class="col-lg-1 col-md-1 col-sm-12">
                   

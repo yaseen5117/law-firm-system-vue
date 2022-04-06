@@ -68,8 +68,15 @@
                   </div>
 
                   <div class="col-lg-4 col-md-4 col-sm-12">
-                    <label>Court</label>
-                    <select class="form-control" v-model="petition.court_id">
+                    <label>Court <span style="color: red">*</span></label>
+                    <select 
+                    class="form-control" 
+                    v-model="petition.court_id"
+                    @blur="v$.petition.court_id.$touch"
+                    v-bind:class="{
+                      'error-boarder': v$.petition.court_id.$error,
+                    }"                    
+                    >
                       <option value="">--Select--</option>
 
                       <option
@@ -81,6 +88,11 @@
                         {{ court.title }}
                       </option>
                     </select>
+                    <span
+                      v-if="v$.petition.court_id.$error"
+                      class="errorMessage"
+                      >Court field is required.</span
+                    >
                   </div>
                 </div>
               </div>
@@ -332,6 +344,7 @@ export default {
         petition_type_id: { required },
         title: { required },
         case_no: { required },
+        court_id: { required },
       },
     };
   },

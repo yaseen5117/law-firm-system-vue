@@ -4,14 +4,60 @@
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg mt-3">
       <div class="container" data-aos="fade-up">
-        <div class="row">                
+        <div class="row">   
+          <!-- search filters -->
+            <div class="col-md-12 col-12">
+               
+              <Transition name="fade">
+              <form v-if="showSearchForm"  class="row mb-2">                               
+                 <div class="col-lg-2 col-md-2 col-sm-12">
+                  <label for="">Case Title</label>
+                  <input
+                    type="text"
+                    id="year"
+                    v-model="filters.case_title"
+                    class="form-control form-control-sm" 
+                  />
+                </div>                   
+                <div class="col-lg-2 col-md-2 col-sm-12">
+                  <label for="">Keywords</label>
+                  <input                    
+                    v-model="filters.keywords"
+                    type="text"
+                    id="ClientName"
+                    class="form-control form-control-sm"
+                  />
+                </div>              
+
+                <div class="col-lg-1 col-md-1 col-sm-12">
+                  
+                  <button
+
+                    type="button"
+                    class="btn btn-danger btn-sm mt-lg-4 mt-md-4 mt-sm-2"
+                    @click="reset()"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </form>
+              </Transition>
+            </div>
+            <!-- search filters -->
+            <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+              
+                <button class="btn btn-secondary btn-sm " v-if="showSearchForm" @click="showSearchForm=!showSearchForm" >Hide Filters</button>
+                <button class="btn btn-warning btn-sm" v-else-if="!showSearchForm" @click="showSearchForm=!showSearchForm;">Show Filters</button>
+              
+          
+            </div>             
           <div class="table-responsive">
             <div class="col-lg-12 col-md-12 col-sm-12">
               <table class="table table-striped">
                 <thead>
                   <th>Case Title</th>
                   <th>Citation</th>
-                  <th>Keyword</th>                   
+                  <th>Keywords</th>                   
                    <th>Legal Provisions</th>     
                   <th width="10%">Actions</th>                   
                 </thead>
@@ -142,15 +188,15 @@
                     <td>
                       <input
                         class="form-control"
-                        v-model="new_standard_index.case_title"
+                        v-model="new_general_case_law.case_title"
                         v-on:keyup.enter="submitGeneralCaseLaw()"
                         v-bind:class="{
-                          'error-boarder': v$.case_title.$error,
+                          'error-boarder': v$.new_general_case_law.case_title.$error,
                         }"
-                        @blur="v$.case_title.$touch"
+                        @blur="v$.new_general_case_law.case_title.$touch"
                       />
                       <span
-                        v-if="v$.case_title.$error"
+                        v-if="v$.new_general_case_law.case_title.$error"
                         class="errorMessage"
                         >Case Title field is required.</span
                       >
@@ -159,15 +205,15 @@
                     <td>
                       <input
                         class="form-control"
-                        v-model="new_standard_index.citation"
+                        v-model="new_general_case_law.citation"
                         v-on:keyup.enter="submitGeneralCaseLaw()"
                         v-bind:class="{
-                          'error-boarder': v$.citation.$error,
+                          'error-boarder': v$.new_general_case_law.citation.$error,
                         }"
-                        @blur="v$.citation.$touch"
+                        @blur="v$.new_general_case_law.citation.$touch"
                       />
                       <span
-                        v-if="v$.citation.$error"
+                        v-if="v$.new_general_case_law.citation.$error"
                         class="errorMessage"
                         >Citation field is required.</span
                       >
@@ -175,14 +221,14 @@
                     <td>
                       <input
                         class="form-control"
-                        v-model="new_standard_index.keywords"
+                        v-model="new_general_case_law.keywords"
                         v-on:keyup.enter="submitGeneralCaseLaw()"
                       />
                     </td>
                     <td>
                       <input
                         class="form-control"
-                        v-model="new_standard_index.legal_provisions"
+                        v-model="new_general_case_law.legal_provisions"
                         v-on:keyup.enter="submitGeneralCaseLaw()"                        
                       />                      
                     </td>
@@ -229,23 +275,40 @@ export default {
       base_url: process.env.VUE_APP_SERVICE_URL,
       page_title: "...",
       petition: {},       
-      new_standard_index: {},
+      new_general_case_law: {},
       general_case_laws: [],       
-      saving: false,    
+      saving: false,   
+      showSearchForm: true,    
+      filters: {}, 
     };
   },
   validations() {
     return {     
+      new_general_case_law: {
         case_title: { required },
         citation: { required },
-     
+      }     
     };
   },
+  watch: {
+    filters: {
+      deep: true,
+      handler() {
+        setTimeout(() => {
+          this.getGeneralCaseLaws();
+        }, 300); // 1 sec delay
+      },
+    },
+  },
   created() { 
-    this.getModuleIndex();
+    this.getGeneralCaseLaws();
   },
   methods: {    
-    getModuleIndex() {
+    reset() {
+      this.filters = {};
+      this.getGeneralCaseLaws();
+    },
+    getGeneralCaseLaws() {
        var headers = {
           Authorization:
             `Bearer ` + localStorage.getItem("lfms_user"),
@@ -253,7 +316,10 @@ export default {
       axios
         .get(
           this.base_url + "/api/general_case_laws",
-          {headers}
+          {
+            headers,
+            params: this.filters,
+          }
         )
         .then((response) => {
           this.general_case_laws = response.data.general_case_Laws;
@@ -277,7 +343,7 @@ export default {
         axios
           .post(
             this.base_url + "/api/general_case_laws",
-            this.new_standard_index,
+            this.new_general_case_law,
             {
               headers,
             }
@@ -291,9 +357,9 @@ export default {
                   text: "Saved Successfully!",
                 });
                 this.saving = false;
-                this.new_standard_index = {};
+                this.new_general_case_law = {};
                 setTimeout(() => { this.v$.$reset() }, 0)
-                this.getModuleIndex();
+                this.getGeneralCaseLaws();
               }
             },
             (error) => {
