@@ -43,17 +43,9 @@
                         >{{ index_data_single.document_description }}
                       </router-link>
                     </td>
-                    <td>
-                      <!-- <datepicker
-                        :enableTimePicker="false"
-                        autoApply
-                        format="dd/MM/yyyy"
-                        placeholder="dd/mm/yyyy"
-                        v-model="index_data_single.date"
-                        v-on:keyup.enter="editStandardIndex(index_data_single)"
-                        v-show="index_data_single.editMode"
-                      ></datepicker> -->
-                       <input
+                    <td>                    
+                    <InputMask
+                      mask="99/99/9999"
                       class="form-control"
                       type="text"
                       placeholder="dd/mm/yyyy"
@@ -164,16 +156,9 @@
                         v-on:keyup.enter="submitPetitionIndex()"
                       />
                     </td>
-                    <td>
-                      <!-- <datepicker
-                        :enableTimePicker="false"
-                        autoApply
-                        format="dd/MM/yyyy"
-                        placeholder="dd/mm/yyyy"
-                        type="date"
-                        v-model="new_standard_index.date"
-                      ></datepicker> -->
-                      <input
+                    <td>                      
+                      <InputMask
+                      mask="99/99/9999"
                       class="form-control"
                       type="text"
                       placeholder="dd/mm/yyyy"

@@ -27,20 +27,9 @@
 
                    <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Naqal Form Date<span style="color: red">*</span></label>
-                    <!-- <datepicker
-                    v-bind:class="{
-                        'error-boarder': v$.naqal_form.naqal_form_date.$error,
-                      }"
-                      @blur="v$.naqal_form.naqal_form_date.$touch"
-                      :enableTimePicker="false"
-                      autoApply
-                      format="dd/MM/yyyy"
-                      placeholder="dd/mm/yyyy"
-                      v-model="naqal_form.naqal_form_date"
-                    >
-                    </datepicker> -->
-
-                     <input
+                   
+                     <InputMask
+                      mask="99/99/9999"
                       class="form-control"
                       type="text"
                      placeholder="dd/mm/yyyy"

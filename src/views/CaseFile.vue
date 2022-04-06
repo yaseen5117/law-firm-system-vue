@@ -22,14 +22,7 @@
                     v-model="filters.institution_date"
                     class=""
                     >
-                     </datepicker>
-                  <!-- <input
-                    type="date"
-                    v-model="filters.institution_date"
-                    id="date"
-                    class="form-control form-control-sm"
-                    placeholder="Date of Institution"
-                  />  -->
+                     </datepicker>                  
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-12">
                   <label for="">Case #</label>
@@ -202,45 +195,7 @@
               </div>
               <div v-if="!isLoaded" class="col-md-12">
                   <p class="alert alert-warning">Loading....</p>
-                </div>
-
-              <div class="table-responsive">
-                <!-- <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>Sr No</th>
-                      <th>Case #</th>
-                      <th>Case Title</th>
-                      <th>Court</th>
-                      <th>Client Name</th>
-                      <th>Date of Institution</th>
-                      <th width="10%">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>{{ petition.id }}</td>
-                      <td></td>
-                      <td>
-                        
-                      </td>
-                      <td>
-                        {{
-                          petition && petition.court ? petition.court.title : ""
-                        }}
-                      </td>
-                      <td></td>
-                      <td>{{ petition.institution_date }}</td>
-                      <td width="15%">
-                        
-                      </td>
-                    </tr>
-                    <tr class="text-center" v-if="petitions.length == 0">
-                      <td colspan="7">No Record found.</td>
-                    </tr>
-                  </tbody>
-                </table> -->
-              </div>
+                </div>  
             </div>                  
           </div>
         </div>

@@ -38,21 +38,13 @@
                       >{{ petition_reply.document_description }}
                     </router-link>
                   </td>
-                  <td>
-                    <!-- <datepicker
-                    v-show="petition_reply.editMode"
-                    :enableTimePicker="false"
-                    autoApply   
-                    format="dd/MM/yyyy"                                              
-                    v-model="petition_reply.date"
-                    v-on:keyup.enter="editPetitionReply(petition_reply)"
-                    >
-                     </datepicker> -->
-                    <input
+                  <td>                   
+                    <InputMask
+                      mask="99/99/9999"
                       v-show="petition_reply.editMode"
                       class="form-control"
                       type="text"
-                      placeholder="yyyy/mm/dd"
+                      placeholder="dd/mm/yyyy"
                       v-model="petition_reply.date"
                       v-on:keyup.enter="editPetitionReply(petition_reply)"
                     />
@@ -150,15 +142,9 @@
                       >Description field is required.</span
                     >
                   </td>
-                  <td>
-                    <!-- <datepicker
-                    v-on:keyup.enter="submitPetitionReply()"
-                    :enableTimePicker="false"
-                    autoApply   
-                    format="dd/MM/yyyy"  
-                    placeholder="dd/mm/yyyy"      
-                     v-model="new_petition_reply.date"></datepicker> -->
-                    <input
+                  <td>                     
+                    <InputMask
+                      mask="99/99/9999"
                       class="form-control"
                       type="text"
                       placeholder="dd/mm/yyyy"

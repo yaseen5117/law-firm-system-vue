@@ -27,20 +27,8 @@
 
                    <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Talbana Date<span style="color: red">*</span></label>
-                    <!-- <datepicker
-                    v-bind:class="{
-                        'error-boarder': v$.talbana.talbana_date.$error,
-                      }"
-                      @blur="v$.talbana.talbana_date.$touch"
-                      :enableTimePicker="false"
-                      autoApply
-                      format="dd/MM/yyyy"
-                      placeholder="dd/mm/yyyy"
-                      v-model="talbana.talbana_date"
-                    >
-                    </datepicker> -->
-
-                     <input
+                   <InputMask
+                      mask="99/99/9999"
                       class="form-control"
                       type="text"
                      placeholder="dd/mm/yyyy"

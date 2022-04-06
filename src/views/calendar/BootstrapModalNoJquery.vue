@@ -34,17 +34,27 @@
                 
                 <label for="">Case</label>
                 <Dropdown v-model="petition_hearing_event.petition_id" 
-                :class="'form-control'"
+                
                 :options="petitions" 
                 optionLabel="case_no" 
+                class="form-control"
                 optionValue="id" 
                 placeholder="Select a Case" 
                 :filter="true" 
                 :showClear="true" 
                 appendTo="self"
                 required
-                filterPlaceholder="Find by Case No "/>
-      
+                filterPlaceholder="Find by Case No "
+                v-bind:class="{                   
+                  'error-boarder': v$.petition_hearing_event.petition_id.$error,
+                }"
+                @blur="v$.petition_hearing_event.petition_id.$touch"
+                />
+                <span
+                    v-if="v$.petition_hearing_event.petition_id.$error"
+                    class="errorMessage"
+                >Case field is required.
+                </span>
                
               </div>
 
@@ -82,8 +92,16 @@
 <script>
 import axios from "axios";
 import moment from 'moment';
+import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
+
 export default {
   props: ["selected_date","eventToUpdateProp","title"],
+  setup() {
+      return {
+        v$: useVuelidate(),
+      };
+    },
   data(){
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,
@@ -98,6 +116,13 @@ export default {
       petitions:  [],
       saving_event: false,
     }
+  },
+  validations() {
+    return {      
+        petition_hearing_event: {
+          petition_id: { required },  
+        }       
+    };
   },
   watch: {
     eventToUpdateProp: function(newVal, oldVal) { // watch it
@@ -163,6 +188,8 @@ export default {
     },
 
     savePetitionHearing() {
+      this.v$.$validate();
+      if (!this.v$.$error) { 
       let url = this.base_url + "/api/petition_hearing";
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
@@ -187,6 +214,9 @@ export default {
           console.log(error);
           this.saving_event = false;
         });
+      }else{
+        this.saving_event = false;
+      }
     },
     getPetitions() {       
         var headers = {
@@ -218,5 +248,8 @@ export default {
 /* Override default value of 'none' */
 .modal {
   display: block;
+}
+.error-boarder {
+  border: 1px solid red;
 }
 </style>

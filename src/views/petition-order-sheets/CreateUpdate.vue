@@ -27,19 +27,9 @@
 
                    <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Order Sheet Date<span style="color: red">*</span></label>
-                    <!-- <datepicker
-                    v-bind:class="{
-                        'error-boarder': v$.order_sheet.order_sheet_date.$error,
-                      }"
-                      @blur="v$.order_sheet.order_sheet_date.$touch"
-                      :enableTimePicker="false"
-                      autoApply
-                      format="dd/MM/yyyy"
-                      placeholder="dd/mm/yyyy"
-                      v-model="order_sheet.order_sheet_date"
-                    >
-                    </datepicker> -->
-                     <input
+                   
+                     <InputMask
+                      mask="99/99/9999"
                       class="form-control"
                       type="text"
                       placeholder="dd/mm/yyyy"
