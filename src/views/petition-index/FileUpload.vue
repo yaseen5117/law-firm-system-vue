@@ -109,6 +109,7 @@ export default {
           },
           (error) => {
             this.saving = false;
+            this.beforUploading = "";
             console.log(error.response.data.error);
             this.$notify({
               type: "error",
