@@ -83,14 +83,14 @@
             <div v-show="!horizontalView && !editView">
               <div
                 class="row mb-2 text-center"
-                :id="'image-container-' + attachment.id"
-                v-for="attachment in petition_index_details.attachments"
+                v-for="(attachment , index_attachment) in petition_index_details.attachments"
                 :key="attachment"
+                :id="'image-container-' + (index_attachment+1)"
               >
                 <div class="col-12">
                   <Image
                     v-if="attachment.mime_type != 'application/pdf'"
-                    :class="activePage == attachment.id ? 'active-img' : ''"
+                    :class="activePage == (index_attachment+1) ? 'active-img' : ''"
                     imageClass="img-fluid"
                     imageStyle="width: 90%"
                     :preview="true"
@@ -306,14 +306,14 @@
     >
       <ul class="list-group">
         <li
-          v-for="attachment in petition_index_details.attachments"
+          v-for="( attachment , index_attachment) in petition_index_details.attachments"
           :key="attachment"
-          :class="activePage == attachment.id ? 'active' : ''"
+          :class="activePage == (index_attachment+1) ? 'active' : ''"
           class="list-group-item"
-          @click="scrollIntoView(attachment.id)"
+          @click="scrollIntoView(index_attachment+1)"
           style="cursor: pointer"
         >
-          {{ attachment.id }}
+          {{ index_attachment+1 }}
         </li>
       </ul>
     </div>
