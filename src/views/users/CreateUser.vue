@@ -149,7 +149,7 @@
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Phone</label>
-                    <input class="form-control" v-model="user.phone" />
+                    <InputMask class="form-control" mask="9999-9999999" v-model="user.phone" />
                   </div>
                 </div>
               </div>
