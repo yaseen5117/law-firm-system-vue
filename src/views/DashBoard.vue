@@ -66,7 +66,7 @@
             </div>
           </div>
 
-          <div  v-if="this.user.is_admin" class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
+          <div  @click="gotoLink('petition-general-case-law')"  v-if="this.user.is_admin" class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
             <div class="icon-box iconbox-red border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -77,8 +77,7 @@
               <h4>
                 <router-link
                 :to="{
-                  name: 'petition-general-case-law',
-                  params: { petition_id: 1 },
+                  name: 'petition-general-case-law'
                 }"
                 >Case Law Library</router-link>
                 </h4>
