@@ -47,6 +47,7 @@ export default createStore({
 
 
     authUser({ commit }) {
+      
       var headers = { Authorization: `Bearer `+localStorage.getItem("lfms_user") };
       axios.get(process.env.VUE_APP_SERVICE_URL + '/api/user', {headers})
       .then(response => {

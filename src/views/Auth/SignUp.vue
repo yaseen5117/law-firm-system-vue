@@ -86,7 +86,14 @@
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Phone</label>
-                    <input class="form-control" v-model="user.phone" />
+                    <InputMask
+                      class="form-control"
+                      v-model="user.phone"
+                      mask="9999-9999999"
+                      placeholder="0300-1234567"
+                      
+                    />
+                    
                   </div>
                 </div>
               </div>
