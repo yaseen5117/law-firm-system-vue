@@ -273,7 +273,7 @@ export default {
   data() {
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,
-      page_title: "...",
+      page_title: "Case Law Library",
       petition: {},       
       new_general_case_law: {},
       general_case_laws: [],       
@@ -323,7 +323,6 @@ export default {
         )
         .then((response) => {
           this.general_case_laws = response.data.general_case_Laws;
-          this.page_title = response.data.page_title;
           console.log(response.data.page_title);
           console.log(response.data.general_case_Laws);
         })

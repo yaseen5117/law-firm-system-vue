@@ -12,7 +12,7 @@
           <li>
             <router-link class="nav-link" to="/">Home</router-link>
           </li>
-          <li v-show="this.user">
+          <li v-if="this.user && this.user.id">
             <router-link class="nav-link" to="/dashboard"
               >Welcome {{ this.user.name }}!</router-link
             >
@@ -31,13 +31,13 @@
          
           <!-- <li><a class="nav-link scrollto" href="#">Link-1</a></li>
           <li><a class="nav-link scrollto" href="#">Link-2</a></li>           -->
-          <li v-show="this.user" class="dropdown">
+          <li v-show="this.user && this.user.is_admin" class="dropdown">
             <a href="javascript:void"
               ><span>Settings</span> <i class="bi bi-chevron-down"></i
             ></a>
             <ul>
-              <li v-show="this.user && this.user.is_admin"><router-link class="nav-link" to="/users">Users</router-link></li>
-              <li v-if="this.user && this.user.id>0">
+              
+              <li v-if="this.user && this.user.id">
                 <router-link class="nav-link" 
                   :to="{
                     name: 'edit-user',
@@ -48,11 +48,12 @@
                 </router-link>
               </li>
               <li class="dropdown" v-show="this.user && this.user.is_admin">
-                <a href="#"
+                <a href="javascript:void"
                   ><span>System Settings</span>
                   <i class="bi bi-chevron-right"></i
                 ></a>
                 <ul>
+                  <li v-show="this.user && this.user.is_admin"><router-link class="nav-link" to="/users">Users</router-link></li>
                   <li><router-link class="nav-link" to="/courts">Courts</router-link></li>
                   <li><router-link to="/petition-types">Case Types</router-link></li>
                   <!-- <li><a href="#">System Setting 3</a></li>
