@@ -82,14 +82,14 @@
             <div v-show="!horizontalView && !editView">
               <div
                 class="row mb-2 text-center"
-                :id="'image-container-' + attachment.id"
-                v-for="attachment in petition_reply_details.attachments"
+                :id="'image-container-' + (index_attachment+1)"
+                v-for="(attachment , index_attachment) in petition_reply_details.attachments"
                 :key="attachment"
               >
                 <div class="col-12">
                   <img
                     v-if="attachment.mime_type != 'application/pdf'"
-                    :class="activePage == attachment.id ? 'active-img' : ''"
+                    :class="activePage == (index_attachment+1) ? 'active-img' : ''"
                     class="img-fluid"
                     style="width: 90%"
                     :src="
@@ -101,7 +101,7 @@
                       attachment.file_name
                     "
                   />                         
-                  <a :class="activePage == attachment.id ? 'active-img' : ''"
+                  <a :class="activePage == (index_attachment+1) ? 'active-img' : ''"
                    v-if="attachment.mime_type == 'application/pdf'" :href="this.base_url +
                       '/storage/attachments/' 
                       +                     
@@ -270,12 +270,12 @@
         class="list-group"
       >
       <li 
-        v-for="attachment in petition_reply_details.attachments"
-        :key="attachment" :class="activePage == attachment.id ? 'active' : ''" class="list-group-item"
-        @click="scrollIntoView(attachment.id)"
+        v-for="(attachment, index_attachment) in petition_reply_details.attachments"
+        :key="attachment" :class="activePage == (index_attachment+1) ? 'active' : ''" class="list-group-item"
+        @click="scrollIntoView(index_attachment+1)"
         style="cursor:pointer"
         >
-          {{ attachment.id }}
+          {{index_attachment+1 }}
         </li>
       </ul>
     </div>
