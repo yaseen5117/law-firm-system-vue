@@ -78,32 +78,7 @@
         </div>
 
         <div class="row">
-          <div class="col-12">
-            <!-- <button
-              class="btn btn-primary btn-sm mb-3"
-              v-on:click="horizontalView = !horizontalView"
-            >
-              Slide/Horizontal View
-            </button> -->
-            <!-- <carousel :items-to-show="1" v-show="horizontalView">
-              <slide
-                v-for="attachment in petition_reply_details.attachments"
-                :key="attachment"
-              >
-                <img
-                  :src="
-                    'http://127.0.0.1:8000/storage/attachments/' +
-                    attachment.file_name
-                  "
-                />
-              </slide>
-
-              <template #addons>
-                <navigation />
-                <pagination />
-              </template>
-            </carousel> -->
-
+          <div class="col-12">           
             <div v-show="!horizontalView && !editView">
               <div
                 class="row mb-2 text-center"
@@ -142,8 +117,27 @@
               <div class="row">
                 <div class="table-responsive">
                 <div class="col-lg-12 col-md-12 col-sm-12">
+                  <button
+                      v-if="showDeleteBtn"
+                      class="btn btn-sm btn-danger"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      title="Delete"
+                      @click="deleteAll()"
+                    >
+                      Delete Selected
+                    </button>
                   <table class="table table-bordered">
-                    <thead>                      
+                    <thead>   
+                      <th>
+                          <input
+                            class="margin-left-checkbox"
+                            type="checkbox"
+                            v-model="selectedAllToDelete"
+                            @click="selectAllToDelete()"
+                          />
+                          Select all
+                        </th>                   
                       <th>Image</th>
                       <th>Title</th>
                       <th>Display Order</th>
@@ -155,7 +149,16 @@
                         v-for="(attachment , attachmentReplyIndex) in petition_reply_details.attachments"
                         :key="attachment"
                       >
-                       
+                       <td>
+                            <div class="checkbox">
+                              <input
+                                type="checkbox"
+                                :value="attachment.id"
+                                v-model="selected"
+                                @change="updateCheckall()"
+                              />
+                            </div>
+                          </td>
                         <td>
                           <img
                             :class="
@@ -330,6 +333,9 @@ export default {
       horizontalView: false, //it will show vertical images by default
       activePage: null,
       removePageHeader: false,
+      selected: [],
+      selectedAllToDelete: false,
+      showDeleteBtn: false,
     };
   },
   created() {
@@ -444,6 +450,65 @@ export default {
                 }); 
                 //this.getPetitionReplyDetails()  
                 this.petition_reply_details.attachments.splice(attachmentReplyIndex,1);//removing record from list/index after deleting record from DB              
+              }
+            },
+            (error) => {
+              console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
+            }
+          );
+      }
+    },
+    //select all to delete all
+    selectAllToDelete() {      
+      this.selected = [];
+      if (!this.selectedAllToDelete) {
+        this.showDeleteBtn = true;
+        for (let i in this.petition_reply_details.attachments) {
+          this.selected.push(this.petition_reply_details.attachments[i].id);
+        }
+      }else{
+        this.showDeleteBtn = false;
+      }
+    },
+    updateCheckall: function () {
+      if (
+        this.petition_reply_details.attachments.length == this.selected.length
+      ) {        
+        this.selectedAllToDelete = true;     
+      }
+      else if(!this.selected.length){
+        this.showDeleteBtn = false;   
+      }
+       else {    
+        this.showDeleteBtn = true;    
+        this.selectedAllToDelete = false;
+      }
+    },
+    deleteAll(){
+      if (confirm("Do you really want to delete?")) {
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+  
+        axios
+          .post(this.base_url + "/api/delete_selected", this.selected, {
+            headers,
+          })
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "Deleted Successfully!",
+                });  
+                this.showDeleteBtn = false;
+                this.getPetitionReplyDetails(); //Reload all records from DB   
               }
             },
             (error) => {

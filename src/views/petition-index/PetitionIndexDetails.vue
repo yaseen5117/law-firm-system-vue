@@ -5,16 +5,16 @@
       :title="petition_index_details.document_description"
       :petition="petition"
       :hide="removePageHeader ? true : false"
-    />    
+    />
     <!-- End Breadcrumbs -->
     <section
       id="services"
       class="services section-bg"
       :class="removePageHeader ? 'margintop85' : ''"
     >
-    <nav-components activeNavPill = 'petition' :petition_id="petition.id"  />
+      <nav-components activeNavPill="petition" :petition_id="petition.id" />
       <div class="container mt-4" data-aos="fade-up">
-        <div class="row mb-2">             
+        <div class="row mb-2">
           <div class="col-12 mb-1">
             <div class="form-check form-switch">
               <input
@@ -70,44 +70,16 @@
               Cancel
             </button>
           </div>
-          <div
-            class="col-lg-12 col-md-12 col-sm-12"
-            v-show="showImgCard"
-          >
+          <div class="col-lg-12 col-md-12 col-sm-12" v-show="showImgCard">
             <file-upload
               @afterUpload="getCaseDetails"
               type="App\Models\PetitionIndex"
-              :attachmentable_id= id
+              :attachmentable_id="id"
             />
           </div>
-        </div>        
+        </div>
         <div class="row">
           <div class="col-12">
-            <!-- <button
-              class="btn btn-primary btn-sm mb-3"
-              v-on:click="horizontalView = !horizontalView"
-            >
-              Slide/Horizontal View
-            </button> -->
-            <!-- <carousel :items-to-show="1" v-show="horizontalView">
-              <slide
-                v-for="attachment in petition_index_details.attachments"
-                :key="attachment"
-              >
-                <img
-                  :src="
-                    'http://127.0.0.1:8000/storage/attachments/' +
-                    attachment.file_name
-                  "
-                />
-              </slide>
-
-              <template #addons>
-                <navigation />
-                <pagination />
-              </template>
-            </carousel> -->
-
             <div v-show="!horizontalView && !editView">
               <div
                 class="row mb-2 text-center"
@@ -116,32 +88,12 @@
                 :key="attachment"
               >
                 <div class="col-12">
-
-                  <Image 
-
-                  v-if="attachment.mime_type != 'application/pdf'"
-                  :class="activePage == attachment.id ? 'active-img' : ''"
-                  imageClass="img-fluid"
-                  imageStyle="width: 90%"
-                  :preview="true"
-                  :src="
-                      this.base_url +
-                      '/storage/attachments/' +
-                      this.$route.params.id +
-                      '/' +
-                      attachment.file_name
-                    " 
-                    :alt="attachment.file_name">
-                      <template #indicator>
-                          Preview Content
-                      </template>
-                  </Image>
-
-                   <!-- <img
+                  <Image
                     v-if="attachment.mime_type != 'application/pdf'"
                     :class="activePage == attachment.id ? 'active-img' : ''"
-                    class="img-fluid"
-                    style="width: 90%"
+                    imageClass="img-fluid"
+                    imageStyle="width: 90%"
+                    :preview="true"
                     :src="
                       this.base_url +
                       '/storage/attachments/' +
@@ -149,16 +101,26 @@
                       '/' +
                       attachment.file_name
                     "
-                  /> -->
+                    :alt="attachment.file_name"
+                  >
+                    <template #indicator> Preview Content </template>
+                  </Image>
 
-                
-                  <a :class="activePage == attachment.id ? 'active-img' : ''"
-                   v-if="attachment.mime_type == 'application/pdf'" :href="this.base_url +
-                      '/storage/attachments/' 
-                      +                     
+                  <a
+                    :class="activePage == attachment.id ? 'active-img' : ''"
+                    v-if="attachment.mime_type == 'application/pdf'"
+                    :href="
+                      this.base_url +
+                      '/storage/attachments/' +
                       this.$route.params.id +
                       '/' +
-                      attachment.file_name" target="_blank"><u><span>Click to Open: </span>{{ attachment.title }}</u></a> 
+                      attachment.file_name
+                    "
+                    target="_blank"
+                    ><u
+                      ><span>Click to Open: </span>{{ attachment.title }}</u
+                    ></a
+                  >
                   <hr class="mt-4 mb-4" style="border: solid 3px" />
                 </div>
               </div>
@@ -168,8 +130,27 @@
               <div class="row">
                 <div class="table-responsive">
                   <div class="col-lg-12 col-md-12 col-sm-12">
+                    <button
+                      v-if="showDeleteBtn"
+                      class="btn btn-sm btn-danger"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      title="Delete"
+                      @click="deleteAll()"
+                    >
+                      Delete Selected
+                    </button>
                     <table class="table table-bordered">
                       <thead>
+                        <th>
+                          <input
+                            class="margin-left-checkbox"
+                            type="checkbox"
+                            v-model="selectedAllToDelete"
+                            @click="selectAllToDelete()"
+                          />
+                          Select all
+                        </th>
                         <th>Image</th>
                         <th>Title</th>
                         <th>Display Order</th>
@@ -183,6 +164,16 @@
                           ) in petition_index_details.attachments"
                           :key="attachment"
                         >
+                          <td>
+                            <div class="checkbox">
+                              <input
+                                type="checkbox"
+                                :value="attachment.id"
+                                v-model="selected_attachment_ids"
+                                @change="updateCheckall()"
+                              />
+                            </div>
+                          </td>
                           <td>
                             <img
                               :class="
@@ -247,7 +238,8 @@
                               data-bs-placement="top"
                               title="Edit"
                             >
-                              <i class="fa fa-edit"></i>
+                              Edit
+                              <!-- <i class="fa fa-edit"></i> -->
                             </a>
                             <a
                               v-show="attachment.editMode"
@@ -259,7 +251,8 @@
                               data-bs-placement="top"
                               title="Update"
                             >
-                              <i class="fa fa-save"></i>
+                              Update
+                              <!-- <i class="fa fa-save"></i> -->
                             </a>
 
                             <a
@@ -272,7 +265,8 @@
                               data-bs-placement="top"
                               title="Cancel"
                             >
-                              <i class="fa fa-remove"></i>
+                              Cancel
+                              <!-- <i class="fa fa-remove"></i> -->
                             </a>
 
                             <a
@@ -290,7 +284,8 @@
                               data-bs-placement="top"
                               title="Delete"
                             >
-                              <i class="fa fa-trash-o"></i>
+                              Delete
+                              <!-- <i class="fa fa-trash-o"></i> -->
                             </a>
                           </td>
                         </tr>
@@ -305,7 +300,10 @@
       </div>
     </section>
 
-    <div v-show="!horizontalView && !editView" class="fixed-page-numbers d-none d-md-block">
+    <div
+      v-show="!horizontalView && !editView"
+      class="fixed-page-numbers d-none d-md-block"
+    >
       <ul class="list-group">
         <li
           v-for="attachment in petition_index_details.attachments"
@@ -356,8 +354,8 @@ export default {
     Slide,
     Pagination,
     Navigation,
-    FileUpload,    
-    NavComponents
+    FileUpload,
+    NavComponents,
   },
   data() {
     return {
@@ -370,7 +368,10 @@ export default {
       id: this.$route.params.id, //this is the id from the browser
       horizontalView: false, //it will show vertical images by default
       activePage: null,
-      removePageHeader: false,      
+      removePageHeader: false,
+      selected_attachment_ids: [],
+      selectedAllToDelete: false,
+      showDeleteBtn: false,
     };
   },
   created() {
@@ -392,11 +393,10 @@ export default {
     },
     async getCaseDetails() {
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       await axios
-        .get(this.base_url + "/api/petitions_index/" + this.id, {headers})
+        .get(this.base_url + "/api/petitions_index/" + this.id, { headers })
         .then((response) => {
           this.petition_index_details = response.data.petition_index;
           this.petition = response.data.petition;
@@ -410,11 +410,10 @@ export default {
 
     async getPetitionAnnexure(petition_id) {
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       await axios
-        .get(this.base_url + "/api/petitions/" + petition_id, {headers})
+        .get(this.base_url + "/api/petitions/" + petition_id, { headers })
         .then((response) => {
           this.petition_index = response.data.petition_details;
           var arr = [];
@@ -433,8 +432,7 @@ export default {
     editPetitionAttachment(attachmentToUpdate) {
       if (true) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
@@ -470,8 +468,7 @@ export default {
     deletePetitionAttachment(petitionId, attachmentIndex) {
       if (confirm("Do you really want to delete?")) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
@@ -504,9 +501,68 @@ export default {
           );
       }
     },
+    //select all to delete all
+    selectAllToDelete() {      
+      this.selected_attachment_ids = [];
+      if (!this.selectedAllToDelete) {        
+        this.showDeleteBtn = true;
+        for (let i in this.petition_index_details.attachments) {
+          this.selected_attachment_ids.push(this.petition_index_details.attachments[i].id);
+        }
+      }else{         
+        this.showDeleteBtn = false;
+      }
+    },
+    updateCheckall: function () {
+      if (
+        this.petition_index_details.attachments.length == this.selected_attachment_ids.length
+      ) {        
+        this.selectedAllToDelete = true;  
+            
+      } else if(!this.selected_attachment_ids.length){
+        this.showDeleteBtn = false;   
+      }
+       else {    
+        this.showDeleteBtn = true;    
+        this.selectedAllToDelete = false;
+      }
+    },
+    deleteAll(){
+      if (confirm("Do you really want to delete?")) {
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+
+        axios
+          .post(this.base_url + "/api/delete_selected", this.selected_attachment_ids, {
+            headers,
+          })
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "Deleted Successfully!",
+                });  
+                this.showDeleteBtn = false;
+                this.getCaseDetails(); //Reload all records from DB   
+              }
+            },
+            (error) => {
+              console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
+            }
+          );
+      }
+    },
   },
 };
 </script>
 
-<style> 
+<style>
 </style>
