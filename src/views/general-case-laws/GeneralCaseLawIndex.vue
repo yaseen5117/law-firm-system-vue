@@ -74,20 +74,9 @@
                         v-model="general_case_law.case_title"
                         v-on:keyup.enter="editGeneralLawIndex(general_case_law)"
                       />
-                      <router-link to="#">
+                      <span v-show="!general_case_law.editMode">
                         {{ general_case_law.case_title }}
-                      </router-link>
-                      <!-- <router-link
-                        v-show="!general_case_law.editMode"
-                        :to="{
-                          name: 'standard-index-details',
-                          params: { 
-                              module_id: general_case_law.id,                               
-                            },
-                        }"
-                        >
-                        {{ general_case_law.case_title }}
-                      </router-link> -->
+                      </span>                      
                     </td>
                    
                     <td>
@@ -186,7 +175,19 @@
                   </tr>
                   <tr>
                     <td>
-                      <input
+                      <AutoComplete
+                      :delay="1"
+                      v-model="new_general_case_law.case_title"
+                      :suggestions="filteredCaseTitle"
+                      @complete="searchForAutocomplete($event)"
+                       v-bind:class="{
+                          'error-boarder': v$.new_general_case_law.case_title.$error,
+                        }"
+                        @blur="v$.new_general_case_law.case_title.$touch"
+                      :style="'width:100%'"
+                      :inputStyle="'width:100%'"
+                    />
+                      <!-- <input
                         class="form-control"
                         v-model="new_general_case_law.case_title"
                         v-on:keyup.enter="submitGeneralCaseLaw()"
@@ -194,7 +195,7 @@
                           'error-boarder': v$.new_general_case_law.case_title.$error,
                         }"
                         @blur="v$.new_general_case_law.case_title.$touch"
-                      />
+                      /> -->
                       <span
                         v-if="v$.new_general_case_law.case_title.$error"
                         class="errorMessage"
@@ -280,6 +281,8 @@ export default {
       saving: false,   
       showSearchForm: true,    
       filters: {}, 
+      defaultDocumentDiscriptions:["Power of Attorney","Writ Petition along with Affidavit","Application for stay cm","Application for Exemption"],
+      filteredCaseTitle: null,
     };
   },
   validations() {
@@ -303,7 +306,20 @@ export default {
   created() { 
     this.getGeneralCaseLaws();
   },
-  methods: {    
+  methods: {   
+    searchForAutocomplete(event) {
+      setTimeout(() => {
+        if (!event.query.trim().length) {
+          this.filteredCaseTitle = this.defaultDocumentDiscriptions;
+        } else {
+          this.filteredCaseTitle = this.defaultDocumentDiscriptions.filter((country) => {
+            return country
+              .toLowerCase()
+              .startsWith(event.query.toLowerCase());
+          });
+        }
+      }, 250);
+    }, 
     reset() {
       this.filters = {};
       this.getGeneralCaseLaws();

@@ -81,23 +81,21 @@
                     v-for="(opinion, opinionIndex) in opinions"
                     :key="opinion.id"
                   >
-                    <td>
-                      <select
-                        class="form-control"
-                        v-model="opinion.client_id"
-                      >
-                        <option value="">--Select Client--</option>
-
-                        <option
-                          v-for="client in clients"
-                          :key="client.id"
-                          :value="client.id"
-                          :selected="opinion.client_id == client.id"
-                        >
-                          {{ client.name }}
-                        </option>
-                      </select>
-                                   
+                    <td>                                          
+                      <Dropdown v-show="opinion.editMode" v-model="opinion.client_id"                       
+                      :options="clients" 
+                      optionLabel="name" 
+                      class="form-control drop-down-height"
+                      optionValue="id" 
+                      placeholder="Select a Client" 
+                      :filter="true" 
+                      :showClear="true" 
+                      appendTo="body"  
+                      filterPlaceholder="Find by Client Name"                        
+                      />
+                      <span v-show="!opinion.editMode">{{
+                        opinion.user.name
+                      }}</span> 
                     </td>
                     <td>
                       <input
@@ -192,21 +190,19 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>
-                      <select
-                        class="form-control"
-                        v-model="new_opinion.client_id"
-                      >
-                        <option value="">--Select Client--</option>
-
-                        <option
-                          v-for="client in clients"
-                          :key="client.id"
-                          :value="client.id"
-                        >
-                          {{ client.name }}
-                        </option>
-                      </select>
+                    <td>                       
+                      <Dropdown v-model="new_opinion.client_id"                       
+                      :options="clients" 
+                      optionLabel="name" 
+                      class="form-control drop-down-height"
+                      optionValue="id" 
+                      placeholder="Select a Client" 
+                      :filter="true" 
+                      :showClear="true" 
+                      appendTo="body"  
+                      filterPlaceholder="Find by Client Name" 
+                      />
+                     
                     </td>
                     <td>
                       <input
@@ -268,8 +264,7 @@ export default {
     return {
       page_title: "Opinions",
       base_url: process.env.VUE_APP_SERVICE_URL,
-      opinions: [],
-      //id: this.$route.params.id, //this is the id from the browser
+      opinions: [],      
       new_opinion: {},
       petition: {},
       clients: [],
@@ -384,6 +379,7 @@ export default {
                   text: "Update Successfully!",
                 });
                 OpinionToUpdate.editMode = false;
+                this.getOpinionsDetail();
               }
             },
             (error) => {
