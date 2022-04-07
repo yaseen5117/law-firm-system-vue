@@ -149,7 +149,7 @@
                             v-model="selectedAllToDelete"
                             @click="selectAllToDelete()"
                           />
-                          Select all
+                          Select All
                         </th>
                         <th>Image</th>
                         <th>Title</th>
