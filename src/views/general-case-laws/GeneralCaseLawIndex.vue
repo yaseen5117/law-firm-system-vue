@@ -10,7 +10,7 @@
                
               <Transition name="fade">
               <form v-if="showSearchForm"  class="row mb-2">                               
-                 <div class="col-lg-2 col-md-2 col-sm-12">
+                 <div class="col-lg-3 col-md-3 col-sm-12">
                   <label for="">Case Title</label>
                   <input
                     type="text"
@@ -19,7 +19,7 @@
                     class="form-control form-control-sm" 
                   />
                 </div>                   
-                <div class="col-lg-2 col-md-2 col-sm-12">
+                <div class="col-lg-3 col-md-3 col-sm-12">
                   <label for="">Keywords</label>
                   <input                    
                     v-model="filters.keywords"

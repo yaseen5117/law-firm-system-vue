@@ -1522,6 +1522,20 @@ section {
   top: 18%;
   font-size: 12px;
 }
+.fixed-page-numbers-mobile {
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 37%;
+  font-size: 12px;
+}
+.fixed-eye-icon {
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 26%;
+  font-size: 15px;
+}
 .fixed-annexsures {
   position: fixed;
   right: 0;

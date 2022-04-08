@@ -292,8 +292,17 @@
         </div>
       </div>
     </section>
+     <div class="fixed-eye-icon d-lg-none d-lg-block d-md-none d-md-block">
+      <button 
+      data-bs-toggle="tooltip"
+                      data-bs-placement="right"
+                      title="Page#"
+       class="btn btn-sm btn-primary" @click="showPageNumbers()"><i class="fa fa-expand" aria-hidden="true"></i></button>
+    </div>
 
-    <div v-show="!horizontalView && !editView" class="fixed-page-numbers d-none d-md-block">
+    <div v-show="!horizontalView && !editView" 
+    :class="isShowPageNumOnMobile ? 'd-none d-md-block fixed-page-numbers' : 'fixed-page-numbers-mobile'" 
+    >
       <ul class="list-group">
         <li
           v-for="(attachment , index_attachment) in index_detail_data.attachments"
@@ -368,6 +377,7 @@ export default {
       selected_attachment_ids: [],
       selectedAllToDelete: false,
       showDeleteBtn: false,   
+      isShowPageNumOnMobile: true
     };
   },
   created() {
@@ -560,6 +570,9 @@ export default {
             }
           );
       }
+    },
+    showPageNumbers(){               
+      this.isShowPageNumOnMobile = !this.isShowPageNumOnMobile;
     },
   },
 };

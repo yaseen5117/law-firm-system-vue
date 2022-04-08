@@ -10,7 +10,7 @@
                
               <Transition name="fade">
               <form v-if="showSearchForm"  class="row mb-2">  
-                <div class="col-lg-2 col-md-2 col-sm-12">
+                <div class="col-lg-3 col-md-3 col-sm-12">
                   <label for="">Client</label>
                   <select
                     class="form-control form-control-sm"
@@ -26,7 +26,7 @@
                     </option>
                   </select>
                 </div>                  
-                 <div class="col-lg-2 col-md-2 col-sm-12">
+                 <div class="col-lg-3 col-md-3 col-sm-12">
                   <label for="">Reference No</label>
                   <input
                     type="text"                    
@@ -34,7 +34,7 @@
                     class="form-control form-control-sm"                     
                   />
                 </div>                   
-                <div class="col-lg-2 col-md-2 col-sm-12">
+                <div class="col-lg-3 col-md-3 col-sm-12">
                   <label for="">Subject</label>
                   <input 
                     v-model="filters.subject"
@@ -48,7 +48,7 @@
                   <button
 
                     type="button"
-                    class="btn btn-danger btn-sm mt-lg-4 mt-md-4"
+                    class="btn btn-danger btn-sm mt-lg-4 mt-md-4 mt"
                     @click="reset()"
                   >
                     Reset
