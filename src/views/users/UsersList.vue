@@ -12,7 +12,7 @@
                 v-if="showSearchForm"
                 class="row gy-2 gx-3 align-items-center"
               >
-                <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="col-lg-4 col-md-4 col-sm-6">
                   <input
                     type="text"
                     id="name"
@@ -23,7 +23,7 @@
                   />
                 </div>
 
-                <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="col-lg-4 col-md-4 col-sm-6">
                   <input
                     placeholder="Email"
                     v-model="filters.email"

@@ -75,12 +75,10 @@
                   />
                 </div>
 
-                <div class="col-lg-1 col-md-1 col-sm-12">
-                  
+                <div class="col-lg-1 col-md-1 col-sm-12">                  
                   <button
-
                     type="button"
-                    class="btn btn-danger btn-sm mt-lg-4 mt-md-4"
+                    class="btn btn-danger btn-sm mt-lg-4 mt-md-4 mt"
                     @click="reset()"
                   >
                     Reset
@@ -299,5 +297,5 @@ export default {
 };
 </script>
 
-<style>
+<style> 
 </style>

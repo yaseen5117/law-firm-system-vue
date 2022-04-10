@@ -37,29 +37,21 @@
                     <label
                       >Case Category <span style="color: red">*</span></label
                     >
-                    <select
-                      class="form-control"
-                      v-model="petition.petition_type_id"
+                    <Dropdown v-model="petition.petition_type_id"                  
+                      :options="petition_types" 
+                      optionLabel="title" 
+                      class="form-control drop-down-height"
+                      optionValue="id" 
+                      placeholder="Select a Case" 
+                      :filter="true" 
+                      :showClear="true" 
+                      appendTo="self"  
+                      filterPlaceholder="Find by Case Title" 
                       @blur="v$.petition.petition_type_id.$touch"
                       v-bind:class="{
                         'error-boarder': v$.petition.petition_type_id.$error,
-                      }"
-                    >
-                      <option value="">--Select--</option>
-                      <template
-                        v-for="petition_type in petition_types"
-                        :key="petition_type.id"
-                      >
-                        <option
-                          :selected="
-                            petition.petition_type_id == petition_type.id
-                          "
-                          :value="petition_type.id"
-                        >
-                          {{ petition_type.title }}
-                        </option>
-                      </template>
-                    </select>
+                      }"                       
+                      /> 
                     <span
                       v-if="v$.petition.petition_type_id.$error"
                       class="errorMessage"

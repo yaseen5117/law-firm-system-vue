@@ -49,7 +49,7 @@ export default {
       //attachmentable_id: this.$route.params.id, //this is the id from the browser
       success: "",   
       beforUploading: "",    
-      saving: false,
+      saving: true,
     };
   },
   validations() {
@@ -61,6 +61,7 @@ export default {
 
     onChange(e) {
       this.files = e.target.files;
+      this.saving = false;
       if(this.compactInlineView){                
         this.onUploadFile();
       }
@@ -100,7 +101,7 @@ export default {
                 title: "Success",
                 text: "Files Uploaded Successfully!",
               });  
-              this.saving = false;
+              this.saving = true;
               this.beforUploading = "";
               this.$refs.fileupload.value=null;            
               console.log(response.data);
