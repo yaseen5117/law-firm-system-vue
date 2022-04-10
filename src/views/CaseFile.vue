@@ -176,12 +176,21 @@
                               <router-link
                                 style="margin-right: 2px"
                                 to="#"
-                                class="btn btn-warning btn-sm action-btn"
+                                class="btn btn-info btn-sm action-btn"
                                 role="button"
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
                                 title="Alert"
                                 >Alert</router-link>
+                              <router-link
+                                style="margin-right: 2px"
+                                to="#"
+                                class="btn btn-warning btn-sm action-btn"
+                                role="button"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                title="Archive Case"
+                                >Archive</router-link>
                             </div>
                           </div>
                         </div>
