@@ -35,7 +35,7 @@
                 <label for="">Case</label>
                 <Dropdown v-model="petition_hearing_event.petition_id" 
                 
-                :options=2"petitions" 
+                :options="petitions" 
                 optionLabel="case_no" 
                 class="form-control"
                 optionValue="id" 
