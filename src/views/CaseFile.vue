@@ -8,105 +8,123 @@
           <div class="row">
             <!-- search filters -->
             <div class="col-md-12 col-12">
-               
               <Transition name="fade">
-              <form v-if="showSearchForm"  class="row mb-2">
-                <div hidden class="col-lg-2 col-md-2 col-sm-12">
-                  <label for="">Date</label>
-                  <datepicker                     
-                    :enableTimePicker="false"
-                    autoApply   
-                    format="dd/MM/yyyy"   
-                    id="date"            
-                    type="date"                     
-                    v-model="filters.institution_date"
-                    class=""
+                <form v-if="showSearchForm" class="row mb-2">
+                  <div hidden class="col-lg-2 col-md-2 col-sm-12">
+                    <label for="">Date</label>
+                    <datepicker
+                      :enableTimePicker="false"
+                      autoApply
+                      format="dd/MM/yyyy"
+                      id="date"
+                      type="date"
+                      v-model="filters.institution_date"
+                      class=""
                     >
-                     </datepicker>                  
-                </div>
-                <div class="col-lg-2 col-md-2 col-sm-12">
-                  <label for="">Case #</label>
-                  <input
-                    type="text"
-                    id="Case"
-                    v-model="filters.case_no"
-                    class="form-control form-control-sm"
-                    
-                    aria-describedby="Case"
-                  />
-                </div>
-                 <div class="col-lg-2 col-md-2 col-sm-12">
-                  <label for="">Year</label>
-                  <input
-                    type="text"
-                    id="year"
-                    v-model="filters.year"
-                    class="form-control form-control-sm"
-                    
-                    aria-describedby="year"
-                  />
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-12">
-                  <label for="">Court</label>
-                  <select
-                    class="form-control form-control-sm"
-                    v-model="filters.court_id"
-                  >
-                    <option value="">--All--</option>
-
-                    <option
-                      v-for="court in courts"
-                      :key="court.id"
-                      :value="court.id"
+                    </datepicker>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-12">
+                    <label for="">Case #</label>
+                    <input
+                      type="text"
+                      id="Case"
+                      v-model="filters.case_no"
+                      class="form-control form-control-sm"
+                      aria-describedby="Case"
+                    />
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-12">
+                    <label for="">Year</label>
+                    <input
+                      type="text"
+                      id="year"
+                      v-model="filters.year"
+                      class="form-control form-control-sm"
+                      aria-describedby="year"
+                    />
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-12">
+                    <label for="">Court</label>
+                    <select
+                      class="form-control form-control-sm"
+                      v-model="filters.court_id"
                     >
-                      {{ court.title }}
-                    </option>
-                  </select>
-                </div>
-                <div class="col-lg-2 col-md-2 col-sm-12">
-                  <label for="">Client Name</label>
-                  <input
-                    
-                    v-model="filters.petitioner_name"
-                    type="text"
-                    id="ClientName"
-                    class="form-control form-control-sm"
-                    aria-describedby="ClientName"
-                  />
-                </div>
+                      <option value="">--All--</option>
 
-                <div class="col-lg-1 col-md-1 col-sm-12">                  
-                  <button
-                    type="button"
-                    class="btn btn-danger btn-sm mt-lg-4 mt-md-4 mt"
-                    @click="reset()"
-                  >
-                    Reset
-                  </button>
-                </div>
-              </form>
+                      <option
+                        v-for="court in courts"
+                        :key="court.id"
+                        :value="court.id"
+                      >
+                        {{ court.title }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-12">
+                    <label for="">Client Name</label>
+                    <input
+                      v-model="filters.petitioner_name"
+                      type="text"
+                      id="ClientName"
+                      class="form-control form-control-sm"
+                      aria-describedby="ClientName"
+                    />
+                  </div>
+
+                  <div class="col-lg-1 col-md-1 col-sm-12">
+                    <button
+                      type="button"
+                      class="btn btn-danger btn-sm mt-lg-4 mt-md-4 mt"
+                      @click="reset()"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </form>
               </Transition>
             </div>
             <!-- search filters -->
             <div class="col-lg-12 col-md-12 col-sm-12">
               <router-link
                 v-if="this.user.is_admin"
-                style="margin-right:2px"
+                style="margin-right: 2px"
                 class="btn btn-success btn-sm"
                 :to="'/petitions/create'"
                 >New Case</router-link
               >
+
+              <button
+                class="btn btn-secondary btn-sm"
+                style="margin-right: 2px"
+                v-if="showSearchForm"
+                @click="showSearchForm = !showSearchForm"
+              >
+                Hide Filters
+              </button>
+              <button
+                class="btn btn-warning btn-sm"
+                style="margin-right: 2px"
+                v-else-if="!showSearchForm"
+                @click="showSearchForm = !showSearchForm"
+              >
+                Show Filters
+              </button>
               
+              <button
+                class="btn btn-warning btn-sm"
+                style="margin-right: 2px"
+                @click="filters.archived = !filters.archived;"
+                
+              >
+              {{filters.archived?'New Cases':'Archived Cases'}}
+                
+              </button>
               
-                <button class="btn btn-secondary btn-sm " v-if="showSearchForm" @click="showSearchForm=!showSearchForm" >Hide Filters</button>
-                <button class="btn btn-warning btn-sm" v-else-if="!showSearchForm" @click="showSearchForm=!showSearchForm;">Show Filters</button>
-              
-          
+
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 mt-2">
               <div v-if="isLoaded" class="row">
                 <div
-                  
                   class="
                     col-sm-12 col-md-3 col-lg-3 col-12
                     d-flex
@@ -118,11 +136,13 @@
                   <div
                     class="card listing-cards shadow-sm mb-4"
                     style="width: 100%"
-                    @click="goToDetails(petition.id)"
+                    
                   >
-                    <div class="card-body">
+                    <div class="card-body" @click="goToDetails(petition.id)">
                       <div class="row">
-                        <h6 class="card-title">{{ petition.case_no }}-{{petition.year}}</h6>
+                        <h6 class="card-title">
+                          {{ petition.case_no }}-{{ petition.year }}
+                        </h6>
                         <div class="col-md-5 col-5 col-sm-5">
                           <p class="card-text">
                             {{ petition.institution_date }}
@@ -142,7 +162,12 @@
                                 : ""
                             }}
                           </p>
-                          <div class="mt-auto">
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-footer">
+                      <div class="mt-auto">
                             <div class="pull-right">
                               <router-link
                                 style="margin-right: 2px"
@@ -179,20 +204,17 @@
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
                                 title="Alert"
-                                >Alert</router-link>
-                              <router-link
+                                >Alert</router-link
+                              >
+                              <button
+                                @click="toggleArchiveStatus(petition)"
                                 style="margin-right: 2px"
-                                to="#"
                                 class="btn btn-warning btn-sm action-btn"
-                                role="button"
-                                data-bs-toggle="tooltip"
-                                data-bs-placement="top"
                                 title="Archive Case"
-                                >Archive</router-link>
+                                >{{!petition.archived?"Archive":"Unarchive"}}</button
+                              >
                             </div>
                           </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -201,9 +223,9 @@
                 </div>
               </div>
               <div v-if="!isLoaded" class="col-md-12">
-                  <p class="alert alert-warning">Loading....</p>
-                </div>  
-            </div>                  
+                <p class="alert alert-warning">Loading....</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -220,7 +242,7 @@ import { mapState } from "vuex";
 
 export default {
   components: {
-    PageHeader,    
+    PageHeader,
   },
   name: "CaseFile",
   data() {
@@ -231,8 +253,9 @@ export default {
         court_id: "",
       },
       courts: [],
-      showSearchForm: true,    
-      isLoaded:false     
+      
+      showSearchForm: true,
+      isLoaded: false,
     };
   },
   created() {
@@ -257,25 +280,51 @@ export default {
       this.$router.push({ path: "/petitions/" + petition_id });
     },
     async getCaseFiles() {
-      this.isLoaded =false;
+      this.isLoaded = false;
       let url = this.base_url + "/api/petitions";
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-      };      
+      };
       await axios
         .get(url, {
           headers,
           params: this.filters,
         })
         .then((response) => {
-          this.petitions = response.data.petitions;                  
-          console.log(this.petitions); 
-          this.isLoaded=true;          
+          this.petitions = response.data.petitions;
+          console.log(this.petitions);
+          this.isLoaded = true;
         })
         .catch((error) => {
           console.log(error);
         });
     },
+
+    toggleArchiveStatus(petition) {
+      let url = this.base_url + "/api/petitions/toggle_archived";
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+
+      axios
+        .post(
+          url,
+          {
+            petition_id: petition.id,
+            archived: !petition.archived,
+          },
+          {
+            headers,
+          }
+        )
+        .then((response) => {
+          this.getCaseFiles();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     reset() {
       this.filters = {};
       this.getCaseFiles();
@@ -297,5 +346,5 @@ export default {
 };
 </script>
 
-<style> 
+<style>
 </style>
