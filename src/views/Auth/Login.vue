@@ -55,9 +55,9 @@
                 </button>
               </div>
               <div class="col-md-12 col-sm-12">
-                <router-link to="/forgot-password">
-                  Forgotten password?
-                </router-link>
+                <a href="http://localhost:8000/password/reset">
+                  Forgot Password?
+                </a>
               </div>
             </form>
           </div>
