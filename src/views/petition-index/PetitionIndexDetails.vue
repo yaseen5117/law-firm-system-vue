@@ -303,7 +303,9 @@
       data-bs-toggle="tooltip"
                       data-bs-placement="right"
                       title="Page#"
-       class="btn btn-sm btn-primary" @click="showPageNumbers()"><i class="fa fa-expand" aria-hidden="true"></i></button>
+       class="btn btn-sm btn-primary" @click="showPageNumbers()">
+          <i class="" :class="isShowPageNumOnMobile?'fa fa-plus':'fa fa-minus'"></i>
+       </button>
     </div>
     <div       
       v-show="!horizontalView && !editView"       
