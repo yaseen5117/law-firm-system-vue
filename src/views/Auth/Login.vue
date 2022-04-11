@@ -55,7 +55,7 @@
                 </button>
               </div>
               <div class="col-md-12 col-sm-12">
-                <a href="http://localhost:8000/password/reset">
+                <a href="https://elawfirmpk.com/password/reset">
                   Forgot Password?
                 </a>
               </div>
