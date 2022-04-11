@@ -13,8 +13,7 @@
                   <th width="10%">Actions</th>                   
                 </thead>
                 <tbody>
-                  <tr
-                    @dblclick="petition_type.editMode = false"
+                  <tr                    
                     v-for="(petition_type, row_index) in petition_types"
                     :key="petition_type.id"
                   >                      

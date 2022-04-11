@@ -76,8 +76,7 @@
                   <th width="10%">Actions</th>
                 </thead>
                 <tbody>
-                  <tr
-                    @dblclick="opinion.editMode = false"
+                  <tr                     
                     v-for="(opinion, opinionIndex) in opinions"
                     :key="opinion.id"
                   >

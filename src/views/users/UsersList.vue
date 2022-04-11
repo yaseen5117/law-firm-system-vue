@@ -98,8 +98,7 @@
                   <th width="20%">Actions</th>
                 </thead>
                 <tbody>
-                  <tr
-                    @dblclick="user.editMode = false"
+                  <tr                   
                     v-for="(user, userIndex) in users"
                     :key="user.id"
                   >

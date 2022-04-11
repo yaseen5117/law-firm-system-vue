@@ -148,8 +148,7 @@
                         <th>Actions</th>
                       </thead>
                       <tbody>
-                        <tr
-                          @dblclick="attachment.editMode = false"
+                        <tr                          
                           v-for="(
                             attachment, attachmentIndex
                           ) in index_detail_data.attachments"

@@ -15,8 +15,7 @@
                 <th width=10%>Actions</th>
               </thead>
               <tbody>
-                <tr
-                  @dblclick="petition_reply_parent.editMode = false"
+                <tr                  
                   v-for="(petition_reply_parent , petitionReplyParentIndex) in petition_reply_parents"
                   :key="petition_reply_parent.id"
                 >                   

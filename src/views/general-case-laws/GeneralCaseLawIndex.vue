@@ -62,8 +62,7 @@
                   <th width="10%">Actions</th>                   
                 </thead>
                 <tbody>
-                  <tr
-                    @dblclick="general_case_law.editMode = false"
+                  <tr                    
                     v-for="(general_case_law, row_index) in general_case_laws"
                     :key="general_case_law.id"
                   >

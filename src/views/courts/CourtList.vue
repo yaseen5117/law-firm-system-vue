@@ -13,8 +13,7 @@
                   <th width="10%">Actions</th>                   
                 </thead>
                 <tbody>
-                  <tr
-                    @dblclick="court.editMode = false"
+                  <tr                    
                     v-for="(court, row_index) in courts"
                     :key="court.id"
                   >                      
