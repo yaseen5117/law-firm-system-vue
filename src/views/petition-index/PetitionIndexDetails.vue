@@ -157,8 +157,7 @@
                         <th>Actions</th>
                       </thead>
                       <tbody>
-                        <tr
-                          @dblclick="attachment.editMode = false"
+                        <tr                           
                           v-for="(
                             attachment, attachmentIndex
                           ) in petition_index_details.attachments"

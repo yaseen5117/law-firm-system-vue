@@ -144,8 +144,7 @@
                       <th>Actions</th>
                     </thead>
                     <tbody>
-                      <tr
-                        @dblclick="attachment.editMode = false"                         
+                      <tr                                          
                         v-for="(attachment , attachmentReplyIndex) in petition_reply_details.attachments"
                         :key="attachment"
                       >

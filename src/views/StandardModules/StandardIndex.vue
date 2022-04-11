@@ -18,8 +18,7 @@
                   <th :class="ShowOnOralArgument ? '' : 'display'">Image Upload</th>
                 </thead>
                 <tbody>
-                  <tr
-                    @dblclick="index_data_single.editMode = false"
+                  <tr                  
                     v-for="(index_data_single, row_index) in index_data"
                     :key="index_data_single.id"
                   >
