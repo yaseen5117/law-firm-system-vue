@@ -1570,7 +1570,7 @@ section {
   color: red;
 }
 .error-boarder {
-  border: 1px solid red;
+  border: 1px solid red !important;
 }
 @media only screen and (max-width: 768px) {
   .mt {
