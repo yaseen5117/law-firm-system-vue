@@ -1,4 +1,5 @@
 <template>
+<BlockUI :blocked="blockPanel" :fullScreen="true" :autoZIndex="true" :baseZIndex="99999">
   <main id="main">
     <!-- ======= Breadcrumbs ======= -->
     <page-header
@@ -8,12 +9,13 @@
     />
     <!-- End Breadcrumbs -->
     <section
+    
       id="services"
       class="services section-bg"
       :class="removePageHeader ? 'margintop85' : ''"
     >
       <nav-components activeNavPill="petition" :petition_id="petition.id" />
-      <div class="container mt-4" data-aos="fade-up">
+      <div  class="container mt-4" data-aos="fade-up">
         <div class="row mb-2">
           <div class="col-12 mb-1">
             <div class="form-check form-switch">
@@ -89,24 +91,21 @@
                 :key="attachment"
                 :id="'image-container-' + (index_attachment+1)"
               >
-                <div class="col-12">
-                  <Image
+                <div class="col-12" @scroll="testScroll()">
+                  <img
                     v-if="attachment.mime_type != 'application/pdf'"
                     :class="activePage == (index_attachment+1) ? 'active-img' : ''"
-                    imageClass="img-fluid"
-                    imageStyle="width: 90%"
-                    :preview="true"
+                    class="img-fluid"
+                    style="width: 90%"
                     :src="
                       this.base_url +
-                      '/storage/attachments/' +
+                      '/storage/attachments/' 
+                      +                     
                       this.$route.params.id +
                       '/' +
                       attachment.file_name
                     "
-                    :alt="attachment.file_name"
-                  >
-                    <template #indicator> Preview Content </template>
-                  </Image>
+                  />    
 
                   <a
                     :class="activePage == attachment.id ? 'active-img' : ''"
@@ -354,6 +353,7 @@
     </div>
   </main>
   <!-- End #main -->
+</BlockUI>
 </template>
 
 <script>
@@ -376,6 +376,8 @@ export default {
   },
   data() {
     return {
+      next_index_id: null,
+      previous_index_id: null,
       visibleLeft: false,
       showImgCard: false,
       editView: false,
@@ -391,10 +393,31 @@ export default {
       selectedAllToDelete: false,
       showDeleteBtn: false,
       isShowPageNumOnMobile: true,         
+      blockPanel: false,
     };
   },
   created() {
     this.getCaseDetails();
+
+    
+  },
+  mounted() {
+    const myDiv = document.getElementById('services');
+    console.log("myddiv",myDiv); 
+    /* window.addEventListener('scroll', (e) => {  
+        if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight) {
+          this.$router.push({ path: "/petition-index-details/"+this.previous_index_id });
+        }   
+    }) */
+   /*  window.addEventListener('scroll', (e) => {  
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+          //this.$router.push({ path: "/petition-index-details/"+this.next_index_id });
+          this.id = this.next_index_id;
+          this.getCaseDetails();
+        }   
+    }) */
+
+    
   },
   methods: {
     scrollIntoView(id) {
@@ -405,25 +428,33 @@ export default {
       const yOffset = -200;
       const element = document.getElementById("image-container-" + id);
       const y =
-        element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
       //document.getElementById("image-container-" + id).style.border="solid 1px red"
       this.activePage = id;
     },
     async getCaseDetails() {
+      this.blockPanel = false;
+      
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
       await axios
         .get(this.base_url + "/api/petitions_index/" + this.id, { headers })
         .then((response) => {
+          this.blockPanel = false;
+          
           this.petition_index_details = response.data.petition_index;
           this.petition = response.data.petition;
+          this.next_index_id = response.data.next_index_id;
+          this.previous_index_id = response.data.previous_index_id;
+          
 
           this.getPetitionAnnexure(response.data.petition.id);
         })
         .catch((error) => {
           console.log(error);
+          this.blockPanel = false;
         });
     },
 
@@ -434,6 +465,7 @@ export default {
       await axios
         .get(this.base_url + "/api/petitions/" + petition_id, { headers })
         .then((response) => {
+          this.blockPanel =false
           this.petition_index = response.data.petition_details;
           var arr = [];
           this.petition_index.forEach((element) => {
@@ -582,6 +614,9 @@ export default {
     showPageNumbers(){               
       this.isShowPageNumOnMobile = !this.isShowPageNumOnMobile;
     },
+    testScroll(){
+      alert("vue scroll");
+    }
   },
 };
 </script>
