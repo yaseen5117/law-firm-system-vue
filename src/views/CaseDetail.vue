@@ -1,4 +1,5 @@
 <template>
+
   <main id="main">
     <page-header title="Petition" />
     <nav-components activeNavPill = 'petition' :petition_id="petition.id"  />

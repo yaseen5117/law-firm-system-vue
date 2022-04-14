@@ -58,6 +58,9 @@
                 <a href="https://elawfirmpk.com/password/reset">
                   Forgot Password?
                 </a>
+                <a class="d-block" href="https://elawfirmpk.com/sign-up">
+                  Register your account
+                </a>
               </div>
             </form>
           </div>

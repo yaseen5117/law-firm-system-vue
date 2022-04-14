@@ -17,6 +17,10 @@ import AutoComplete from "primevue/autocomplete";
 import Calendar from "primevue/calendar";
 import Dropdown from 'primevue/dropdown';
 import Image from 'primevue/image';
+import BlockUI from 'primevue/blockui';
+import Sidebar from 'primevue/sidebar';
+
+
 
 
 
@@ -30,7 +34,9 @@ createApp(App).use(store).use(router).use(PrimeVue).use(Notifications)
 .component('Image',Image)
 .component('Dropdown',Dropdown)
 .component('datepicker',Datepicker)
+.component('BlockUI',BlockUI)
 .component('InputMask',InputMask)
 .component('Calendar',Calendar)
+.component('Sidebar',Sidebar)
 .mount('#app')
 
