@@ -1426,7 +1426,7 @@ section {
   text-decoration: none;
 }
 .border{
-	border:2px solid #dbdbdb;
+	border:1px solid #4638c778!important;
 }
 
 .cursor-pointer{
@@ -1620,7 +1620,11 @@ h2 span {
 /* CSS for Delete check box */
 
 /* Searchable drop height */
+/* Searchable drop height */
 .drop-down-height{
   height: 2.8rem;
 }
-/* Searchable drop height */
+.sidebarswitch{
+  position: fixed;
+  top: 50%;
+}

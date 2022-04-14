@@ -1,4 +1,5 @@
 <template>
+<BlockUI :blocked="!isLoaded" :fullScreen="true">
   <div class="case_file">
     <main id="main">
       <page-header title="Case Files" />
@@ -233,6 +234,7 @@
     </main>
     <!-- End #main -->
   </div>
+</BlockUI>
 </template>
 
 <script>

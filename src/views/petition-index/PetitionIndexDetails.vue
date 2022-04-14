@@ -30,6 +30,8 @@
             </div>
           </div>
           <div v-if="!removePageHeader" class="col-12">
+            
+
             <button
               v-show="!showImgCard"
               @click="showImgCard = true"
@@ -307,9 +309,12 @@
           <i class="" :class="isShowPageNumOnMobile?'fa fa-plus':'fa fa-minus'"></i>
        </button>
     </div>
-    <div       
+    
+
+    <Sidebar v-model:visible="visibleLeft" class="p-sidebar-sm" :dismissable="false" :modal="false">
+      <div       
       v-show="!horizontalView && !editView"       
-      :class="isShowPageNumOnMobile ? 'd-none d-md-block fixed-page-numbers' : 'fixed-page-numbers-mobile'" 
+      
     >
       <ul class="list-group">
         <li
@@ -323,6 +328,11 @@
           {{ index_attachment+1 }}
         </li>
       </ul>
+    </div>
+    </Sidebar>
+    
+    <div class="sidebarswitch">
+      <button v-tooltip="'Show Page Numbers'" class="btn btn-primary" @click="visibleLeft = true" ><i class="pi pi-arrow-right"></i></button>
     </div>
 
     <div class="fixed-annexsures" @show="!editView">
@@ -366,6 +376,7 @@ export default {
   },
   data() {
     return {
+      visibleLeft: false,
       showImgCard: false,
       editView: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
@@ -576,4 +587,7 @@ export default {
 </script>
 
 <style>
+.p-sidebar-sm{
+  width: 6rem!important;
+}
 </style>
