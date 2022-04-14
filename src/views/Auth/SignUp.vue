@@ -28,6 +28,54 @@
                     >
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    
+                    <label>CNIC<span style="color: red">*</span></label>
+                    <InputMask
+                      class="form-control"
+                      v-model="user.cnic"
+                      mask="99999-9999999-9"
+                      placeholder="00000-0000000-0"
+                      v-bind:class="{
+                        'error-boarder': v$.user.cnic.$error,
+                      }"
+                      @blur="v$.user.cnic.$touch"
+                    />                                    
+                    <span v-if="v$.user.cnic.$error" class="errorMessage"
+                      >CNIC field is required.</span
+                    >
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <label>Role <span style="color: red">*</span></label>
+                    <select 
+                    class="form-control" 
+                    v-model="user.role_name"
+                    @blur="v$.user.role_name.$touch"
+                    v-bind:class="{
+                      'error-boarder': v$.user.role_name.$error,
+                    }"                    
+                    >
+                      <option value="">--Select--</option>
+
+                      <option
+                        v-for="role in roles"
+                        :key="role.name"
+                        :value="role.name"                         
+                      >
+                        {{ role.name }}
+                      </option>
+                    </select>
+                    <span
+                      v-if="v$.user.role_name.$error"
+                      class="errorMessage"
+                      >Role field is required.</span
+                    >
+                  </div>
+                </div>
+
                 <div class="row mt-2">
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Email<span style="color: red">*</span></label>
@@ -139,10 +187,18 @@ export default {
         password: "",
         confirm_password: "",
         phone: "",
+        cnic: "",
+        role_name: "",
       },
       msgAfterSignUp: "",    
       error_email: "",   
       saving: false,
+      roles: [
+        {name: "PARTNER"},
+        {name: "ASSOCIATE"},        
+        {name: "PARALEGAL"},        
+        {name: "CLIENT"},
+      ],
     };
   },
   validations() {
@@ -154,7 +210,8 @@ export default {
         confirm_password: {
             sameAs: sameAs(this.user.password),         
         },
-        phone: { required },        
+        cnic: { required },    
+        role_name: {required},
       },
     };
   },
@@ -168,16 +225,11 @@ export default {
       this.v$.$validate();
       if (!this.v$.$error) {
         event.preventDefault();
-        this.saving = true;
-        var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        this.saving = true;         
 
         axios
-          .post(this.base_url + "/api/signup", this.user, {
-            headers,
-          })
+          .post(this.base_url + "/api/signup", this.user      
+          )
           .then(
             (response) => {
               if (response.status === 200) {
