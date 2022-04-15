@@ -1,5 +1,5 @@
 <template>
-<BlockUI :blocked="blockPanel" :fullScreen="true" :autoZIndex="true" :baseZIndex="99999">
+
   <main id="main">
     <!-- ======= Breadcrumbs ======= -->
     <page-header
@@ -15,6 +15,7 @@
       :class="removePageHeader ? 'margintop85' : ''"
     >
       <nav-components activeNavPill="petition" :petition_id="petition.id" />
+      
       <div  class="container mt-4" data-aos="fade-up">
         <div class="row mb-2">
           <div class="col-12 mb-1">
@@ -91,7 +92,7 @@
                 :key="attachment"
                 :id="'image-container-' + (index_attachment+1)"
               >
-                <div class="col-12" @scroll="testScroll()">
+                <div class="col-12" >
                   <img
                     v-if="attachment.mime_type != 'application/pdf'"
                     :class="activePage == (index_attachment+1) ? 'active-img' : ''"
@@ -125,6 +126,20 @@
                   <hr class="mt-4 mb-4" style="border: solid 3px" />
                 </div>
               </div>
+            </div>
+            <div class="row" >
+                  <div class="col-lg-12 col-md-12 col-sm-12 ">
+                      <router-link
+                        
+                        
+                        class="btn btn-success w-50 float-right"
+                        :to="{
+                          name: 'petition-index-details',
+                          params: { id: next_index_id },
+                        }"
+                        >Next</router-link
+                      >
+                  </div>
             </div>
 
             <div v-show="editView">
@@ -298,6 +313,7 @@
           </div>
         </div>
       </div>
+      
     </section>
     <div class="fixed-eye-icon d-lg-none d-lg-block d-md-none d-md-block">
       <button 
@@ -353,7 +369,7 @@
     </div>
   </main>
   <!-- End #main -->
-</BlockUI>
+
 </template>
 
 <script>
@@ -409,11 +425,14 @@ export default {
           this.$router.push({ path: "/petition-index-details/"+this.previous_index_id });
         }   
     }) */
-   /*  window.addEventListener('scroll', (e) => {  
+    /* window.addEventListener('scroll', (e) => {  
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
           //this.$router.push({ path: "/petition-index-details/"+this.next_index_id });
           this.id = this.next_index_id;
           this.getCaseDetails();
+          const yOffset = -200;
+         
+          
         }   
     }) */
 
@@ -434,7 +453,7 @@ export default {
       this.activePage = id;
     },
     async getCaseDetails() {
-      this.blockPanel = false;
+      this.blockPanel = true;
       
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
@@ -449,7 +468,7 @@ export default {
           this.next_index_id = response.data.next_index_id;
           this.previous_index_id = response.data.previous_index_id;
           
-
+          window.scrollTo({ top: 200, behavior: "smooth" });
           this.getPetitionAnnexure(response.data.petition.id);
         })
         .catch((error) => {

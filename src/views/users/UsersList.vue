@@ -1,4 +1,5 @@
 <template>
+<BlockUI :blocked="blockPanel" :fullScreen="true" :autoZIndex="true" :baseZIndex="99999">
   <main id="main">
     <page-header title="Users" />
 
@@ -212,6 +213,7 @@
     <!-- End Services Section -->
   </main>
   <!-- End #main -->
+</BlockUI>
 </template>
 
 <script>
@@ -229,6 +231,7 @@ export default {
       roles: [],
       id: this.$route.params.id, //this is the id from the browser
       new_petition_index: {},
+      blockPanel: true,
       showSearchForm: true,
       filters: {
         role_id: "",
@@ -245,6 +248,7 @@ export default {
     },
 
     getUsers() {
+      this.blockPanel = true;
       let url = this.base_url + "/api/users";
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
@@ -255,6 +259,7 @@ export default {
           params: this.filters,
         })
         .then((response) => {
+          this.blockPanel = false;
           this.users = response.data.users;
           this.roles = response.data.roles;
         })

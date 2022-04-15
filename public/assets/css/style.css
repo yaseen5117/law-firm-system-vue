@@ -117,7 +117,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.5s;
   z-index: 997;
   padding: 20px 0;
-  background: rgba(24, 6, 185, 0.8);
+  background: rgb(143 58 48);
 }
 #header.header-scrolled, #header.header-inner-pages {
   background: rgba(24, 6, 185, 0.8);
@@ -133,7 +133,7 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
 }
 #header .logo a {
-  color: #fff;
+  color: #f3be32;
 }
 #header .logo img {
   max-height: 40px;
@@ -169,7 +169,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Poppins", sans-serif;
   font-size: 15px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
+  color: #f3be32;
   white-space: nowrap;
   transition: 0.3s;
   position: relative;
@@ -380,7 +380,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 52px;
   font-weight: 700;
   line-height: 64px;
-  color: rgb(0, 0, 0);
+  color: rgb(143 58 48);
 }
 #hero h2 {
   color: rgba(255, 255, 255, 0.8);
@@ -397,11 +397,11 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 5px;
   transition: 0.5s;
   margin-top: 30px;
-  color: rgb(0, 0, 0);
-  border: 2px solid rgb(0, 0, 0);
+  color: rgb(143 58 48)  ;
+  border: 2px solid rgb(143 58 48);
 }
 #hero .btn-get-started:hover {
-  background: rgb(0, 0, 0);
+  background: rgb(143 58 48);
   color: #ffffff;
 }
 #hero .animated {
