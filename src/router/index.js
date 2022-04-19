@@ -36,6 +36,8 @@ import GeneralCaseLawIndex from '../views/general-case-laws/GeneralCaseLawIndex'
 
 import CourtList from '../views/courts/CourtList'
 
+import ContactRequestList from '../views/contact-requests/ContactRequestList'
+
 import PetitionTypes from '../views/petition-types/PetitionTypesList'
 
 import ForgotPassword from '../views/Auth/ForgotPassword'
@@ -252,6 +254,17 @@ const routes = [
   },
 }, 
 //////////////// COURTS /////////////
+
+//////////////// CONTACT REQUEST /////////////
+{
+  path: '/contact-requests',
+  name: 'contact-requests',    
+  component: ContactRequestList,
+  meta: { 
+    auth: true ,
+  },
+}, 
+//////////////// CONTACT REQUEST /////////////
 
 //////////////// PETITION TYPES /////////////
 {
