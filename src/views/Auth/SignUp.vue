@@ -36,7 +36,7 @@
                       class="form-control"
                       v-model="user.cnic"
                       mask="99999-9999999-9"
-                      placeholder="00000-0000000-0"
+                      placeholder="xxxxx-xxxxxxx-x"
                       v-bind:class="{
                         'error-boarder': v$.user.cnic.$error,
                       }"
