@@ -131,8 +131,8 @@
                   <div class="col-lg-12 col-md-12 col-sm-12 ">
                       <router-link
                         
-                        
-                        class="btn btn-success w-50 float-right"
+                        style="float: right;"
+                        class="btn btn-success float-right"
                         :to="{
                           name: 'petition-index-details',
                           params: { id: next_index_id },
@@ -424,17 +424,17 @@ export default {
         if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight) {
           this.$router.push({ path: "/petition-index-details/"+this.previous_index_id });
         }   
-    }) */
+    })  */
     /* window.addEventListener('scroll', (e) => {  
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-          //this.$router.push({ path: "/petition-index-details/"+this.next_index_id });
-          this.id = this.next_index_id;
-          this.getCaseDetails();
-          const yOffset = -200;
+        if ((window.innerHeight + window.scrollY) == document.body.offsetHeight) {
+          this.$router.push({ path: "/petition-index-details/"+this.next_index_id });
+          //this.id = this.next_index_id;
+          //this.getCaseDetails();
+          //const yOffset = -200;
          
           
         }   
-    }) */
+    })  */
 
     
   },
@@ -461,7 +461,7 @@ export default {
       await axios
         .get(this.base_url + "/api/petitions_index/" + this.id, { headers })
         .then((response) => {
-          this.blockPanel = false;
+          
           
           this.petition_index_details = response.data.petition_index;
           this.petition = response.data.petition;
@@ -473,7 +473,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.blockPanel = false;
+          
         });
     },
 

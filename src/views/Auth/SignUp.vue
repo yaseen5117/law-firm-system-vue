@@ -36,7 +36,7 @@
                       class="form-control"
                       v-model="user.cnic"
                       mask="99999-9999999-9"
-                      placeholder="00000-0000000-0"
+                      placeholder="xxxxx-xxxxxxx-x"
                       v-bind:class="{
                         'error-boarder': v$.user.cnic.$error,
                       }"
@@ -49,7 +49,7 @@
                 </div>
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Role <span style="color: red">*</span></label>
+                    <label>Status <span style="color: red">*</span></label>
                     <select 
                     class="form-control" 
                     v-model="user.role_name"
