@@ -132,7 +132,7 @@
                       <router-link
                         
                         style="float: right;"
-                        class="btn btn-success w-50 float-right"
+                        class="btn btn-success float-right"
                         :to="{
                           name: 'petition-index-details',
                           params: { id: next_index_id },
