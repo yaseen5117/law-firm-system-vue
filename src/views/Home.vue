@@ -97,23 +97,23 @@
           <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column align-items-lg-center">
             <div class="icon-box mt-5 mt-lg-0" data-aos="fade-up" data-aos-delay="100">
               <i class="bx bx-receipt"></i>
-              <h4>Archive of Case Files</h4>
-              <!-- <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p> -->
+              <h4>Case File View</h4>
+                <p>You can view all your case files online - and from anywhere.</p>
             </div>
             <div class="icon-box mt-5" data-aos="fade-up" data-aos-delay="200">
               <i class="bx bx-cube-alt"></i>
-              <h4>Dynamic Indexes Generation</h4>
-              <!-- <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p> -->
+              <h4>Court Calendar</h4>
+                <p>Keep track of all the dates of hearing.</p>
             </div>
             <div class="icon-box mt-5" data-aos="fade-up" data-aos-delay="300">
               <i class="bx bx-images"></i>
-              <h4>Easy Access to Index items</h4>
-              <!-- <p>Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut maiores omnis facere</p> -->
+              <h4>Case Law Library</h4>
+                <p>Organize and store all the case law which you read daily.</p> 
             </div>
             <div class="icon-box mt-5" data-aos="fade-up" data-aos-delay="400">
               <i class="bx bx-shield"></i>
-              <h4>Events Calendar</h4>
-              <!-- <p>Expedita veritatis consequuntur nihil tempore laudantium vitae denat pacta</p> -->
+              <h4>Auto-invoicing</h4>
+                <p>Use our Invoice-generator to generate professional invoices and keep a track of your firm's finances.</p>
             </div>
           </div>
           <div class="image col-lg-6 order-1 order-lg-2 " data-aos="zoom-in" data-aos-delay="100">
@@ -224,6 +224,8 @@
         <div class="section-title">
           <h2>Contact</h2>
           <p>Umer Ijaz Gilani <small>(Advocate High Courts)</small></p>
+          <p>Muhammed Alee Qureshi <small>(Advocate High Courts)</small></p>
+          
         </div>
 
         <div class="row">
@@ -231,7 +233,8 @@
             <div class="info-box mb-4">
               <i class="bx bx-map"></i>
               <h3>Our Address</h3>
-              <p>Office No. F-16, Afzal Center, Opposite Islamabad High Court، Islamabad 44000</p>
+              <p>Office No. 5, Saeed Plaza, I and T Center, G-10/1, Opposite Islamabad High Court</p>
+              
             </div>
           </div>
 
@@ -256,7 +259,7 @@
         <div class="row">
 
           <div class="col-lg-6 ">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3320.4985850154235!2d73.01338161520496!3d33.670151880711735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x8002693aa3eb051!2zMzPCsDQwJzEyLjYiTiA3M8KwMDAnNTYuMSJF!5e0!3m2!1sen!2s!4v1650019163750!5m2!1sen!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3320.4985850154235!2d73.01338161520496!3d33.670151880711735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x8002693aa3eb051!2zMzPCsDQwJzEyLjYiTiA3M8KwMDAnNTYuMSJF!5e0!3m2!1sen!2s!4v1650019163750!5m2!1sen!2s" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
 
           <div class="col-lg-6">
