@@ -94,7 +94,7 @@
                   <th>Name</th>
                   <th>Role</th>
                   <th>Email</th>
-                  <th>Status</th>
+                  <th width="15%">Status</th>
 
                   <th width="20%">Actions</th>
                 </thead>
