@@ -128,16 +128,29 @@
               </div>
             </div>
             <div class="row" >
-                  <div class="col-lg-12 col-md-12 col-sm-12 ">
+                  <div class="col-lg-12 col-md-12 col-sm-12 text-center">
                       <router-link
-                        
-                        style="float: right;"
-                        class="btn btn-success float-right"
+                      v-tooltip.top="'Previous'"
+                      style="margin-right:3px"
+                        v-if="previous_index_id"
+                        class="btn btn-success ml-3 mr-2"
+                        :to="{
+                          name: 'petition-index-details',
+                          params: { id: previous_index_id },
+                        }"
+                        ><i class="fa fa-angle-up fa-2x btn-round"></i></router-link
+                      >
+                      
+                      <router-link
+                        v-tooltip.top="'Next'"
+                        style="margin-right:3px"
+                        v-if="next_index_id"
+                        class="btn btn-success ml-3"
                         :to="{
                           name: 'petition-index-details',
                           params: { id: next_index_id },
                         }"
-                        >Next</router-link
+                        ><i class="fa fa-angle-down fa-2x btn-round"></i></router-link
                       >
                   </div>
             </div>
