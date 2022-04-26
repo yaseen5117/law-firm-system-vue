@@ -327,18 +327,7 @@
         </div>
       </div>
       
-    </section>
-    <div class="fixed-eye-icon d-lg-none d-lg-block d-md-none d-md-block">
-      <button 
-      data-bs-toggle="tooltip"
-                      data-bs-placement="right"
-                      title="Page#"
-       class="btn btn-sm btn-primary" @click="showPageNumbers()">
-          <i class="" :class="isShowPageNumOnMobile?'fa fa-plus':'fa fa-minus'"></i>
-       </button>
-    </div>
-    
-
+    </section> 
     <Sidebar v-model:visible="visibleLeft" class="p-sidebar-sm" :dismissable="false" :modal="false">
       <div       
       v-show="!horizontalView && !editView"       
