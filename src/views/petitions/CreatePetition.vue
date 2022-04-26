@@ -137,11 +137,15 @@
                           v-for="(petitioner, index) in petition.petitioners"
                           :key="petitioner"
                         >
-                          <input
+                        <AutoComplete                            
+                            delay="1"                       
+                            :suggestions="filteredClient"
+                            @complete="searchClient($event)"
+                            field="label"
                             placeholder="Name"
                             v-model="petitioner.user.name"
-                            class="form-control mb-2"
-                          />
+                            class="form-control mb-2"                            
+                          />                                                  
                           <div class="input-group-prepend">
                             <span
                               class="input-group-text cursor-pointer"
@@ -198,11 +202,15 @@
                           v-for="(opponent, index) in petition.opponents"
                           :key="opponent"
                         >
-                          <input
+                          <AutoComplete            
+                            delay="1"                   
+                            :suggestions="filteredClient"
+                            @complete="searchClient($event)"
+                            field="label"
                             placeholder="Name"
                             v-model="opponent.user.name"
                             class="form-control mb-2"
-                          />
+                          />                           
                           <div class="input-group-prepend">
                             <span
                               class="input-group-text cursor-pointer"
@@ -328,6 +336,8 @@ export default {
       lawyers: [],
       courts: [],
       petition_types: [],
+      filteredClient: null,
+      clients: [],    
     };
   },
   validations() {
@@ -341,7 +351,7 @@ export default {
     };
   },
   created() {
-    this.getUsers();
+    this.getClients();
     this.getCourts();
     this.getPetitionTypes();
     this.getPetition();
@@ -349,6 +359,18 @@ export default {
   },
   activated() {},
   methods: {
+    searchClient(event) {
+            setTimeout(() => {
+                if (!event.query.trim().length) {
+                    this.filteredClient = [this.clients];
+                }
+                else {
+                    this.filteredClient = this.clients.filter((country) => {
+                        return country.label.toLowerCase().startsWith(event.query.toLowerCase());
+                    });                     
+                }
+            }, 250);
+        },
     addMorePetitioner: function () {
       var new_petitioner = {
         user: {},
@@ -402,27 +424,14 @@ export default {
             }
           );
       }
-    },
-    searchCountry(event) {
-      setTimeout(() => {
-        if (!event.query.trim().length) {
-          this.filteredCountries = this.countries;
-        } else {
-          this.filteredCountries = this.countries.filter((country) => {
-            return country
-              .toLowerCase()
-              .startsWith(event.query.toLowerCase());
-          });
-        }
-      }, 250);
-    },
-    async getUsers() {
+    },   
+    async getClients() {
       let url = this.base_url + "/api/clients";
       await axios
         .get(url)
         .then((response) => {
-          this.clients = response.data.users;
-          console.log(this.users);
+          this.clients = response.data.clients;
+          console.log(this.clients);
         })
         .catch((error) => {
           console.log(error);
