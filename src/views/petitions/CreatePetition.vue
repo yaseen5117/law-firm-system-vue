@@ -37,21 +37,22 @@
                     <label
                       >Case Category <span style="color: red">*</span></label
                     >
-                    <Dropdown v-model="petition.petition_type_id"                  
-                      :options="petition_types" 
-                      optionLabel="title" 
+                    <Dropdown
+                      v-model="petition.petition_type_id"
+                      :options="petition_types"
+                      optionLabel="title"
                       class="form-control drop-down-height"
-                      optionValue="id" 
-                      placeholder="Select a Case" 
-                      :filter="true" 
-                      :showClear="true" 
-                      appendTo="self"  
-                      filterPlaceholder="Find by Case Title" 
+                      optionValue="id"
+                      placeholder="Select a Case"
+                      :filter="true"
+                      :showClear="true"
+                      appendTo="self"
+                      filterPlaceholder="Find by Case Title"
                       @blur="v$.petition.petition_type_id.$touch"
                       v-bind:class="{
                         'error-boarder': v$.petition.petition_type_id.$error,
-                      }"                       
-                      /> 
+                      }"
+                    />
                     <span
                       v-if="v$.petition.petition_type_id.$error"
                       class="errorMessage"
@@ -61,13 +62,13 @@
 
                   <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Court <span style="color: red">*</span></label>
-                    <select 
-                    class="form-control" 
-                    v-model="petition.court_id"
-                    @blur="v$.petition.court_id.$touch"
-                    v-bind:class="{
-                      'error-boarder': v$.petition.court_id.$error,
-                    }"                    
+                    <select
+                      class="form-control"
+                      v-model="petition.court_id"
+                      @blur="v$.petition.court_id.$touch"
+                      v-bind:class="{
+                        'error-boarder': v$.petition.court_id.$error,
+                      }"
                     >
                       <option value="">--Select--</option>
 
@@ -137,15 +138,15 @@
                           v-for="(petitioner, index) in petition.petitioners"
                           :key="petitioner"
                         >
-                        <AutoComplete                            
-                            delay="1"                       
+                          <AutoComplete
+                            delay="1"
                             :suggestions="filteredClient"
                             @complete="searchClient($event)"
                             field="label"
                             placeholder="Name"
                             v-model="petitioner.user.name"
-                            class="form-control mb-2"                            
-                          />                                                  
+                            class="form-control mb-2"
+                          />
                           <div class="input-group-prepend">
                             <span
                               class="input-group-text cursor-pointer"
@@ -202,15 +203,15 @@
                           v-for="(opponent, index) in petition.opponents"
                           :key="opponent"
                         >
-                          <AutoComplete            
-                            delay="1"                   
+                          <AutoComplete
+                            delay="1"
                             :suggestions="filteredClient"
                             @complete="searchClient($event)"
                             field="label"
                             placeholder="Name"
                             v-model="opponent.user.name"
                             class="form-control mb-2"
-                          />                           
+                          />
                           <div class="input-group-prepend">
                             <span
                               class="input-group-text cursor-pointer"
@@ -261,7 +262,6 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-12">
-                    
                     <label>Date Of Institution</label>
                     <br />
                     <InputMask
@@ -295,10 +295,8 @@ import useVuelidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
 import Multiselect from "@vueform/multiselect";
 
-
 export default {
   components: {
-    
     PageHeader,
     Multiselect,
   },
@@ -337,7 +335,7 @@ export default {
       courts: [],
       petition_types: [],
       filteredClient: null,
-      clients: [],    
+      clients: [],
     };
   },
   validations() {
@@ -360,17 +358,18 @@ export default {
   activated() {},
   methods: {
     searchClient(event) {
-            setTimeout(() => {
-                if (!event.query.trim().length) {
-                    this.filteredClient = [this.clients];
-                }
-                else {
-                    this.filteredClient = this.clients.filter((country) => {
-                        return country.label.toLowerCase().startsWith(event.query.toLowerCase());
-                    });                     
-                }
-            }, 250);
-        },
+      setTimeout(() => {
+        if (!event.query.trim().length) {
+          this.filteredClient = [this.clients];
+        } else {
+          this.filteredClient = this.clients.filter((country) => {
+            return country.label
+              .toLowerCase()
+              .startsWith(event.query.toLowerCase());
+          });
+        }
+      }, 250);
+    },
     addMorePetitioner: function () {
       var new_petitioner = {
         user: {},
@@ -424,7 +423,7 @@ export default {
             }
           );
       }
-    },   
+    },
     async getClients() {
       let url = this.base_url + "/api/clients";
       await axios
