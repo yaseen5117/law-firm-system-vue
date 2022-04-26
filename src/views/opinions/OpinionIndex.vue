@@ -188,7 +188,7 @@
                       </a>
                     </td>
                   </tr>
-                  <tr>
+                  <tr>                    
                     <td>                       
                       <Dropdown v-model="new_opinion.client_id"                       
                       :options="clients" 
@@ -317,9 +317,10 @@ export default {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
       axios
-        .get(this.base_url + "/api/clients", { headers })
-        .then((response) => {
-          this.clients = response.data.clients;
+        .get(this.base_url + "/api/client_users", { headers })
+        .then((response) => {          
+          this.clients = response.data.clients;    
+          console.log(this.clients);       
         })
         .catch((error) => {
           console.log(error);

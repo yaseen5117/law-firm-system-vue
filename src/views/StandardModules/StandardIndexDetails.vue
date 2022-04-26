@@ -25,7 +25,7 @@
                 id="flexSwitchCheckDefault"
               />
               <label class="form-check-label" for="flexSwitchCheckDefault"
-                >Toggle Header</label
+                >Show/Hide Header</label
               >
             </div>
           </div>

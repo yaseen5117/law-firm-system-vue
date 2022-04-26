@@ -41,7 +41,7 @@
             <ul>
               <li><i class="bi bi-check-circle"></i> It’s SIMPLE. We know that most lawyers are not techies.</li>
               <li><i class="bi bi-check-circle"></i> It's FAST.</li>
-              <li><i class="bi bi-check-circle"></i> It's CHEAP.</li>
+              <li><i class="bi bi-check-circle"></i> It's Affordable.</li>
               <li><i class="bi bi-check-circle"></i> It’s EVOLVING. We are constantly updating it.</li>
             </ul>
             <a href="#" class="read-more">Read More <i class="bi bi-long-arrow-right"></i></a>

@@ -13,7 +13,7 @@
                 v-if="showSearchForm"
                 class="row gy-2 gx-3 align-items-center"
               >
-                <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="col-lg-3 col-md-3 col-sm-6">
                   <input
                     type="text"
                     id="name"
@@ -23,8 +23,8 @@
                     aria-describedby="Name"
                   />
                 </div>
-
-                <div class="col-lg-4 col-md-4 col-sm-6">
+                 
+                <div class="col-lg-3 col-md-3 col-sm-6">
                   <input
                     placeholder="Email"
                     v-model="filters.email"
@@ -49,6 +49,24 @@
                       :value="role.id"
                     >
                       {{ role.name }}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-12">                 
+                  <select
+                    class="form-control form-control-sm"
+                    aria-describedby="Role"
+                    v-model="filters.is_approved"
+                  >
+                    <option value="">--Status--</option>
+
+                    <option
+                      class="text-capitalize"
+                      v-for="status in statuses"
+                      :key="status.id"
+                      :value="status.id"
+                    >
+                      {{ status.name }}
                     </option>
                   </select>
                 </div>
@@ -129,10 +147,12 @@
                       />
                       <span v-show="!user.editMode">{{ user.email }} </span>
                     </td>
-                    <td><button :class="
-                          user.is_approved ? 'btn-success' : 'btn-danger'
+                    <td><p :class="
+                          user.is_approved ? '' : ''
                         "
-                        class="btn btn-sm action-btn">{{user.is_approved?"Approved":"Pending Approval"}}</button></td>
+                        class="">{{user.is_approved?"Approved":"Pending Approval"}}
+                        </p>
+                    </td>
                     <td width="15%">
                       <button
                         :class="
@@ -235,7 +255,19 @@ export default {
       showSearchForm: true,
       filters: {
         role_id: "",
+        is_approved: "",
       },
+      statuses: 
+      [
+        {
+          id: 1,
+          name: 'Approved'
+        },
+        {
+          id: 0,
+          name: 'Pending'
+        }
+      ],
     };
   },
   created() {
@@ -344,6 +376,7 @@ export default {
     reset() {
       this.filters = {
         role_id: "",
+        is_approved: "",
       };
       this.getUsers();
     },

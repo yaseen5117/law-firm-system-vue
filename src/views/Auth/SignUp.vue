@@ -147,7 +147,7 @@
               </div>
 
               <div class="form-group">
-                <button :disabled="saving" class="btn btn-success btn-sm mt-2">Sign Up</button>
+                <button :disabled="saving" class="btn btn-danger btn-sm mt-2">Sign Up</button>
               </div>
             </form>
           </div>
