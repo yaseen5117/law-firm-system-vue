@@ -41,11 +41,9 @@
                       v-model="petition.petition_type_id"
                       :options="petition_types"
                       optionLabel="title"
-                      class="form-control drop-down-height"
                       optionValue="id"
                       placeholder="Select a Case"
                       :filter="true"
-                      :showClear="true"
                       appendTo="self"
                       filterPlaceholder="Find by Case Title"
                       @blur="v$.petition.petition_type_id.$touch"
@@ -141,7 +139,6 @@
                           <AutoComplete
                             delay="1"
                             :suggestions="filteredClient"
-                            :inputStyle="'width:100%;'"
                             @complete="searchClient($event)"
                             field="label"
                             placeholder="Name"
@@ -262,7 +259,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label>Date Of Institution</label>
+                    <label>Date of Institution</label>
                     <br />
                     <InputMask
                       v-model="petition.institution_date"
