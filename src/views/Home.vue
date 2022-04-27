@@ -44,7 +44,7 @@
               <li><i class="bi bi-check-circle"></i> It's Affordable.</li>
               <li><i class="bi bi-check-circle"></i> It’s EVOLVING. We are constantly updating it.</li>
             </ul>
-            <a href="#" class="read-more">Read More <i class="bi bi-long-arrow-right"></i></a>
+            <a href="javascript:void(0)" @click="scrollIntoView('features')" class="read-more">Read More <i class="bi bi-long-arrow-right"></i></a>
           </div>
         </div>
 
@@ -372,6 +372,14 @@ export default {
     };
   },
   methods: {
+      scrollIntoView(id) {
+      
+        const yOffset = -200;
+        const element = document.getElementById(id);
+        const y =
+          element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: "smooth" });       
+      },
       submitForm: function (event) {
       this.v$.$validate();
       if (!this.v$.$error) {
