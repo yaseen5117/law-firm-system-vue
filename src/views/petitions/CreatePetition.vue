@@ -41,11 +41,9 @@
                       v-model="petition.petition_type_id"
                       :options="petition_types"
                       optionLabel="title"
-                      class="form-control drop-down-height"
                       optionValue="id"
                       placeholder="Select a Case"
                       :filter="true"
-                      :showClear="true"
                       appendTo="self"
                       filterPlaceholder="Find by Case Title"
                       @blur="v$.petition.petition_type_id.$touch"
@@ -145,7 +143,7 @@
                             field="label"
                             placeholder="Name"
                             v-model="petitioner.user.name"
-                            class="form-control mb-2"
+                            
                           />
                           <div class="input-group-prepend">
                             <span
@@ -210,7 +208,6 @@
                             field="label"
                             placeholder="Name"
                             v-model="opponent.user.name"
-                            class="form-control mb-2"
                           />
                           <div class="input-group-prepend">
                             <span
@@ -257,7 +254,7 @@
                     />
                   </div>
                    <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label>Date Of Institution</label>
+                    <label>Date of Institution</label>
                     <br />
                     <InputMask
                       v-model="petition.institution_date"

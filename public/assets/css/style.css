@@ -1636,3 +1636,14 @@ h2 span {
 .btn-danger{
   background: rgb(143 58 48) !important;
 }
+.p-dropdown	{
+  width: 100%;
+  font-size: 1rem ;
+}
+.p-dropdown-panel	{
+  width: 100%;
+  font-size: 1rem ;
+}
+label{
+  font-weight: bold;
+}
