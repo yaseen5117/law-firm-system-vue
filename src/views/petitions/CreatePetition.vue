@@ -141,11 +141,12 @@
                           <AutoComplete
                             delay="1"
                             :suggestions="filteredClient"
+                            :inputStyle="'width:100%;'"
                             @complete="searchClient($event)"
                             field="label"
                             placeholder="Name"
                             v-model="petitioner.user.name"
-                            class="form-control mb-2"
+                            
                           />
                           <div class="input-group-prepend">
                             <span
@@ -210,7 +211,6 @@
                             field="label"
                             placeholder="Name"
                             v-model="opponent.user.name"
-                            class="form-control mb-2"
                           />
                           <div class="input-group-prepend">
                             <span

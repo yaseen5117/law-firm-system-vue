@@ -179,7 +179,7 @@ export default {
   },
   data() {
     return {
-      page_title: "Sign Up",
+      page_title: "Register your Account",
       base_url: process.env.VUE_APP_SERVICE_URL,
       user: {
         name: "",
