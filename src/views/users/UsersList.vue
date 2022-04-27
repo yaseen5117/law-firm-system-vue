@@ -260,13 +260,17 @@ export default {
       statuses: 
       [
         {
+          id: 2,
+          name: 'All'
+        },
+        {
           id: 1,
           name: 'Approved'
         },
         {
-          id: 0,
-          name: 'Pending'
-        }
+          id: "0",
+          name: 'Pending Approval'
+        },        
       ],
     };
   },

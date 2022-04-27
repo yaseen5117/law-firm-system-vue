@@ -92,7 +92,7 @@
 
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-10 col-md-10 col-sm-12">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
                     <label>Title <span style="color: red">*</span></label>
                     <input
                       v-bind:class="{
@@ -256,12 +256,7 @@
                       :value="petition.lawyer_ids"
                     />
                   </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-12">
+                   <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Date Of Institution</label>
                     <br />
                     <InputMask
@@ -272,10 +267,9 @@
                     />
                   </div>
                 </div>
-              </div>
-
+              </div> 
               <div class="form-group">
-                <button :disabled="saving" class="btn btn-success btn-sm mt-2">
+                <button :disabled="saving" class="btn btn-success btn-sm">
                   Save
                 </button>
               </div>

@@ -1515,7 +1515,7 @@ section {
   font-weight: 700;
 }
 .form-group{
-  margin-bottom: 2vh;
+  margin-bottom: 2vh !important;
 }
 
 
