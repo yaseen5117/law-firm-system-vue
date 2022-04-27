@@ -85,25 +85,21 @@
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Role <span style="color: red">*</span></label>
-                    <select
-                      class="form-control text-capitalize"
+                     <Dropdown
                       v-model="user.role_id"
+                      :options="roles"
+                      class="text-capitalize"
+                      optionLabel="name"
+                      optionValue="id"
+                      placeholder="Select"
+                      :filter="true"
+                      appendTo="self"
+                      filterPlaceholder="Find by Role Title"
                       v-bind:class="{
                         'error-boarder': v$.user.role_id.$error,
                       }"
                       @blur="v$.user.role_id.$touch"
-                    >
-                      <option value="">--Select--</option>
-                      <template v-for="role in roles" :key="role.id">
-                        <option
-                          :selected="user.role_id == role.id"
-                          class="text-capitalize"
-                          :value="role.id"
-                        >
-                          {{ role.name }}
-                        </option>
-                      </template>
-                    </select>
+                    /> 
                     <span v-if="v$.user.role_id.$error" class="errorMessage"
                       >Role field is required.</span
                     >
@@ -171,23 +167,13 @@
                   <div class="col-lg-3 col-md-3 col-sm-12">
                       <div class="imagePreviewWrapper" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage">
 
-                      </div> 
-                      <!-- <div v-if="user.id" class="imagePreviewWrapper" :src="
-                      this.base_url +
-                      '/storage/users/' +
-                      this.$route.params.id +
-                      '/' +
-                      user.file_name
-                    " 
-                    @click="selectImage">
-
-                      </div>                        -->
+                      </div>                       
                   </div>
                 </div>
               </div>
 
               <div class="form-group">
-                <button :disabled="saving" class="btn btn-success btn-sm mt-2">Save</button>
+                <button :disabled="saving" class="btn btn-success btn-sm">Save</button>
               </div>
             </form>
           </div>

@@ -8,11 +8,11 @@
                 {{msgAfterSignUp}}
             </div>
           <div class="col-md-4 col-lg-4"></div>
-          <div class="col-md-8 col-lg-8 col-sm-12">
+          <div class="col-md-12 col-lg-12 col-sm-12">
             <form @submit.prevent="submitForm($event)">
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="col-lg-3 col-md-3 col-sm-12">
                     
                     <label>Name<span style="color: red">*</span></label>
                     <input
@@ -27,9 +27,7 @@
                       >Name field is required.</span
                     >
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="col-lg-3 col-md-3 col-sm-12">
                     
                     <label>CNIC<span style="color: red">*</span></label>
                     <InputMask
@@ -47,37 +45,10 @@
                     >
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Status <span style="color: red">*</span></label>
-                    <select 
-                    class="form-control" 
-                    v-model="user.role_name"
-                    @blur="v$.user.role_name.$touch"
-                    v-bind:class="{
-                      'error-boarder': v$.user.role_name.$error,
-                    }"                    
-                    >
-                      <option value="">--Select--</option>
-
-                      <option
-                        v-for="role in roles"
-                        :key="role.name"
-                        :value="role.name"                         
-                      >
-                        {{ role.name }}
-                      </option>
-                    </select>
-                    <span
-                      v-if="v$.user.role_name.$error"
-                      class="errorMessage"
-                      >Role field is required.</span
-                    >
-                  </div>
                 </div>
-
-                <div class="row mt-2">
-                  <div class="col-lg-6 col-md-6 col-sm-12">
+               <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Email<span style="color: red">*</span></label>
                     <input
                       type="email"
@@ -93,8 +64,19 @@
                     >
                     <small class="text-danger">{{ error_email }} </small>
                   </div>
+                  <div class="col-lg-3 col-md-3 col-sm-12">
+                    <label>Phone</label>
+                    <InputMask
+                      class="form-control"
+                      v-model="user.phone"
+                      mask="9999-9999999"
+                      placeholder="0300-1234567"                      
+                    />                    
+                  </div>
+                  
                 </div>
-
+                </div>
+                <div class="form-group">
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-12 mt-2">
                     <label>Password<span style="color: red">*</span></label>
@@ -130,18 +112,34 @@
                     >
                   </div>
                 </div>
-
+                </div>
+                <div class="form-group">
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label>Phone</label>
-                    <InputMask
-                      class="form-control"
-                      v-model="user.phone"
-                      mask="9999-9999999"
-                      placeholder="0300-1234567"
-                      
-                    />
-                    
+                    <label>Status <span style="color: red">*</span></label>
+                    <select 
+                    class="form-control text-capitalize" 
+                    v-model="user.role_name"
+                    @blur="v$.user.role_name.$touch"
+                    v-bind:class="{
+                      'error-boarder': v$.user.role_name.$error,
+                    }"                    
+                    >
+                      <option value="">--Select--</option>
+
+                      <option
+                        v-for="role in roles"
+                        :key="role.name"
+                        :value="role.name"                         
+                      >
+                        {{ role.name }}
+                      </option>
+                    </select>
+                    <span
+                      v-if="v$.user.role_name.$error"
+                      class="errorMessage"
+                      >Role field is required.</span
+                    >
                   </div>
                 </div>
               </div>

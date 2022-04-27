@@ -33,7 +33,7 @@
                     />
                   </div>
 
-                  <div class="col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-4 col-md-4 col-sm-12">
                     <label
                       >Case Category <span style="color: red">*</span></label
                     >
@@ -58,27 +58,22 @@
                     >
                   </div>
 
-                  <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Court <span style="color: red">*</span></label>
-                    <select
-                      class="form-control"
+                     <Dropdown
                       v-model="petition.court_id"
+                      :options="courts"
+                      optionLabel="title"
+                      optionValue="id"
+                      placeholder="Select a Court"
+                      :filter="true"
+                      appendTo="self"
+                      filterPlaceholder="Select"
                       @blur="v$.petition.court_id.$touch"
                       v-bind:class="{
                         'error-boarder': v$.petition.court_id.$error,
                       }"
-                    >
-                      <option value="">--Select--</option>
-
-                      <option
-                        v-for="court in courts"
-                        :key="court.id"
-                        :value="court.id"
-                        :selected="petition.court_id == court.id"
-                      >
-                        {{ court.title }}
-                      </option>
-                    </select>
+                    /> 
                     <span
                       v-if="v$.petition.court_id.$error"
                       class="errorMessage"
