@@ -19,21 +19,15 @@
       <div  class="container mt-4" data-aos="fade-up">
         <div class="row mb-2">
           <div class="col-12 mb-1">
-            <div class="form-check form-switch">
-              <input
-                @click="pageHeader()"
-                class="form-check-input"
-                type="checkbox"
-                role="switch"
-                id="flexSwitchCheckDefault"
-              />
-              <label v-if="removePageHeader" class="form-check-label" for="flexSwitchCheckDefault"
-                >Show Header</label
+            
+              
+              <button v-if="removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm" for="flexSwitchCheckDefault"
+                ><i class="fa fa-eye"></i> Show Header</button
               >
-              <label v-if="!removePageHeader" class="form-check-label" for="flexSwitchCheckDefault"
-                >Hide Header</label
+              <button v-if="!removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm" for="flexSwitchCheckDefault"
+                ><i class="fa fa-eye-slash"></i> Hide Header</button
               >
-            </div>
+            
           </div>
           <div v-if="!removePageHeader" class="col-12">
             
@@ -352,7 +346,7 @@
     </Sidebar>
     
     <div class="sidebarswitch">
-      <button v-tooltip="'Show Page Numbers'" class="btn btn-success" @click="visibleLeft = true" ><i class="fa fa-angle-right"></i></button>
+      <button v-tooltip="'Show Page Numbers'" class="btn btn-success sidebar-btn" @click="visibleLeft = true" ><i class="fa fa-angle-right"></i></button>
     </div>
 
   <Sidebar  v-model:visible="visibleRight" position="right" class="p-sidebar-sm" :dismissable="false" :modal="false">
@@ -376,7 +370,7 @@
     </div>
     </Sidebar> 
      <div class="sidebarindexswitch">
-      <button v-tooltip="'Show Page Index'" class="btn btn-success" @click="visibleRight = true" ><i class="fa fa-angle-left"></i></button>
+      <button v-tooltip="'Show Page Index'" class="btn btn-success sidebar-btn" @click="visibleRight = true" ><i class="fa fa-angle-left"></i></button>
     </div>
   </main>
   <!-- End #main -->
