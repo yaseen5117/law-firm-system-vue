@@ -23,7 +23,7 @@
                     >
                   </div>
 
-                  <div class="col-lg-2 col-md-2 col-sm-12">
+                  <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Year</label>
                     <input
                       type="text"
@@ -33,7 +33,28 @@
                     />
                   </div>
 
-                  <div class="col-lg-4 col-md-4 col-sm-12">
+                  
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <label>Title <span style="color: red">*</span></label>
+                    <input
+                      v-bind:class="{
+                        'error-boarder': v$.petition.title.$error,
+                      }"
+                      class="form-control"
+                      v-model="petition.title"
+                      @blur="v$.petition.title.$touch"
+                    />
+                    <span v-if="v$.petition.title.$error" class="errorMessage"
+                      >Title field is required.</span
+                    >
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-3 col-md-3 col-sm-12">
                     <label
                       >Case Category <span style="color: red">*</span></label
                     >
@@ -80,24 +101,28 @@
                       >Court field is required.</span
                     >
                   </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-lg-12 col-md-12 col-sm-12">
-                    <label>Title <span style="color: red">*</span></label>
-                    <input
-                      v-bind:class="{
-                        'error-boarder': v$.petition.title.$error,
-                      }"
-                      class="form-control"
-                      v-model="petition.title"
-                      @blur="v$.petition.title.$touch"
+                  <div class="col-lg-3 col-md-3 col-sm-12">
+                    <label>Lawyer</label>
+                    <Multiselect
+                      placeholder="--Select--"
+                      class="text-capitalize"
+                      mode="tags"
+                      :close-on-select="false"
+                      :searchable="true"
+                      v-model="petition.lawyer_ids"
+                      :options="lawyers"
+                      :value="petition.lawyer_ids"
                     />
-                    <span v-if="v$.petition.title.$error" class="errorMessage"
-                      >Title field is required.</span
-                    >
+                  </div>
+                   <div class="col-lg-3 col-md-3 col-sm-12">
+                    <label>Date of Institution</label>
+                    <br />
+                    <InputMask
+                      v-model="petition.institution_date"
+                      mask="99/99/9999"
+                      aria-placeholder=""
+                      placeholder="dd/mm/yyyy "
+                    />
                   </div>
                 </div>
               </div>
@@ -233,33 +258,6 @@
                 </div>
               </div>
 
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label>Lawyer</label>
-                    <Multiselect
-                      placeholder="--Select--"
-                      class="text-capitalize"
-                      mode="tags"
-                      :close-on-select="false"
-                      :searchable="true"
-                      v-model="petition.lawyer_ids"
-                      :options="lawyers"
-                      :value="petition.lawyer_ids"
-                    />
-                  </div>
-                   <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label>Date of Institution</label>
-                    <br />
-                    <InputMask
-                      v-model="petition.institution_date"
-                      mask="99/99/9999"
-                      aria-placeholder=""
-                      placeholder="dd/mm/yyyy "
-                    />
-                  </div>
-                </div>
-              </div> 
               <div class="form-group">
                 <button :disabled="saving" class="btn btn-success btn-sm">
                   Save
