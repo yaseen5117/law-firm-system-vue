@@ -27,8 +27,11 @@
                 role="switch"
                 id="flexSwitchCheckDefault"
               />
-              <label class="form-check-label" for="flexSwitchCheckDefault"
-                >Show/Hide Header</label
+              <label v-if="removePageHeader" class="form-check-label" for="flexSwitchCheckDefault"
+                >Show Header</label
+              >
+              <label v-if="!removePageHeader" class="form-check-label" for="flexSwitchCheckDefault"
+                >Hide Header</label
               >
             </div>
           </div>
@@ -352,7 +355,11 @@
       <button v-tooltip="'Show Page Numbers'" class="btn btn-primary" @click="visibleLeft = true" ><i class="pi pi-arrow-right"></i></button>
     </div>
 
-    <div class="fixed-annexsures" @show="!editView">
+  <Sidebar  v-model:visible="visibleRight" position="right" class="p-sidebar-sm" :dismissable="false" :modal="false">
+      <div       
+      @show="!editView"       
+      
+    >
       <ul class="list-group">
         <router-link
           v-for="petition_index_single in petition_index"
@@ -366,8 +373,10 @@
           >{{ petition_index_single.annexure }}</router-link
         >
       </ul>
-      <!-- Prayers -->
-      <!-- Stay Order -->
+    </div>
+    </Sidebar> 
+     <div class="sidebarindexswitch">
+      <button v-tooltip="'Show Page Index'" class="btn btn-primary" @click="visibleRight = true" ><i class="pi pi-arrow-left"></i></button>
     </div>
   </main>
   <!-- End #main -->
@@ -397,6 +406,7 @@ export default {
       next_index_id: null,
       previous_index_id: null,
       visibleLeft: false,
+      visibleRight:true,
       showImgCard: false,
       editView: false,
       base_url: process.env.VUE_APP_SERVICE_URL,

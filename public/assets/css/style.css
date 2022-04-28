@@ -1633,6 +1633,11 @@ h2 span {
   position: fixed;
   top: 50%;
 }
+.sidebarindexswitch{
+  position: fixed;
+  right: 0px;
+  top: 50%;
+}
 .btn-danger{
   background: rgb(143 58 48) !important;
 }

@@ -23,8 +23,11 @@
                 role="switch"
                 id="flexSwitchCheckDefault"
               />
-              <label class="form-check-label" for="flexSwitchCheckDefault"
-                >Show/Hide Header</label
+              <label v-if="removePageHeader" class="form-check-label" for="flexSwitchCheckDefault"
+                >Show Header</label
+              >
+              <label v-if="!removePageHeader" class="form-check-label" for="flexSwitchCheckDefault"
+                >Hide Header</label
               >
             </div>
           </div>
