@@ -12,7 +12,7 @@
     
       id="services"
       class="services section-bg"
-      :class="removePageHeader ? 'margintop85' : ''"
+      :class="removePageHeader ? '' : ''"
     >
       <nav-components activeNavPill="petition" :petition_id="petition.id" />
       
@@ -21,7 +21,7 @@
           <div class="col-12 mb-1">
             <div class="form-check form-switch">
               <input
-                @change="removePageHeader = !removePageHeader"
+                @click="pageHeader()"
                 class="form-check-input"
                 type="checkbox"
                 role="switch"
@@ -352,7 +352,7 @@
     </Sidebar>
     
     <div class="sidebarswitch">
-      <button v-tooltip="'Show Page Numbers'" class="btn btn-primary" @click="visibleLeft = true" ><i class="pi pi-arrow-right"></i></button>
+      <button v-tooltip="'Show Page Numbers'" class="btn btn-primary" @click="visibleLeft = true" ><i class="fa fa-angle-right"></i></button>
     </div>
 
   <Sidebar  v-model:visible="visibleRight" position="right" class="p-sidebar-sm" :dismissable="false" :modal="false">
@@ -376,7 +376,7 @@
     </div>
     </Sidebar> 
      <div class="sidebarindexswitch">
-      <button v-tooltip="'Show Page Index'" class="btn btn-primary" @click="visibleRight = true" ><i class="pi pi-arrow-left"></i></button>
+      <button v-tooltip="'Show Page Index'" class="btn btn-primary" @click="visibleRight = true" ><i class="fa fa-angle-left"></i></button>
     </div>
   </main>
   <!-- End #main -->
@@ -451,6 +451,15 @@ export default {
     
   },
   methods: {
+    pageHeader(){
+      this.removePageHeader = !this.removePageHeader;
+      if(this.removePageHeader){
+        document.getElementById("header").style.display = "none";
+      }else{
+        document.getElementById("header").style.display = "block";
+      }
+      
+    },
     scrollIntoView(id) {
       // document
       //   .getElementById("image-container-" + id)
