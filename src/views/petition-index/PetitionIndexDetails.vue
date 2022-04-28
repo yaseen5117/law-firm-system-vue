@@ -18,19 +18,15 @@
       
       <div  class="container mt-4" data-aos="fade-up">
         <div class="row mb-2">
-          <div class="col-12 mb-1">
-            
-              
-              <button v-if="removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm" for="flexSwitchCheckDefault"
+           
+          <div class="col-12">
+            <!-- v-if="!removePageHeader" -->
+             <button v-if="removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm mb-2" style="margin-right: 2px" for="flexSwitchCheckDefault"
                 ><i class="fa fa-eye"></i> Show Header</button
               >
-              <button v-if="!removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm" for="flexSwitchCheckDefault"
+              <button v-if="!removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm mb-2" style="margin-right: 2px" for="flexSwitchCheckDefault"
                 ><i class="fa fa-eye-slash"></i> Hide Header</button
               >
-            
-          </div>
-          <div v-if="!removePageHeader" class="col-12">
-            
 
             <button
               v-show="!showImgCard"
