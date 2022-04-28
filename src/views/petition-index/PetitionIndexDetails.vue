@@ -352,7 +352,7 @@
     </Sidebar>
     
     <div class="sidebarswitch">
-      <button v-tooltip="'Show Page Numbers'" class="btn btn-primary" @click="visibleLeft = true" ><i class="fa fa-angle-right"></i></button>
+      <button v-tooltip="'Show Page Numbers'" class="btn btn-success" @click="visibleLeft = true" ><i class="fa fa-angle-right"></i></button>
     </div>
 
   <Sidebar  v-model:visible="visibleRight" position="right" class="p-sidebar-sm" :dismissable="false" :modal="false">
@@ -376,7 +376,7 @@
     </div>
     </Sidebar> 
      <div class="sidebarindexswitch">
-      <button v-tooltip="'Show Page Index'" class="btn btn-primary" @click="visibleRight = true" ><i class="fa fa-angle-left"></i></button>
+      <button v-tooltip="'Show Page Index'" class="btn btn-success" @click="visibleRight = true" ><i class="fa fa-angle-left"></i></button>
     </div>
   </main>
   <!-- End #main -->

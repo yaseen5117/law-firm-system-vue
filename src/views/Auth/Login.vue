@@ -50,7 +50,7 @@
                 </div>
               </div>
               <div class="col-md-12 col-sm-12">
-                <button :disabled="saving" type="submit" class="btn btn-danger">
+                <button :disabled="saving" type="submit" class="btn auth-btn">
                   Login
                 </button>
               </div>
