@@ -58,8 +58,6 @@
                     aria-describedby="Role"
                     v-model="filters.is_approved"
                   >
-                    <option value="">--Status--</option>
-
                     <option
                       class="text-capitalize"
                       v-for="status in statuses"
@@ -255,10 +253,11 @@ export default {
       showSearchForm: true,
       filters: {
         role_id: "",
-        is_approved: "",
+        is_approved: "0",
       },
       statuses: 
       [
+        
         {
           id: 2,
           name: 'All'
@@ -270,7 +269,8 @@ export default {
         {
           id: "0",
           name: 'Pending Approval'
-        },        
+        },
+                
       ],
     };
   },
@@ -392,9 +392,14 @@ export default {
     filters: {
       deep: true,
       handler() {
-        setTimeout(() => {
-          this.getUsers();
-        }, 300); // 1 sec delay
+
+        if (!this.awaitingSearch) {
+            setTimeout(() => {
+              this.getUsers();
+              this.awaitingSearch = false;
+            }, 1500); // 1 sec delay
+          }
+          this.awaitingSearch = true;
       },
     },
   },

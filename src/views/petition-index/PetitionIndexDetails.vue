@@ -366,7 +366,7 @@
     </div>
     </Sidebar> 
      <div class="sidebarindexswitch">
-      <button v-tooltip="'Show Page Index'" class="btn btn-success sidebar-btn" @click="visibleRight = true" ><i class="fa fa-angle-left"></i></button>
+      <button v-tooltip="'Show Annexsures'" class="btn btn-success sidebar-btn" @click="visibleRight = true" ><i class="fa fa-angle-left"></i></button>
     </div>
   </main>
   <!-- End #main -->

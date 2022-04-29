@@ -339,9 +339,14 @@ export default {
     filters: {
       deep: true,
       handler() {
-        setTimeout(() => {
-          this.getCaseFiles();
-        }, 300); // 1 sec delay
+
+        if (!this.awaitingSearch) {
+            setTimeout(() => {
+              this.getCaseFiles();
+              this.awaitingSearch = false;
+            }, 1500); // 1 sec delay
+          }
+          this.awaitingSearch = true;
       },
     },
   },
