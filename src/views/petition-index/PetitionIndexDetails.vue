@@ -421,7 +421,7 @@ export default {
   },
   mounted() {
     const myDiv = document.getElementById('services');
-    console.log("myddiv",myDiv); 
+    document.getElementById("header").style.display = "none"; 
     /* window.addEventListener('scroll', (e) => {  
         if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight) {
           this.$router.push({ path: "/petition-index-details/"+this.previous_index_id });
