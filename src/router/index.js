@@ -341,6 +341,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   document.querySelector("#navbar").classList.remove("navbar-mobile");
+  document.getElementById("header").style.display = "block";
   var isloggedin= localStorage.getItem("lfms_user");
   if (to.matched.some(record => record.meta.auth)) {
     // this route requires auth, check if logged in

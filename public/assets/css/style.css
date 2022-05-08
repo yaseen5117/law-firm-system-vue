@@ -585,6 +585,9 @@ section {
 /*--------------------------------------------------------------
 # Services
 --------------------------------------------------------------*/
+.services  {
+  padding: 0px;
+}
 .services .icon-box {
   text-align: center;
   padding: 70px 20px 80px 20px;
