@@ -153,6 +153,14 @@ const routes = [
       auth: true ,
     },
   },
+  {
+    path: '/petition-order-sheets-edit/:petition_id/:editable_order_sheet_id',
+    name: 'petition-order-sheets-edit',    
+    component: PetitionOrderSheetCreateUpdate,
+    meta: { 
+      auth: true ,
+    },
+  },
   ////////////////Order Sheets/////////////
 
   //////////////// TALBANA ROUTES /////////////

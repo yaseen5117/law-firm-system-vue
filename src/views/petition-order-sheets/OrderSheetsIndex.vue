@@ -46,12 +46,22 @@
 
             <div class="mt-4" v-if="orderSheetsActive">
               <div v-if="!removePageHeader" class="mb-4">
-                <strong>Title: </strong>{{ orderSheetsActive.title }}
+                <p><strong>Title: </strong>{{ orderSheetsActive.title }}
                 <strong>Description: </strong
                 >{{ orderSheetsActive.description }}
                 <strong>Order Sheet Date: </strong
                 >{{ orderSheetsActive.order_sheet_date }}
-
+                <router-link
+                    class="btn btn-success btn-sm  action-btn"
+                    :to="{
+                      name: 'petition-order-sheets-edit',
+                      params: { petition_id: petition.id ,  editable_order_sheet_id: orderSheetsActive.id },
+                    }"
+                  >
+                    Edit
+                  </router-link>
+                </p>
+  
                 <file-upload
                   @afterUpload="getOrderSheet"
                   type="App\Models\PetitonOrderSheet"
@@ -97,7 +107,7 @@
       </div>
     </section>
 
-    <div class="fixed-annexsures">
+    <Sidebar v-model:visible="visibleLeft" class="p-sidebar-sm" position="right" :dismissable="false" :modal="false">
       <ul class="list-group">
         <router-link
           v-for="orderSheet in orderSheets"
@@ -111,6 +121,10 @@
           >{{ orderSheet.order_sheet_date }}</router-link
         >
       </ul>
+    </Sidebar>
+
+    <div class="fixed-annexsures">
+      
       <!-- Prayers -->
       <!-- Stay Order -->
     </div>
@@ -138,6 +152,7 @@ export default {
   },
   data() {
     return {
+      visibleLeft: true,
       showImgCard: false,
       editView: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
