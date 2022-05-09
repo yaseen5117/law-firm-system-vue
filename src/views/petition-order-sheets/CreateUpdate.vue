@@ -222,6 +222,7 @@ export default {
                   text: "Saved Successfully!",
                 });
                 this.saving = false;
+                console.log("saved changes...");
                 this.$router.push({ path: "/petition-order-sheets-index/"+ this.order_sheet.petition_id});
               }
               console.log(response);
