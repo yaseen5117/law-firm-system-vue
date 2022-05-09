@@ -1,5 +1,4 @@
 <template>
-
   <main id="main">
     <!-- ======= Breadcrumbs ======= -->
     <page-header
@@ -8,25 +7,34 @@
       :hide="removePageHeader ? true : false"
     />
     <!-- End Breadcrumbs -->
+    <nav-components activeNavPill="petition" :petition_id="petition.id" />
     <section
-    
       id="services"
       class="services section-bg"
       :class="removePageHeader ? '' : ''"
-    >
-      <nav-components activeNavPill="petition" :petition_id="petition.id" />
-      
-      <div  class="container mt-4" data-aos="fade-up">
+    >      
+      <div class="container mt-2" data-aos="fade-up">
         <div class="row mb-2">
-           
           <div class="col-12">
             <!-- v-if="!removePageHeader" -->
-             <button v-if="removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm mb-2" style="margin-right: 2px" for="flexSwitchCheckDefault"
-                ><i class="fa fa-eye"></i> Show Header</button
-              >
-              <button v-if="!removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm mb-2" style="margin-right: 2px" for="flexSwitchCheckDefault"
-                ><i class="fa fa-eye-slash"></i> Hide Header</button
-              >
+            <button
+              v-if="removePageHeader"
+              @click="pageHeader()"
+              class="btn btn-success btn-sm mb-2"
+              style="margin-right: 2px"
+              for="flexSwitchCheckDefault"
+            >
+              <i class="fa fa-eye"></i> Show Header
+            </button>
+            <button
+              v-if="!removePageHeader"
+              @click="pageHeader()"
+              class="btn btn-success btn-sm mb-2"
+              style="margin-right: 2px"
+              for="flexSwitchCheckDefault"
+            >
+              <i class="fa fa-eye-slash"></i> Hide Header
+            </button>
 
             <button
               v-show="!showImgCard"
@@ -81,25 +89,28 @@
             <div v-show="!horizontalView && !editView">
               <div
                 class="row mb-2 text-center"
-                v-for="(attachment , index_attachment) in petition_index_details.attachments"
+                v-for="(
+                  attachment, index_attachment
+                ) in petition_index_details.attachments"
                 :key="attachment"
-                :id="'image-container-' + (index_attachment+1)"
+                :id="'image-container-' + (index_attachment + 1)"
               >
-                <div class="col-12" >
+                <div class="col-12">
                   <img
                     v-if="attachment.mime_type != 'application/pdf'"
-                    :class="activePage == (index_attachment+1) ? 'active-img' : ''"
+                    :class="
+                      activePage == index_attachment + 1 ? 'active-img' : ''
+                    "
                     class="img-fluid"
                     style="width: 90%"
                     :src="
                       this.base_url +
-                      '/storage/attachments/' 
-                      +                     
+                      '/storage/attachments/' +
                       this.$route.params.id +
                       '/' +
                       attachment.file_name
                     "
-                  />    
+                  />
 
                   <a
                     :class="activePage == attachment.id ? 'active-img' : ''"
@@ -120,32 +131,32 @@
                 </div>
               </div>
             </div>
-            <div class="row" >
-                  <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-                      <router-link
-                      v-tooltip.top="'Previous'"
-                      style="margin-right:3px"
-                        v-if="previous_index_id"
-                        class="btn btn-success ml-3 mr-2"
-                        :to="{
-                          name: 'petition-index-details',
-                          params: { id: previous_index_id },
-                        }"
-                        ><i class="fa fa-angle-up fa-2x btn-round"></i></router-link
-                      >
-                      
-                      <router-link
-                        v-tooltip.top="'Next'"
-                        style="margin-right:3px"
-                        v-if="next_index_id"
-                        class="btn btn-success ml-3"
-                        :to="{
-                          name: 'petition-index-details',
-                          params: { id: next_index_id },
-                        }"
-                        ><i class="fa fa-angle-down fa-2x btn-round"></i></router-link
-                      >
-                  </div>
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                <router-link
+                  v-tooltip.top="'Previous'"
+                  style="margin-right: 3px"
+                  v-if="previous_index_id"
+                  class="btn btn-success ml-3 mr-2"
+                  :to="{
+                    name: 'petition-index-details',
+                    params: { id: previous_index_id },
+                  }"
+                  ><i class="fa fa-angle-up fa-2x btn-round"></i
+                ></router-link>
+
+                <router-link
+                  v-tooltip.top="'Next'"
+                  style="margin-right: 3px"
+                  v-if="next_index_id"
+                  class="btn btn-success ml-3"
+                  :to="{
+                    name: 'petition-index-details',
+                    params: { id: next_index_id },
+                  }"
+                  ><i class="fa fa-angle-down fa-2x btn-round"></i
+                ></router-link>
+              </div>
             </div>
 
             <div v-show="editView">
@@ -179,7 +190,7 @@
                         <th>Actions</th>
                       </thead>
                       <tbody>
-                        <tr                           
+                        <tr
                           v-for="(
                             attachment, attachmentIndex
                           ) in petition_index_details.attachments"
@@ -319,58 +330,14 @@
           </div>
         </div>
       </div>
-      
-    </section> 
-    <Sidebar v-model:visible="visibleLeft" class="p-sidebar-sm" :dismissable="false" :modal="false">
-      <div       
-      v-show="!horizontalView && !editView"       
-      
-    >
-      <ul class="list-group">
-        <li
-          v-for="( attachment , index_attachment) in petition_index_details.attachments"
-          :key="attachment"
-          :class="activePage == (index_attachment+1) ? 'active' : ''"
-          class="list-group-item"
-          @click="scrollIntoView(index_attachment+1)"
-          style="cursor: pointer"
-        >
-          {{ index_attachment+1 }}
-        </li>
-      </ul>
-    </div>
-    </Sidebar>
-    
-    <div class="sidebarswitch">
-      <button v-tooltip="'Show Page Numbers'" class="btn btn-success sidebar-btn" @click="visibleLeft = true" ><i class="fa fa-angle-right"></i></button>
-    </div>
-
-  <Sidebar  v-model:visible="visibleRight" position="right" class="p-sidebar-sm" :dismissable="false" :modal="false">
-      <div       
-      @show="!editView"       
-      
-    >
-      <ul class="list-group">
-        <router-link
-          v-for="petition_index_single in petition_index"
-          :key="petition_index_single"
-          :class="id == petition_index_single.id ? 'active' : ''"
-          class="list-group-item"
-          :to="{
-            name: 'petition-index-details',
-            params: { id: petition_index_single.id },
-          }"
-          >{{ petition_index_single.annexure }}</router-link
-        >
-      </ul>
-    </div>
-    </Sidebar> 
-     <div class="sidebarindexswitch">
-      <button v-tooltip="'Show Annexsures'" class="btn btn-success sidebar-btn" @click="visibleRight = true" ><i class="fa fa-angle-left"></i></button>
-    </div>
+    </section>
+    <page-number-side-bar :petition_index_details="petition_index_details" />
+    <annexure-right-side-bar
+      :petition_index="petition_index"
+      url="petition-index-details"
+    />
   </main>
   <!-- End #main -->
-
 </template>
 
 <script>
@@ -380,6 +347,8 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import NavComponents from "../Cases/NavComponents.vue";
 import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
+import PageNumberSideBar from "../shared/PageNumberLeftSideBar.vue";
+import AnnexureRightSideBar from "../shared/AnnexureRightSideBar.vue";
 
 export default {
   components: {
@@ -390,13 +359,13 @@ export default {
     Navigation,
     FileUpload,
     NavComponents,
+    PageNumberSideBar,
+    AnnexureRightSideBar,
   },
   data() {
     return {
       next_index_id: null,
       previous_index_id: null,
-      visibleLeft: false,
-      visibleRight:true,
       showImgCard: false,
       editView: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
@@ -405,23 +374,21 @@ export default {
       petition_index_details: {},
       id: this.$route.params.id, //this is the id from the browser
       horizontalView: false, //it will show vertical images by default
-      activePage: null,
       removePageHeader: true,
+      activePage: null,
       selected_attachment_ids: [],
       selectedAllToDelete: false,
       showDeleteBtn: false,
-      isShowPageNumOnMobile: true,         
+      isShowPageNumOnMobile: true,
       blockPanel: false,
     };
   },
   created() {
     this.getCaseDetails();
-
-    
   },
   mounted() {
-    const myDiv = document.getElementById('services');
-    document.getElementById("header").style.display = "none"; 
+    const myDiv = document.getElementById("services");
+    document.getElementById("header").style.display = "none";
     /* window.addEventListener('scroll', (e) => {  
         if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight) {
           this.$router.push({ path: "/petition-index-details/"+this.previous_index_id });
@@ -437,54 +404,35 @@ export default {
           
         }   
     })  */
-
-    
   },
   methods: {
-    pageHeader(){
+    pageHeader() {
       this.removePageHeader = !this.removePageHeader;
-      if(this.removePageHeader){
+      if (this.removePageHeader) {
         document.getElementById("header").style.display = "none";
-      }else{
+      } else {
         document.getElementById("header").style.display = "block";
       }
-      
-    },
-    scrollIntoView(id) {
-      // document
-      //   .getElementById("image-container-" + id)
-      //   .scrollIntoView({ duration: 2000 });
-
-      const yOffset = -200;
-      const element = document.getElementById("image-container-" + id);
-      const y =
-      element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-      //document.getElementById("image-container-" + id).style.border="solid 1px red"
-      this.activePage = id;
     },
     async getCaseDetails() {
       this.blockPanel = true;
-      
+
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
       await axios
         .get(this.base_url + "/api/petitions_index/" + this.id, { headers })
         .then((response) => {
-          
-          
           this.petition_index_details = response.data.petition_index;
           this.petition = response.data.petition;
           this.next_index_id = response.data.next_index_id;
           this.previous_index_id = response.data.previous_index_id;
-          
+
           window.scrollTo({ top: 200, behavior: "smooth" });
           this.getPetitionAnnexure(response.data.petition.id);
         })
         .catch((error) => {
           console.log(error);
-          
         });
     },
 
@@ -495,7 +443,7 @@ export default {
       await axios
         .get(this.base_url + "/api/petitions/" + petition_id, { headers })
         .then((response) => {
-          this.blockPanel =false
+          this.blockPanel = false;
           this.petition_index = response.data.petition_details;
           var arr = [];
           this.petition_index.forEach((element) => {
@@ -583,41 +531,46 @@ export default {
       }
     },
     //select all to delete all
-    selectAllToDelete() {      
+    selectAllToDelete() {
       this.selected_attachment_ids = [];
-      if (!this.selectedAllToDelete) {        
+      if (!this.selectedAllToDelete) {
         this.showDeleteBtn = true;
         for (let i in this.petition_index_details.attachments) {
-          this.selected_attachment_ids.push(this.petition_index_details.attachments[i].id);
+          this.selected_attachment_ids.push(
+            this.petition_index_details.attachments[i].id
+          );
         }
-      }else{         
+      } else {
         this.showDeleteBtn = false;
       }
     },
     updateCheckall: function () {
       if (
-        this.petition_index_details.attachments.length == this.selected_attachment_ids.length
-      ) {        
-        this.selectedAllToDelete = true;  
-            
-      } else if(!this.selected_attachment_ids.length){
-        this.showDeleteBtn = false;   
-      }
-       else {    
-        this.showDeleteBtn = true;    
+        this.petition_index_details.attachments.length ==
+        this.selected_attachment_ids.length
+      ) {
+        this.selectedAllToDelete = true;
+      } else if (!this.selected_attachment_ids.length) {
+        this.showDeleteBtn = false;
+      } else {
+        this.showDeleteBtn = true;
         this.selectedAllToDelete = false;
       }
     },
-    deleteAll(){
+    deleteAll() {
       if (confirm("Do you really want to delete?")) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
-          .post(this.base_url + "/api/delete_selected", this.selected_attachment_ids, {
-            headers,
-          })
+          .post(
+            this.base_url + "/api/delete_selected",
+            this.selected_attachment_ids,
+            {
+              headers,
+            }
+          )
           .then(
             (response) => {
               if (response.status === 200) {
@@ -625,9 +578,9 @@ export default {
                   type: "success",
                   title: "Success",
                   text: "Deleted Successfully!",
-                });  
+                });
                 this.showDeleteBtn = false;
-                this.getCaseDetails(); //Reload all records from DB   
+                this.getCaseDetails(); //Reload all records from DB
               }
             },
             (error) => {
@@ -641,18 +594,18 @@ export default {
           );
       }
     },
-    showPageNumbers(){               
+    showPageNumbers() {
       this.isShowPageNumOnMobile = !this.isShowPageNumOnMobile;
     },
-    testScroll(){
+    testScroll() {
       alert("vue scroll");
-    }
+    },
   },
 };
 </script>
 
 <style>
-.p-sidebar-sm{
-  width: 6rem!important;
+.p-sidebar-sm {
+  width: 6rem !important;
 }
 </style>

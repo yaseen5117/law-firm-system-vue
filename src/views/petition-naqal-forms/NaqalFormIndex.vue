@@ -10,31 +10,21 @@
     <section
       id="services"
       class="services section-bg"
-      :class="removePageHeader ? 'margintop85' : ''"
+      :class="removePageHeader ? '' : ''"
     >
     <nav-components activeNavPill = 'naqal_forms' :petition_id="petition.id"  />
-      <div class="container mt-4" data-aos="fade-up">
+      <div class="container mt-2" data-aos="fade-up">
         <div class="row">
           <div class="col-12 mb-1">
-            <div class="form-check form-switch">
-              <input
-                @change="removePageHeader = !removePageHeader"
-                class="form-check-input"
-                type="checkbox"
-                role="switch"
-                id="flexSwitchCheckDefault"
-              />
-              <label v-if="removePageHeader" class="form-check-label" for="flexSwitchCheckDefault"
-                >Show Header</label
+            <!-- v-if="!removePageHeader" -->
+             <button v-if="removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm" style="margin-right: 2px" for="flexSwitchCheckDefault"
+                ><i class="fa fa-eye"></i> Show Header</button
               >
-              <label v-if="!removePageHeader" class="form-check-label" for="flexSwitchCheckDefault"
-                >Hide Header</label
+              <button v-if="!removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm" style="margin-right: 2px" for="flexSwitchCheckDefault"
+                ><i class="fa fa-eye-slash"></i> Hide Header</button
               >
-            </div>
-          </div>
-          <div class="col-md-12 mb-4">
-            <router-link
-              v-if="!removePageHeader"
+          
+            <router-link               
               class="btn btn-primary btn-sm"
               :to="{
                 name: 'petition-naqal-forms-save',
@@ -46,12 +36,21 @@
 
             <div class="mt-4" v-if="NaqalFormActive">
               <div v-if="!removePageHeader" class="mb-4">
-                <strong>Title: </strong>{{ NaqalFormActive.title }}
+                <p><strong>Title: </strong>{{ NaqalFormActive.title }}
                 <strong>Description: </strong
                 >{{ NaqalFormActive.description }}
                 <strong>Naqal Form Date: </strong
                 >{{ NaqalFormActive.naqal_form_date }}
-
+                <router-link
+                    class="btn btn-success btn-sm  action-btn"
+                    :to="{
+                      name: 'petition-naqal-forms-edit',
+                      params: { petition_id: petition.id ,  editable_naqal_form_id: NaqalFormActive.id },
+                    }"
+                  >
+                    Edit
+                  </router-link>
+                </p>
                 <file-upload
                   @afterUpload="getNaqalForm"
                   type="App\Models\PetitionNaqalForm"
@@ -96,13 +95,16 @@
         </div>
       </div>
     </section>
-
-    <div class="fixed-annexsures">
+    <Sidebar  v-model:visible="visibleRight" position="right" class="p-sidebar-sm" :dismissable="false" :modal="false">
+      <div       
+      @show="!editView"       
+      
+    >
       <ul class="list-group">
         <router-link
           v-for="naqal_form in naqal_forms"
           :key="naqal_form"
-          :class="id == naqal_form.id ? 'active' : ''"
+          :class="naqal_form_id == naqal_form.id ? 'active' : ''"
           class="list-group-item"
           :to="{
             name: 'petition-naqal-forms-index',
@@ -111,8 +113,10 @@
           >{{ naqal_form.naqal_form_date }}</router-link
         >
       </ul>
-      <!-- Prayers -->
-      <!-- Stay Order -->
+    </div>
+    </Sidebar>     
+    <div class="sidebarindexswitch">
+      <button v-tooltip="'Show Annexsures'" class="btn btn-success sidebar-btn" @click="visibleRight = true" ><i class="fa fa-angle-left"></i></button>
     </div>
   </main>
   <!-- End #main -->
@@ -150,13 +154,26 @@ export default {
       petition_id: this.$route.params.petition_id, //this is the id from the browser
       horizontalView: false, //it will show vertical images by default
       activePage: null,
-      removePageHeader: false,
+      removePageHeader: true,
+      visibleRight:true, 
     };
   },
   created() {
     this.getNaqalForms();
   },
+  mounted(){
+    document.getElementById("header").style.display = "none";
+  },
   methods: {
+    pageHeader(){
+      this.removePageHeader = !this.removePageHeader;
+      if(this.removePageHeader){
+        document.getElementById("header").style.display = "none";
+      }else{
+        document.getElementById("header").style.display = "block";
+      }
+      
+    },   
     scrollIntoView(id) {
       // document
       //   .getElementById("image-container-" + id)

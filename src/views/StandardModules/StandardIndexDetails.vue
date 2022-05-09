@@ -7,32 +7,24 @@
       :hide="removePageHeader ? true : false"
     />   
     <!-- End Breadcrumbs -->
+    <nav-components :activeNavPill="module_type" :petition_id="petition.id"  />
     <section
       id="services"
       class="services section-bg"
-      :class="removePageHeader ? 'margintop85' : ''"
+      :class="removePageHeader ? '' : ''"
     >
-    <nav-components :activeNavPill="module_type" :petition_id="petition.id"  />
-      <div class="container mt-4" data-aos="fade-up">
+    
+      <div class="container mt-2" data-aos="fade-up">
         <div class="row mb-2">
-          <div class="col-12 mb-1">
-            <div class="form-check form-switch">
-              <input
-                @change="removePageHeader = !removePageHeader"
-                class="form-check-input"
-                type="checkbox"
-                role="switch"
-                id="flexSwitchCheckDefault"
-              />
-              <label v-if="removePageHeader" class="form-check-label" for="flexSwitchCheckDefault"
-                >Show Header</label
+          <div class="col-12">
+            <!-- v-if="!removePageHeader" -->
+             <button v-if="removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm mb-2" style="margin-right: 2px" for="flexSwitchCheckDefault"
+                ><i class="fa fa-eye"></i> Show Header</button
               >
-              <label v-if="!removePageHeader" class="form-check-label" for="flexSwitchCheckDefault"
-                >Hide Header</label
-              >
-            </div>
-          </div>
-          <div v-if="!removePageHeader" class="col-12">
+              <button v-if="!removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm mb-2" style="margin-right: 2px" for="flexSwitchCheckDefault"
+                ><i class="fa fa-eye-slash"></i> Hide Header</button
+              > 
+          
             <button
               v-show="!showImgCard"
               @click="showImgCard = true"
@@ -294,51 +286,10 @@
         </div>
       </div>
     </section>
-     <div class="fixed-eye-icon d-lg-none d-lg-block d-md-none d-md-block">
-      <button 
-      data-bs-toggle="tooltip"
-                      data-bs-placement="right"
-                      title="Page#"
-       class="btn btn-sm btn-primary" @click="showPageNumbers()"><i class="fa fa-expand" aria-hidden="true"></i></button>
-    </div>
-
-    <div v-show="!horizontalView && !editView" 
-    :class="isShowPageNumOnMobile ? 'd-none d-md-block fixed-page-numbers' : 'fixed-page-numbers-mobile'" 
-    >
-      <ul class="list-group">
-        <li
-          v-for="(attachment , index_attachment) in index_detail_data.attachments"
-          :key="attachment"
-          :class="activePage == (index_attachment+1) ? 'active' : ''"
-          class="list-group-item"
-          @click="scrollIntoView(index_attachment+1)"
-          style="cursor: pointer"
-        >
-          {{ index_attachment+1 }}
-        </li>
-      </ul>
-    </div>
-
-    <div class="fixed-annexsures" @show="!editView">
-      <ul class="list-group">
-        <router-link
-          v-for="index_data_single in module_index_data"
-          :key="index_data_single"
-          :class="id == index_data_single.id ? 'active' : ''"
-          class="list-group-item"
-          :to="{
-            name: 'standard-index-details',
-            params: { 
-              module_id: index_data_single.id,
-              module_type: module_type  
-            },
-          }"
-          >{{ index_data_single.annexure }}</router-link
-        >
-      </ul>
-      <!-- Prayers -->
-      <!-- Stay Order -->
-    </div>
+    <page-number-side-bar :petition_index_details="index_detail_data"/>
+    
+    <standard-annexure-right-side-bar :module_index_data="module_index_data"/>
+   
   </main>
   <!-- End #main -->
 </template>
@@ -350,6 +301,9 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import NavComponents from "../Cases/NavComponents.vue";
 import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
+import PageNumberSideBar from "../shared/PageNumberLeftSideBar.vue" 
+import StandardAnnexureRightSideBar from "../shared/StandardAnnexureRightSideBar.vue"
+
 
 export default {
   components: {
@@ -360,6 +314,8 @@ export default {
     Navigation,
     FileUpload,    
     NavComponents,
+    PageNumberSideBar, 
+    StandardAnnexureRightSideBar
   },
   data() {
     return {
@@ -372,7 +328,7 @@ export default {
       //id: this.$route.params.id, //this is the id from the browser
       horizontalView: false, //it will show vertical images by default
       activePage: null,
-      removePageHeader: false, 
+      removePageHeader: true, 
       module_type: this.$route.params.module_type,
       module_id: this.$route.params.module_id ,  
       model_type: "",  
@@ -385,7 +341,19 @@ export default {
   created() {
     this.getModuleIndexDetails();
   },
+  mounted(){
+    document.getElementById("header").style.display = "none";
+  },
   methods: {
+    pageHeader(){
+      this.removePageHeader = !this.removePageHeader;
+      if(this.removePageHeader){
+        document.getElementById("header").style.display = "none";
+      }else{
+        document.getElementById("header").style.display = "block";
+      }
+      
+    },   
     scrollIntoView(id) {
       // document
       //   .getElementById("image-container-" + id)

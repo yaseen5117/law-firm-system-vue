@@ -104,14 +104,14 @@ export default {
   },
   data() {
     return {
-      page_title: this.$route.params.id
+      page_title: this.$route.params.editable_naqal_form_id
         ? "Edit Naqal Form"
         : "Add New Naqal Form",
       base_url: process.env.VUE_APP_SERVICE_URL,
       naqal_form: {
         petition_id: this.$route.params.petition_id,
         naqal_form_type_id: "",
-        id: this.$route.params.id, //this is the id from the browser
+        id: this.$route.params.editable_naqal_form_id, //this is the id from the browser
         title: "",
         description: "",
       },
@@ -145,9 +145,44 @@ export default {
   created() {     
     this.getPetitionTypes();
     this.getPetition();
+    this.getEditableNaqalForm();
   },
   activated() {},
   methods: {
+    getEditableNaqalForm: function(){
+      if (this.$route.params.editable_naqal_form_id) {
+        var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+
+        axios
+          .get(
+            this.base_url + "/api/petition_naqal_forms/"+this.$route.params.editable_naqal_form_id,
+            
+            {
+              headers,
+            }
+          )
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                console.log("editable naqal from object: ",response.data.record ); 
+                this.naqal_form = response.data.record;
+              }
+            },
+            (error) => {
+              this.saving = false;
+              console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
+            }
+          );
+      }
+    },
     submitForm: function (event) {
       this.v$.$validate();
       if (!this.v$.$error) {
