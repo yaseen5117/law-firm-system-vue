@@ -1,30 +1,42 @@
 <template>
   <main id="main">
     <!-- ======= Breadcrumbs ======= -->
-    <page-header 
-    :title="'Naqal Forms'" 
-    :petition="petition" 
-    :hide="removePageHeader ? true : false"
-    />     
+    <page-header
+      :title="'Naqal Forms'"
+      :petition="petition"
+      :hide="removePageHeader ? true : false"
+    />
     <!-- End Breadcrumbs -->
     <section
       id="services"
       class="services section-bg"
       :class="removePageHeader ? '' : ''"
     >
-    <nav-components activeNavPill = 'naqal_forms' :petition_id="petition.id"  />
+      <nav-components activeNavPill="naqal_forms" :petition_id="petition.id" />
       <div class="container mt-2" data-aos="fade-up">
         <div class="row">
           <div class="col-12 mb-1">
             <!-- v-if="!removePageHeader" -->
-             <button v-if="removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm" style="margin-right: 2px" for="flexSwitchCheckDefault"
-                ><i class="fa fa-eye"></i> Show Header</button
-              >
-              <button v-if="!removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm" style="margin-right: 2px" for="flexSwitchCheckDefault"
-                ><i class="fa fa-eye-slash"></i> Hide Header</button
-              >
-          
-            <router-link               
+            <button
+              v-if="removePageHeader"
+              @click="pageHeader()"
+              class="btn btn-success btn-sm"
+              style="margin-right: 2px"
+              for="flexSwitchCheckDefault"
+            >
+              <i class="fa fa-eye"></i> Show Header
+            </button>
+            <button
+              v-if="!removePageHeader"
+              @click="pageHeader()"
+              class="btn btn-success btn-sm"
+              style="margin-right: 2px"
+              for="flexSwitchCheckDefault"
+            >
+              <i class="fa fa-eye-slash"></i> Hide Header
+            </button>
+
+            <router-link
               class="btn btn-primary btn-sm"
               :to="{
                 name: 'petition-naqal-forms-save',
@@ -36,20 +48,34 @@
 
             <div class="mt-4" v-if="NaqalFormActive">
               <div class="mb-4">
-                <p><strong>Title: </strong>{{ NaqalFormActive.title }}
-                <strong>Description: </strong
-                >{{ NaqalFormActive.description }}
-                <strong>Naqal Form Date: </strong
-                >{{ NaqalFormActive.naqal_form_date }}
-                <router-link
-                    class="btn btn-success btn-sm  action-btn"
+                <p>
+                  <strong>Title: </strong>{{ NaqalFormActive.title }}
+                  <strong>Description: </strong
+                  >{{ NaqalFormActive.description }}
+                  <strong>Naqal Form Date: </strong
+                  >{{ NaqalFormActive.naqal_form_date }}
+                  <router-link
+                    class="btn btn-success btn-sm action-btn"
                     :to="{
                       name: 'petition-naqal-forms-edit',
-                      params: { petition_id: petition.id ,  editable_naqal_form_id: NaqalFormActive.id },
+                      params: {
+                        petition_id: petition.id,
+                        editable_naqal_form_id: NaqalFormActive.id,
+                      },
                     }"
                   >
                     Edit
                   </router-link>
+                  <a
+                    class="btn btn-danger btn-sm action-btn"
+                    style="margin-left: 2px"
+                    @click="deletePetitionNaqalForm(NaqalFormActive.id)"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Delete"
+                  >
+                    Delete
+                  </a>
                 </p>
                 <file-upload
                   @afterUpload="getNaqalForm"
@@ -57,8 +83,8 @@
                   :attachmentable_id="NaqalFormActive.id"
                 />
               </div>
-              
-              <div >
+
+              <div>
                 <div
                   class="row mb-2 text-center"
                   :id="'image-container-' + attachment.id"
@@ -79,13 +105,21 @@
                         attachment.file_name
                       "
                     />
-                    <a :class="activePage == attachment.id ? 'active-img' : ''"
-                    v-if="attachment.mime_type == 'application/pdf'" :href="this.base_url +
-                      '/storage/attachments/' 
-                      +                     
-                      attachment.attachmentable_id +
-                      '/' +
-                      attachment.file_name" target="_blank"><u><span>Click to Open: </span>{{ attachment.title }}</u></a> 
+                    <a
+                      :class="activePage == attachment.id ? 'active-img' : ''"
+                      v-if="attachment.mime_type == 'application/pdf'"
+                      :href="
+                        this.base_url +
+                        '/storage/attachments/' +
+                        attachment.attachmentable_id +
+                        '/' +
+                        attachment.file_name
+                      "
+                      target="_blank"
+                      ><u
+                        ><span>Click to Open: </span>{{ attachment.title }}</u
+                      ></a
+                    >
                     <hr class="mt-4 mb-4" style="border: solid 3px" />
                   </div>
                 </div>
@@ -95,28 +129,40 @@
         </div>
       </div>
     </section>
-    <Sidebar  v-model:visible="visibleRight" position="right" class="p-sidebar-sm" :dismissable="false" :modal="false">
-      <div       
-      @show="!editView"       
-      
+    <Sidebar
+      v-model:visible="visibleRight"
+      position="right"
+      class="p-sidebar-sm"
+      :dismissable="false"
+      :modal="false"
     >
-      <ul class="list-group">
-        <router-link
-          v-for="naqal_form in naqal_forms"
-          :key="naqal_form"
-          :class="naqal_form_id == naqal_form.id ? 'active' : ''"
-          class="list-group-item"
-          :to="{
-            name: 'petition-naqal-forms-index',
-            params: { naqal_form_id: naqal_form.id, petition_id: petition.id },
-          }"
-          >{{ naqal_form.naqal_form_date }}</router-link
-        >
-      </ul>
-    </div>
-    </Sidebar>     
+      <div @show="!editView">
+        <ul class="list-group">
+          <router-link
+            v-for="naqal_form in naqal_forms"
+            :key="naqal_form"
+            :class="naqal_form_id == naqal_form.id ? 'active' : ''"
+            class="list-group-item"
+            :to="{
+              name: 'petition-naqal-forms-index',
+              params: {
+                naqal_form_id: naqal_form.id,
+                petition_id: petition.id,
+              },
+            }"
+            >{{ naqal_form.naqal_form_date }}</router-link
+          >
+        </ul>
+      </div>
+    </Sidebar>
     <div class="sidebarindexswitch">
-      <button v-tooltip="'Show Annexsures'" class="btn sidebar-btn" @click="visibleRight = true" ><i class="fa fa-angle-left"></i></button>
+      <button
+        v-tooltip="'Show Annexsures'"
+        class="btn sidebar-btn"
+        @click="visibleRight = true"
+      >
+        <i class="fa fa-angle-left"></i>
+      </button>
     </div>
   </main>
   <!-- End #main -->
@@ -155,25 +201,24 @@ export default {
       horizontalView: false, //it will show vertical images by default
       activePage: null,
       removePageHeader: true,
-      visibleRight:true, 
+      visibleRight: true,
     };
   },
   created() {
     this.getNaqalForms();
   },
-  mounted(){
+  mounted() {
     document.getElementById("header").style.display = "none";
   },
   methods: {
-    pageHeader(){
+    pageHeader() {
       this.removePageHeader = !this.removePageHeader;
-      if(this.removePageHeader){
+      if (this.removePageHeader) {
         document.getElementById("header").style.display = "none";
-      }else{
+      } else {
         document.getElementById("header").style.display = "block";
       }
-      
-    },   
+    },
     scrollIntoView(id) {
       // document
       //   .getElementById("image-container-" + id)
@@ -189,15 +234,14 @@ export default {
     },
     getNaqalForms() {
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       axios
         .get(
           this.base_url +
             "/api/petition_naqal_forms?petition_id=" +
             this.petition_id,
-            {headers}
+          { headers }
         )
         .then((response) => {
           this.naqal_forms = response.data.records;
@@ -229,8 +273,8 @@ export default {
         )
         .then((response) => {
           this.NaqalFormActive = response.data.record;
-        consol.log("success");
-        consol.log(this.NaqalFormActive);
+          consol.log("success");
+          consol.log(this.NaqalFormActive);
           this.getCaseDetails();
         })
         .catch((error) => {
@@ -240,11 +284,10 @@ export default {
 
     getCaseDetails() {
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       axios
-        .get(this.base_url + "/api/petitions/" + this.petition_id, {headers})
+        .get(this.base_url + "/api/petitions/" + this.petition_id, { headers })
         .then((response) => {
           this.petition = response.data.petition;
         })
@@ -256,8 +299,7 @@ export default {
     editPetitionAttachment(attachmentToUpdate) {
       if (true) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
@@ -290,15 +332,14 @@ export default {
           );
       }
     },
-    deletePetitionAttachment(petitionId, attachmentIndex) {
+    deletePetitionNaqalForm(naqalFormId) {
       if (confirm("Do you really want to delete?")) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
-          .delete(this.base_url + "/api/attachments/" + petitionId, {
+          .delete(this.base_url + "/api/petition_naqal_forms/" + naqalFormId, {
             headers,
           })
           .then(
@@ -309,11 +350,11 @@ export default {
                   title: "Success",
                   text: "Deleted Successfully!",
                 });
-                //this.getNaqalForms()
-                this.petition_index_details.attachments.splice(
-                  attachmentIndex,
-                  1
-                ); //removing record from list/index after deleting record from DB
+                this.getNaqalForms();
+                // this.petition_index_details.attachments.splice(
+                //   attachmentIndex,
+                //   1
+                // ); //removing record from list/index after deleting record from DB
               }
             },
             (error) => {
@@ -331,5 +372,5 @@ export default {
 };
 </script>
 
-<style> 
+<style>
 </style>

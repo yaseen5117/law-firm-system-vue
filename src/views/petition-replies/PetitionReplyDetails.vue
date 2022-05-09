@@ -12,7 +12,7 @@
       id="services"
       class="services section-bg"
       :class="removePageHeader ? '' : ''"
-    >      
+    >
       <div class="container mt-2" data-aos="fade-up">
         <div class="row mb-4">
           <div class="col-12">
@@ -355,7 +355,7 @@ export default {
   created() {
     this.getPetitionReplyDetails();
   },
-  mounted(){
+  mounted() {
     document.getElementById("header").style.display = "none";
   },
   methods: {

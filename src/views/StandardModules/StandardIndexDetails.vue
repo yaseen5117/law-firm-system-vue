@@ -5,26 +5,37 @@
       :title="index_detail_data.document_description"
       :petition="petition"
       :hide="removePageHeader ? true : false"
-    />   
+    />
     <!-- End Breadcrumbs -->
-    <nav-components :activeNavPill="module_type" :petition_id="petition.id"  />
+    <nav-components :activeNavPill="module_type" :petition_id="petition.id" />
     <section
       id="services"
       class="services section-bg"
       :class="removePageHeader ? '' : ''"
     >
-    
       <div class="container mt-2" data-aos="fade-up">
         <div class="row mb-2">
           <div class="col-12">
             <!-- v-if="!removePageHeader" -->
-             <button v-if="removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm mb-2" style="margin-right: 2px" for="flexSwitchCheckDefault"
-                ><i class="fa fa-eye"></i> Show Header</button
-              >
-              <button v-if="!removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm mb-2" style="margin-right: 2px" for="flexSwitchCheckDefault"
-                ><i class="fa fa-eye-slash"></i> Hide Header</button
-              > 
-          
+            <button
+              v-if="removePageHeader"
+              @click="pageHeader()"
+              class="btn btn-success btn-sm mb-2"
+              style="margin-right: 2px"
+              for="flexSwitchCheckDefault"
+            >
+              <i class="fa fa-eye"></i> Show Header
+            </button>
+            <button
+              v-if="!removePageHeader"
+              @click="pageHeader()"
+              class="btn btn-success btn-sm mb-2"
+              style="margin-right: 2px"
+              for="flexSwitchCheckDefault"
+            >
+              <i class="fa fa-eye-slash"></i> Hide Header
+            </button>
+
             <button
               v-show="!showImgCard"
               @click="showImgCard = true"
@@ -65,31 +76,31 @@
               Cancel
             </button>
           </div>
-          <div
-            class="col-lg-12 col-md-12 col-sm-12"
-            v-show="showImgCard"
-          >
+          <div class="col-lg-12 col-md-12 col-sm-12" v-show="showImgCard">
             <file-upload
               @afterUpload="getModuleIndexDetails"
               :type="model_type"
-              :attachmentable_id= "module_id"
+              :attachmentable_id="module_id"
             />
           </div>
-        </div>        
+        </div>
         <div class="row">
           <div class="col-12">
-             
             <div v-show="!horizontalView && !editView">
               <div
                 class="row mb-2 text-center"
-                :id="'image-container-' + (index_attachment+1)"
-                v-for="(attachment, index_attachment) in index_detail_data.attachments"
+                :id="'image-container-' + (index_attachment + 1)"
+                v-for="(
+                  attachment, index_attachment
+                ) in index_detail_data.attachments"
                 :key="attachment"
               >
                 <div class="col-12">
                   <img
                     v-if="attachment.mime_type != 'application/pdf'"
-                    :class="activePage == (index_attachment+1) ? 'active-img' : ''"
+                    :class="
+                      activePage == index_attachment + 1 ? 'active-img' : ''
+                    "
                     class="img-fluid"
                     style="width: 90%"
                     :src="
@@ -100,13 +111,23 @@
                       attachment.file_name
                     "
                   />
-                  <a :class="activePage == (index_attachment+1) ? 'active-img' : ''"
-                   v-if="attachment.mime_type == 'application/pdf'" :href="this.base_url +
-                      '/storage/attachments/' 
-                      +                     
+                  <a
+                    :class="
+                      activePage == index_attachment + 1 ? 'active-img' : ''
+                    "
+                    v-if="attachment.mime_type == 'application/pdf'"
+                    :href="
+                      this.base_url +
+                      '/storage/attachments/' +
                       this.$route.params.module_id +
                       '/' +
-                      attachment.file_name" target="_blank"><u><span>Click to Open: </span>{{ attachment.title }}</u></a> 
+                      attachment.file_name
+                    "
+                    target="_blank"
+                    ><u
+                      ><span>Click to Open: </span>{{ attachment.title }}</u
+                    ></a
+                  >
                   <hr class="mt-4 mb-4" style="border: solid 3px" />
                 </div>
               </div>
@@ -143,13 +164,13 @@
                         <th>Actions</th>
                       </thead>
                       <tbody>
-                        <tr                          
+                        <tr
                           v-for="(
                             attachment, attachmentIndex
                           ) in index_detail_data.attachments"
                           :key="attachment"
                         >
-                         <td>
+                          <td>
                             <div class="checkbox">
                               <input
                                 type="checkbox"
@@ -188,9 +209,9 @@
                               v-show="!attachment.editMode"
                               :to="{
                                 name: 'standard-index-details',
-                                params: { 
+                                params: {
                                   module_id: attachment.id,
-                                  module_type: module_type 
+                                  module_type: module_type,
                                 },
                               }"
                               >{{ attachment.title }}
@@ -210,9 +231,9 @@
                               v-show="!attachment.editMode"
                               :to="{
                                 name: 'standard-index-details',
-                                params: { 
+                                params: {
                                   module_id: attachment.id,
-                                  module_type: module_type 
+                                  module_type: module_type,
                                 },
                               }"
                               >{{ attachment.display_order }}
@@ -286,10 +307,9 @@
         </div>
       </div>
     </section>
-    <page-number-side-bar :petition_index_details="index_detail_data"/>
-    
-    <standard-annexure-right-side-bar :module_index_data="module_index_data"/>
-   
+    <page-number-side-bar :petition_index_details="index_detail_data" />
+
+    <standard-annexure-right-side-bar :module_index_data="module_index_data" />
   </main>
   <!-- End #main -->
 </template>
@@ -301,9 +321,8 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import NavComponents from "../Cases/NavComponents.vue";
 import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
-import PageNumberSideBar from "../shared/PageNumberLeftSideBar.vue" 
-import StandardAnnexureRightSideBar from "../shared/StandardAnnexureRightSideBar.vue"
-
+import PageNumberSideBar from "../shared/PageNumberLeftSideBar.vue";
+import StandardAnnexureRightSideBar from "../shared/StandardAnnexureRightSideBar.vue";
 
 export default {
   components: {
@@ -312,10 +331,10 @@ export default {
     Slide,
     Pagination,
     Navigation,
-    FileUpload,    
+    FileUpload,
     NavComponents,
-    PageNumberSideBar, 
-    StandardAnnexureRightSideBar
+    PageNumberSideBar,
+    StandardAnnexureRightSideBar,
   },
   data() {
     return {
@@ -328,32 +347,31 @@ export default {
       //id: this.$route.params.id, //this is the id from the browser
       horizontalView: false, //it will show vertical images by default
       activePage: null,
-      removePageHeader: true, 
+      removePageHeader: true,
       module_type: this.$route.params.module_type,
-      module_id: this.$route.params.module_id ,  
-      model_type: "",  
+      module_id: this.$route.params.module_id,
+      model_type: "",
       selected_attachment_ids: [],
       selectedAllToDelete: false,
-      showDeleteBtn: false,   
-      isShowPageNumOnMobile: true
+      showDeleteBtn: false,
+      isShowPageNumOnMobile: true,
     };
   },
   created() {
     this.getModuleIndexDetails();
   },
-  mounted(){
+  mounted() {
     document.getElementById("header").style.display = "none";
   },
   methods: {
-    pageHeader(){
+    pageHeader() {
       this.removePageHeader = !this.removePageHeader;
-      if(this.removePageHeader){
+      if (this.removePageHeader) {
         document.getElementById("header").style.display = "none";
-      }else{
+      } else {
         document.getElementById("header").style.display = "block";
       }
-      
-    },   
+    },
     scrollIntoView(id) {
       // document
       //   .getElementById("image-container-" + id)
@@ -367,14 +385,20 @@ export default {
       //document.getElementById("image-container-" + id).style.border="solid 1px red"
       this.activePage = id;
     },
-    async getModuleIndexDetails() {       
+    async getModuleIndexDetails() {
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       await axios
-        .post(this.base_url + "/api/module_index_details_"+this.module_type+"/" + this.module_id, {headers})
-        .then((response) => {             
+        .post(
+          this.base_url +
+            "/api/module_index_details_" +
+            this.module_type +
+            "/" +
+            this.module_id,
+          { headers }
+        )
+        .then((response) => {
           this.index_detail_data = response.data.index_detail_data;
           this.petition = response.data.petition;
           this.model_type = response.data.model_type;
@@ -388,12 +412,13 @@ export default {
 
     async getModuleAnnexure(petition_id) {
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       await axios
-        .get(this.base_url + "/api/"+this.module_type+"/" + petition_id, {headers})
-        .then((response) => {            
+        .get(this.base_url + "/api/" + this.module_type + "/" + petition_id, {
+          headers,
+        })
+        .then((response) => {
           this.module_index_data = response.data.index_annexure_data;
           var arr = [];
           this.module_index_data.forEach((element) => {
@@ -411,8 +436,7 @@ export default {
     editPetitionAttachment(attachmentToUpdate) {
       if (true) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
@@ -465,10 +489,7 @@ export default {
                   text: "Deleted Successfully!",
                 });
                 //this.getModuleIndexDetails()
-                this.index_detail_data.attachments.splice(
-                  attachmentIndex,
-                  1
-                ); //removing record from list/index after deleting record from DB
+                this.index_detail_data.attachments.splice(attachmentIndex, 1); //removing record from list/index after deleting record from DB
               }
             },
             (error) => {
@@ -483,41 +504,46 @@ export default {
       }
     },
     //select all to delete all
-    selectAllToDelete() {      
+    selectAllToDelete() {
       this.selected_attachment_ids = [];
       if (!this.selectedAllToDelete) {
         this.showDeleteBtn = true;
         for (let i in this.index_detail_data.attachments) {
-          this.selected_attachment_ids.push(this.index_detail_data.attachments[i].id);
+          this.selected_attachment_ids.push(
+            this.index_detail_data.attachments[i].id
+          );
         }
-      }else{
+      } else {
         this.showDeleteBtn = false;
       }
     },
     updateCheckall: function () {
       if (
-        this.index_detail_data.attachments.length == this.selected_attachment_ids.length
-      ) {        
-        this.selectedAllToDelete = true;  
-            
-      } else if(!this.selected_attachment_ids.length){
-        this.showDeleteBtn = false;   
-      }
-       else {    
-        this.showDeleteBtn = true;    
+        this.index_detail_data.attachments.length ==
+        this.selected_attachment_ids.length
+      ) {
+        this.selectedAllToDelete = true;
+      } else if (!this.selected_attachment_ids.length) {
+        this.showDeleteBtn = false;
+      } else {
+        this.showDeleteBtn = true;
         this.selectedAllToDelete = false;
       }
     },
-    deleteAll(){
+    deleteAll() {
       if (confirm("Do you really want to delete?")) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
-          .post(this.base_url + "/api/delete_selected", this.selected_attachment_ids, {
-            headers,
-          })
+          .post(
+            this.base_url + "/api/delete_selected",
+            this.selected_attachment_ids,
+            {
+              headers,
+            }
+          )
           .then(
             (response) => {
               if (response.status === 200) {
@@ -525,9 +551,9 @@ export default {
                   type: "success",
                   title: "Success",
                   text: "Deleted Successfully!",
-                });  
+                });
                 this.showDeleteBtn = false;
-                this.getModuleIndexDetails(); //Reload all records from DB   
+                this.getModuleIndexDetails(); //Reload all records from DB
               }
             },
             (error) => {
@@ -541,7 +567,7 @@ export default {
           );
       }
     },
-    showPageNumbers(){               
+    showPageNumbers() {
       this.isShowPageNumOnMobile = !this.isShowPageNumOnMobile;
     },
   },

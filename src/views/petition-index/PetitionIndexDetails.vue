@@ -12,7 +12,7 @@
       id="services"
       class="services section-bg"
       :class="removePageHeader ? '' : ''"
-    >      
+    >
       <div class="container mt-2" data-aos="fade-up">
         <div class="row mb-2">
           <div class="col-12">

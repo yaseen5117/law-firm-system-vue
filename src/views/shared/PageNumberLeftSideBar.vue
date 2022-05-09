@@ -36,7 +36,7 @@
 
 <script>
 export default {
-    props: ["petition_index_details"],
+  props: ["petition_index_details"],
   data() {
     return {
       visibleLeft: false,

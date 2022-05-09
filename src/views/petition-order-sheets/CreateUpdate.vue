@@ -2,7 +2,7 @@
   <main id="main">
     <page-header :title="page_title" :order_sheet="null" :petition="petition" />
     <section id="services" class="services section-bg">
-      <div class="container" >
+      <div class="container">
         <div class="row">
           <div class="col-12">
             <form @submit.prevent="submitForm($event)">
@@ -25,10 +25,12 @@
                     >
                   </div>
 
-                   <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label>Order Sheet Date<span style="color: red">*</span></label>
-                   
-                     <InputMask
+                  <div class="col-lg-3 col-md-3 col-sm-12">
+                    <label
+                      >Order Sheet Date<span style="color: red">*</span></label
+                    >
+
+                    <InputMask
                       mask="99/99/9999"
                       class="form-control"
                       type="text"
@@ -39,7 +41,7 @@
                       }"
                       @blur="v$.order_sheet.order_sheet_date.$touch"
                     />
-                     <span
+                    <span
                       v-if="v$.order_sheet.order_sheet_date.$error"
                       class="errorMessage"
                       >Date field is required.</span
@@ -47,9 +49,9 @@
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Type</label>
-                    <select                     
+                    <select
                       class="form-control"
-                      v-model="order_sheet.order_sheet_type_id"                      
+                      v-model="order_sheet.order_sheet_type_id"
                     >
                       <option value="">--Select--</option>
                       <option
@@ -59,8 +61,7 @@
                       >
                         {{ order_sheet_type.title }}
                       </option>
-                    </select> 
-                                 
+                    </select>
                   </div>
                 </div>
               </div>
@@ -76,11 +77,12 @@
                   </div>
                 </div>
               </div>
-            
+
               <div class="form-group">
-                <button :disabled="saving" class="btn btn-success btn-sm mt-2">Save</button>
+                <button :disabled="saving" class="btn btn-success btn-sm mt-2">
+                  Save
+                </button>
               </div>
-              
             </form>
           </div>
         </div>
@@ -116,7 +118,7 @@ export default {
         title: "",
         description: "",
       },
-      petition:{},
+      petition: {},
       petition_types: [],
       order_sheet_types: [
         {
@@ -137,7 +139,7 @@ export default {
   },
   validations() {
     return {
-      order_sheet: {        
+      order_sheet: {
         order_sheet_date: { required },
         title: { required },
       },
@@ -152,17 +154,18 @@ export default {
   },
   activated() {},
   methods: {
-    getEditableOrderSheet: function(){
+    getEditableOrderSheet: function () {
       if (this.$route.params.editable_order_sheet_id) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
           .get(
-            this.base_url + "/api/petition_order_sheets/"+this.$route.params.editable_order_sheet_id,
-            
+            this.base_url +
+              "/api/petition_order_sheets/" +
+              this.$route.params.editable_order_sheet_id,
+
             {
               headers,
             }
@@ -170,7 +173,10 @@ export default {
           .then(
             (response) => {
               if (response.status === 200) {
-                console.log("editable ordersheet object: ",response.data.record ); 
+                console.log(
+                  "editable ordersheet object: ",
+                  response.data.record
+                );
                 this.order_sheet = response.data.record;
               }
             },
@@ -192,8 +198,7 @@ export default {
         event.preventDefault();
         this.saving = true;
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
@@ -213,7 +218,13 @@ export default {
                   text: "Saved Successfully!",
                 });
                 this.saving = false;
-                this.$router.push({ path: "/petition-order-sheets-index/"+ this.order_sheet.petition_id+"/"+response.data.petitionOrderSheet.id});
+                this.$router.push({
+                  path:
+                    "/petition-order-sheets-index/" +
+                    this.order_sheet.petition_id +
+                    "/" +
+                    response.data.petitionOrderSheet.id,
+                });
               }
               console.log(response);
             },
@@ -232,11 +243,10 @@ export default {
     async getUsers() {
       let url = this.base_url + "/api/clients";
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       await axios
-        .get(url, {headers})
+        .get(url, { headers })
         .then((response) => {
           this.clients = response.data.users;
           console.log(this.users);
@@ -248,11 +258,10 @@ export default {
     async getCourts() {
       let url = this.base_url + "/api/courts";
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       await axios
-        .get(url, {headers})
+        .get(url, { headers })
         .then((response) => {
           this.courts = response.data.courts;
           console.log(this.courts);
@@ -264,11 +273,10 @@ export default {
     async getPetitionTypes() {
       let url = this.base_url + "/api/petition_types";
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       await axios
-        .get(url, {headers})
+        .get(url, { headers })
         .then((response) => {
           this.petition_types = response.data.petition_types;
           console.log(this.petition_types);
@@ -278,15 +286,14 @@ export default {
         });
     },
     getPetition() {
-      
       if (this.$route.params.petition_id) {
-        var url = this.base_url + "/api/petitions/" + this.$route.params.petition_id;
+        var url =
+          this.base_url + "/api/petitions/" + this.$route.params.petition_id;
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
         axios
-          .get(url, {headers})
+          .get(url, { headers })
           .then((response) => {
             this.petition = response.data.petition;
             this.opponents = [{}];
@@ -300,5 +307,5 @@ export default {
 };
 </script>
 
-<style> 
+<style>
 </style>

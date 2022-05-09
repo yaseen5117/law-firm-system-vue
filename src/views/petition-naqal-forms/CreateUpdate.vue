@@ -18,28 +18,28 @@
                       }"
                       @blur="v$.naqal_form.title.$touch"
                     />
-                    <span
-                      v-if="v$.naqal_form.title.$error"
-                      class="errorMessage"
+                    <span v-if="v$.naqal_form.title.$error" class="errorMessage"
                       >Title field is required.</span
                     >
                   </div>
 
-                   <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label>Naqal Form Date<span style="color: red">*</span></label>
-                   
-                     <InputMask
+                  <div class="col-lg-3 col-md-3 col-sm-12">
+                    <label
+                      >Naqal Form Date<span style="color: red">*</span></label
+                    >
+
+                    <InputMask
                       mask="99/99/9999"
                       class="form-control"
                       type="text"
-                     placeholder="dd/mm/yyyy"
+                      placeholder="dd/mm/yyyy"
                       v-model="naqal_form.naqal_form_date"
                       v-bind:class="{
                         'error-boarder': v$.naqal_form.naqal_form_date.$error,
                       }"
                       @blur="v$.naqal_form.naqal_form_date.$touch"
                     />
-                     <span
+                    <span
                       v-if="v$.naqal_form.naqal_form_date.$error"
                       class="errorMessage"
                       >Date field is required.</span
@@ -47,7 +47,7 @@
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Type</label>
-                    <select                     
+                    <select
                       class="form-control"
                       v-model="naqal_form.naqal_form_type_id"
                     >
@@ -59,7 +59,7 @@
                       >
                         {{ naqal_form_type.title }}
                       </option>
-                    </select>                    
+                    </select>
                   </div>
                 </div>
               </div>
@@ -75,11 +75,12 @@
                   </div>
                 </div>
               </div>
-            
+
               <div class="form-group">
-                <button :disabled="saving" class="btn btn-success btn-sm mt-2">Save</button>
+                <button :disabled="saving" class="btn btn-success btn-sm mt-2">
+                  Save
+                </button>
               </div>
-              
             </form>
           </div>
         </div>
@@ -115,7 +116,7 @@ export default {
         title: "",
         description: "",
       },
-      petition:{},
+      petition: {},
       petition_types: [],
       naqal_form_types: [
         {
@@ -142,24 +143,25 @@ export default {
       },
     };
   },
-  created() {     
+  created() {
     this.getPetitionTypes();
     this.getPetition();
     this.getEditableNaqalForm();
   },
   activated() {},
   methods: {
-    getEditableNaqalForm: function(){
+    getEditableNaqalForm: function () {
       if (this.$route.params.editable_naqal_form_id) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
           .get(
-            this.base_url + "/api/petition_naqal_forms/"+this.$route.params.editable_naqal_form_id,
-            
+            this.base_url +
+              "/api/petition_naqal_forms/" +
+              this.$route.params.editable_naqal_form_id,
+
             {
               headers,
             }
@@ -167,7 +169,10 @@ export default {
           .then(
             (response) => {
               if (response.status === 200) {
-                console.log("editable naqal from object: ",response.data.record ); 
+                console.log(
+                  "editable naqal from object: ",
+                  response.data.record
+                );
                 this.naqal_form = response.data.record;
               }
             },
@@ -189,18 +194,13 @@ export default {
         event.preventDefault();
         this.saving = true;
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
-          .post(
-            this.base_url + "/api/petition_naqal_forms",
-            this.naqal_form,
-            {
-              headers,
-            }
-          )
+          .post(this.base_url + "/api/petition_naqal_forms", this.naqal_form, {
+            headers,
+          })
           .then(
             (response) => {
               if (response.status === 200) {
@@ -210,7 +210,13 @@ export default {
                   text: "Saved Successfully!",
                 });
                 this.saving = false;
-                this.$router.push({ path: "/petition-naqal-forms-index/"+ this.naqal_form.petition_id+"/"+response.data.PetitionNaqalForm.id});
+                this.$router.push({
+                  path:
+                    "/petition-naqal-forms-index/" +
+                    this.naqal_form.petition_id +
+                    "/" +
+                    response.data.PetitionNaqalForm.id,
+                });
               }
               console.log(response);
             },
@@ -225,16 +231,15 @@ export default {
             }
           );
       }
-    },    
-    
+    },
+
     async getPetitionTypes() {
       let url = this.base_url + "/api/petition_types";
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       await axios
-        .get(url, {headers})
+        .get(url, { headers })
         .then((response) => {
           this.petition_types = response.data.petition_types;
           console.log(this.petition_types);
@@ -246,12 +251,12 @@ export default {
     getPetition() {
       if (this.$route.params.petition_id) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
-        var url = this.base_url + "/api/petitions/" + this.$route.params.petition_id;
+        var url =
+          this.base_url + "/api/petitions/" + this.$route.params.petition_id;
         axios
-          .get(url, {headers})
+          .get(url, { headers })
           .then((response) => {
             this.petition = response.data.petition;
             this.opponents = [{}];
@@ -265,5 +270,5 @@ export default {
 };
 </script>
 
-<style> 
+<style>
 </style>
