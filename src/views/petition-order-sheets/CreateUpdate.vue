@@ -49,11 +49,7 @@
                     <label>Type</label>
                     <select                     
                       class="form-control"
-                      v-model="order_sheet.order_sheet_type_id"
-                      v-bind:class="{
-                        'error-boarder': v$.order_sheet.order_sheet_type_id.$error,
-                      }"
-                      @blur="v$.order_sheet.order_sheet_type_id.$touch"
+                      v-model="order_sheet.order_sheet_type_id"                      
                     >
                       <option value="">--Select--</option>
                       <option
@@ -63,12 +59,8 @@
                       >
                         {{ order_sheet_type.title }}
                       </option>
-                    </select>  
-                    <span
-                      v-if="v$.order_sheet.order_sheet_type_id.$error"
-                      class="errorMessage"
-                      >Type field is required.</span
-                    >                  
+                    </select> 
+                                 
                   </div>
                 </div>
               </div>
@@ -145,8 +137,7 @@ export default {
   },
   validations() {
     return {
-      order_sheet: {
-        order_sheet_type_id: { required },
+      order_sheet: {        
         order_sheet_date: { required },
         title: { required },
       },
@@ -222,8 +213,7 @@ export default {
                   text: "Saved Successfully!",
                 });
                 this.saving = false;
-                console.log("saved changes...");
-                this.$router.push({ path: "/petition-order-sheets-index/"+ this.order_sheet.petition_id});
+                this.$router.push({ path: "/petition-order-sheets-index/"+ this.order_sheet.petition_id+"/"+response.data.petitionOrderSheet.id});
               }
               console.log(response);
             },

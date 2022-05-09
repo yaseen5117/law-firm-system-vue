@@ -26,7 +26,7 @@
   <div class="sidebarswitch">
     <button
       v-tooltip="'Show Page Numbers'"
-      class="btn btn-success sidebar-btn"
+      class="btn sidebar-btn"
       @click="visibleLeft = true"
     >
       <i class="fa fa-angle-right"></i>

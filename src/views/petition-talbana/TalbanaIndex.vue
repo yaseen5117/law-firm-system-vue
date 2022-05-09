@@ -36,12 +36,21 @@
 
             <div class="mt-4" v-if="TalbanaActive">
               <div v-if="!removePageHeader" class="mb-4">
-                <strong>Title: </strong>{{ TalbanaActive.title }}
+                <p><strong>Title: </strong>{{ TalbanaActive.title }}
                 <strong>Description: </strong
                 >{{ TalbanaActive.description }}
                 <strong>Talbana Date: </strong
                 >{{ TalbanaActive.talbana_date }}
-
+                <router-link
+                    class="btn btn-success btn-sm  action-btn"
+                    :to="{
+                      name: 'petition-talbana-edit',
+                      params: { petition_id: petition.id ,  editable_talbana_id: TalbanaActive.id },
+                    }"
+                  >
+                    Edit
+                  </router-link>
+                </p>
                 <file-upload
                   @afterUpload="getTalbana"
                   type="App\Models\PetitionTalbana"
@@ -107,7 +116,7 @@
         </div>
         </Sidebar>      
         <div class="sidebarindexswitch">
-        <button v-tooltip="'Show Annexsures'" class="btn btn-success sidebar-btn" @click="visibleRight = true" ><i class="fa fa-angle-left"></i></button>
+        <button v-tooltip="'Show Annexsures'" class="btn sidebar-btn" @click="visibleRight = true" ><i class="fa fa-angle-left"></i></button>
       </div>
   </main>
   <!-- End #main -->

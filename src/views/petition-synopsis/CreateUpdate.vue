@@ -104,14 +104,14 @@ export default {
   },
   data() {
     return {
-      page_title: this.$route.params.id
+      page_title: this.$route.params.editable_synopsis_id
         ? "Edit Synopsis"
         : "Add New Synopsis",
       base_url: process.env.VUE_APP_SERVICE_URL,
       synopsis: {
         petition_id: this.$route.params.petition_id,
         synopsis_type_id: "",
-        id: this.$route.params.id, //this is the id from the browser
+        id: this.$route.params.editable_synopsis_id, //this is the id from the browser
         title: "",
         description: "",
       },
@@ -145,9 +145,44 @@ export default {
   created() {     
     this.getPetitionTypes();
     this.getPetition();
+    this.getEditableSynopsis();
   },
   activated() {},
   methods: {
+    getEditableSynopsis: function(){
+      if (this.$route.params.editable_synopsis_id) {
+        var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+
+        axios
+          .get(
+            this.base_url + "/api/petition_synopsis/"+this.$route.params.editable_synopsis_id,
+            
+            {
+              headers,
+            }
+          )
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                console.log("editable synopsis object: ",response.data.record ); 
+                this.synopsis = response.data.record;
+              }
+            },
+            (error) => {
+              this.saving = false;
+              console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
+            }
+          );
+      }
+    },
     submitForm: function (event) {
       this.v$.$validate();
       if (!this.v$.$error) {
@@ -175,7 +210,7 @@ export default {
                   text: "Saved Successfully!",
                 });
                 this.saving = false;
-                this.$router.push({ path: "/petition-synopsis-index/"+ this.synopsis.petition_id});
+                this.$router.push({ path: "/petition-synopsis-index/"+ this.synopsis.petition_id+"/"+response.data.petitionSynopsis.id});
               }
               console.log(response);
             },
