@@ -218,6 +218,14 @@ const routes = [
       auth: true ,
     },
   },
+  {
+    path: '/petition-naqal-forms-edit/:petition_id/:editable_naqal_form_id',
+    name: 'petition-naqal-forms-edit',    
+    component: PetitionNaqalFormCreateUpdate,
+    meta: { 
+      auth: true ,
+    },
+  },
   //////////////// NAQAL FORMS ROUTES /////////////
 
   

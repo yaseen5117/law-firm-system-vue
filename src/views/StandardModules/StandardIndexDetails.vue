@@ -7,32 +7,24 @@
       :hide="removePageHeader ? true : false"
     />   
     <!-- End Breadcrumbs -->
+    <nav-components :activeNavPill="module_type" :petition_id="petition.id"  />
     <section
       id="services"
       class="services section-bg"
-      :class="removePageHeader ? 'margintop85' : ''"
+      :class="removePageHeader ? '' : ''"
     >
-    <nav-components :activeNavPill="module_type" :petition_id="petition.id"  />
-      <div class="container mt-4" data-aos="fade-up">
+    
+      <div class="container mt-2" data-aos="fade-up">
         <div class="row mb-2">
-          <div class="col-12 mb-1">
-            <div class="form-check form-switch">
-              <input
-                @change="removePageHeader = !removePageHeader"
-                class="form-check-input"
-                type="checkbox"
-                role="switch"
-                id="flexSwitchCheckDefault"
-              />
-              <label v-if="removePageHeader" class="form-check-label" for="flexSwitchCheckDefault"
-                >Show Header</label
+          <div class="col-12">
+            <!-- v-if="!removePageHeader" -->
+             <button v-if="removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm mb-2" style="margin-right: 2px" for="flexSwitchCheckDefault"
+                ><i class="fa fa-eye"></i> Show Header</button
               >
-              <label v-if="!removePageHeader" class="form-check-label" for="flexSwitchCheckDefault"
-                >Hide Header</label
-              >
-            </div>
-          </div>
-          <div v-if="!removePageHeader" class="col-12">
+              <button v-if="!removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm mb-2" style="margin-right: 2px" for="flexSwitchCheckDefault"
+                ><i class="fa fa-eye-slash"></i> Hide Header</button
+              > 
+          
             <button
               v-show="!showImgCard"
               @click="showImgCard = true"
@@ -336,7 +328,7 @@ export default {
       //id: this.$route.params.id, //this is the id from the browser
       horizontalView: false, //it will show vertical images by default
       activePage: null,
-      removePageHeader: false, 
+      removePageHeader: true, 
       module_type: this.$route.params.module_type,
       module_id: this.$route.params.module_id ,  
       model_type: "",  
@@ -349,7 +341,19 @@ export default {
   created() {
     this.getModuleIndexDetails();
   },
+  mounted(){
+    document.getElementById("header").style.display = "none";
+  },
   methods: {
+    pageHeader(){
+      this.removePageHeader = !this.removePageHeader;
+      if(this.removePageHeader){
+        document.getElementById("header").style.display = "none";
+      }else{
+        document.getElementById("header").style.display = "block";
+      }
+      
+    },   
     scrollIntoView(id) {
       // document
       //   .getElementById("image-container-" + id)

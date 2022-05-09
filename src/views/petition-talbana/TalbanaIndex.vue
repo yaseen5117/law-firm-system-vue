@@ -10,31 +10,21 @@
     <section
       id="services"
       class="services section-bg"
-      :class="removePageHeader ? 'margintop85' : ''"
+      :class="removePageHeader ? '' : ''"
     >
     <nav-components activeNavPill = 'talbana' :petition_id="petition.id"  />
-      <div class="container mt-4" data-aos="fade-up">
+      <div class="container mt-2" data-aos="fade-up">
         <div class="row">
           <div class="col-12 mb-1">
-            <div class="form-check form-switch">
-              <input
-                @change="removePageHeader = !removePageHeader"
-                class="form-check-input"
-                type="checkbox"
-                role="switch"
-                id="flexSwitchCheckDefault"
-              />
-              <label v-if="removePageHeader" class="form-check-label" for="flexSwitchCheckDefault"
-                >Show Header</label
+            <!-- v-if="!removePageHeader" -->
+             <button v-if="removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm" style="margin-right: 2px" for="flexSwitchCheckDefault"
+                ><i class="fa fa-eye"></i> Show Header</button
               >
-              <label v-if="!removePageHeader" class="form-check-label" for="flexSwitchCheckDefault"
-                >Hide Header</label
+              <button v-if="!removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm" style="margin-right: 2px" for="flexSwitchCheckDefault"
+                ><i class="fa fa-eye-slash"></i> Hide Header</button
               >
-            </div>
-          </div>
-          <div class="col-md-12 mb-4">
-            <router-link
-              v-if="!removePageHeader"
+          
+            <router-link               
               class="btn btn-primary btn-sm"
               :to="{
                 name: 'petition-talbana-save',
@@ -155,14 +145,26 @@ export default {
       petition_id: this.$route.params.petition_id, //this is the id from the browser
       horizontalView: false, //it will show vertical images by default
       activePage: null,
-      removePageHeader: false,
+      removePageHeader: true,
       visibleRight:true, 
     };
   },
   created() {
     this.getTalbanas();
   },
+  mounted(){
+    document.getElementById("header").style.display = "none";
+  },
   methods: {
+    pageHeader(){
+      this.removePageHeader = !this.removePageHeader;
+      if(this.removePageHeader){
+        document.getElementById("header").style.display = "none";
+      }else{
+        document.getElementById("header").style.display = "block";
+      }
+      
+    },
     scrollIntoView(id) {
       // document
       //   .getElementById("image-container-" + id)
