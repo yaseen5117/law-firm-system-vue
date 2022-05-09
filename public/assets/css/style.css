@@ -1554,16 +1554,18 @@ section {
 }
 .list-group-item {
   background-color:#ffffff00;
-  color: black;
-  border: solid 1px black;
+  color: rgb(143 58 48);
+  font-size: 12px;
+  border: solid 1px #f3be32 !important;
   font-weight: bold;
 }
 .list-group-item:hover {
-  background-color: rgb(92, 116, 255);
-  color: black;
+  background-color: rgb(143 58 48);
+  color: #f3bc32;
 }
 .list-group-item.active {
-  background-color: rgb(92, 116, 255);
+  background-color: rgb(143 58 48);
+  color: #f3bc32;
 }
 /* START CSS FOR CREATE PAGES */
 

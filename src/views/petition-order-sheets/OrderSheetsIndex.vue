@@ -97,12 +97,12 @@
       </div>
     </section>
 
-    <Sidebar v-model:visible="visibleLeft" class="p-sidebar-sm" position="right" :dismissable="false" :modal="false">
+    <Sidebar v-model:visible="visibleLeft" class="p-sidebar-sm p-side-bar-ordersheet" position="right"  :fullscreen="false" :dismissable="false" :modal="false">
       <ul class="list-group">
         <router-link
           v-for="orderSheet in orderSheets"
           :key="orderSheet"
-          :class="order_sheet_id == orderSheet.id ? 'active' : ''"
+          :class="orderSheetsActive.id == orderSheet.id ? 'active' : ''"
           class="list-group-item"
           :to="{
             name: 'petition-order-sheets-index',
@@ -328,4 +328,7 @@ export default {
 </script>
 
 <style> 
+.p-side-bar-ordersheet{
+  width: 130px!important;
+}
 </style>
