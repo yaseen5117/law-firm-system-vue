@@ -141,9 +141,12 @@
                   >
                     <div class="card-body" @click="goToDetails(petition.id)">
                       <div class="row">
-                        <h6 class="card-title">
-                          {{ petition.case_no }}-{{ petition.year }}
-                        </h6>
+                        <p class="card-title" style="margin-bottom: 0px;">
+                          <strong>{{ petition.case_no }}-{{ petition.year }}</strong> 
+                        </p>
+                        <div class="col-md-12 col-12 col-sm-12">
+                          <small>{{petition.type?""+petition.type.title+"":""}}</small>
+                        </div>
                         <div class="col-md-5 col-5 col-sm-5">
                           <p class="card-text">
                             {{ petition.institution_date }}
