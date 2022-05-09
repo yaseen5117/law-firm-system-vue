@@ -153,6 +153,14 @@ const routes = [
       auth: true ,
     },
   },
+  {
+    path: '/petition-order-sheets-edit/:petition_id/:editable_order_sheet_id',
+    name: 'petition-order-sheets-edit',    
+    component: PetitionOrderSheetCreateUpdate,
+    meta: { 
+      auth: true ,
+    },
+  },
   ////////////////Order Sheets/////////////
 
   //////////////// TALBANA ROUTES /////////////
@@ -341,6 +349,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   document.querySelector("#navbar").classList.remove("navbar-mobile");
+  document.getElementById("header").style.display = "block";
   var isloggedin= localStorage.getItem("lfms_user");
   if (to.matched.some(record => record.meta.auth)) {
     // this route requires auth, check if logged in

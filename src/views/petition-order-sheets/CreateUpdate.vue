@@ -2,7 +2,7 @@
   <main id="main">
     <page-header :title="page_title" :order_sheet="null" :petition="petition" />
     <section id="services" class="services section-bg">
-      <div class="container" data-aos="fade-up">
+      <div class="container" >
         <div class="row">
           <div class="col-12">
             <form @submit.prevent="submitForm($event)">
@@ -50,6 +50,10 @@
                     <select                     
                       class="form-control"
                       v-model="order_sheet.order_sheet_type_id"
+                      v-bind:class="{
+                        'error-boarder': v$.order_sheet.order_sheet_type_id.$error,
+                      }"
+                      @blur="v$.order_sheet.order_sheet_type_id.$touch"
                     >
                       <option value="">--Select--</option>
                       <option
@@ -59,7 +63,12 @@
                       >
                         {{ order_sheet_type.title }}
                       </option>
-                    </select>                    
+                    </select>  
+                    <span
+                      v-if="v$.order_sheet.order_sheet_type_id.$error"
+                      class="errorMessage"
+                      >Type field is required.</span
+                    >                  
                   </div>
                 </div>
               </div>
@@ -104,14 +113,14 @@ export default {
   },
   data() {
     return {
-      page_title: this.$route.params.id
+      page_title: this.$route.params.editable_order_sheet_id
         ? "Edit Order Sheet"
         : "Add New Order Sheet",
       base_url: process.env.VUE_APP_SERVICE_URL,
       order_sheet: {
         petition_id: this.$route.params.petition_id,
         order_sheet_type_id: "",
-        id: this.$route.params.id, //this is the id from the browser
+        id: this.$route.params.editable_order_sheet_id, //this is the id from the browser
         title: "",
         description: "",
       },
@@ -137,6 +146,7 @@ export default {
   validations() {
     return {
       order_sheet: {
+        order_sheet_type_id: { required },
         order_sheet_date: { required },
         title: { required },
       },
@@ -144,12 +154,47 @@ export default {
   },
   created() {
     this.getUsers();
+    this.getEditableOrderSheet();
     this.getCourts();
     this.getPetitionTypes();
     this.getPetition();
   },
   activated() {},
   methods: {
+    getEditableOrderSheet: function(){
+      if (this.$route.params.editable_order_sheet_id) {
+        var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+
+        axios
+          .get(
+            this.base_url + "/api/petition_order_sheets/"+this.$route.params.editable_order_sheet_id,
+            
+            {
+              headers,
+            }
+          )
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                console.log("editable ordersheet object: ",response.data.record ); 
+                this.order_sheet = response.data.record;
+              }
+            },
+            (error) => {
+              this.saving = false;
+              console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
+            }
+          );
+      }
+    },
     submitForm: function (event) {
       this.v$.$validate();
       if (!this.v$.$error) {

@@ -364,6 +364,8 @@ export default {
       id: this.$route.params.id, //this is the id from the browser
       horizontalView: false, //it will show vertical images by default
       removePageHeader: false,
+      activePage: null,
+      removePageHeader: true,
       selected_attachment_ids: [],
       selectedAllToDelete: false,
       showDeleteBtn: false,
@@ -378,7 +380,7 @@ export default {
   },
   mounted() {
     const myDiv = document.getElementById('services');
-    console.log("myddiv",myDiv); 
+    document.getElementById("header").style.display = "none"; 
     /* window.addEventListener('scroll', (e) => {  
         if ((window.innerHeight + window.scrollY) <= document.body.offsetHeight) {
           this.$router.push({ path: "/petition-index-details/"+this.previous_index_id });

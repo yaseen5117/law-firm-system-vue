@@ -46,12 +46,22 @@
 
             <div class="mt-4" v-if="orderSheetsActive">
               <div v-if="!removePageHeader" class="mb-4">
-                <strong>Title: </strong>{{ orderSheetsActive.title }}
+                <p><strong>Title: </strong>{{ orderSheetsActive.title }}
                 <strong>Description: </strong
                 >{{ orderSheetsActive.description }}
                 <strong>Order Sheet Date: </strong
                 >{{ orderSheetsActive.order_sheet_date }}
-
+                <router-link
+                    class="btn btn-success btn-sm  action-btn"
+                    :to="{
+                      name: 'petition-order-sheets-edit',
+                      params: { petition_id: petition.id ,  editable_order_sheet_id: orderSheetsActive.id },
+                    }"
+                  >
+                    Edit
+                  </router-link>
+                </p>
+  
                 <file-upload
                   @afterUpload="getOrderSheet"
                   type="App\Models\PetitonOrderSheet"
@@ -96,11 +106,8 @@
         </div>
       </div>
     </section>
-     <Sidebar  v-model:visible="visibleRight" position="right" class="p-sidebar-sm" :dismissable="false" :modal="false">
-      <div       
-      @show="!editView"       
-      
-    >
+
+    <Sidebar v-model:visible="visibleLeft" class="p-sidebar-sm" position="right" :dismissable="false" :modal="false">
       <ul class="list-group">
         <router-link
           v-for="orderSheet in orderSheets"
@@ -114,10 +121,12 @@
           >{{ orderSheet.order_sheet_date }}</router-link
         >
       </ul>
-    </div>
-    </Sidebar> 
-    <div class="sidebarindexswitch">
-      <button v-tooltip="'Show Annexsures'" class="btn btn-success sidebar-btn" @click="visibleRight = true" ><i class="fa fa-angle-left"></i></button>
+    </Sidebar>
+
+    <div class="fixed-annexsures">
+      
+      <!-- Prayers -->
+      <!-- Stay Order -->
     </div>
   </main>
   <!-- End #main -->
@@ -143,6 +152,7 @@ export default {
   },
   data() {
     return {
+      visibleLeft: true,
       showImgCard: false,
       editView: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
