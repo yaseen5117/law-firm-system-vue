@@ -97,22 +97,28 @@
       </div>
     </section>
 
-    <div class="fixed-annexsures">
-      <ul class="list-group">
-        <router-link
-          v-for="synopsis in synopsis"
-          :key="synopsis"
-          :class="id == synopsis.id ? 'active' : ''"
-          class="list-group-item"
-          :to="{
-            name: 'petition-synopsis-index',
-            params: { synopsis_id: synopsis.id, petition_id: petition.id },
-          }"
-          >{{ synopsis.synopsis_date }}</router-link
+     <Sidebar  v-model:visible="visibleRight" position="right" class="p-sidebar-sm" :dismissable="false" :modal="false">
+          <div       
+          @show="!editView"       
+          
         >
-      </ul>
-      <!-- Prayers -->
-      <!-- Stay Order -->
+          <ul class="list-group">
+            <router-link
+            v-for="synopsis in synopsis"
+            :key="synopsis"
+            :class="synopsis_id == synopsis.id ? 'active' : ''"
+            class="list-group-item"
+            :to="{
+              name: 'petition-synopsis-index',
+              params: { synopsis_id: synopsis.id, petition_id: petition.id },
+            }"
+            >{{ synopsis.synopsis_date }}</router-link
+          >
+          </ul>
+        </div>
+        </Sidebar>   
+    <div class="sidebarindexswitch">
+      <button v-tooltip="'Show Annexsures'" class="btn btn-success sidebar-btn" @click="visibleRight = true" ><i class="fa fa-angle-left"></i></button>
     </div>
   </main>
   <!-- End #main -->
@@ -151,6 +157,7 @@ export default {
       horizontalView: false, //it will show vertical images by default
       activePage: null,
       removePageHeader: false,
+      visibleRight:true,  
     };
   },
   created() {

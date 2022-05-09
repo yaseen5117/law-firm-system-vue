@@ -266,50 +266,10 @@
         </div>
       </div>
     </section>
-     <div class="fixed-eye-icon d-lg-none d-lg-block d-md-none d-md-block">
-      <button 
-      data-bs-toggle="tooltip"
-                      data-bs-placement="right"
-                      title="Page#"
-       class="btn btn-sm btn-primary" @click="showPageNumbers()"><i class="fa fa-expand" aria-hidden="true"></i></button>
-    </div>
+   <page-number-side-bar :petition_index_details="petition_reply_details"/>
 
-    <div v-show="(!horizontalView &&  !editView)" 
-    :class="isShowPageNumOnMobile ? 'd-none d-md-block fixed-page-numbers' : 'fixed-page-numbers-mobile'" 
-    >
-      <ul
-        class="list-group"
-      >
-      <li 
-        v-for="(attachment, index_attachment) in petition_reply_details.attachments"
-        :key="attachment" :class="activePage == (index_attachment+1) ? 'active' : ''" class="list-group-item"
-        @click="scrollIntoView(index_attachment+1)"
-        style="cursor:pointer"
-        >
-          {{index_attachment+1 }}
-        </li>
-      </ul>
-    </div>
-
-    <div class="fixed-annexsures" @show="!editView">
-      <div
-        class="list-group"
-        v-for="petition_reply_index_single in petition_reply_index"
-        :key="petition_reply_index_single"
-      >
-        <router-link
-          class="list-group-item"
-          :class="id == petition_reply_index_single.id ? 'active' : ''"
-          :to="{
-            name: 'petition-reply-details',
-            params: { id: petition_reply_index_single.id },
-          }"
-          >{{ petition_reply_index_single.annexure }}</router-link
-        >
-      </div>
-      <!-- Prayers -->
-      <!-- Stay Order -->
-    </div>
+   <annexure-right-side-bar :petition_index="petition_reply_index" url="petition-reply-details"/>
+   
   </main>
   <!-- End #main -->
 </template>
@@ -321,6 +281,9 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import NavComponents from "../Cases/NavComponents.vue";
 import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
+import PageNumberSideBar from "../shared/PageNumberLeftSideBar.vue"
+import AnnexureRightSideBar from "../shared/AnnexureRightSideBar.vue"
+
 export default {
   components: {
     PageHeader,
@@ -330,6 +293,8 @@ export default {
     Navigation,
     FileUpload,
     NavComponents,
+    PageNumberSideBar,
+    AnnexureRightSideBar,
   },
   data() {
     return {    
@@ -346,27 +311,13 @@ export default {
       removePageHeader: false,
       selected: [],
       selectedAllToDelete: false,
-      showDeleteBtn: false,
-      isShowPageNumOnMobile: true
+      showDeleteBtn: false,       
     };
   },
   created() {
     this.getPetitionReplyDetails();
   },
-  methods: {
-    scrollIntoView(id) {
-      // document
-      //   .getElementById("image-container-" + id)
-      //   .scrollIntoView({ duration: 2000 });
-
-      const yOffset = -200;
-      const element = document.getElementById("image-container-" + id);
-      const y =
-        element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-      //document.getElementById("image-container-" + id).style.border="solid 1px red"
-      this.activePage = id;
-    },
+  methods: {     
     async getPetitionReplyDetails() {
       var headers = {
           Authorization:
@@ -534,9 +485,7 @@ export default {
           );
       }
     },
-    showPageNumbers(){               
-      this.isShowPageNumOnMobile = !this.isShowPageNumOnMobile;
-    },
+    
   },
 };
 </script>

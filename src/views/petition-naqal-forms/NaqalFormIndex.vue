@@ -96,13 +96,16 @@
         </div>
       </div>
     </section>
-
-    <div class="fixed-annexsures">
+    <Sidebar  v-model:visible="visibleRight" position="right" class="p-sidebar-sm" :dismissable="false" :modal="false">
+      <div       
+      @show="!editView"       
+      
+    >
       <ul class="list-group">
         <router-link
           v-for="naqal_form in naqal_forms"
           :key="naqal_form"
-          :class="id == naqal_form.id ? 'active' : ''"
+          :class="naqal_form_id == naqal_form.id ? 'active' : ''"
           class="list-group-item"
           :to="{
             name: 'petition-naqal-forms-index',
@@ -111,8 +114,10 @@
           >{{ naqal_form.naqal_form_date }}</router-link
         >
       </ul>
-      <!-- Prayers -->
-      <!-- Stay Order -->
+    </div>
+    </Sidebar>     
+    <div class="sidebarindexswitch">
+      <button v-tooltip="'Show Annexsures'" class="btn btn-success sidebar-btn" @click="visibleRight = true" ><i class="fa fa-angle-left"></i></button>
     </div>
   </main>
   <!-- End #main -->
@@ -151,6 +156,7 @@ export default {
       horizontalView: false, //it will show vertical images by default
       activePage: null,
       removePageHeader: false,
+      visibleRight:true, 
     };
   },
   created() {

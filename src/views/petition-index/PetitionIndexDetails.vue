@@ -321,53 +321,9 @@
       </div>
       
     </section> 
-    <Sidebar v-model:visible="visibleLeft" class="p-sidebar-sm" :dismissable="false" :modal="false">
-      <div       
-      v-show="!horizontalView && !editView"       
-      
-    >
-      <ul class="list-group">
-        <li
-          v-for="( attachment , index_attachment) in petition_index_details.attachments"
-          :key="attachment"
-          :class="activePage == (index_attachment+1) ? 'active' : ''"
-          class="list-group-item"
-          @click="scrollIntoView(index_attachment+1)"
-          style="cursor: pointer"
-        >
-          {{ index_attachment+1 }}
-        </li>
-      </ul>
-    </div>
-    </Sidebar>
-    
-    <div class="sidebarswitch">
-      <button v-tooltip="'Show Page Numbers'" class="btn btn-success sidebar-btn" @click="visibleLeft = true" ><i class="fa fa-angle-right"></i></button>
-    </div>
-
-  <Sidebar  v-model:visible="visibleRight" position="right" class="p-sidebar-sm" :dismissable="false" :modal="false">
-      <div       
-      @show="!editView"       
-      
-    >
-      <ul class="list-group">
-        <router-link
-          v-for="petition_index_single in petition_index"
-          :key="petition_index_single"
-          :class="id == petition_index_single.id ? 'active' : ''"
-          class="list-group-item"
-          :to="{
-            name: 'petition-index-details',
-            params: { id: petition_index_single.id },
-          }"
-          >{{ petition_index_single.annexure }}</router-link
-        >
-      </ul>
-    </div>
-    </Sidebar> 
-     <div class="sidebarindexswitch">
-      <button v-tooltip="'Show Annexsures'" class="btn btn-success sidebar-btn" @click="visibleRight = true" ><i class="fa fa-angle-left"></i></button>
-    </div>
+    <page-number-side-bar :petition_index_details="petition_index_details"/>
+    <annexure-right-side-bar :petition_index="petition_index" url="petition-index-details"/>
+  
   </main>
   <!-- End #main -->
 
@@ -380,6 +336,8 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import NavComponents from "../Cases/NavComponents.vue";
 import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
+import PageNumberSideBar from "../shared/PageNumberLeftSideBar.vue"
+import AnnexureRightSideBar from "../shared/AnnexureRightSideBar.vue"
 
 export default {
   components: {
@@ -390,13 +348,13 @@ export default {
     Navigation,
     FileUpload,
     NavComponents,
+    PageNumberSideBar,
+    AnnexureRightSideBar,
   },
   data() {
     return {
       next_index_id: null,
       previous_index_id: null,
-      visibleLeft: false,
-      visibleRight:true,
       showImgCard: false,
       editView: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
@@ -405,7 +363,6 @@ export default {
       petition_index_details: {},
       id: this.$route.params.id, //this is the id from the browser
       horizontalView: false, //it will show vertical images by default
-      activePage: null,
       removePageHeader: false,
       selected_attachment_ids: [],
       selectedAllToDelete: false,
@@ -449,20 +406,7 @@ export default {
         document.getElementById("header").style.display = "block";
       }
       
-    },
-    scrollIntoView(id) {
-      // document
-      //   .getElementById("image-container-" + id)
-      //   .scrollIntoView({ duration: 2000 });
-
-      const yOffset = -200;
-      const element = document.getElementById("image-container-" + id);
-      const y =
-      element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-      //document.getElementById("image-container-" + id).style.border="solid 1px red"
-      this.activePage = id;
-    },
+    },    
     async getCaseDetails() {
       this.blockPanel = true;
       

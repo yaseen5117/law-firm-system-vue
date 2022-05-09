@@ -96,23 +96,28 @@
         </div>
       </div>
     </section>
-
-    <div class="fixed-annexsures">
+     <Sidebar  v-model:visible="visibleRight" position="right" class="p-sidebar-sm" :dismissable="false" :modal="false">
+      <div       
+      @show="!editView"       
+      
+    >
       <ul class="list-group">
         <router-link
           v-for="orderSheet in orderSheets"
           :key="orderSheet"
-          :class="id == orderSheet.id ? 'active' : ''"
+          :class="order_sheet_id == orderSheet.id ? 'active' : ''"
           class="list-group-item"
           :to="{
             name: 'petition-order-sheets-index',
-            params: { order_sheet_id: orderSheet.id, petition_id: petition.id },
+            params: { order_sheet_id: orderSheet.id, petition_id: orderSheet.petition_id },
           }"
           >{{ orderSheet.order_sheet_date }}</router-link
         >
       </ul>
-      <!-- Prayers -->
-      <!-- Stay Order -->
+    </div>
+    </Sidebar> 
+    <div class="sidebarindexswitch">
+      <button v-tooltip="'Show Annexsures'" class="btn btn-success sidebar-btn" @click="visibleRight = true" ><i class="fa fa-angle-left"></i></button>
     </div>
   </main>
   <!-- End #main -->
@@ -125,7 +130,7 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import NavComponents from "../Cases/NavComponents.vue";
 import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
-
+ 
 export default {
   components: {
     PageHeader,
@@ -134,7 +139,7 @@ export default {
     Pagination,
     Navigation,
     FileUpload,
-    NavComponents,
+    NavComponents,  
   },
   data() {
     return {
@@ -151,6 +156,8 @@ export default {
       horizontalView: false, //it will show vertical images by default
       activePage: null,
       removePageHeader: false,
+      visibleRight:true,      
+           
     };
   },
   created() {
