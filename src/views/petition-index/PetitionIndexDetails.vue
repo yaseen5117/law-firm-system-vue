@@ -261,7 +261,7 @@
                           </td>
                           <td width="15%">
                             <a
-                              class="btn btn-sm btn-primary"
+                              class="btn btn-sm btn-primary action-btn"
                               v-show="!attachment.editMode"
                               @click="attachment.editMode = true"
                               href="javascript:void"
@@ -275,7 +275,7 @@
                             </a>
                             <a
                               v-show="attachment.editMode"
-                              class="btn btn-sm btn-warning"
+                              class="btn btn-sm btn-warning action-btn"
                               @click="editPetitionAttachment(attachment)"
                               href="javascript:void"
                               style="margin-left: 2px"
@@ -290,7 +290,7 @@
                             <a
                               v-show="attachment.editMode"
                               @click="attachment.editMode = false"
-                              class="btn btn-sm btn-info"
+                              class="btn btn-sm btn-info action-btn"
                               href="javascript:void"
                               style="margin-left: 2px"
                               data-bs-toggle="tooltip"
@@ -302,7 +302,7 @@
                             </a>
 
                             <a
-                              class="btn btn-sm btn-danger"
+                              class="btn btn-sm btn-danger action-btn"
                               v-show="!attachment.editMode"
                               @click="
                                 deletePetitionAttachment(

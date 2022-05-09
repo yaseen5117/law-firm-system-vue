@@ -33,9 +33,10 @@
             >
               Add New Order Sheet
             </router-link>
-
+          </div>
+          <div>
             <div class="mt-4" v-if="orderSheetsActive">
-              <div v-if="!removePageHeader" class="mb-4">
+              <div class="mb-4">
                 <p><strong>Title: </strong>{{ orderSheetsActive.title }}
                 <strong>Description: </strong
                 >{{ orderSheetsActive.description }}

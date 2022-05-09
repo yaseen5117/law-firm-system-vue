@@ -220,7 +220,7 @@
                           </td>
                           <td width="15%">
                             <a
-                              class="btn btn-sm btn-primary"
+                              class="btn btn-sm btn-primary action-btn"
                               v-show="!attachment.editMode"
                               @click="attachment.editMode = true"
                               href="javascript:void"
@@ -229,11 +229,11 @@
                               data-bs-placement="top"
                               title="Edit"
                             >
-                              <i class="fa fa-edit"></i>
+                              Edit
                             </a>
                             <a
                               v-show="attachment.editMode"
-                              class="btn btn-sm btn-warning"
+                              class="btn btn-sm btn-warning action-btn"
                               @click="editPetitionAttachment(attachment)"
                               href="javascript:void"
                               style="margin-left: 2px"
@@ -241,24 +241,24 @@
                               data-bs-placement="top"
                               title="Update"
                             >
-                              <i class="fa fa-save"></i>
+                              Update
                             </a>
 
                             <a
                               v-show="attachment.editMode"
                               @click="attachment.editMode = false"
-                              class="btn btn-sm btn-info"
+                              class="btn btn-sm btn-info action-btn"
                               href="javascript:void"
                               style="margin-left: 2px"
                               data-bs-toggle="tooltip"
                               data-bs-placement="top"
                               title="Cancel"
                             >
-                              <i class="fa fa-remove"></i>
+                              Cancel
                             </a>
 
                             <a
-                              class="btn btn-sm btn-danger"
+                              class="btn btn-sm btn-danger action-btn"
                               v-show="!attachment.editMode"
                               @click="
                                 deletePetitionAttachment(
@@ -272,7 +272,7 @@
                               data-bs-placement="top"
                               title="Delete"
                             >
-                              <i class="fa fa-trash-o"></i>
+                              Delete
                             </a>
                           </td>
                         </tr>

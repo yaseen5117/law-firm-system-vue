@@ -35,7 +35,7 @@
             </router-link>
 
             <div class="mt-4" v-if="SynopsisActive">
-              <div v-if="!removePageHeader" class="mb-4">
+              <div class="mb-4">
                 <p><strong>Title: </strong>{{ SynopsisActive.title }}
                 <strong>Description: </strong
                 >{{ SynopsisActive.description }}
