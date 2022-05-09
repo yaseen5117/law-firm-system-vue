@@ -36,11 +36,21 @@
 
             <div class="mt-4" v-if="SynopsisActive">
               <div v-if="!removePageHeader" class="mb-4">
-                <strong>Title: </strong>{{ SynopsisActive.title }}
+                <p><strong>Title: </strong>{{ SynopsisActive.title }}
                 <strong>Description: </strong
                 >{{ SynopsisActive.description }}
                 <strong>Synopsis Date: </strong
                 >{{ SynopsisActive.synopsis_date }}
+                <router-link
+                    class="btn btn-success btn-sm  action-btn"
+                    :to="{
+                      name: 'petition-synopsis-edit',
+                      params: { petition_id: petition.id ,  editable_synopsis_id: SynopsisActive.id },
+                    }"
+                  >
+                    Edit
+                  </router-link>
+                </p>
 
                 <file-upload
                   @afterUpload="getSynops"

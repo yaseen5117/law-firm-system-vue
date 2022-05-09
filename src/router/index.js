@@ -180,6 +180,14 @@ const routes = [
       auth: true ,
     },
   },
+  {
+    path: '/petition-talbana-edit/:petition_id/:editable_talbana_id',
+    name: 'petition-talbana-edit',    
+    component: PetitionTalbanaCreateUpdate,
+    meta: { 
+      auth: true ,
+    },
+  },
   //////////////// TALBANA ROUTES /////////////
 
   //////////////// SYNOPSIS ROUTES /////////////
@@ -194,6 +202,14 @@ const routes = [
   {
     path: '/petition-synopsis-save/:petition_id',
     name: 'petition-synopsis-save',    
+    component: PetitionSynopsisCreateUpdate,
+    meta: { 
+      auth: true ,
+    },
+  },
+  {
+    path: '/petition-synopsis-edit/:petition_id/:editable_synopsis_id',
+    name: 'petition-synopsis-edit',    
     component: PetitionSynopsisCreateUpdate,
     meta: { 
       auth: true ,

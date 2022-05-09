@@ -210,7 +210,7 @@ export default {
                   text: "Saved Successfully!",
                 });
                 this.saving = false;
-                this.$router.push({ path: "/petition-naqal-forms-index/"+ this.naqal_form.petition_id});
+                this.$router.push({ path: "/petition-naqal-forms-index/"+ this.naqal_form.petition_id+"/"+response.data.PetitionNaqalForm.id});
               }
               console.log(response);
             },
