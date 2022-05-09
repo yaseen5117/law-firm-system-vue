@@ -142,11 +142,8 @@
                     <div class="card-body" @click="goToDetails(petition.id)">
                       <div class="row">
                         <p class="card-title" style="margin-bottom: 0px;">
-                          <strong>{{ petition.case_no }}-{{ petition.year }}</strong> 
+                          <strong>{{ petition.case_no }}-{{ petition.year }}</strong>  <small v-tooltip.top="petition.type?''+ petition.type.title:''">{{petition.type_abrivation!=""?"("+petition.type_abrivation+")":""}}</small>
                         </p>
-                        <div class="col-md-12 col-12 col-sm-12">
-                          <small>{{petition.type?""+petition.type.title+"":""}}</small>
-                        </div>
                         <div class="col-md-5 col-5 col-sm-5">
                           <p class="card-text">
                             {{ petition.institution_date }}
