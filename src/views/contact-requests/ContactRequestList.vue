@@ -13,7 +13,8 @@
                   <th>Name</th>  
                   <th>Email</th>  
                   <th>Subject</th>  
-                  <th>Message</th>                                  
+                  <th>Message</th> 
+                  <th>Date</th>                                 
                   <th width="10%">Actions</th>                   
                 </thead>
                 <tbody>
@@ -32,6 +33,9 @@
                     </td>
                     <td>                      
                        {{ contact_request.message }} 
+                    </td>
+                    <td>
+                      {{contact_request.created_at}}
                     </td>
                      
                     <td width="15%">                     

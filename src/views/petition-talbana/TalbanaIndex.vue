@@ -1,30 +1,42 @@
 <template>
   <main id="main">
     <!-- ======= Breadcrumbs ======= -->
-    <page-header 
-    :title="'Talbana'" 
-    :petition="petition" 
-    :hide="removePageHeader ? true : false"
-    />     
+    <page-header
+      :title="'Talbana'"
+      :petition="petition"
+      :hide="removePageHeader ? true : false"
+    />
     <!-- End Breadcrumbs -->
     <section
       id="services"
       class="services section-bg"
       :class="removePageHeader ? '' : ''"
     >
-    <nav-components activeNavPill = 'talbana' :petition_id="petition.id"  />
+      <nav-components activeNavPill="talbana" :petition_id="petition.id" />
       <div class="container mt-2" data-aos="fade-up">
         <div class="row">
           <div class="col-12 mb-1">
             <!-- v-if="!removePageHeader" -->
-             <button v-if="removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm" style="margin-right: 2px" for="flexSwitchCheckDefault"
-                ><i class="fa fa-eye"></i> Show Header</button
-              >
-              <button v-if="!removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm" style="margin-right: 2px" for="flexSwitchCheckDefault"
-                ><i class="fa fa-eye-slash"></i> Hide Header</button
-              >
-          
-            <router-link               
+            <button
+              v-if="removePageHeader"
+              @click="pageHeader()"
+              class="btn btn-success btn-sm"
+              style="margin-right: 2px"
+              for="flexSwitchCheckDefault"
+            >
+              <i class="fa fa-eye"></i> Show Header
+            </button>
+            <button
+              v-if="!removePageHeader"
+              @click="pageHeader()"
+              class="btn btn-success btn-sm"
+              style="margin-right: 2px"
+              for="flexSwitchCheckDefault"
+            >
+              <i class="fa fa-eye-slash"></i> Hide Header
+            </button>
+
+            <router-link
               class="btn btn-primary btn-sm"
               :to="{
                 name: 'petition-talbana-save',
@@ -35,21 +47,34 @@
             </router-link>
 
             <div class="mt-4" v-if="TalbanaActive">
-              <div v-if="!removePageHeader" class="mb-4">
-                <p><strong>Title: </strong>{{ TalbanaActive.title }}
-                <strong>Description: </strong
-                >{{ TalbanaActive.description }}
-                <strong>Talbana Date: </strong
-                >{{ TalbanaActive.talbana_date }}
-                <router-link
-                    class="btn btn-success btn-sm  action-btn"
+              <div class="mb-4">
+                <p>
+                  <strong>Title: </strong>{{ TalbanaActive.title }}
+                  <strong>Description: </strong>{{ TalbanaActive.description }}
+                  <strong>Talbana Date: </strong
+                  >{{ TalbanaActive.talbana_date }}
+                  <router-link
+                    class="btn btn-success btn-sm action-btn"
                     :to="{
                       name: 'petition-talbana-edit',
-                      params: { petition_id: petition.id ,  editable_talbana_id: TalbanaActive.id },
+                      params: {
+                        petition_id: petition.id,
+                        editable_talbana_id: TalbanaActive.id,
+                      },
                     }"
                   >
                     Edit
                   </router-link>
+                  <a
+                    class="btn btn-danger btn-sm action-btn"
+                    style="margin-left: 2px"
+                    @click="deletePetitionTalbana(TalbanaActive.id)"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Delete"
+                  >
+                    Delete
+                  </a>
                 </p>
                 <file-upload
                   @afterUpload="getTalbana"
@@ -57,8 +82,8 @@
                   :attachmentable_id="TalbanaActive.id"
                 />
               </div>
-              
-              <div >
+
+              <div>
                 <div
                   class="row mb-2 text-center"
                   :id="'image-container-' + attachment.id"
@@ -79,13 +104,21 @@
                         attachment.file_name
                       "
                     />
-                    <a :class="activePage == attachment.id ? 'active-img' : ''"
-                      v-if="attachment.mime_type == 'application/pdf'" :href="this.base_url +
-                      '/storage/attachments/' 
-                      +                     
-                      attachment.attachmentable_id +
-                      '/' +
-                      attachment.file_name" target="_blank"><u><span>Click to Open: </span>{{ attachment.title }}</u></a> 
+                    <a
+                      :class="activePage == attachment.id ? 'active-img' : ''"
+                      v-if="attachment.mime_type == 'application/pdf'"
+                      :href="
+                        this.base_url +
+                        '/storage/attachments/' +
+                        attachment.attachmentable_id +
+                        '/' +
+                        attachment.file_name
+                      "
+                      target="_blank"
+                      ><u
+                        ><span>Click to Open: </span>{{ attachment.title }}</u
+                      ></a
+                    >
                     <hr class="mt-4 mb-4" style="border: solid 3px" />
                   </div>
                 </div>
@@ -95,13 +128,16 @@
         </div>
       </div>
     </section>
-    <Sidebar  v-model:visible="visibleRight" position="right" class="p-sidebar-sm" :dismissable="false" :modal="false">
-          <div       
-          @show="!editView"       
-          
-        >
-          <ul class="list-group">
-            <router-link
+    <Sidebar
+      v-model:visible="visibleRight"
+      position="right"
+      class="p-sidebar-sm"
+      :dismissable="false"
+      :modal="false"
+    >
+      <div @show="!editView">
+        <ul class="list-group">
+          <router-link
             v-for="talbana in talbanas"
             :key="talbana"
             :class="talbana_id == talbana.id ? 'active' : ''"
@@ -112,12 +148,18 @@
             }"
             >{{ talbana.talbana_date }}</router-link
           >
-          </ul>
-        </div>
-        </Sidebar>      
-        <div class="sidebarindexswitch">
-        <button v-tooltip="'Show Annexsures'" class="btn sidebar-btn" @click="visibleRight = true" ><i class="fa fa-angle-left"></i></button>
+        </ul>
       </div>
+    </Sidebar>
+    <div class="sidebarindexswitch">
+      <button
+        v-tooltip="'Show Annexsures'"
+        class="btn sidebar-btn"
+        @click="visibleRight = true"
+      >
+        <i class="fa fa-angle-left"></i>
+      </button>
+    </div>
   </main>
   <!-- End #main -->
 </template>
@@ -155,24 +197,23 @@ export default {
       horizontalView: false, //it will show vertical images by default
       activePage: null,
       removePageHeader: true,
-      visibleRight:true, 
+      visibleRight: true,
     };
   },
   created() {
     this.getTalbanas();
   },
-  mounted(){
+  mounted() {
     document.getElementById("header").style.display = "none";
   },
   methods: {
-    pageHeader(){
+    pageHeader() {
       this.removePageHeader = !this.removePageHeader;
-      if(this.removePageHeader){
+      if (this.removePageHeader) {
         document.getElementById("header").style.display = "none";
-      }else{
+      } else {
         document.getElementById("header").style.display = "block";
       }
-      
     },
     scrollIntoView(id) {
       // document
@@ -189,15 +230,14 @@ export default {
     },
     getTalbanas() {
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       axios
         .get(
           this.base_url +
             "/api/petition_talbana?petition_id=" +
             this.petition_id,
-            {headers}
+          { headers }
         )
         .then((response) => {
           this.talbanas = response.data.records;
@@ -239,11 +279,10 @@ export default {
 
     getCaseDetails() {
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       axios
-        .get(this.base_url + "/api/petitions/" + this.petition_id, {headers})
+        .get(this.base_url + "/api/petitions/" + this.petition_id, { headers })
         .then((response) => {
           this.petition = response.data.petition;
         })
@@ -255,8 +294,7 @@ export default {
     editPetitionAttachment(attachmentToUpdate) {
       if (true) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
@@ -289,15 +327,14 @@ export default {
           );
       }
     },
-    deletePetitionAttachment(petitionId, attachmentIndex) {
+    deletePetitionTalbana(talbanaId) {
       if (confirm("Do you really want to delete?")) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
-          .delete(this.base_url + "/api/attachments/" + petitionId, {
+          .delete(this.base_url + "/api/petition_talbana/" + talbanaId, {
             headers,
           })
           .then(
@@ -308,11 +345,11 @@ export default {
                   title: "Success",
                   text: "Deleted Successfully!",
                 });
-                //this.getTalbanas()
-                this.petition_index_details.attachments.splice(
-                  attachmentIndex,
-                  1
-                ); //removing record from list/index after deleting record from DB
+                this.getTalbanas();
+                // this.petition_index_details.attachments.splice(
+                //   attachmentIndex,
+                //   1
+                // ); //removing record from list/index after deleting record from DB
               }
             },
             (error) => {

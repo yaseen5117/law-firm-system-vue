@@ -5,7 +5,7 @@
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg mt-3">
       <div class="container" data-aos="fade-up">
-        <div class="row">          
+        <div class="row">
           <div class="table-responsive">
             <div class="col-lg-12 col-md-12 col-sm-12">
               <table class="table table-striped">
@@ -15,10 +15,12 @@
                   <th>Annexure</th>
                   <th>Page</th>
                   <th width="10%">Actions</th>
-                  <th :class="ShowOnOralArgument ? '' : 'display'">Image Upload</th>
+                  <th :class="ShowOnOralArgument ? '' : 'display'">
+                    Image Upload
+                  </th>
                 </thead>
                 <tbody>
-                  <tr                  
+                  <tr
                     v-for="(index_data_single, row_index) in index_data"
                     :key="index_data_single.id"
                   >
@@ -29,29 +31,29 @@
                         v-model="index_data_single.document_description"
                         v-on:keyup.enter="editStandardIndex(index_data_single)"
                       />
-                      
+
                       <router-link
                         v-show="!index_data_single.editMode"
                         :to="{
                           name: 'standard-index-details',
-                          params: { 
-                              module_id: index_data_single.id,
-                              module_type: module_type 
-                            },
+                          params: {
+                            module_id: index_data_single.id,
+                            module_type: module_type,
+                          },
                         }"
                         >{{ index_data_single.document_description }}
                       </router-link>
                     </td>
-                    <td>                    
-                    <InputMask
-                      mask="99/99/9999"
-                      class="form-control"
-                      type="text"
-                      placeholder="dd/mm/yyyy"
-                      v-model="index_data_single.date"
+                    <td>
+                      <InputMask
+                        mask="99/99/9999"
+                        class="form-control"
+                        type="text"
+                        placeholder="dd/mm/yyyy"
+                        v-model="index_data_single.date"
                         v-on:keyup.enter="editStandardIndex(index_data_single)"
                         v-show="index_data_single.editMode"
-                    />
+                      />
 
                       <span v-show="!index_data_single.editMode">{{
                         index_data_single.date
@@ -135,16 +137,16 @@
                       >
                         Delete
                         <!-- <i class="fa fa-trash-o"></i> -->
-                      </a>                       
-                    </td>                                                     
+                      </a>
+                    </td>
                     <td :class="ShowOnOralArgument ? '' : 'display'">
-                       <file-upload
-                          @afterUpload="getModuleIndexDetails"
-                          :type="model_type"
-                          :attachmentable_id="index_data_single.id"
-                          :compactInlineView="compactInlineView"   
-                          class="mt-1"                                          
-                        />                        
+                      <file-upload
+                        @afterUpload="getModuleIndexDetails"
+                        :type="model_type"
+                        :attachmentable_id="index_data_single.id"
+                        :compactInlineView="compactInlineView"
+                        class="mt-1"
+                      />
                     </td>
                   </tr>
                   <tr>
@@ -155,15 +157,15 @@
                         v-on:keyup.enter="submitPetitionIndex()"
                       />
                     </td>
-                    <td>                      
+                    <td>
                       <InputMask
-                      mask="99/99/9999"
-                      class="form-control"
-                      type="text"
-                      placeholder="dd/mm/yyyy"
-                      v-model="new_standard_index.date"
-                      v-on:keyup.enter="submitPetitionIndex()"
-                    />
+                        mask="99/99/9999"
+                        class="form-control"
+                        type="text"
+                        placeholder="dd/mm/yyyy"
+                        v-model="new_standard_index.date"
+                        v-on:keyup.enter="submitPetitionIndex()"
+                      />
                     </td>
                     <td>
                       <input
@@ -212,7 +214,7 @@ export default {
   components: {
     NavComponents,
     PageHeader,
-    FileUpload
+    FileUpload,
   },
   data() {
     return {
@@ -222,11 +224,11 @@ export default {
       module_type: this.$route.params.module_type,
       petition_id: this.$route.params.petition_id,
       new_standard_index: {},
-      index_data: [],   
-      compactInlineView: "",    
+      index_data: [],
+      compactInlineView: "",
       ShowOnOralArgument: "",
-      model_type: "",  
-      saving: false,    
+      model_type: "",
+      saving: false,
     };
   },
   created() {
@@ -236,11 +238,10 @@ export default {
   methods: {
     getCaseDetails() {
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       axios
-        .get(this.base_url + "/api/petitions/" + this.petition_id, {headers})
+        .get(this.base_url + "/api/petitions/" + this.petition_id, { headers })
         .then((response) => {
           this.petition = response.data.petition;
 
@@ -251,14 +252,13 @@ export default {
         });
     },
     getModuleIndex() {
-       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       axios
         .get(
           this.base_url + "/api/" + this.module_type + "/" + this.petition_id,
-          {headers}
+          { headers }
         )
         .then((response) => {
           this.index_data = response.data.index_data;
@@ -276,8 +276,7 @@ export default {
     submitPetitionIndex() {
       if (true) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
         this.saving = true;
         this.new_standard_index.petition_id = this.petition_id;
@@ -317,8 +316,7 @@ export default {
     editStandardIndex(standardIndexToUpdate) {
       if (true) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
@@ -354,8 +352,7 @@ export default {
     deleteStandardIndex(moduleId, row_index) {
       if (confirm("Do you really want to delete?")) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios

@@ -1,30 +1,42 @@
 <template>
   <main id="main">
     <!-- ======= Breadcrumbs ======= -->
-    <page-header 
-    :title="'Order Sheets'" 
-    :petition="petition" 
-    :hide="removePageHeader ? true : false"
-    />     
+    <page-header
+      :title="'Order Sheets'"
+      :petition="petition"
+      :hide="removePageHeader ? true : false"
+    />
     <!-- End Breadcrumbs -->
     <section
       id="services"
       class="services section-bg"
       :class="removePageHeader ? '' : ''"
     >
-    <nav-components activeNavPill = 'order_sheet' :petition_id="petition.id"  />
+      <nav-components activeNavPill="order_sheet" :petition_id="petition.id" />
       <div class="container mt-2" data-aos="fade-up">
         <div class="row mb-4">
           <div class="col-12">
-              <!-- v-if="!removePageHeader" -->
-             <button v-if="removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm" style="margin-right: 2px" for="flexSwitchCheckDefault"
-                ><i class="fa fa-eye"></i> Show Header</button
-              >
-              <button v-if="!removePageHeader" @click="pageHeader()" class="btn btn-success btn-sm" style="margin-right: 2px" for="flexSwitchCheckDefault"
-                ><i class="fa fa-eye-slash"></i> Hide Header</button
-              >
-           
-            <router-link              
+            <!-- v-if="!removePageHeader" -->
+            <button
+              v-if="removePageHeader"
+              @click="pageHeader()"
+              class="btn btn-success btn-sm"
+              style="margin-right: 2px"
+              for="flexSwitchCheckDefault"
+            >
+              <i class="fa fa-eye"></i> Show Header
+            </button>
+            <button
+              v-if="!removePageHeader"
+              @click="pageHeader()"
+              class="btn btn-success btn-sm"
+              style="margin-right: 2px"
+              for="flexSwitchCheckDefault"
+            >
+              <i class="fa fa-eye-slash"></i> Hide Header
+            </button>
+
+            <router-link
               class="btn btn-primary btn-sm"
               :to="{
                 name: 'petition-order-sheets-save',
@@ -33,33 +45,51 @@
             >
               Add New Order Sheet
             </router-link>
-
+          </div>
+          <div>
             <div class="mt-4" v-if="orderSheetsActive">
-              <div v-if="!removePageHeader" class="mb-4">
-                <p><strong>Title: </strong>{{ orderSheetsActive.title }}
-                <strong>Description: </strong
-                >{{ orderSheetsActive.description }}
-                <strong>Order Sheet Date: </strong
-                >{{ orderSheetsActive.order_sheet_date }}
-                <router-link
-                    class="btn btn-success btn-sm  action-btn"
+              <div class="mb-4">
+                <p>
+                  <strong>Title: </strong>{{ orderSheetsActive.title }}
+                  <strong>Description: </strong
+                  >{{ orderSheetsActive.description }}
+                  <strong>Order Sheet Date: </strong
+                  >{{ orderSheetsActive.order_sheet_date }}
+                  <router-link
+                    class="btn btn-success btn-sm action-btn"
                     :to="{
                       name: 'petition-order-sheets-edit',
-                      params: { petition_id: petition.id ,  editable_order_sheet_id: orderSheetsActive.id },
+                      params: {
+                        petition_id: petition.id,
+                        editable_order_sheet_id: orderSheetsActive.id,
+                      },
                     }"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Edit"
                   >
                     Edit
                   </router-link>
+                  <a
+                    class="btn btn-danger btn-sm action-btn"
+                    style="margin-left: 2px"
+                    @click="deletePetitionOrderSheet(orderSheetsActive.id)"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Delete"
+                  >
+                    Delete
+                  </a>
                 </p>
-  
+
                 <file-upload
                   @afterUpload="getOrderSheet"
                   type="App\Models\PetitonOrderSheet"
                   :attachmentable_id="orderSheetsActive.id"
                 />
               </div>
-              
-              <div >
+
+              <div>
                 <div
                   class="row mb-2 text-center"
                   :id="'image-container-' + attachment.id"
@@ -80,13 +110,21 @@
                         attachment.file_name
                       "
                     />
-                    <a :class="activePage == attachment.id ? 'active-img' : ''"
-                    v-if="attachment.mime_type == 'application/pdf'" :href="this.base_url +
-                      '/storage/attachments/' 
-                      +                     
-                      attachment.attachmentable_id +
-                      '/' +
-                      attachment.file_name" target="_blank"><u><span>Click to Open: </span>{{ attachment.title }}</u></a> 
+                    <a
+                      :class="activePage == attachment.id ? 'active-img' : ''"
+                      v-if="attachment.mime_type == 'application/pdf'"
+                      :href="
+                        this.base_url +
+                        '/storage/attachments/' +
+                        attachment.attachmentable_id +
+                        '/' +
+                        attachment.file_name
+                      "
+                      target="_blank"
+                      ><u
+                        ><span>Click to Open: </span>{{ attachment.title }}</u
+                      ></a
+                    >
                     <hr class="mt-4 mb-4" style="border: solid 3px" />
                   </div>
                 </div>
@@ -97,7 +135,14 @@
       </div>
     </section>
 
-    <Sidebar v-model:visible="visibleLeft" class="p-sidebar-sm p-side-bar-ordersheet" position="right"  :fullscreen="false" :dismissable="false" :modal="false">
+    <Sidebar
+      v-model:visible="visibleLeft"
+      class="p-sidebar-sm p-side-bar-ordersheet"
+      position="right"
+      :fullscreen="false"
+      :dismissable="false"
+      :modal="false"
+    >
       <ul class="list-group">
         <router-link
           v-for="orderSheet in orderSheets"
@@ -106,7 +151,10 @@
           class="list-group-item"
           :to="{
             name: 'petition-order-sheets-index',
-            params: { order_sheet_id: orderSheet.id, petition_id: orderSheet.petition_id },
+            params: {
+              order_sheet_id: orderSheet.id,
+              petition_id: orderSheet.petition_id,
+            },
           }"
           >{{ orderSheet.order_sheet_date }}</router-link
         >
@@ -114,7 +162,6 @@
     </Sidebar>
 
     <div class="fixed-annexsures">
-      
       <!-- Prayers -->
       <!-- Stay Order -->
     </div>
@@ -129,7 +176,7 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import NavComponents from "../Cases/NavComponents.vue";
 import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
- 
+
 export default {
   components: {
     PageHeader,
@@ -138,7 +185,7 @@ export default {
     Pagination,
     Navigation,
     FileUpload,
-    NavComponents,  
+    NavComponents,
   },
   data() {
     return {
@@ -156,26 +203,24 @@ export default {
       horizontalView: false, //it will show vertical images by default
       activePage: null,
       removePageHeader: true,
-      visibleRight:true,      
-           
+      visibleRight: true,
     };
   },
   created() {
     this.getOrderSheets();
   },
-  mounted(){
+  mounted() {
     document.getElementById("header").style.display = "none";
   },
   methods: {
-    pageHeader(){
+    pageHeader() {
       this.removePageHeader = !this.removePageHeader;
-      if(this.removePageHeader){
+      if (this.removePageHeader) {
         document.getElementById("header").style.display = "none";
-      }else{
+      } else {
         document.getElementById("header").style.display = "block";
       }
-      
-    },   
+    },
     scrollIntoView(id) {
       // document
       //   .getElementById("image-container-" + id)
@@ -235,12 +280,11 @@ export default {
     },
 
     getCaseDetails() {
-       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       axios
-        .get(this.base_url + "/api/petitions/" + this.petition_id, {headers})
+        .get(this.base_url + "/api/petitions/" + this.petition_id, { headers })
         .then((response) => {
           this.petition = response.data.petition;
         })
@@ -252,8 +296,7 @@ export default {
     editPetitionAttachment(attachmentToUpdate) {
       if (true) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
@@ -286,17 +329,19 @@ export default {
           );
       }
     },
-    deletePetitionAttachment(petitionId, attachmentIndex) {
+    deletePetitionOrderSheet(orderSheetId) {
       if (confirm("Do you really want to delete?")) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
-          .delete(this.base_url + "/api/attachments/" + petitionId, {
-            headers,
-          })
+          .delete(
+            this.base_url + "/api/petition_order_sheets/" + orderSheetId,
+            {
+              headers,
+            }
+          )
           .then(
             (response) => {
               if (response.status === 200) {
@@ -305,11 +350,11 @@ export default {
                   title: "Success",
                   text: "Deleted Successfully!",
                 });
-                //this.getOrderSheets()
-                this.petition_index_details.attachments.splice(
-                  attachmentIndex,
-                  1
-                ); //removing record from list/index after deleting record from DB
+                this.getOrderSheets();
+                // this.petition_index_details.attachments.splice(
+                //   attachmentIndex,
+                //   1
+                // ); //removing record from list/index after deleting record from DB
               }
             },
             (error) => {
@@ -327,8 +372,8 @@ export default {
 };
 </script>
 
-<style> 
-.p-side-bar-ordersheet{
-  width: 130px!important;
+<style>
+.p-side-bar-ordersheet {
+  width: 130px !important;
 }
 </style>

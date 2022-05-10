@@ -1,123 +1,139 @@
 <template>
   <main id="main">
     <page-header title="Petition Replies Parent" />
-    <nav-components activeNavPill = 'reply' :petition_id="petition.id"  />
+    <nav-components activeNavPill="reply" :petition_id="petition.id" />
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg mt-3">
-      <div class="container" data-aos="fade-up">        
+      <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="table-responsive">
-          <div class="col-lg-12 col-md-12 col-sm-12">
-            <table  class="table table-striped">
-              <thead>                 
-                <th>Title</th>
-                 
-                <th width=10%>Actions</th>
-              </thead>
-              <tbody>
-                <tr                  
-                  v-for="(petition_reply_parent , petitionReplyParentIndex) in petition_reply_parents"
-                  :key="petition_reply_parent.id"
-                >                   
-                  <td>
-                    <input
-                      v-show="petition_reply_parent.editMode"
-                      class="form-control"
-                      v-model="petition_reply_parent.title"
-                      v-on:keyup.enter="editPetitionReplyParent(petition_reply_parent)"
-                    />
-                    <router-link
-                      v-show="!petition_reply_parent.editMode"
-                      :to="{
-                        name: 'petition-replies',
-                        params: { id: petition_reply_parent.id },
-                      }"
-                      >{{ petition_reply_parent.title }}
-                    </router-link>
-                  </td>
-                  
-                  <td width="15%">
-                    <a
-                      class="btn btn-sm btn-primary action-btn"
-                      v-show="!petition_reply_parent.editMode"
-                      @click="petition_reply_parent.editMode = true"
-                      href="javascript:void"
-                      style="margin-left:2px"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"
-                    >
-                    Edit
-                      <!-- <i class="fa fa-edit"></i> -->
-                    </a>
-                    <a
-                      v-show="petition_reply_parent.editMode"
-                      class="btn btn-sm btn-warning action-btn"
-                      @click="editPetitionReplyParent(petition_reply_parent)"
-                      href="javascript:void"
-                      style="margin-left:2px"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Update"
-                    >
-                    Update
-                      <!-- <i class="fa fa-save"></i> -->
-                    </a>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <table class="table table-striped">
+                <thead>
+                  <th>Title</th>
 
-                    <a
-                      v-show="petition_reply_parent.editMode"
-                      @click="petition_reply_parent.editMode=false"
-                      class="btn btn-sm btn-info action-btn"
-                      href="javascript:void"
-                      style="margin-left:2px"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Cancel"
-                    >
-                    Cancel
-                      <!-- <i class="fa fa-remove"></i> -->
-                    </a>
+                  <th width="10%">Actions</th>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="(
+                      petition_reply_parent, petitionReplyParentIndex
+                    ) in petition_reply_parents"
+                    :key="petition_reply_parent.id"
+                  >
+                    <td>
+                      <input
+                        v-show="petition_reply_parent.editMode"
+                        class="form-control"
+                        v-model="petition_reply_parent.title"
+                        v-on:keyup.enter="
+                          editPetitionReplyParent(petition_reply_parent)
+                        "
+                      />
+                      <router-link
+                        v-show="!petition_reply_parent.editMode"
+                        :to="{
+                          name: 'petition-replies',
+                          params: { id: petition_reply_parent.id },
+                        }"
+                        >{{ petition_reply_parent.title }}
+                      </router-link>
+                    </td>
 
-                    <a
-                    class="btn btn-sm btn-danger action-btn"
+                    <td width="15%">
+                      <a
+                        class="btn btn-sm btn-primary action-btn"
+                        v-show="!petition_reply_parent.editMode"
+                        @click="petition_reply_parent.editMode = true"
+                        href="javascript:void"
+                        style="margin-left: 2px"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Edit"
+                      >
+                        Edit
+                        <!-- <i class="fa fa-edit"></i> -->
+                      </a>
+                      <a
+                        v-show="petition_reply_parent.editMode"
+                        class="btn btn-sm btn-warning action-btn"
+                        @click="editPetitionReplyParent(petition_reply_parent)"
+                        href="javascript:void"
+                        style="margin-left: 2px"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Update"
+                      >
+                        Update
+                        <!-- <i class="fa fa-save"></i> -->
+                      </a>
 
-                      v-show="!petition_reply_parent.editMode"
-                      @click="deletePetitionReply(petition_reply_parent.id,petitionReplyParentIndex)"
-                      href="javascript:void"
-                      style="margin-left:2px"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
-                    >
-                    Delete
-                     <!-- <i class="fa fa-trash-o"></i> -->
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  
-                  <td>
-                    <input
-                      class="form-control"
-                      v-model="new_petition_reply_parent.title"
-                      v-on:keyup.enter="submitPetitionReply()"
-                      v-bind:class="{
-                        'error-boarder': v$.new_petition_reply_parent.title.$error,
-                      }"
-                      @blur="v$.new_petition_reply_parent.title.$touch"
-                    />
-                     <span
-                      v-if="v$.new_petition_reply_parent.title.$error"
-                      class="errorMessage"
-                      >Title field is required.</span
-                    >
-                  </td>                  
-                  <td>
-                    <button
-                      :disabled="saving"                      
-                      @click="submitPetitionReply()"
-                      class="btn btn-sm btn-success action-btn"
-                    >
-                    Save
-                      <!-- <i class="fa fa-save"></i> -->
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                      <a
+                        v-show="petition_reply_parent.editMode"
+                        @click="petition_reply_parent.editMode = false"
+                        class="btn btn-sm btn-info action-btn"
+                        href="javascript:void"
+                        style="margin-left: 2px"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Cancel"
+                      >
+                        Cancel
+                        <!-- <i class="fa fa-remove"></i> -->
+                      </a>
+
+                      <a
+                        class="btn btn-sm btn-danger action-btn"
+                        v-show="!petition_reply_parent.editMode"
+                        @click="
+                          deletePetitionReply(
+                            petition_reply_parent.id,
+                            petitionReplyParentIndex
+                          )
+                        "
+                        href="javascript:void"
+                        style="margin-left: 2px"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Delete"
+                      >
+                        Delete
+                        <!-- <i class="fa fa-trash-o"></i> -->
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input
+                        class="form-control"
+                        v-model="new_petition_reply_parent.title"
+                        v-on:keyup.enter="submitPetitionReply()"
+                        v-bind:class="{
+                          'error-boarder':
+                            v$.new_petition_reply_parent.title.$error,
+                        }"
+                        @blur="v$.new_petition_reply_parent.title.$touch"
+                      />
+                      <span
+                        v-if="v$.new_petition_reply_parent.title.$error"
+                        class="errorMessage"
+                        >Title field is required.</span
+                      >
+                    </td>
+                    <td>
+                      <button
+                        :disabled="saving"
+                        @click="submitPetitionReply()"
+                        class="btn btn-sm btn-success action-btn"
+                      >
+                        Save
+                        <!-- <i class="fa fa-save"></i> -->
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -135,29 +151,29 @@ import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 
 export default {
-    components: { PageHeader,NavComponents },
-     setup() {
-      return {
-        v$: useVuelidate(),
-      };
-    },
-    data() {
+  components: { PageHeader, NavComponents },
+  setup() {
     return {
-      'page_title':'Petiton Replies',
+      v$: useVuelidate(),
+    };
+  },
+  data() {
+    return {
+      page_title: "Petiton Replies",
       base_url: process.env.VUE_APP_SERVICE_URL,
-      petition_reply_parents: [], 
-      petition:{},      
-      id: this.$route.params.id, 
-      petition_id: this.$route.params.id, 
-      new_petition_reply_parent: {},   
-      saving: false,   
+      petition_reply_parents: [],
+      petition: {},
+      id: this.$route.params.id,
+      petition_id: this.$route.params.id,
+      new_petition_reply_parent: {},
+      saving: false,
     };
   },
   validations() {
-    return {      
-        new_petition_reply_parent: {
-          title: { required },  
-        }       
+    return {
+      new_petition_reply_parent: {
+        title: { required },
+      },
     };
   },
   created() {
@@ -165,14 +181,12 @@ export default {
     this.getPetitionReplyParents();
   },
   methods: {
-
     getCaseDetails() {
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       axios
-        .get(this.base_url + "/api/petitions/" + this.petition_id, {headers})
+        .get(this.base_url + "/api/petitions/" + this.petition_id, { headers })
         .then((response) => {
           this.petition = response.data.petition;
 
@@ -184,27 +198,27 @@ export default {
     },
     getPetitionReplyParents() {
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       axios
-        .get(this.base_url + "/api/petition_reply_parents/" + this.id, {headers})
+        .get(this.base_url + "/api/petition_reply_parents/" + this.id, {
+          headers,
+        })
         .then((response) => {
-          this.petition_reply_parents = response.data.petition_reply_parents;                 
+          this.petition_reply_parents = response.data.petition_reply_parents;
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    deletePetitionReply(petitionId,petitionReplyParentIndex) {
+    deletePetitionReply(petitionId, petitionReplyParentIndex) {
       if (confirm("Do you really want to delete?")) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),           
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
-       
+
         axios
-          .delete(this.base_url + "/api/petition_reply_parents/"+petitionId, {
+          .delete(this.base_url + "/api/petition_reply_parents/" + petitionId, {
             headers,
           })
           .then(
@@ -215,9 +229,9 @@ export default {
                   type: "success",
                   title: "Success",
                   text: "Deleted Successfully!",
-                }); 
-                //this.getCaseDetails()  
-                this.petition_reply_parents.splice(petitionReplyParentIndex,1);//removing record from list/index after deleting record from DB              
+                });
+                //this.getCaseDetails()
+                this.petition_reply_parents.splice(petitionReplyParentIndex, 1); //removing record from list/index after deleting record from DB
               }
             },
             (error) => {
@@ -234,14 +248,17 @@ export default {
     editPetitionReplyParent(petitionReplyParentToUpdate) {
       if (true) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
-          .post(this.base_url + "/api/petition_reply_parents", petitionReplyParentToUpdate, {
-            headers,
-          })
+          .post(
+            this.base_url + "/api/petition_reply_parents",
+            petitionReplyParentToUpdate,
+            {
+              headers,
+            }
+          )
           .then(
             (response) => {
               if (response.status === 200) {
@@ -266,10 +283,9 @@ export default {
     },
     submitPetitionReply() {
       this.v$.$validate();
-      if (!this.v$.$error) { 
+      if (!this.v$.$error) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
         this.saving = true;
         this.new_petition_reply_parent.petition_id = this.id;
@@ -290,8 +306,10 @@ export default {
                   text: "Saved Successfully!",
                 });
                 this.saving = false;
-                this.new_petition_reply_parent = {};              
-                setTimeout(() => { this.v$.$reset() }, 0)
+                this.new_petition_reply_parent = {};
+                setTimeout(() => {
+                  this.v$.$reset();
+                }, 0);
                 this.getPetitionReplyParents();
               }
             },
@@ -307,10 +325,9 @@ export default {
           );
       }
     },
-  } 
-}
+  },
+};
 </script>
 
 <style>
-
 </style>

@@ -18,27 +18,25 @@
                       }"
                       @blur="v$.talbana.title.$touch"
                     />
-                    <span
-                      v-if="v$.talbana.title.$error"
-                      class="errorMessage"
+                    <span v-if="v$.talbana.title.$error" class="errorMessage"
                       >Title field is required.</span
                     >
                   </div>
 
-                   <div class="col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Talbana Date<span style="color: red">*</span></label>
-                   <InputMask
+                    <InputMask
                       mask="99/99/9999"
                       class="form-control"
                       type="text"
-                     placeholder="dd/mm/yyyy"
+                      placeholder="dd/mm/yyyy"
                       v-model="talbana.talbana_date"
                       v-bind:class="{
                         'error-boarder': v$.talbana.talbana_date.$error,
                       }"
                       @blur="v$.talbana.talbana_date.$touch"
                     />
-                     <span
+                    <span
                       v-if="v$.talbana.talbana_date.$error"
                       class="errorMessage"
                       >Date field is required.</span
@@ -46,7 +44,7 @@
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Type</label>
-                    <select                     
+                    <select
                       class="form-control"
                       v-model="talbana.talbana_type_id"
                     >
@@ -58,7 +56,7 @@
                       >
                         {{ talbana_type.title }}
                       </option>
-                    </select>                    
+                    </select>
                   </div>
                 </div>
               </div>
@@ -67,18 +65,16 @@
                 <div class="row">
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <label>Description </label>
-                    <input
-                      class="form-control"
-                      v-model="talbana.description"
-                    />
+                    <input class="form-control" v-model="talbana.description" />
                   </div>
                 </div>
               </div>
-            
+
               <div class="form-group">
-                <button :disabled="saving" class="btn btn-success btn-sm mt-2">Save</button>
+                <button :disabled="saving" class="btn btn-success btn-sm mt-2">
+                  Save
+                </button>
               </div>
-              
             </form>
           </div>
         </div>
@@ -114,7 +110,7 @@ export default {
         title: "",
         description: "",
       },
-      petition:{},
+      petition: {},
       petition_types: [],
       talbana_types: [
         {
@@ -141,24 +137,25 @@ export default {
       },
     };
   },
-  created() {     
+  created() {
     this.getPetitionTypes();
     this.getPetition();
     this.getEditableTalbana();
   },
   activated() {},
   methods: {
-    getEditableTalbana: function(){
+    getEditableTalbana: function () {
       if (this.$route.params.editable_talbana_id) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
           .get(
-            this.base_url + "/api/petition_talbana/"+this.$route.params.editable_talbana_id,
-            
+            this.base_url +
+              "/api/petition_talbana/" +
+              this.$route.params.editable_talbana_id,
+
             {
               headers,
             }
@@ -166,7 +163,7 @@ export default {
           .then(
             (response) => {
               if (response.status === 200) {
-                console.log("editable talbana object: ",response.data.record ); 
+                console.log("editable talbana object: ", response.data.record);
                 this.talbana = response.data.record;
               }
             },
@@ -188,18 +185,13 @@ export default {
         event.preventDefault();
 
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
         this.saving = true;
         axios
-          .post(
-            this.base_url + "/api/petition_talbana",
-            this.talbana,
-            {
-              headers,
-            }
-          )
+          .post(this.base_url + "/api/petition_talbana", this.talbana, {
+            headers,
+          })
           .then(
             (response) => {
               if (response.status === 200) {
@@ -209,7 +201,13 @@ export default {
                   text: "Saved Successfully!",
                 });
                 this.saving = false;
-                this.$router.push({ path: "/petition-talbana-index/"+ this.talbana.petition_id+"/"+response.data.petitionTalbana.id});
+                this.$router.push({
+                  path:
+                    "/petition-talbana-index/" +
+                    this.talbana.petition_id +
+                    "/" +
+                    response.data.petitionTalbana.id,
+                });
               }
               console.log(response);
             },
@@ -224,16 +222,15 @@ export default {
             }
           );
       }
-    },    
-    
+    },
+
     async getPetitionTypes() {
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       let url = this.base_url + "/api/petition_types";
       await axios
-        .get(url, {headers})
+        .get(url, { headers })
         .then((response) => {
           this.petition_types = response.data.petition_types;
           console.log(this.petition_types);
@@ -244,13 +241,13 @@ export default {
     },
     getPetition() {
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       if (this.$route.params.petition_id) {
-        var url = this.base_url + "/api/petitions/" + this.$route.params.petition_id;
+        var url =
+          this.base_url + "/api/petitions/" + this.$route.params.petition_id;
         axios
-          .get(url, {headers})
+          .get(url, { headers })
           .then((response) => {
             this.petition = response.data.petition;
             this.opponents = [{}];
@@ -264,5 +261,5 @@ export default {
 };
 </script>
 
-<style> 
+<style>
 </style>

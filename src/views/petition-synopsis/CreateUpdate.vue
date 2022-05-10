@@ -18,16 +18,16 @@
                       }"
                       @blur="v$.synopsis.title.$touch"
                     />
-                    <span
-                      v-if="v$.synopsis.title.$error"
-                      class="errorMessage"
+                    <span v-if="v$.synopsis.title.$error" class="errorMessage"
                       >Title field is required.</span
                     >
                   </div>
 
-                   <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label>Synopsis Date<span style="color: red">*</span></label>
-                    
+                  <div class="col-lg-3 col-md-3 col-sm-12">
+                    <label
+                      >Synopsis Date<span style="color: red">*</span></label
+                    >
+
                     <InputMask
                       mask="99/99/9999"
                       class="form-control"
@@ -39,7 +39,7 @@
                       }"
                       @blur="v$.synopsis.synopsis_date.$touch"
                     />
-                     <span
+                    <span
                       v-if="v$.synopsis.synopsis_date.$error"
                       class="errorMessage"
                       >Date field is required.</span
@@ -47,7 +47,7 @@
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Type</label>
-                    <select                     
+                    <select
                       class="form-control"
                       v-model="synopsis.synopsis_type_id"
                     >
@@ -59,7 +59,7 @@
                       >
                         {{ synopsis_type.title }}
                       </option>
-                    </select>                    
+                    </select>
                   </div>
                 </div>
               </div>
@@ -75,11 +75,12 @@
                   </div>
                 </div>
               </div>
-            
+
               <div class="form-group">
-                <button :disabled="saving" class="btn btn-success btn-sm mt-2">Save</button>
+                <button :disabled="saving" class="btn btn-success btn-sm mt-2">
+                  Save
+                </button>
               </div>
-              
             </form>
           </div>
         </div>
@@ -115,7 +116,7 @@ export default {
         title: "",
         description: "",
       },
-      petition:{},
+      petition: {},
       petition_types: [],
       synopsis_types: [
         {
@@ -142,24 +143,25 @@ export default {
       },
     };
   },
-  created() {     
+  created() {
     this.getPetitionTypes();
     this.getPetition();
     this.getEditableSynopsis();
   },
   activated() {},
   methods: {
-    getEditableSynopsis: function(){
+    getEditableSynopsis: function () {
       if (this.$route.params.editable_synopsis_id) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
           .get(
-            this.base_url + "/api/petition_synopsis/"+this.$route.params.editable_synopsis_id,
-            
+            this.base_url +
+              "/api/petition_synopsis/" +
+              this.$route.params.editable_synopsis_id,
+
             {
               headers,
             }
@@ -167,7 +169,7 @@ export default {
           .then(
             (response) => {
               if (response.status === 200) {
-                console.log("editable synopsis object: ",response.data.record ); 
+                console.log("editable synopsis object: ", response.data.record);
                 this.synopsis = response.data.record;
               }
             },
@@ -189,18 +191,13 @@ export default {
         event.preventDefault();
         this.saving = true;
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
-          .post(
-            this.base_url + "/api/petition_synopsis",
-            this.synopsis,
-            {
-              headers,
-            }
-          )
+          .post(this.base_url + "/api/petition_synopsis", this.synopsis, {
+            headers,
+          })
           .then(
             (response) => {
               if (response.status === 200) {
@@ -210,7 +207,13 @@ export default {
                   text: "Saved Successfully!",
                 });
                 this.saving = false;
-                this.$router.push({ path: "/petition-synopsis-index/"+ this.synopsis.petition_id+"/"+response.data.petitionSynopsis.id});
+                this.$router.push({
+                  path:
+                    "/petition-synopsis-index/" +
+                    this.synopsis.petition_id +
+                    "/" +
+                    response.data.petitionSynopsis.id,
+                });
               }
               console.log(response);
             },
@@ -225,16 +228,15 @@ export default {
             }
           );
       }
-    },    
-    
+    },
+
     async getPetitionTypes() {
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       let url = this.base_url + "/api/petition_types";
       await axios
-        .get(url, {headers})
+        .get(url, { headers })
         .then((response) => {
           this.petition_types = response.data.petition_types;
           console.log(this.petition_types);
@@ -245,13 +247,13 @@ export default {
     },
     getPetition() {
       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       if (this.$route.params.petition_id) {
-        var url = this.base_url + "/api/petitions/" + this.$route.params.petition_id;
+        var url =
+          this.base_url + "/api/petitions/" + this.$route.params.petition_id;
         axios
-          .get(url, {headers})
+          .get(url, { headers })
           .then((response) => {
             this.petition = response.data.petition;
             this.opponents = [{}];
@@ -265,5 +267,5 @@ export default {
 };
 </script>
 
-<style> 
+<style>
 </style>
