@@ -52,19 +52,18 @@
                           v-bind:class="{
                             'error-boarder': v$.client.id.$error,
                           }"
-                        /> 
-                        <span
-                          v-if="v$.client.id.$error"
-                          class="errorMessage"
+                        />
+                        <span v-if="v$.client.id.$error" class="errorMessage"
                           >Client field is required.</span
                         >
                       </div>
                       <div class="col-md-3">
                         <label for="">Invoice No</label>
-                        <input 
+                        <input
                           v-model="client.invoice_no"
-                          type="text" 
-                          class="form-control" />
+                          type="text"
+                          class="form-control"
+                        />
                       </div>
                       <div class="col-md-3">
                         <label for="">Due Date</label>
@@ -143,11 +142,18 @@
                 <div class="col-md-12 text center">
                   <p>
                     <strong
-                      >Subject: <input type="text" class="form-control" v-model="client.subject">
-                      </strong
-                    >
+                      >Subject:
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="client.subject"
+                      />
+                    </strong>
                   </p>
-                  <Editor v-model="client.content" editorStyle="height: 320px" />
+                  <Editor
+                    v-model="client.content"
+                    editorStyle="height: 320px"
+                  />
                   <br />
                 </div>
               </div>
@@ -156,19 +162,19 @@
                 <div class="col-md-12">
                   <table class="table table-striped">
                     <tr>
-                      <th colspan="2" width="65%">Professional Services</th>                                 
+                      <th colspan="2" width="65%">Professional Services</th>
                       <th>Amount</th>
                     </tr>
                     <tr>
                       <td colspan="2">
                         <textarea
-                            v-model="client.services"
-                            type="text"
-                            class="form-control"    
-                            rows="2"                         
-                          ></textarea>                        
-                      </td> 
-                                  
+                          v-model="client.services"
+                          type="text"
+                          class="form-control"
+                          rows="2"
+                        ></textarea>
+                      </td>
+
                       <td>
                         <div class="input-group">
                           <span class="input-group-text">RS</span>
@@ -184,11 +190,33 @@
                   </table>
                 </div>
               </div>
+
               <div class="row">
-                <div class="col-12">                  
-                    <button :disabled="saving" style="float: right;" class="btn btn-success btn-sm">
-                      Create Invoice
-                    </button>                   
+                <div class="col-md-2">
+                  <label for=""><input type="checkbox" v-model="client.apply_tax" /> Apply Tax</label>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="input-group" v-show="client.apply_tax">
+                    <input
+                      v-model="client.tax_percentage"
+                      type="text"
+                      class="form-control"
+                      placeholder="10"
+                    />
+                    <span class="input-group-text">%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <button
+                    :disabled="saving"
+                    style="float: right"
+                    class="btn btn-success btn-sm"
+                  >
+                    Create Invoice
+                  </button>
                 </div>
               </div>
             </div>
@@ -228,7 +256,8 @@ export default {
         amount: "",
         subject: "Professional Fee for Providing Legal Opinion",
         content: "",
-        services: "Legal Opinion on the matter of State Bank Circular related to Closure of Govt. Accounts in commercial banksRs",
+        services:
+          "Legal Opinion on the matter of State Bank Circular related to Closure of Govt. Accounts in commercial banksRs",
       },
       clients: [],
     };
@@ -236,7 +265,7 @@ export default {
   validations() {
     return {
       client: {
-        id: { required },         
+        id: { required },
       },
     };
   },
@@ -269,7 +298,8 @@ export default {
         .then((response) => {
           this.client = response.data.user;
           this.client.subject = "Professional Fee for Providing Legal Opinion";
-          this.client.services = "Legal Opinion on the matter of State Bank Circular related to Closure of Govt. Accounts in commercial banksRs";
+          this.client.services =
+            "Legal Opinion on the matter of State Bank Circular related to Closure of Govt. Accounts in commercial banksRs";
         })
         .catch((error) => {
           console.log(error);
