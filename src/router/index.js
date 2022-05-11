@@ -45,6 +45,7 @@ import ForgotPassword from '../views/Auth/ForgotPassword'
 import OpinionIndex from '../views/opinions/OpinionIndex'
 
 import CreateInvoice from '../views/invoices/CreateInvoice'
+import Invoices from '../views/invoices/Invoices'
 
 const routes = [
   {
@@ -348,8 +349,42 @@ const routes = [
       auth: true ,
     },
   },
+  {
+    path: '/invoices',
+    name: 'invoices',
+    component: Invoices,
+    meta: { 
+      auth: true ,
+    },
+  },
   
   //invoices
+
+  //users list
+  {
+    path: '/users',
+    name: 'users-list',
+    component: UsersList,
+    meta: { 
+      auth: true ,
+    },
+  },
+  {
+    path: '/users/create',
+    name: 'create-user',    
+    component: CreateUser,
+    meta: { 
+      auth: true ,
+    },
+  },
+  {
+    path: '/users/edit/:id',
+    name: 'edit-user',    
+    component: CreateUser,
+    meta: { 
+      auth: true ,
+    },
+  },
 
 ]
 
