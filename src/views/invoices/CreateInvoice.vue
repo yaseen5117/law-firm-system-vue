@@ -38,8 +38,19 @@
                     <div class="row">
                       <div class="col-md-3">
                         <label for="">Select Client</label>
+                        <a
+                          class="btn btn-sm btn-primary action-btn"
+                          @click="editClientIfo()"
+                          href="javascript:void"
+                          style="margin-left: 10px; margin-bottom: 3px"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Edit"
+                        >
+                        Edit                       
+                      </a>
                         <Dropdown
-                          v-model="client.id"
+                          v-model="invoice.invoiceable_id"
                           :options="clients"
                           optionLabel="label"
                           optionValue="value"
@@ -48,19 +59,19 @@
                           appendTo="self"
                           @change="onChange"
                           filterPlaceholder="Find by Client Name"
-                          @blur="v$.client.id.$touch"
+                          @blur="v$.invoice.invoiceable_id.$touch"
                           v-bind:class="{
-                            'error-boarder': v$.client.id.$error,
+                            'error-boarder': v$.invoice.invoiceable_id.$error,
                           }"
                         />
-                        <span v-if="v$.client.id.$error" class="errorMessage"
+                        <span v-if="v$.invoice.invoiceable_id.$error" class="errorMessage"
                           >Client field is required.</span
                         >
-                      </div>
+                      </div>                      
                       <div class="col-md-3">
                         <label for="">Invoice No</label>
                         <input
-                          v-model="client.invoice_no"
+                          v-model="invoice.invoice_no"
                           type="text"
                           class="form-control"
                         />
@@ -68,7 +79,7 @@
                       <div class="col-md-3">
                         <label for="">Due Date</label>
                         <InputMask
-                          v-model="client.due_date"
+                          v-model="invoice.due_date"
                           mask="99/99/9999"
                           placeholder="dd/mm/yyyy"
                           type="text"
@@ -83,18 +94,19 @@
                         <label for="">Company Name</label>
                         <input
                           type="text"
-                          readonly
-                          v-model="client.company_name"
+                          :disabled=isDisabled
+                          v-model="invoice.selectedClient.company_name"
                           class="form-control"
                         />
                       </div>
 
                       <div class="col-md-3">
                         <label for="">Phone</label>
-                        <input
+                        <input                          
                           type="text"
-                          readonly
-                          v-model="client.phone"
+                          id="phone"
+                          :disabled=isDisabled
+                          v-model="invoice.selectedClient.phone"
                           class="form-control"
                         />
                       </div>
@@ -103,7 +115,7 @@
                         <input
                           type="text"
                           readonly
-                          v-model="client.email"
+                          v-model="invoice.selectedClient.email"
                           class="form-control"
                         />
                       </div>
@@ -111,8 +123,8 @@
                         <label for="">Address</label>
                         <input
                           type="text"
-                          readonly
-                          v-model="client.address"
+                          :disabled=isDisabled
+                          v-model="invoice.selectedClient.address"
                           class="form-control"
                         />
                       </div>
@@ -146,12 +158,12 @@
                       <input
                         type="text"
                         class="form-control"
-                        v-model="client.subject"
+                        v-model="invoice.subject"
                       />
                     </strong>
                   </p>
                   <Editor
-                    v-model="client.content"
+                    v-model="invoice.content"
                     editorStyle="height: 320px"
                   />
                   <br />
@@ -168,7 +180,7 @@
                     <tr>
                       <td colspan="2">
                         <textarea
-                          v-model="client.services"
+                          v-model="invoice.services"
                           type="text"
                           class="form-control"
                           rows="2"
@@ -179,7 +191,7 @@
                         <div class="input-group">
                           <span class="input-group-text">RS</span>
                           <input
-                            v-model="client.amount"
+                            v-model="invoice.amount"
                             type="text"
                             class="form-control"
                             placeholder="25000"
@@ -193,13 +205,13 @@
 
               <div class="row">
                 <div class="col-md-2">
-                  <label for=""><input type="checkbox" v-model="client.apply_tax" /> Apply Tax</label>
+                  <label for=""><input type="checkbox" v-model="invoice.apply_tax" /> Apply Tax</label>
                 </div>
 
                 <div class="col-md-2">
-                  <div class="input-group" v-show="client.apply_tax">
+                  <div class="input-group" v-show="invoice.apply_tax">
                     <input
-                      v-model="client.tax_percentage"
+                      v-model="invoice.tax_percentage"
                       type="text"
                       class="form-control"
                       placeholder="10"
@@ -249,23 +261,26 @@ export default {
     return {
       saving: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
-      value: "any",
-      client: {
+      value: "any",       
+      invoice: {         
+        invoiceable_id: "",
         due_date: "",
         invoice_no: "",
         amount: "",
         subject: "Professional Fee for Providing Legal Opinion",
-        content: "",
+        content: "Dear Sirs: Please see attached our Invoice for professional services to the tune of Rs.25,000/-for providing legal opinion on a query about the State Bank’s Circular addressed to Commercial Banks regarding closure of bank accounts of government ministries and subordinate bodies. The opinion was sought by learned Head of Accounts via email dated 16th December, 2020. Legal Opinion was provided on an urgent basis via email dated 19th December, 2020. Please note that cheque is payable to “Umer Gilani”. We would appreciate payment of our invoice within seven (7) days. Very truly yours,",
         services:
           "Legal Opinion on the matter of State Bank Circular related to Closure of Govt. Accounts in commercial banksRs",
+        selectedClient: {},
       },
       clients: [],
+      isDisabled: true,
     };
   },
   validations() {
     return {
-      client: {
-        id: { required },
+      invoice: {
+        invoiceable_id: { required },
       },
     };
   },
@@ -273,6 +288,9 @@ export default {
     this.getClients();
   },
   methods: {
+    editClientIfo() {        
+      this.isDisabled = false;      
+    },
     getClients() {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
@@ -296,9 +314,10 @@ export default {
       axios
         .get(url, { headers })
         .then((response) => {
-          this.client = response.data.user;
-          this.client.subject = "Professional Fee for Providing Legal Opinion";
-          this.client.services =
+          console.log(response.data.user);
+          this.invoice.selectedClient = response.data.user;
+          this.invoice.subject = "Professional Fee for Providing Legal Opinion";
+          this.invoice.services =
             "Legal Opinion on the matter of State Bank Circular related to Closure of Govt. Accounts in commercial banksRs";
         })
         .catch((error) => {
@@ -316,7 +335,7 @@ export default {
         };
 
         axios
-          .post(this.base_url + "/api/invoices", this.client, {
+          .post(this.base_url + "/api/invoices", this.invoice, {
             headers,
           })
           .then(
