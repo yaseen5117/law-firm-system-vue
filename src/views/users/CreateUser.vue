@@ -304,7 +304,12 @@ export default {
             this.user.role_id = response.data.user.roles[0].id;
           })
           .catch((error) => {
-            console.log(error);
+            console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
           });
       }
     },
@@ -319,7 +324,12 @@ export default {
           this.roles = response.data.roles;
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
         });
     },
   },

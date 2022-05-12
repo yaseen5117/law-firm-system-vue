@@ -48,12 +48,16 @@
                 >
                    
                   <td>
-                    <input
+                     <AutoComplete
                       v-show="petition_detail.editMode"
-                      class="form-control"
+                      :delay="1"
                       v-model="petition_detail.document_description"
+                      :suggestions="filteredDocumentDiscriptions"
+                      @complete="searchForAutocomplete($event)"                      
+                      :style="'width:100%'"
+                      :inputStyle="'width:100%'"
                       v-on:keyup.enter="editPetitionIndex(petition_detail)"
-                    />
+                    />                     
                     <router-link
                       v-show="!petition_detail.editMode"
                       :to="{
@@ -296,7 +300,12 @@ export default {
           console.log(this.petition);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
         });
     },
 

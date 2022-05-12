@@ -417,7 +417,12 @@ export default {
           console.log(this.clients);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
         });
     },
     getLawyers() {
@@ -432,7 +437,12 @@ export default {
           console.log(this.lawyers);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
         });
     },
     async getCourts() {
@@ -444,7 +454,12 @@ export default {
           console.log(this.courts);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
         });
     },
     async getPetitionTypes() {
@@ -456,7 +471,12 @@ export default {
           console.log(this.petition_types);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
         });
     },
     getPetition() {
@@ -475,7 +495,12 @@ export default {
             this.petition.lawyer_ids = response.data.petition.lawyer_ids_array;
           })
           .catch((error) => {
-            console.log(error);
+            console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
           });
       }
     },
