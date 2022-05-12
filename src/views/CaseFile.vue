@@ -335,21 +335,7 @@ export default {
   mounted() {
     console.log("Case File Component Mounted");
   },
-  watch: {
-    filters: {
-      deep: true,
-      handler() {
-
-        if (!this.awaitingSearch) {
-            setTimeout(() => {
-              this.getCaseFiles();
-              this.awaitingSearch = false;
-            }, 1500); // 1 sec delay
-          }
-          this.awaitingSearch = true;
-      },
-    },
-  },
+  
 };
 </script>
 

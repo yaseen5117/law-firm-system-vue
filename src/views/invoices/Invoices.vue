@@ -9,18 +9,24 @@
               <table class="table table-striped">
                   <thead>
                       <tr>
-                          <th>Invoice ID</th>
-                          <th>Client</th>
+                          <th>Invoice</th>
                           <th>Due Date</th>
-                          <th>Created At</th>
+                          <th>Actions</th>
                       </tr>
                   </thead>
                   <tbody>
                       <tr v-for="(invoice , invoice_index) in invoices" :key="invoice_index">
-                          <td>{{invoice.invoice_id}}</td>
-                          <td>{{invoice.client?invoice.client.name:""}}</td>
+                          <td>{{invoice.invoice_no}} 
+                            <small style="display:block" class="text-muted">{{invoice.client?invoice.client.name:""}} <span class="badge rounded-pill bg-primary">Pending</span></small>
+                            <small>Created at:{{invoice.created_at}}</small>
+                          </td>
+                          
                           <td>{{invoice.due_date}}</td>
-                          <td>{{invoice.created_at}}</td>
+                          <td>
+                              <button class="btn btn-success action-btn " style="margin-right:2px">Download PDF</button>
+                              <button class="btn btn-success action-btn" style="margin-right:2px">Edit</button>
+                              <button class="btn btn-danger action-btn" style="margin-right:2px">Delete</button>
+                            </td>
                       </tr>
                   </tbody>
               </table>

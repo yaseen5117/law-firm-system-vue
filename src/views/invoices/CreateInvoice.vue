@@ -38,18 +38,15 @@
                     <div class="row">
                       <div class="col-md-3">
                         <label for="">Select Client</label>
-                        <a
-                          class="btn btn-sm btn-primary action-btn"
-                          @click="editClientIfo()"
-                          href="javascript:void"
-                          style="margin-left: 10px; margin-bottom: 3px"
-                          data-bs-toggle="tooltip"
+                        
+                          
+                          
+                        <span v-show="invoice.invoiceable_id" style="margin-left:5px" for="" data-bs-toggle="tooltip"
                           data-bs-placement="top"
-                          title="Edit"
-                        >
-                        Edit                       
-                      </a>
+                          title="Make changes to user's profile"><input type="checkbox"
+                          @change="this.isDisabled=!this.isDisabled;invoice.edit_client=!invoice.edit_client;"  >Edit client</span>
                         <Dropdown
+                          
                           v-model="invoice.invoiceable_id"
                           :options="clients"
                           optionLabel="label"
@@ -220,8 +217,37 @@
                   </div>
                 </div>
               </div>
+              <div class="row mt-2">
+                <div class="col-md-12">
+                  <div v-for="(invoice_expense_index,invoice_expense) in invoice.invoice_expenses" :key="invoice_expense" class="form-group">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <label for="">Expense</label>
+                        <input type="text" class="form-control" v-model="invoice_expense.expense">
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Amount</label>
+                        <div class="input-group">
+                          <span class="input-group-text">RS</span>
+                          <input
+                            v-model="invoice_expense.amount"
+                            type="text"
+                            class="form-control"
+                            placeholder="25000"
+                          />
+                        <button @click="removeInvoiceExpenses(invoice.invoice_expenses,invoice_expense_index)"><span class="fa fa-minus"></span></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button @click="addInvoiceExpenses()"><span class="fa fa-plus"></span> Add Expenses</button>
+                </div>
+
+                
+              </div>
               <div class="row">
                 <div class="col-12">
+                  <p class="text-end"><strong>Total: </strong>{{total_amount}}</p>
                   <button
                     :disabled="saving"
                     style="float: right"
@@ -262,6 +288,7 @@ export default {
       saving: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
       value: "any",       
+      total_amount:0.00,
       invoice: {         
         invoiceable_id: "",
         due_date: "",
@@ -272,10 +299,25 @@ export default {
         services:
           "Legal Opinion on the matter of State Bank Circular related to Closure of Govt. Accounts in commercial banksRs",
         selectedClient: {},
+        invoice_expenses: [],
       },
       clients: [],
       isDisabled: true,
     };
+  },
+   watch: {
+    invoice: {
+      deep: true,
+      handler() {
+        
+        var sum_invoice_expenses = 0;
+        for(var invoice_expense in this.invoice.invoice_expenses){
+          sum_invoice_expenses = sum_invoice_expenses+parseFloat(invoice_expense.amount);
+        }
+        console.log("sum_invoice_expenses",sum_invoice_expenses);
+        this.total_amount = parseFloat(this.invoice.amount) + parseFloat(sum_invoice_expenses);
+      },
+    },
   },
   validations() {
     return {
@@ -284,10 +326,21 @@ export default {
       },
     };
   },
+  
   created() {
     this.getClients();
   },
   methods: {
+    removeInvoiceExpenses: function (obj, index) {
+      obj.splice(index, 1);
+    },
+    addInvoiceExpenses(){
+      var invoice_expense_single = {
+        "expense":"",
+        "amount":"0.00",
+      };
+      this.invoice.invoice_expenses.push(invoice_expense_single);
+    },
     editClientIfo() {        
       this.isDisabled = false;      
     },
