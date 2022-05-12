@@ -303,7 +303,12 @@ export default {
           console.log(this.clients);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
         });
     },
     onChange(event) {
@@ -321,7 +326,12 @@ export default {
             "Legal Opinion on the matter of State Bank Circular related to Closure of Govt. Accounts in commercial banksRs";
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
         });
     },
     submitForm: function (event) {

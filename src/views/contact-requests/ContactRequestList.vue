@@ -114,7 +114,12 @@ export default {
           this.isLoaded = true;           
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
         });
     },
     deleteContactRequest(contactRequestId, row_index) {
