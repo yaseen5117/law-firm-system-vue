@@ -417,11 +417,11 @@ export default {
           console.log(this.clients);
         })
         .catch((error) => {
-          console.log(error.response.data.error);
+          console.log(error);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error,
               });
         });
     },
@@ -437,11 +437,11 @@ export default {
           console.log(this.lawyers);
         })
         .catch((error) => {
-          console.log(error.response.data.error);
+          console.log(error);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error,
               });
         });
     },
@@ -454,11 +454,11 @@ export default {
           console.log(this.courts);
         })
         .catch((error) => {
-          console.log(error.response.data.error);
+          console.log(error);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error,
               });
         });
     },
@@ -471,11 +471,11 @@ export default {
           console.log(this.petition_types);
         })
         .catch((error) => {
-          console.log(error.response.data.error);
+          console.log(error);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error,
               });
         });
     },
@@ -495,11 +495,11 @@ export default {
             this.petition.lawyer_ids = response.data.petition.lawyer_ids_array;
           })
           .catch((error) => {
-            console.log(error.response.data.error);
+            console.log(error);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error,
               });
           });
       }
