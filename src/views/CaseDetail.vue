@@ -48,12 +48,16 @@
                 >
                    
                   <td>
-                    <input
+                     <AutoComplete
                       v-show="petition_detail.editMode"
-                      class="form-control"
+                      :delay="1"
                       v-model="petition_detail.document_description"
+                      :suggestions="filteredDocumentDiscriptions"
+                      @complete="searchForAutocomplete($event)"                      
+                      :style="'width:100%'"
+                      :inputStyle="'width:100%'"
                       v-on:keyup.enter="editPetitionIndex(petition_detail)"
-                    />
+                    />                     
                     <router-link
                       v-show="!petition_detail.editMode"
                       :to="{
