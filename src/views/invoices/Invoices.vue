@@ -5,31 +5,68 @@
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="col-md-12">
-              
-              <table class="table table-striped">
-                  <thead>
-                      <tr>
-                          <th>Invoice</th>
-                          <th>Due Date</th>
-                          <th>Actions</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr v-for="(invoice , invoice_index) in invoices" :key="invoice_index">
-                          <td>{{invoice.invoice_no}} 
-                            <small style="display:block" class="text-muted">{{invoice.client?invoice.client.name:""}} <span class="badge rounded-pill bg-primary">Pending</span></small>
-                            <small>Created at:{{invoice.created_at}}</small>
-                          </td>
-                          
-                          <td>{{invoice.due_date}}</td>
-                          <td>
-                              <button class="btn btn-success action-btn " style="margin-right:2px">Download PDF</button>
-                              <button class="btn btn-success action-btn" style="margin-right:2px">Edit</button>
-                              <button class="btn btn-danger action-btn" style="margin-right:2px">Delete</button>
-                            </td>
-                      </tr>
-                  </tbody>
-              </table>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Invoice</th>
+                  <th>Due Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="(invoice, invoice_index) in invoices"
+                  :key="invoice_index"
+                >
+                  <td>
+                    {{ invoice.invoice_no }}
+                    <small style="display: block" class="text-muted"
+                      >{{ invoice.client ? invoice.client.name : "" }}
+                      <span class="badge rounded-pill bg-primary"
+                        >Pending</span
+                      ></small
+                    >
+                    <small>Created at:{{ invoice.created_at }}</small>
+                  </td>
+
+                  <td>{{ invoice.due_date }}</td>
+                  <td>
+                    <button
+                      class="btn btn-success action-btn"
+                      @click="downloadPdf()"
+                      style="margin-right: 2px"
+                    >
+                      Download PDF
+                    </button>
+                    <router-link
+                        class="btn btn-sm btn-success action-btn"                        
+                        :to="{
+                          name: 'edit-invoice',
+                          params: { id: invoice.id },
+                        }"
+                        href="javascript:void"
+                        style="margin-right: 2px"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Edit"
+                      >
+                        Edit                         
+                      </router-link>                    
+                     <a
+                        class="btn btn-sm btn-danger action-btn"                       
+                        @click="deleteInvoice(invoice.id, invoice_index)"
+                        href="javascript:void"
+                        style="margin-right: 2px"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        title="Delete"
+                      >
+                        Delete                        
+                      </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -82,14 +119,13 @@ export default {
         .get(url, { headers })
         .then((response) => {
           this.invoices = response.data.invoices;
-          
         })
         .catch((error) => {
           this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error.response.data.error,
-            });
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.error,
+          });
         });
     },
     onChange(event) {
@@ -131,13 +167,69 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
-                
               }
               console.log(response);
               this.saving = false;
             },
             (error) => {
               this.saving = false;
+              console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
+            }
+          );
+      }
+    },
+    downloadPdf() {
+      let url = "https://api.elawfirmpk.com/download_pdf";
+      //  let url = "http://localhost:8000/download_pdf";
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      axios
+        .get(url, { headers })
+        .then((response) => {
+          this.$notify({
+            type: "success",
+            title: "Success",
+            text: "Downloaded Successfully!",
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error,
+          });
+        });
+    },
+        deleteInvoice(invoiceId, invoice_index) {
+      if (confirm("Do you really want to delete?")) {
+        var headers = {
+          Authorization:
+            `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+
+        axios
+          .delete(this.base_url + "/api/invoices/" + invoiceId, {
+            headers,
+          })
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "Deleted Successfully!",
+                });                 
+                this.invoices.splice(invoice_index, 1); //removing record from list/index after deleting record from DB
+              }
+            },
+            (error) => {
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",

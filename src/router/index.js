@@ -357,7 +357,15 @@ const routes = [
       auth: true ,
     },
   },
-  
+  {
+    path: '/invoices/edit/:id',
+    name: 'edit-invoice',    
+    component: CreateInvoice,
+    meta: { 
+      auth: true ,
+    },
+  },
+
   //invoices
 
   //users list

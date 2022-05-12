@@ -1,6 +1,6 @@
 <template>
   <main id="main">
-    <page-header :title="'Create New Invoice'" :petition="null" />
+    <page-header :title="page_title" :petition="null" />
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="row">
@@ -155,12 +155,12 @@
                       <input
                         type="text"
                         class="form-control"
-                        v-model="invoice.subject"
+                        v-model="invoice.invoice_meta.subject"
                       />
                     </strong>
                   </p>
                   <Editor
-                    v-model="invoice.content"
+                    v-model="invoice.invoice_meta.content"
                     editorStyle="height: 320px"
                   />
                   <br />
@@ -177,7 +177,7 @@
                     <tr>
                       <td colspan="2">
                         <textarea
-                          v-model="invoice.services"
+                          v-model="invoice.invoice_meta.services"
                           type="text"
                           class="form-control"
                           rows="2"
@@ -285,6 +285,7 @@ export default {
   },
   data() {
     return {
+      page_title: this.$route.params.id ? "Edit Invoice" : "Create New Invoice",
       saving: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
       value: "any",       
@@ -293,13 +294,14 @@ export default {
         invoiceable_id: "",
         due_date: "",
         invoice_no: "",
-        amount: "",
-        subject: "Professional Fee for Providing Legal Opinion",
-        content: "Dear Sirs: Please see attached our Invoice for professional services to the tune of Rs.25,000/-for providing legal opinion on a query about the State Bank’s Circular addressed to Commercial Banks regarding closure of bank accounts of government ministries and subordinate bodies. The opinion was sought by learned Head of Accounts via email dated 16th December, 2020. Legal Opinion was provided on an urgent basis via email dated 19th December, 2020. Please note that cheque is payable to “Umer Gilani”. We would appreciate payment of our invoice within seven (7) days. Very truly yours,",
-        services:
-          "Legal Opinion on the matter of State Bank Circular related to Closure of Govt. Accounts in commercial banksRs",
+        amount: "",        
         selectedClient: {},
         invoice_expenses: [],
+        invoice_meta: {
+          subject: "",
+          content: "",
+          services: "",
+        },
       },
       clients: [],
       isDisabled: true,
@@ -329,6 +331,7 @@ export default {
   
   created() {
     this.getClients();
+    this.getInvoice();
   },
   methods: {
     removeInvoiceExpenses: function (obj, index) {
@@ -356,11 +359,11 @@ export default {
           console.log(this.clients);
         })
         .catch((error) => {
-          console.log(error.response.data.error);
+          console.log(error);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error,
               });
         });
     },
@@ -374,16 +377,19 @@ export default {
         .then((response) => {
           console.log(response.data.user);
           this.invoice.selectedClient = response.data.user;
-          this.invoice.subject = "Professional Fee for Providing Legal Opinion";
-          this.invoice.services =
+          if(!this.$route.params.id){
+            this.invoice.invoice_meta.subject = "Professional Fee for Providing Legal Opinion";
+            this.invoice.invoice_meta.services =
             "Legal Opinion on the matter of State Bank Circular related to Closure of Govt. Accounts in commercial banksRs";
+          this.invoice.invoice_meta.content = "Dear Sirs: Please see attached our Invoice for professional services to the tune of Rs.25,000/-for providing legal opinion on a query about the State Bank’s Circular addressed to Commercial Banks regarding closure of bank accounts of government ministries and subordinate bodies. The opinion was sought by learned Head of Accounts via email dated 16th December, 2020. Legal Opinion was provided on an urgent basis via email dated 19th December, 2020. Please note that cheque is payable to “Umer Gilani”. We would appreciate payment of our invoice within seven (7) days. Very truly yours,";
+          }          
         })
         .catch((error) => {
-          console.log(error.response.data.error);
+          console.log(error);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error,
               });
         });
     },
@@ -409,23 +415,49 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
-                // this.$router.push({ path: "/petitions" });
+                this.$router.push({ path: "/invoices" });
               }
               console.log(response);
               this.saving = false;
             },
             (error) => {
               this.saving = false;
-              console.log(error.response.data.error);
+              console.log(error);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error,
               });
             }
           );
       }
     },
+    getInvoice(){      
+      if (this.$route.params.id) {
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+
+        var url = this.base_url + "/api/invoices/" + this.$route.params.id;
+        axios
+          .get(url, { headers })
+          .then((response) => {
+            // console.log('success');
+            // console.log(response.data.invoice.client);
+            this.invoice = response.data.invoice;    
+            this.invoice.selectedClient = response.data.invoice.client;  
+            this.invoice.invoice_meta = response.data.invoice.invoice_meta;
+          })
+          .catch((error) => {
+            console.log(error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error,
+              });
+          });
+      }
+    }
   },
 };
 </script>
