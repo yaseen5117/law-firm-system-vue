@@ -184,13 +184,13 @@
                         ></textarea>
                       </td>
 
-                      <td>
+                      <td>                         
                         <div class="input-group">
                           <span class="input-group-text">RS</span>
                           <input
                             v-model="invoice.amount"
                             type="text"
-                            class="form-control"
+                            class="form-control"                            
                             placeholder="25000"
                           />
                         </div>
@@ -232,7 +232,7 @@
                           <input
                             v-model="invoice_expense.amount"
                             type="text"
-                            class="form-control"
+                            class="form-control"                            
                             placeholder="25000"
                           />
                         <button @click="removeInvoiceExpenses(invoice.invoice_expenses,invoice_expense_index)"><span class="fa fa-minus"></span></button>
@@ -304,7 +304,7 @@ export default {
         },
       },
       clients: [],
-      isDisabled: true,
+      isDisabled: true,      
     };
   },
    watch: {
@@ -366,7 +366,7 @@ export default {
                 text: error,
               });
         });
-    },
+    },  
     onChange(event) {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
@@ -381,7 +381,7 @@ export default {
             this.invoice.invoice_meta.subject = "Professional Fee for Providing Legal Opinion";
             this.invoice.invoice_meta.services =
             "Legal Opinion on the matter of State Bank Circular related to Closure of Govt. Accounts in commercial banksRs";
-          this.invoice.invoice_meta.content = "Dear Sirs: Please see attached our Invoice for professional services to the tune of Rs.25,000/-for providing legal opinion on a query about the State Bank’s Circular addressed to Commercial Banks regarding closure of bank accounts of government ministries and subordinate bodies. The opinion was sought by learned Head of Accounts via email dated 16th December, 2020. Legal Opinion was provided on an urgent basis via email dated 19th December, 2020. Please note that cheque is payable to “Umer Gilani”. We would appreciate payment of our invoice within seven (7) days. Very truly yours,";
+            this.invoice.invoice_meta.content = "Dear Sir: Please see attached our Invoice for professional services to the tune of Rs. {service_amount}/-for providing legal opinion on a query about the State Bank’s Circular addressed to Commercial Banks regarding closure of bank accounts of government ministries and subordinate bodies. The opinion was sought by learned Head of Accounts via email dated 16th December, 2020. Legal Opinion was provided on an urgent basis via email dated 19th December, 2020. Please note that cheque is payable to “Umer Gilani”. We would appreciate payment of our invoice within seven (7) days. Very truly yours,";
           }          
         })
         .catch((error) => {
