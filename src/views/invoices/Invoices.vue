@@ -1,6 +1,6 @@
 <template>
   <main id="main">
-    <page-header :title="'Invoices'" :petition="null" />
+    <page-header :title="'Invoices'" :petition="null" :route_object="route_obj" :header_button="header_button" :header_button_text="header_button_text" />
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="row">
@@ -32,7 +32,7 @@
                   <td>{{ invoice.due_date }}</td>
                   <td>
                     <button
-                      class="btn btn-success action-btn"
+                      class="btn btn-warning action-btn"
                       @click="downloadPdf(invoice.id)"
                       style="margin-right: 2px"
                       :disabled="saving"
@@ -40,30 +40,30 @@
                       Download PDF
                     </button>
                     <router-link
-                        class="btn btn-sm btn-success action-btn"                        
-                        :to="{
-                          name: 'edit-invoice',
-                          params: { id: invoice.id },
-                        }"
-                        href="javascript:void"
-                        style="margin-right: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Edit"
-                      >
-                        Edit                         
-                      </router-link>                    
-                     <a
-                        class="btn btn-sm btn-danger action-btn"                       
-                        @click="deleteInvoice(invoice.id, invoice_index)"
-                        href="javascript:void"
-                        style="margin-right: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Delete"
-                      >
-                        Delete                        
-                      </a>
+                      class="btn btn-sm btn-success action-btn"
+                      :to="{
+                        name: 'edit-invoice',
+                        params: { invoice_id: invoice.id },
+                      }"
+                      href="javascript:void"
+                      style="margin-right: 2px"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      title="Edit"
+                    >
+                      Edit
+                    </router-link>
+                    <a
+                      class="btn btn-sm btn-danger action-btn"
+                      @click="deleteInvoice(invoice.id, invoice_index)"
+                      href="javascript:void"
+                      style="margin-right: 2px"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      title="Delete"
+                    >
+                      Delete
+                    </a>
                   </td>
                 </tr>
               </tbody>
@@ -96,6 +96,11 @@ export default {
   data() {
     return {
       saving: false,
+      route_obj: {
+        name: 'create-invoice',
+      },
+      header_button:true,
+      header_button_text:"Create Invoice",
       base_url: process.env.VUE_APP_SERVICE_URL,
       invoices: [],
     };
@@ -185,7 +190,7 @@ export default {
       }
     },
     downloadPdf(invoiceId) {
-      let url = this.base_url +"/api/download_pdf/"+invoiceId;
+      let url = this.base_url + "/api/download_pdf/" + invoiceId;
       //  let url = "http://localhost:8000/download_pdf";
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
@@ -214,8 +219,7 @@ export default {
     deleteInvoice(invoiceId, invoice_index) {
       if (confirm("Do you really want to delete?")) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
@@ -229,7 +233,7 @@ export default {
                   type: "success",
                   title: "Success",
                   text: "Deleted Successfully!",
-                });                 
+                });
                 this.invoices.splice(invoice_index, 1); //removing record from list/index after deleting record from DB
               }
             },

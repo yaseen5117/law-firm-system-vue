@@ -4,7 +4,7 @@
   <section id="breadcrumbs" class="breadcrumbs" v-if="!hide">
     <div class="container" >
       <div class="d-flex justify-content-between align-items-center">
-        <h4 v-if="title">{{ title }}</h4>
+        <h4 v-if="title">{{ title }} <router-link v-if="header_button" class="btn btn-primary btn-sm" :to="route_object">{{header_button_text}}</router-link></h4>
           
         <template v-if="!hideBreadCrumbs">
 
@@ -34,7 +34,7 @@
 
 <script>
 export default {
-  props: ["title", "petition","hideBreadCrumbs",'hide'],
+  props: ["title", "petition","hideBreadCrumbs",'hide','route_object','header_button_text','header_button'],
 };
 </script>
 
