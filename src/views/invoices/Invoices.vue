@@ -184,7 +184,7 @@ export default {
       }
     },
     downloadPdf() {
-      let url = "https://api.elawfirmpk.com/download_pdf";
+      let url = this.base_url +"/download_pdf";
       //  let url = "http://localhost:8000/download_pdf";
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
