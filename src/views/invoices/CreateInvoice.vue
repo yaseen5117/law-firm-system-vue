@@ -70,6 +70,7 @@
                         <input
                           v-model="invoice.invoice_no"
                           type="text"
+                          readonly
                           class="form-control"
                         />
                       </div>
@@ -385,6 +386,7 @@ export default {
         .then((response) => {
           console.log(response.data.user);
           this.invoice.selectedClient = response.data.user;
+          this.invoice.invoice_no = response.data.user.next_invoice_num;
           if(!this.$route.params.id){
             this.invoice.invoice_meta.subject = "Professional Fee for Providing Legal Opinion";
             this.invoice.invoice_meta.services =
