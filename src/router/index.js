@@ -358,7 +358,7 @@ const routes = [
     },
   },
   {
-    path: '/invoices/edit/:id',
+    path: '/invoices/edit/:invoice_id',
     name: 'edit-invoice',    
     component: CreateInvoice,
     meta: { 

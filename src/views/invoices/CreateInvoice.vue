@@ -239,7 +239,7 @@
                             class="form-control"
                             placeholder="300"
                           />
-                        <button @click="removeInvoiceExpenses(invoice.invoice_expenses,invoice_expense_index)"><span class="fa fa-minus"></span></button>
+                        <button type="button" @click="removeInvoiceExpenses(invoice.invoice_expenses,invoice_expense_index)"><span class="fa fa-minus"></span></button>
                         </div>
                       </div>
                     </div>
@@ -257,7 +257,7 @@
                     style="float: right"
                     class="btn btn-success btn-sm"
                   >
-                    Create Invoice
+                    {{page_title}}
                   </button>
                 </div>
               </div>
@@ -289,7 +289,7 @@ export default {
   },
   data() {
     return {
-      page_title: this.$route.params.id ? "Edit Invoice" : "Create New Invoice",
+      page_title: this.$route.params.invoice_id ? "Edit Invoice" : "Create New Invoice",
       saving: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
       value: "any",       
@@ -297,6 +297,7 @@ export default {
       invoice: {         
         invoiceable_id: "",
         due_date: "",
+        tax_percentage: "10",
         invoice_no: "",
         amount: "",        
         selectedClient: {},
@@ -386,8 +387,9 @@ export default {
         .then((response) => {
           console.log(response.data.user);
           this.invoice.selectedClient = response.data.user;
+          this.invoice.due_date = response.data.invoice_date;
           this.invoice.invoice_no = response.data.user.next_invoice_num;
-          if(!this.$route.params.id){
+          if(!this.$route.params.invoice_id){
             this.invoice.invoice_meta.subject = "Professional Fee for Providing Legal Opinion";
             this.invoice.invoice_meta.services =
             "Legal Opinion on the matter of State Bank Circular related to Closure of Govt. Accounts in commercial banksRs";
@@ -443,12 +445,12 @@ export default {
       }
     },
     getInvoice(){      
-      if (this.$route.params.id) {
+      if (this.$route.params.invoice_id) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
-        var url = this.base_url + "/api/invoices/" + this.$route.params.id;
+        var url = this.base_url + "/api/invoices/" + this.$route.params.invoice_id;
         axios
           .get(url, { headers })
           .then((response) => {
