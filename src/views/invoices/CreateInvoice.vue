@@ -189,7 +189,8 @@
                           <span class="input-group-text">RS</span>
                           <input
                             v-model="invoice.amount"
-                            type="text"
+                            type="number"
+                            min="0"
                             class="form-control"
                             placeholder="25000"
                           />
@@ -209,7 +210,9 @@
                   <div class="input-group" v-show="invoice.apply_tax">
                     <input
                       v-model="invoice.tax_percentage"
-                      type="text"
+                      type="number"
+                      min="0"
+                      max="100"
                       class="form-control"
                       placeholder="10"
                     />
@@ -219,7 +222,7 @@
               </div>
               <div class="row mt-2">
                 <div class="col-md-12">
-                  <div v-for="(invoice_expense_index,invoice_expense) in invoice.invoice_expenses" :key="invoice_expense" class="form-group">
+                  <div v-for="(invoice_expense,invoice_expense_index) in invoice.invoice_expenses" :key="invoice_expense" class="form-group">
                     <div class="row">
                       <div class="col-md-8">
                         <label for="">Expense</label>
@@ -231,16 +234,16 @@
                           <span class="input-group-text">RS</span>
                           <input
                             v-model="invoice_expense.amount"
-                            type="text"
+                            type="number"
                             class="form-control"
-                            placeholder="25000"
+                            placeholder="300"
                           />
                         <button @click="removeInvoiceExpenses(invoice.invoice_expenses,invoice_expense_index)"><span class="fa fa-minus"></span></button>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <button @click="addInvoiceExpenses()"><span class="fa fa-plus"></span> Add Expenses</button>
+                  <button type="button" @click="addInvoiceExpenses()"><span class="fa fa-plus"></span> Add Expenses</button>
                 </div>
 
                 
@@ -312,12 +315,17 @@ export default {
       deep: true,
       handler() {
         
-        var sum_invoice_expenses = 0;
-        for(var invoice_expense in this.invoice.invoice_expenses){
-          sum_invoice_expenses = sum_invoice_expenses+parseFloat(invoice_expense.amount);
+        var sum_invoice_expenses= 0.00;
+        var tax_amount= 0.00;
+
+        this.invoice.invoice_expenses.forEach((invoice_expense, index) => {
+            sum_invoice_expenses = sum_invoice_expenses+invoice_expense.amount;
+        });
+        if(this.invoice.apply_tax && this.invoice.tax_percentage>0){
+          tax_amount = (this.invoice.tax_percentage * this.invoice.amount)/100;
         }
-        console.log("sum_invoice_expenses",sum_invoice_expenses);
-        this.total_amount = parseFloat(this.invoice.amount) + parseFloat(sum_invoice_expenses);
+        this.total_amount = parseFloat(this.invoice.amount) + parseFloat(sum_invoice_expenses)-tax_amount;
+        this.total_amount = this.total_amount.toFixed(2);
       },
     },
   },
@@ -340,7 +348,7 @@ export default {
     addInvoiceExpenses(){
       var invoice_expense_single = {
         "expense":"",
-        "amount":"0.00",
+        "amount":0.00,
       };
       this.invoice.invoice_expenses.push(invoice_expense_single);
     },
