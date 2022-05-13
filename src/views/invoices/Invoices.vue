@@ -33,8 +33,9 @@
                   <td>
                     <button
                       class="btn btn-success action-btn"
-                      @click="downloadPdf()"
+                      @click="downloadPdf(invoice.id)"
                       style="margin-right: 2px"
+                      :disabled="saving"
                     >
                       Download PDF
                     </button>
@@ -183,12 +184,13 @@ export default {
           );
       }
     },
-    downloadPdf() {
-      let url = this.base_url +"/api/download_pdf";
+    downloadPdf(invoiceId) {
+      let url = this.base_url +"/api/download_pdf/"+invoiceId;
       //  let url = "http://localhost:8000/download_pdf";
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
+      this.saving = true;
       axios
         .get(url, { headers })
         .then((response) => {
@@ -197,8 +199,10 @@ export default {
             title: "Success",
             text: "Downloaded Successfully!",
           });
+          this.saving = false;
         })
         .catch((error) => {
+          this.saving = false;
           console.log(error);
           this.$notify({
             type: "error",
@@ -207,7 +211,7 @@ export default {
           });
         });
     },
-        deleteInvoice(invoiceId, invoice_index) {
+    deleteInvoice(invoiceId, invoice_index) {
       if (confirm("Do you really want to delete?")) {
         var headers = {
           Authorization:
