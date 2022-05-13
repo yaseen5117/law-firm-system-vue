@@ -393,7 +393,7 @@ export default {
             this.invoice.invoice_meta.subject = "Professional Fee for Providing Legal Opinion";
             this.invoice.invoice_meta.services =
             "Legal Opinion on the matter of State Bank Circular related to Closure of Govt. Accounts in commercial banksRs";
-            this.invoice.invoice_meta.content = "Dear Sir: Please see attached our Invoice for professional services to the tune of Rs. {service_amount}/-for providing legal opinion on a query about the State Bank’s Circular addressed to Commercial Banks regarding closure of bank accounts of government ministries and subordinate bodies. The opinion was sought by learned Head of Accounts via email dated 16th December, 2020. Legal Opinion was provided on an urgent basis via email dated 19th December, 2020. Please note that cheque is payable to “Umer Gilani”. We would appreciate payment of our invoice within seven (7) days. Very truly yours,";
+            this.invoice.invoice_meta.content = "Dear Sir: Please see attached our Invoice for professional services to the tune of Rs. {total_amount}/-for providing legal opinion on a query about the State Bank’s Circular addressed to Commercial Banks regarding closure of bank accounts of government ministries and subordinate bodies. The opinion was sought by learned Head of Accounts via email dated {due_date}. Legal Opinion was provided on an urgent basis via email dated {due_date}. Please note that cheque is payable to “Umer Gilani”. We would appreciate payment of our invoice within seven (7) days. Very truly yours,";
           }          
         })
         .catch((error) => {

@@ -4,6 +4,44 @@
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="row">
+          <div class="col-12 mb-2">
+            <Transition name="fade">
+              <form               
+                class="row gy-2 gx-3 align-items-center"
+              >
+                <div class="col-lg-3 col-md-3 col-sm-6">
+                  <input
+                    type="text"
+                    id="invoice_no"
+                    v-model="filters.invoice_no"
+                    class="form-control form-control-sm"
+                    placeholder="Invoice Number"
+                    aria-describedby="invoice_no"
+                  />
+                </div>
+                 
+                <div class="col-lg-3 col-md-3 col-sm-6">
+                  <input
+                    placeholder="Client Name"
+                    v-model="filters.client_name"
+                    type="text"
+                    id="client_name"
+                    class="form-control form-control-sm"
+                    aria-describedby="client_name"
+                  />
+                </div> 
+                <div class="col-lg-1 col-md-1 col-sm-12">
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                    @click="reset()"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </form>
+            </Transition>
+          </div>
           <div class="col-md-12">
             <table class="table table-striped">
               <thead>
@@ -103,6 +141,10 @@ export default {
       header_button_text:"Create Invoice",
       base_url: process.env.VUE_APP_SERVICE_URL,
       invoices: [],
+      filters:{
+        invoice_no: "",
+        client_name: "",
+      },
     };
   },
   validations() {
@@ -116,13 +158,20 @@ export default {
     this.getInvoices();
   },
   methods: {
+    reset() {
+      this.filters = {
+        invoice_no: "",
+        client_name: "",
+      };
+      this.getInvoices();
+    },
     getInvoices() {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
       let url = this.base_url + "/api/invoices";
       axios
-        .get(url, { headers })
+        .get(url, { headers,params: this.filters })
         .then((response) => {
           this.invoices = response.data.invoices;
         })
@@ -247,6 +296,21 @@ export default {
             }
           );
       }
+    },
+  },
+   watch: {
+    filters: {
+      deep: true,
+      handler() {
+
+        if (!this.awaitingSearch) {
+            setTimeout(() => {
+              this.getInvoices();
+              this.awaitingSearch = false;
+            }, 1500); // 1 sec delay
+          }
+          this.awaitingSearch = true;
+      },
     },
   },
 };
