@@ -1,14 +1,18 @@
 <template>
   <main id="main">
-    <page-header :title="'Invoices'" :petition="null" :route_object="route_obj" :header_button="header_button" :header_button_text="header_button_text" />
+    <page-header
+      :title="'Invoices'"
+      :petition="null"
+      :route_object="route_obj"
+      :header_button="header_button"
+      :header_button_text="header_button_text"
+    />
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="col-12 mb-2">
             <Transition name="fade">
-              <form               
-                class="row gy-2 gx-3 align-items-center"
-              >
+              <form class="row gy-2 gx-3 align-items-center expense">
                 <div class="col-lg-3 col-md-3 col-sm-6">
                   <input
                     type="text"
@@ -19,7 +23,7 @@
                     aria-describedby="invoice_no"
                   />
                 </div>
-                 
+
                 <div class="col-lg-3 col-md-3 col-sm-6">
                   <input
                     placeholder="Client Name"
@@ -29,14 +33,25 @@
                     class="form-control form-control-sm"
                     aria-describedby="client_name"
                   />
-                </div> 
+                </div>
                 <div class="col-lg-1 col-md-1 col-sm-12">
                   <button
                     type="button"
                     class="btn btn-danger btn-sm"
                     @click="reset()"
+                    :disabled="saving"
                   >
                     Reset
+                  </button>
+                </div>
+                <div class="col-lg-1 col-md-12 col-sm-12">
+                  <button
+                    type="button"
+                    class="btn btn-info btn-sm"
+                    @click="archiveInvoices()"
+                    :disabled="saving"
+                  >
+                    Achive
                   </button>
                 </div>
               </form>
@@ -135,15 +150,16 @@ export default {
     return {
       saving: false,
       route_obj: {
-        name: 'create-invoice',
+        name: "create-invoice",
       },
-      header_button:true,
-      header_button_text:"Create Invoice",
+      header_button: true,
+      header_button_text: "Create Invoice",
       base_url: process.env.VUE_APP_SERVICE_URL,
       invoices: [],
-      filters:{
+      filters: {
         invoice_no: "",
         client_name: "",
+        is_archive: "",
       },
     };
   },
@@ -158,12 +174,37 @@ export default {
     this.getInvoices();
   },
   methods: {
+    archiveInvoices() {
+      this.saving = true;
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      this.filters.is_archive = true;
+      let url = this.base_url + "/api/invoices";
+      axios
+        .get(url, { headers, params: this.filters })
+        .then((response) => {
+          this.saving = false;
+          this.invoices = response.data.invoices;
+        })
+        .catch((error) => {
+          this.saving = false;
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.error,
+          });
+        });
+    },
     reset() {
+      this.saving = true;
       this.filters = {
         invoice_no: "",
         client_name: "",
+        is_archive: "",
       };
       this.getInvoices();
+      this.saving = false;
     },
     getInvoices() {
       var headers = {
@@ -171,7 +212,7 @@ export default {
       };
       let url = this.base_url + "/api/invoices";
       axios
-        .get(url, { headers,params: this.filters })
+        .get(url, { headers, params: this.filters })
         .then((response) => {
           this.invoices = response.data.invoices;
         })
@@ -298,18 +339,17 @@ export default {
       }
     },
   },
-   watch: {
+  watch: {
     filters: {
       deep: true,
       handler() {
-
         if (!this.awaitingSearch) {
-            setTimeout(() => {
-              this.getInvoices();
-              this.awaitingSearch = false;
-            }, 1500); // 1 sec delay
-          }
-          this.awaitingSearch = true;
+          setTimeout(() => {
+            this.getInvoices();
+            this.awaitingSearch = false;
+          }, 1500); // 1 sec delay
+        }
+        this.awaitingSearch = true;
       },
     },
   },

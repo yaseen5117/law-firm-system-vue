@@ -38,15 +38,23 @@
                     <div class="row">
                       <div class="col-md-3">
                         <label for="">Select Client</label>
-                        
-                          
-                          
-                        <span v-show="invoice.invoiceable_id" style="margin-left:5px" for="" data-bs-toggle="tooltip"
+
+                        <span
+                          v-show="invoice.invoiceable_id"
+                          style="margin-left: 5px"
+                          for=""
+                          data-bs-toggle="tooltip"
                           data-bs-placement="top"
-                          title="Make changes to user's profile"><input type="checkbox"
-                          @change="this.isDisabled=!this.isDisabled;invoice.edit_client=!invoice.edit_client;"  >Edit client</span>
+                          title="Make changes to user's profile"
+                          ><input
+                            type="checkbox"
+                            @change="
+                              this.isDisabled = !this.isDisabled;
+                              invoice.edit_client = !invoice.edit_client;
+                            "
+                          />Edit client</span
+                        >
                         <Dropdown
-                          
                           v-model="invoice.invoiceable_id"
                           :options="clients"
                           optionLabel="label"
@@ -61,10 +69,12 @@
                             'error-boarder': v$.invoice.invoiceable_id.$error,
                           }"
                         />
-                        <span v-if="v$.invoice.invoiceable_id.$error" class="errorMessage"
+                        <span
+                          v-if="v$.invoice.invoiceable_id.$error"
+                          class="errorMessage"
                           >Client field is required.</span
                         >
-                      </div>                      
+                      </div>
                       <div class="col-md-3">
                         <label for="">Invoice No</label>
                         <input
@@ -92,7 +102,7 @@
                         <label for="">Company Name</label>
                         <input
                           type="text"
-                          :disabled=isDisabled
+                          :disabled="isDisabled"
                           v-model="invoice.selectedClient.company_name"
                           class="form-control"
                         />
@@ -100,10 +110,10 @@
 
                       <div class="col-md-3">
                         <label for="">Phone</label>
-                        <input                          
+                        <input
                           type="text"
                           id="phone"
-                          :disabled=isDisabled
+                          :disabled="isDisabled"
                           v-model="invoice.selectedClient.phone"
                           class="form-control"
                         />
@@ -121,7 +131,7 @@
                         <label for="">Address</label>
                         <input
                           type="text"
-                          :disabled=isDisabled
+                          :disabled="isDisabled"
                           v-model="invoice.selectedClient.address"
                           class="form-control"
                         />
@@ -185,7 +195,7 @@
                         ></textarea>
                       </td>
 
-                      <td>                         
+                      <td>
                         <div class="input-group">
                           <span class="input-group-text">RS</span>
                           <input
@@ -204,7 +214,10 @@
 
               <div class="row">
                 <div class="col-md-2">
-                  <label for=""><input type="checkbox" v-model="invoice.apply_tax" /> Apply Tax</label>
+                  <label for=""
+                    ><input type="checkbox" v-model="invoice.apply_tax" /> Apply
+                    Tax</label
+                  >
                 </div>
 
                 <div class="col-md-2">
@@ -223,11 +236,21 @@
               </div>
               <div class="row mt-2">
                 <div class="col-md-12">
-                  <div v-for="(invoice_expense,invoice_expense_index) in invoice.invoice_expenses" :key="invoice_expense" class="form-group">
+                  <div
+                    v-for="(
+                      invoice_expense, invoice_expense_index
+                    ) in invoice.invoice_expenses"
+                    :key="invoice_expense"
+                    class="form-group"
+                  >
                     <div class="row">
                       <div class="col-md-8">
                         <label for="">Expense</label>
-                        <input type="text" class="form-control" v-model="invoice_expense.expense">
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="invoice_expense.expense"
+                        />
                       </div>
                       <div class="col-md-4">
                         <label for="">Amount</label>
@@ -239,25 +262,38 @@
                             class="form-control"
                             placeholder="300"
                           />
-                        <button type="button" @click="removeInvoiceExpenses(invoice.invoice_expenses,invoice_expense_index)"><span class="fa fa-minus"></span></button>
+                          <button
+                            type="button"
+                            @click="
+                              removeInvoiceExpenses(
+                                invoice.invoice_expenses,
+                                invoice_expense_index,
+                                invoice_expense.id
+                              )
+                            "
+                          >
+                            <span class="fa fa-minus"></span>
+                          </button>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <button type="button" @click="addInvoiceExpenses()"><span class="fa fa-plus"></span> Add Expenses</button>
+                  <button type="button" @click="addInvoiceExpenses()">
+                    <span class="fa fa-plus"></span> Add Expenses
+                  </button>
                 </div>
-
-                
               </div>
               <div class="row">
                 <div class="col-12">
-                  <p class="text-end"><strong>Total: </strong>{{total_amount}}</p>
+                  <p class="text-end">
+                    <strong>Total: </strong>{{ total_amount }}
+                  </p>
                   <button
                     :disabled="saving"
                     style="float: right"
                     class="btn btn-success btn-sm"
                   >
-                    {{page_title}}
+                    {{ page_title }}
                   </button>
                 </div>
               </div>
@@ -289,44 +325,49 @@ export default {
   },
   data() {
     return {
-      page_title: this.$route.params.invoice_id ? "Edit Invoice" : "Create New Invoice",
+      page_title: this.$route.params.invoice_id
+        ? "Edit Invoice"
+        : "Create New Invoice",
       saving: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
-      value: "any",       
-      total_amount:0.00,
-      invoice: {         
+      value: "any",
+      total_amount: 0.0,
+      invoice: {
         invoiceable_id: "",
         due_date: "",
         tax_percentage: "10",
         invoice_no: "",
-        amount: "",        
+        amount: "",
         selectedClient: {},
         invoice_expenses: [],
         invoice_meta: {
-          subject: "",
-          content: "",
-          services: "",
+          subject: "Professional Fee for Providing Legal Opinion",
+          content: "Dear Sir: Please see attached our Invoice for professional services to the tune of Rs. {total_amount}/-for providing legal opinion on a query about the State Bank’s Circular addressed to Commercial Banks regarding closure of bank accounts of government ministries and subordinate bodies. The opinion was sought by learned Head of Accounts via email dated {due_date}. Legal Opinion was provided on an urgent basis via email dated {due_date}. Please note that cheque is payable to “Umer Gilani”. We would appreciate payment of our invoice within seven (7) days. Very truly yours,",
+          services:  "Legal Opinion on the matter of State Bank Circular related to Closure of Govt. Accounts in commercial banksRs",
         },
       },
       clients: [],
-      isDisabled: true,      
+      isDisabled: true,
     };
   },
-   watch: {
+  watch: {
     invoice: {
       deep: true,
       handler() {
-        
-        var sum_invoice_expenses= 0.00;
-        var tax_amount= 0.00;
+        var sum_invoice_expenses = 0.0;
+        var tax_amount = 0.0;
 
         this.invoice.invoice_expenses.forEach((invoice_expense, index) => {
-            sum_invoice_expenses = sum_invoice_expenses+invoice_expense.amount;
+          sum_invoice_expenses = sum_invoice_expenses + invoice_expense.amount;
         });
-        if(this.invoice.apply_tax && this.invoice.tax_percentage>0){
-          tax_amount = (this.invoice.tax_percentage * this.invoice.amount)/100;
+        if (this.invoice.apply_tax && this.invoice.tax_percentage > 0) {
+          tax_amount =
+            (this.invoice.tax_percentage * this.invoice.amount) / 100;
         }
-        this.total_amount = parseFloat(this.invoice.amount) + parseFloat(sum_invoice_expenses)-tax_amount;
+        this.total_amount =
+          parseFloat(this.invoice.amount) +
+          parseFloat(sum_invoice_expenses) -
+          tax_amount;
         this.total_amount = this.total_amount.toFixed(2);
       },
     },
@@ -338,24 +379,51 @@ export default {
       },
     };
   },
-  
+
   created() {
     this.getClients();
     this.getInvoice();
   },
   methods: {
-    removeInvoiceExpenses: function (obj, index) {
-      obj.splice(index, 1);
+    removeInvoiceExpenses: function (obj, index, invoiceExpenseId) {      
+      if (invoiceExpenseId) {
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+        let url =
+          this.base_url + "/api/delete_invoice_expense/" + invoiceExpenseId;
+        axios
+          .delete(url, { headers })
+          .then((response) => {
+            obj.splice(index, 1);
+            console.log(response);
+            this.$notify({
+              type: "success",
+              title: "Success",
+              text: "Expense Deleted Successfully!",
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error,
+            });
+          });
+      }else{
+        obj.splice(index, 1);
+      }      
     },
-    addInvoiceExpenses(){
+    addInvoiceExpenses() {
       var invoice_expense_single = {
-        "expense":"",
-        "amount":0.00,
+        expense: "",
+        amount: 0.0,
       };
       this.invoice.invoice_expenses.push(invoice_expense_single);
     },
-    editClientIfo() {        
-      this.isDisabled = false;      
+    editClientIfo() {
+      this.isDisabled = false;
     },
     getClients() {
       var headers = {
@@ -370,13 +438,13 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error,
-              });
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error,
+          });
         });
-    },  
+    },
     onChange(event) {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
@@ -388,21 +456,15 @@ export default {
           console.log(response.data.user);
           this.invoice.selectedClient = response.data.user;
           this.invoice.due_date = response.data.invoice_date;
-          this.invoice.invoice_no = response.data.user.next_invoice_num;
-          if(!this.$route.params.invoice_id){
-            this.invoice.invoice_meta.subject = "Professional Fee for Providing Legal Opinion";
-            this.invoice.invoice_meta.services =
-            "Legal Opinion on the matter of State Bank Circular related to Closure of Govt. Accounts in commercial banksRs";
-            this.invoice.invoice_meta.content = "Dear Sir: Please see attached our Invoice for professional services to the tune of Rs. {total_amount}/-for providing legal opinion on a query about the State Bank’s Circular addressed to Commercial Banks regarding closure of bank accounts of government ministries and subordinate bodies. The opinion was sought by learned Head of Accounts via email dated {due_date}. Legal Opinion was provided on an urgent basis via email dated {due_date}. Please note that cheque is payable to “Umer Gilani”. We would appreciate payment of our invoice within seven (7) days. Very truly yours,";
-          }          
+          this.invoice.invoice_no = response.data.user.next_invoice_num;          
         })
         .catch((error) => {
           console.log(error);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error,
-              });
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error,
+          });
         });
     },
     submitForm: function (event) {
@@ -444,32 +506,33 @@ export default {
           );
       }
     },
-    getInvoice(){      
+    getInvoice() {
       if (this.$route.params.invoice_id) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
-        var url = this.base_url + "/api/invoices/" + this.$route.params.invoice_id;
+        var url =
+          this.base_url + "/api/invoices/" + this.$route.params.invoice_id;
         axios
           .get(url, { headers })
           .then((response) => {
             // console.log('success');
             // console.log(response.data.invoice.client);
-            this.invoice = response.data.invoice;    
-            this.invoice.selectedClient = response.data.invoice.client;  
+            this.invoice = response.data.invoice;
+            this.invoice.selectedClient = response.data.invoice.client;
             this.invoice.invoice_meta = response.data.invoice.invoice_meta;
           })
           .catch((error) => {
             console.log(error);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error,
-              });
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error,
+            });
           });
       }
-    }
+    },
   },
 };
 </script>

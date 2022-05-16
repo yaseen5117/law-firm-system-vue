@@ -407,10 +407,11 @@ h1, h2, h3, h4, h5, h6 {
 #hero .animated {
   animation: up-down 2s ease-in-out infinite alternate-reverse both;
 }
+
 @media (min-width: 1200px) {
   #hero {
     background-attachment: fixed;
-  }
+  }  
 }
 @media (max-width: 991px) {
   #hero {
@@ -1609,7 +1610,7 @@ h2 span {
   .case_heading .line-hight {
     font-size: 12px !important;
     line-height: normal !important;
-  }
+  }  
 }
 .display{
   display: none;
@@ -1682,4 +1683,9 @@ label{
 }
 .sidebar-btn:hover{   
   opacity: 100%;
+} 
+@media (min-width: 992px) {
+  .expense .col-lg-1{
+    width: 5% !important;
+  }
 }
