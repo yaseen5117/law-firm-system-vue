@@ -2,6 +2,7 @@
   <main id="main">
     <page-header :title="page_title" :petition="null" />
     <section id="services" class="services section-bg">
+      <BlockUI :blocked="invoice" :fullScreen="true" v-if="this.$route.params.invoice_id"></BlockUI>
       <div class="container" data-aos="fade-up">
         <div class="row">
           <form @submit.prevent="submitForm($event)">
@@ -94,6 +95,18 @@
                           class="form-control"
                         />
                       </div>
+                      <div class="col-md-3">
+                        <label for="">Status</label>
+                        <Dropdown
+                          v-model="invoice.invoice_status_id"
+                          :options="invoice_statuses"
+                          optionLabel="title"
+                          optionValue="id"
+                          placeholder="Invoice Status"
+                          appendTo="self"
+                          
+                        />
+                      </div>
                     </div>
                   </div>
                   <div class="form-group">
@@ -158,25 +171,7 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-12 text center">
-                  <p>
-                    <strong
-                      >Subject:
-                      <input
-                        type="text"
-                        class="form-control"
-                        v-model="invoice.invoice_meta.subject"
-                      />
-                    </strong>
-                  </p>
-                  <Editor
-                    v-model="invoice.invoice_meta.content"
-                    editorStyle="height: 320px"
-                  />
-                  <br />
-                </div>
-              </div>
+              
 
               <div class="row">
                 <div class="col-md-12">
@@ -288,6 +283,41 @@
                   <p class="text-end">
                     <strong>Total: </strong>{{ total_amount }}
                   </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8 text center">
+                  <p>
+                    <strong
+                      >Subject:
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="invoice.invoice_meta.subject"
+                      />
+                    </strong>
+                  </p>
+                  <Editor
+                    v-model="invoice.invoice_meta.content"
+                    editorStyle="height: 320px"
+                  />
+                  <br />
+                </div>
+                
+                <div class="col-md-4">
+                    <p class="alert alert-warning">Fill all fields before selecting pre-defined templates.</p>
+                    <Button type="button" label="Toggle" @click="showTemplates">Select Template</Button>
+                    
+                    <OverlayPanel ref="op">
+                      <p v-for="invoice_template in invoice_templates" :key="invoice_template"><a @click="selectTemplate(invoice_template)" href="javascript:void">{{invoice_template.subject}}</a></p>
+                    </OverlayPanel>
+                </div>
+              </div>
+               <div class="row">
+                <div class="col-12">
+                  <p class="text-end">
+                    <strong>Total: </strong>{{ total_amount }}
+                  </p>
                   <button
                     :disabled="saving"
                     style="float: right"
@@ -301,6 +331,7 @@
           </form>
         </div>
       </div>
+      
     </section>
   </main>
   <!-- End #main -->
@@ -312,10 +343,13 @@ import PageHeader from "../shared/PageHeader.vue";
 import Editor from "primevue/editor";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import OverlayPanel from 'primevue/overlaypanel';
+
 
 export default {
   components: {
     PageHeader,
+    OverlayPanel,
     Editor,
   },
   setup() {
@@ -334,6 +368,7 @@ export default {
       total_amount: 0.0,
       invoice: {
         invoiceable_id: "",
+        invoice_status_id: 1,
         due_date: "",
         tax_percentage: "10",
         invoice_no: "",
@@ -341,12 +376,14 @@ export default {
         selectedClient: {},
         invoice_expenses: [],
         invoice_meta: {
-          subject: "Professional Fee for Providing Legal Opinion",
-          content: "Dear Sir: Please see attached our Invoice for professional services to the tune of Rs. {total_amount}/-for providing legal opinion on a query about the State Bank’s Circular addressed to Commercial Banks regarding closure of bank accounts of government ministries and subordinate bodies. The opinion was sought by learned Head of Accounts via email dated {due_date}. Legal Opinion was provided on an urgent basis via email dated {due_date}. Please note that cheque is payable to “Umer Gilani”. We would appreciate payment of our invoice within seven (7) days. Very truly yours,",
-          services:  "Legal Opinion on the matter of State Bank Circular related to Closure of Govt. Accounts in commercial banksRs",
+          subject: "",
+          content: "",
+          services:  "",
         },
       },
       clients: [],
+      invoice_statuses: [],
+      invoice_templates: [],
       isDisabled: true,
     };
   },
@@ -382,9 +419,19 @@ export default {
 
   created() {
     this.getClients();
+    this.getInvoiceStatuses();
+    this.getInvoiceTemplates();
     this.getInvoice();
   },
   methods: {
+
+    showTemplates(event) {
+        this.$refs.op.toggle(event);
+    },
+    selectTemplate(invoice_template) {
+        this.invoice.invoice_meta.content = invoice_template.content;
+        this.invoice.invoice_meta.subject = invoice_template.subject;
+    },
     removeInvoiceExpenses: function (obj, index, invoiceExpenseId) {      
       if (invoiceExpenseId) {
         var headers = {
@@ -435,6 +482,46 @@ export default {
         .then((response) => {
           this.clients = response.data.clients;
           console.log(this.clients);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error,
+          });
+        });
+    },
+    getInvoiceStatuses() {
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      let url = this.base_url + "/api/invoice_statuses";
+      axios
+        .get(url, { headers })
+        .then((response) => {
+          this.invoice_statuses = response.data.invoice_statuses;
+          console.log("statuses",this.invoice_statuses);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error,
+          });
+        });
+    },
+    getInvoiceTemplates() {
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      let url = this.base_url + "/api/invoice_templates";
+      axios
+        .get(url, { headers })
+        .then((response) => {
+          this.invoice_templates = response.data.invoice_templates;
+          console.log("invoice_templates",this.invoice_templates);
         })
         .catch((error) => {
           console.log(error);

@@ -8,6 +8,7 @@
       :header_button_text="header_button_text"
     />
     <section id="services" class="services section-bg">
+      <BlockUI :blocked="invoices" :fullScreen="true">
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="col-12 mb-2">
@@ -76,7 +77,7 @@
                     <small style="display: block" class="text-muted"
                       >{{ invoice.client ? invoice.client.name : "" }}
                       <span class="badge rounded-pill bg-primary"
-                        >Pending</span
+                        >{{invoice.status?invoice.status.title:'Draft'}}</span
                       ></small
                     >
                     <small>Created at:{{ invoice.created_at }}</small>
@@ -124,6 +125,7 @@
           </div>
         </div>
       </div>
+      </BlockUI>
     </section>
   </main>
   <!-- End #main -->
