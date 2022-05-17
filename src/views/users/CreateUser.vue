@@ -31,6 +31,7 @@
                       v-model="user.email"
                       v-bind:class="{
                         'error-boarder': v$.user.email.$error,
+                        'is-invalid': error_email
                       }"
                       @blur="v$.user.email.$touch"
                     />
@@ -171,6 +172,72 @@
                   </div>
                 </div>
               </div>
+              <div class="form-group">
+                <div class="row mt-2">
+                <div class="col-md-12">
+                  <div                    
+                    class="form-group"
+                     v-for="(
+                      contact_person, contact_person_index
+                    ) in user.contact_persons"
+                    :key="contact_person"
+                  >
+                    <div class="row">
+                      <div class="col-md-3">
+                        <label for="">Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="contact_person.name"
+                        />
+                      </div>
+                      <div class="col-md-3">
+                        <label for="">Email</label>                                               
+                          <input
+                            v-model="contact_person.email"
+                            type="text"
+                            :class="contact_person_email_error? 'form-control is-invalid' : 'form-control'"                            
+                          />                             
+                          <small class="text-danger">{{ contact_person_email_error }} </small>                    
+                      </div>
+                      <div class="col-md-3">
+                        <label for="">CNIC</label>
+                        <InputMask
+                          type="text"
+                          class="form-control"
+                          v-model="contact_person.cnic"
+                           mask="99999-9999999-9"
+                        />
+                      </div>
+                      <div class="col-md-3">
+                        <label for="">Phone</label>
+                        <div class="input-group">
+                          <InputMask class="form-control" mask="9999-9999999" v-model="contact_person.phone"/>                        
+                           <button
+                            type="button"
+                            class="btn-danger"
+                            @click="
+                              removeContactPerson(
+                                user.contact_persons,
+                                contact_person_index,                                 
+                              )
+                            "
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Remove"
+                          >
+                          <span class="fa fa-minus"></span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="button" @click="addContactPerson()">
+                    <span class="fa fa-plus"></span> Add Contact Person
+                  </button>
+                </div>
+              </div>
+              </div>
 
               <div class="form-group">
                 <button :disabled="saving" class="btn btn-success btn-sm">Save</button>
@@ -205,10 +272,12 @@ export default {
         password: "",
         role_id: "",
         confirm_password: "",
+        contact_persons: [],
       },
       roles: [],
       error_email: "",
       error_password: "",
+      contact_person_email_error: "",
       previewImage: null,
       saving: false,
     };
@@ -221,6 +290,7 @@ export default {
         confirm_password: {
           sameAs: sameAs(this.user.password),
         },
+        contact_persons: [],
         role_id: { required },
       },
     };
@@ -231,6 +301,18 @@ export default {
   },
 
   methods: {
+    removeContactPerson: function (obj, index) {        
+        obj.splice(index, 1);         
+    },
+    addContactPerson() {
+      var contact_person_single = {
+        name: "",
+        email: "",
+        phone: "",
+        cnic: "",         
+      };
+      this.user.contact_persons.push(contact_person_single);
+    },
     onChange(e) {
       this.file = e.target.file;
     },
@@ -254,6 +336,7 @@ export default {
       if (!this.v$.$error) {
         event.preventDefault();
         this.error_email = "";
+        this.contact_person_email_error = "";
         this.saving = true;
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
@@ -278,8 +361,15 @@ export default {
             },
             (error) => {
               this.saving = false;
-              this.error_email = error.response.data.validation_error.email[0];
-              this.error_password = error.response.data.validation_error.password[0];
+              if(error.response.data.validation_error){
+                this.error_email = error.response.data.validation_error.email[0];
+              }
+              if(error.response.data.validation_error){
+                this.error_password = error.response.data.validation_error.password[0];
+              }
+              if(error.response.data.contact_person_validation_error){
+                this.contact_person_email_error = error.response.data.contact_person_validation_error.email[0];
+              }    
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",
