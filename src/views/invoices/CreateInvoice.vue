@@ -286,6 +286,13 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col-md-12">
+                  <label for=""
+                    ><input type="checkbox" @click="isShowEmailContent=!isShowEmailContent" v-model="invoice.sendEmail" /> Send Email to Client</label
+                  >
+                </div>
+              </div>
+              <div class="row" v-if="isShowEmailContent">                
                 <div class="col-md-8 text center">
                   <p>
                     <strong
@@ -315,7 +322,7 @@
               </div>
                <div class="row">
                 <div class="col-12">
-                  <p class="text-end">
+                  <p class="text-end" v-if="isShowEmailContent">
                     <strong>Total: </strong>{{ total_amount }}
                   </p>
                   <button
@@ -380,11 +387,13 @@ export default {
           content: "",
           services:  "",
         },
+        sendEmail: "",
       },
       clients: [],
       invoice_statuses: [],
       invoice_templates: [],
       isDisabled: true,
+      isShowEmailContent: false,      
     };
   },
   watch: {
@@ -423,8 +432,7 @@ export default {
     this.getInvoiceTemplates();
     this.getInvoice();
   },
-  methods: {
-
+  methods: {     
     showTemplates(event) {
         this.$refs.op.toggle(event);
     },
@@ -576,7 +584,7 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
-                this.$router.push({ path: "/invoices" });
+                //this.$router.push({ path: "/invoices" });
               }
               console.log(response);
               this.saving = false;
