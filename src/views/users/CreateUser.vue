@@ -31,7 +31,7 @@
                       v-model="user.email"
                       v-bind:class="{
                         'error-boarder': v$.user.email.$error,
-                        'is-invalid': error_email
+                        'is-invalid': error_email,
                       }"
                       @blur="v$.user.email.$touch"
                     />
@@ -86,7 +86,7 @@
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Role <span style="color: red">*</span></label>
-                     <Dropdown
+                    <Dropdown
                       v-model="user.role_id"
                       :options="roles"
                       class="text-capitalize"
@@ -100,7 +100,7 @@
                         'error-boarder': v$.user.role_id.$error,
                       }"
                       @blur="v$.user.role_id.$touch"
-                    /> 
+                    />
                     <span v-if="v$.user.role_id.$error" class="errorMessage"
                       >Role field is required.</span
                     >
@@ -146,7 +146,11 @@
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Phone</label>
-                    <InputMask class="form-control" mask="9999-9999999" v-model="user.phone" />
+                    <InputMask
+                      class="form-control"
+                      mask="9999-9999999"
+                      v-model="user.phone"
+                    />
                   </div>
                 </div>
               </div>
@@ -166,81 +170,95 @@
                     />
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-12">
-                      <div class="imagePreviewWrapper" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage">
-
-                      </div>                       
+                    <div
+                      class="imagePreviewWrapper"
+                      :style="{ 'background-image': `url(${previewImage})` }"
+                      @click="selectImage"
+                    ></div>
                   </div>
                 </div>
               </div>
               <div class="form-group">
                 <div class="row mt-2">
-                <div class="col-md-12">
-                  <div                    
-                    class="form-group"
-                     v-for="(
-                      contact_person, contact_person_index
-                    ) in user.contact_persons"
-                    :key="contact_person"
-                  >
-                    <div class="row">
-                      <div class="col-md-3">
-                        <label for="">Name</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          v-model="contact_person.name"
-                        />
-                      </div>
-                      <div class="col-md-3">
-                        <label for="">Email</label>                                               
+                  <div class="col-md-12">
+                    <div
+                      class="form-group"
+                      v-for="(
+                        contact_person, contact_person_index
+                      ) in user.contact_persons"
+                      :key="contact_person"
+                    >
+                      <div class="row">
+                        <div class="col-md-3">
+                          <label for="">Name</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            v-model="contact_person.name"
+                          />
+                        </div>
+                        <div class="col-md-3">
+                          <label for="">Email</label>
                           <input
                             v-model="contact_person.email"
                             type="text"
-                            :class="contact_person_email_error? 'form-control is-invalid' : 'form-control'"                            
-                          />                             
-                          <small class="text-danger">{{ contact_person_email_error }} </small>                    
-                      </div>
-                      <div class="col-md-3">
-                        <label for="">CNIC</label>
-                        <InputMask
-                          type="text"
-                          class="form-control"
-                          v-model="contact_person.cnic"
-                           mask="99999-9999999-9"
-                        />
-                      </div>
-                      <div class="col-md-3">
-                        <label for="">Phone</label>
-                        <div class="input-group">
-                          <InputMask class="form-control" mask="9999-9999999" v-model="contact_person.phone"/>                        
-                           <button
-                            type="button"
-                            class="btn-danger"
-                            @click="
-                              removeContactPerson(
-                                user.contact_persons,
-                                contact_person_index,                                 
-                              )
+                            :class="
+                              contact_person_email_error
+                                ? 'form-control is-invalid'
+                                : 'form-control'
                             "
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="Remove"
-                          >
-                          <span class="fa fa-minus"></span>
-                          </button>
+                          />
+                          <small class="text-danger"
+                            >{{ contact_person_email_error }}
+                          </small>
+                        </div>
+                        <div class="col-md-3">
+                          <label for="">CNIC</label>
+                          <InputMask
+                            type="text"
+                            class="form-control"
+                            v-model="contact_person.cnic"
+                            mask="99999-9999999-9"
+                          />
+                        </div>
+                        <div class="col-md-3">
+                          <label for="">Phone</label>
+                          <div class="input-group">
+                            <InputMask
+                              class="form-control"
+                              mask="9999-9999999"
+                              v-model="contact_person.phone"
+                            />
+                            <button
+                              type="button"
+                              class="btn-danger"
+                              @click="
+                                removeContactPerson(
+                                  user.contact_persons,
+                                  contact_person_index
+                                )
+                              "
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              title="Remove"
+                            >
+                              <span class="fa fa-minus"></span>
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
+                    <button type="button" @click="addContactPerson()">
+                      <span class="fa fa-plus"></span> Add Contact Person
+                    </button>
                   </div>
-                  <button type="button" @click="addContactPerson()">
-                    <span class="fa fa-plus"></span> Add Contact Person
-                  </button>
                 </div>
-              </div>
               </div>
 
               <div class="form-group">
-                <button :disabled="saving" class="btn btn-success btn-sm">Save</button>
+                <button :disabled="saving" class="btn btn-success btn-sm">
+                  Save
+                </button>
               </div>
             </form>
           </div>
@@ -301,36 +319,36 @@ export default {
   },
 
   methods: {
-    removeContactPerson: function (obj, index) {        
-        obj.splice(index, 1);         
+    removeContactPerson: function (obj, index) {
+      obj.splice(index, 1);
     },
     addContactPerson() {
       var contact_person_single = {
         name: "",
         email: "",
         phone: "",
-        cnic: "",         
+        cnic: "",
       };
       this.user.contact_persons.push(contact_person_single);
     },
     onChange(e) {
       this.file = e.target.file;
     },
-    pickFile () {
-        let input = this.$refs.fileInput
-        let file = input.files
-        if (file && file[0]) {
-          let reader = new FileReader
-          reader.onload = e => {
-            this.previewImage = e.target.result
-          }
-          reader.readAsDataURL(file[0])
-          this.$emit('input', file[0])
-        }
-      },
-      selectImage () {
-          this.$refs.fileInput.click()
-      },
+    pickFile() {
+      let input = this.$refs.fileInput;
+      let file = input.files;
+      if (file && file[0]) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          this.previewImage = e.target.result;
+        };
+        reader.readAsDataURL(file[0]);
+        this.$emit("input", file[0]);
+      }
+    },
+    selectImage() {
+      this.$refs.fileInput.click();
+    },
     submitForm: function (event) {
       this.v$.$validate();
       if (!this.v$.$error) {
@@ -361,15 +379,18 @@ export default {
             },
             (error) => {
               this.saving = false;
-              if(error.response.data.validation_error){
-                this.error_email = error.response.data.validation_error.email[0];
+              if (error.response.data.validation_error) {
+                this.error_email =
+                  error.response.data.validation_error.email[0];
               }
-              if(error.response.data.validation_error){
-                this.error_password = error.response.data.validation_error.password[0];
+              if (error.response.data.validation_error) {
+                this.error_password =
+                  error.response.data.validation_error.password[0];
               }
-              if(error.response.data.contact_person_validation_error){
-                this.contact_person_email_error = error.response.data.contact_person_validation_error.email[0];
-              }    
+              if (error.response.data.contact_person_validation_error) {
+                this.contact_person_email_error =
+                  error.response.data.contact_person_validation_error.email[0];
+              }
               console.log(error.response.data.error);
               this.$notify({
                 type: "error",
@@ -395,11 +416,11 @@ export default {
           })
           .catch((error) => {
             console.log(error);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error,
-              });
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error,
+            });
           });
       }
     },
@@ -415,11 +436,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error,
-              });
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error,
+          });
         });
     },
   },
@@ -429,12 +450,12 @@ export default {
 <style>
 .imagePreviewWrapper {
   background-repeat: no-repeat;
-    width: 100px;
-    height: 60px;
-    display: block;
-    cursor: pointer;
-    margin: 0 auto 0px;
-    background-size: contain;
-    background-position: center center;
+  width: 100px;
+  height: 60px;
+  display: block;
+  cursor: pointer;
+  margin: 0 auto 0px;
+  background-size: contain;
+  background-position: center center;
 }
 </style>
