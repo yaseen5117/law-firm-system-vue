@@ -12,7 +12,7 @@
                   <h1>The Law and Policy Chambers</h1>
                 </div>
                 <div class="col-md-6">
-                  <p class="text-left">
+                  <p class="text-start">
                     <strong
                       >Office No. 5, Saeed Plaza, Plot 71,<br />
                       I & T Center, opposite<br />
@@ -22,7 +22,7 @@
                   </p>
                 </div>
                 <div class="col-md-6">
-                  <p class="text-right">
+                  <p class="text-end">
                     <strong>
                       Phone: (+92301) 5011568 <br />
                       (+9251) 8431759 <br />
