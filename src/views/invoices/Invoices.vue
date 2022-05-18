@@ -46,16 +46,19 @@
                         Reset
                       </button>
                     </div>
-                    <div class="col-lg-1 col-md-12 col-sm-12">
+                    <div class="col-lg-3 col-md-12 col-sm-12">
                       <button
                         type="button"
                         class="btn btn-info btn-sm"
-                        @click="filters.is_archive = !filters.is_archive;"                       
+                        @click="filters.is_archive = !filters.is_archive"
                         :disabled="saving"
                       >
-                        {{filters.is_archive?'New Expenses':'Archived Expenses'}}
+                        {{
+                          filters.is_archive
+                            ? "New Expenses"
+                            : "Archived Expenses"
+                        }}
                       </button>
-                       <!-- @click="archiveInvoices()" -->
                     </div>
                   </form>
                 </Transition>
@@ -183,28 +186,6 @@ export default {
     this.getInvoices();
   },
   methods: {
-    archiveInvoices() {
-      this.saving = true;
-      var headers = {
-        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-      };
-      this.filters.is_archive = true;
-      let url = this.base_url + "/api/invoices";
-      axios
-        .get(url, { headers, params: this.filters })
-        .then((response) => {
-          this.saving = false;
-          this.invoices = response.data.invoices;
-        })
-        .catch((error) => {
-          this.saving = false;
-          this.$notify({
-            type: "error",
-            title: "Something went wrong!",
-            text: error.response.data.error,
-          });
-        });
-    },
     reset() {
       this.saving = true;
       this.filters = {
