@@ -619,6 +619,9 @@ export default {
             this.invoice = response.data.invoice;
             this.invoice.selectedClient = response.data.invoice.client;
             this.invoice.invoice_meta = response.data.invoice.invoice_meta;
+            if(response.data.invoice.invoice_status_id == 2){
+              this.isShowEmailContent = true;
+            }            
           })
           .catch((error) => {
             console.log(error);

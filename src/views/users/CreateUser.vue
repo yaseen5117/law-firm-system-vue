@@ -235,12 +235,14 @@
                               @click="
                                 removeContactPerson(
                                   user.contact_persons,
-                                  contact_person_index
+                                  contact_person_index,
+                                  contact_person.id
                                 )
                               "
                               data-bs-toggle="tooltip"
                               data-bs-placement="top"
                               title="Remove"
+                              :disabled="saving"
                             >
                               <span class="fa fa-minus"></span>
                             </button>
@@ -319,8 +321,40 @@ export default {
   },
 
   methods: {
-    removeContactPerson: function (obj, index) {
-      obj.splice(index, 1);
+    removeContactPerson: function (obj, index, userId) {      
+      if (userId) {
+        this.saving = true;
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+        let url =
+          this.base_url + "/api/users/" + userId;
+        axios
+          .delete(url, { headers })
+          .then((response) => {
+            this.saving = false;
+            obj.splice(index, 1);
+            console.log(response);
+            this.$notify({
+              type: "success",
+              title: "Success",
+              text: "User Deleted Successfully!",
+            });
+          })
+          .catch((error) => {
+            this.saving = false;
+            console.log(error);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error,
+            });
+          });
+      }else{
+        obj.splice(index, 1);
+      }    
+
+
     },
     addContactPerson() {
       var contact_person_single = {
