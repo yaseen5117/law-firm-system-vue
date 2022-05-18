@@ -380,16 +380,12 @@ import PageHeader from "../shared/PageHeader.vue";
 import Editor from "primevue/editor";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
-<<<<<<< HEAD
-import OverlayPanel from "primevue/overlaypanel";
-=======
 import OverlayPanel from 'primevue/overlaypanel';
 import ConfirmPopup from 'primevue/confirmpopup';
 import ConfirmDialog from 'primevue/confirmdialog';
 
 
 
->>>>>>> fdd340de6810d1a254ea6df628526e524081e4fb
 
 export default {
   components: {
@@ -474,8 +470,6 @@ export default {
     this.getInvoice();
   },
   methods: {
-<<<<<<< HEAD
-=======
     
     markInvoicePaidConfirmation(event) {
          this.$confirm.require({
@@ -526,7 +520,6 @@ export default {
             }
           );
     },
->>>>>>> fdd340de6810d1a254ea6df628526e524081e4fb
     showTemplates(event) {
       this.$refs.op.toggle(event);
     },
