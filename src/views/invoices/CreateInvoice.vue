@@ -437,7 +437,9 @@ export default {
         this.$refs.op.toggle(event);
     },
     selectTemplate(invoice_template) {
-        this.invoice.invoice_meta.content = invoice_template.content;
+        var content = invoice_template.content.split('[total_amount]').join(this.total_amount);
+        this.invoice.invoice_meta.content = content.split('[due_date]').join(this.invoice.due_date);
+        //this.invoice.invoice_meta.content = invoice_template.content;
         this.invoice.invoice_meta.subject = invoice_template.subject;
     },
     removeInvoiceExpenses: function (obj, index, invoiceExpenseId) {      
