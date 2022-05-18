@@ -2,7 +2,11 @@
   <main id="main">
     <page-header :title="page_title" :petition="null" />
     <section id="services" class="services section-bg">
-      <BlockUI :blocked="invoice" :fullScreen="true" v-if="this.$route.params.invoice_id"></BlockUI>
+      <BlockUI
+        :blocked="invoice"
+        :fullScreen="true"
+        v-if="this.$route.params.invoice_id"
+      ></BlockUI>
       <div class="container" data-aos="fade-up">
         <div class="row">
           <form @submit.prevent="submitForm($event)">
@@ -112,7 +116,6 @@
                           optionValue="id"
                           placeholder="Invoice Status"
                           appendTo="self"
-                          
                         />
                       </div>
                     </div>
@@ -172,14 +175,16 @@
                           name=""
                           id=""
                           class="form-control"
+                          readonly
                           rows="2"
-                        ></textarea>
+                          v-model="contact_persons_name"
+                        >
+                        </textarea>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              
 
               <div class="row">
                 <div class="col-md-12">
@@ -296,11 +301,16 @@
               <div class="row">
                 <div class="col-md-12">
                   <label for=""
-                    ><input type="checkbox" @click="isShowEmailContent=!isShowEmailContent" v-model="invoice.sendEmail" /> Send Email to Client</label
+                    ><input
+                      type="checkbox"
+                      @click="isShowEmailContent = !isShowEmailContent"
+                      v-model="invoice.sendEmail"
+                    />
+                    Send Email to Client</label
                   >
                 </div>
               </div>
-              <div class="row" v-if="isShowEmailContent">                
+              <div class="row" v-if="isShowEmailContent">
                 <div class="col-md-8 text center">
                   <p>
                     <strong
@@ -318,17 +328,30 @@
                   />
                   <br />
                 </div>
-                
+
                 <div class="col-md-4">
-                    <p class="alert alert-warning">Fill all fields before selecting pre-defined templates.</p>
-                    <Button type="button" label="Toggle" @click="showTemplates">Select Template</Button>
-                    
-                    <OverlayPanel ref="op">
-                      <p v-for="invoice_template in invoice_templates" :key="invoice_template"><a @click="selectTemplate(invoice_template)" href="javascript:void">{{invoice_template.subject}}</a></p>
-                    </OverlayPanel>
+                  <p class="alert alert-warning">
+                    Fill all fields before selecting pre-defined templates.
+                  </p>
+                  <Button type="button" label="Toggle" @click="showTemplates"
+                    >Select Template</Button
+                  >
+
+                  <OverlayPanel ref="op">
+                    <p
+                      v-for="invoice_template in invoice_templates"
+                      :key="invoice_template"
+                    >
+                      <a
+                        @click="selectTemplate(invoice_template)"
+                        href="javascript:void"
+                        >{{ invoice_template.subject }}</a
+                      >
+                    </p>
+                  </OverlayPanel>
                 </div>
               </div>
-               <div class="row">
+              <div class="row">
                 <div class="col-12">
                   <p class="text-end" v-if="isShowEmailContent">
                     <strong>Total: </strong>{{ total_amount }}
@@ -346,7 +369,6 @@
           </form>
         </div>
       </div>
-      
     </section>
   </main>
   <!-- End #main -->
@@ -399,7 +421,7 @@ export default {
         invoice_meta: {
           subject: "",
           content: "",
-          services:  "",
+          services: "",
         },
         sendEmail: "",
       },
@@ -407,7 +429,8 @@ export default {
       invoice_statuses: [],
       invoice_templates: [],
       isDisabled: true,
-      isShowEmailContent: false,      
+      isShowEmailContent: false,
+      contact_persons_name: [],
     };
   },
   watch: {
@@ -498,15 +521,19 @@ export default {
           );
     },
     showTemplates(event) {
-        this.$refs.op.toggle(event);
+      this.$refs.op.toggle(event);
     },
     selectTemplate(invoice_template) {
-        var content = invoice_template.content.split('[total_amount]').join(this.total_amount);
-        this.invoice.invoice_meta.content = content.split('[due_date]').join(this.invoice.due_date);
-        //this.invoice.invoice_meta.content = invoice_template.content;
-        this.invoice.invoice_meta.subject = invoice_template.subject;
+      var content = invoice_template.content
+        .split("[total_amount]")
+        .join(this.total_amount);
+      this.invoice.invoice_meta.content = content
+        .split("[due_date]")
+        .join(this.invoice.due_date);
+      //this.invoice.invoice_meta.content = invoice_template.content;
+      this.invoice.invoice_meta.subject = invoice_template.subject;
     },
-    removeInvoiceExpenses: function (obj, index, invoiceExpenseId) {      
+    removeInvoiceExpenses: function (obj, index, invoiceExpenseId) {
       if (invoiceExpenseId) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
@@ -532,9 +559,9 @@ export default {
               text: error,
             });
           });
-      }else{
+      } else {
         obj.splice(index, 1);
-      }      
+      }
     },
     addInvoiceExpenses() {
       var invoice_expense_single = {
@@ -575,7 +602,7 @@ export default {
         .get(url, { headers })
         .then((response) => {
           this.invoice_statuses = response.data.invoice_statuses;
-          console.log("statuses",this.invoice_statuses);
+          console.log("statuses", this.invoice_statuses);
         })
         .catch((error) => {
           console.log(error);
@@ -595,7 +622,7 @@ export default {
         .get(url, { headers })
         .then((response) => {
           this.invoice_templates = response.data.invoice_templates;
-          console.log("invoice_templates",this.invoice_templates);
+          console.log("invoice_templates", this.invoice_templates);
         })
         .catch((error) => {
           console.log(error);
@@ -617,7 +644,10 @@ export default {
           console.log(response.data.user);
           this.invoice.selectedClient = response.data.user;
           this.invoice.due_date = response.data.invoice_date;
-          this.invoice.invoice_no = response.data.user.next_invoice_num;          
+          this.invoice.invoice_no = response.data.user.next_invoice_num;
+          response.data.user.contact_persons.forEach((element) => {
+            this.contact_persons_name.push(element.name);
+          });
         })
         .catch((error) => {
           console.log(error);
@@ -683,9 +713,12 @@ export default {
             this.invoice = response.data.invoice;
             this.invoice.selectedClient = response.data.invoice.client;
             this.invoice.invoice_meta = response.data.invoice.invoice_meta;
-            if(response.data.invoice.invoice_status_id == 2){
+            response.data.invoice.client.contact_persons.forEach((element) => {
+              this.contact_persons_name.push(element.name);
+            });
+            if (response.data.invoice.invoice_status_id == 2) {
               this.isShowEmailContent = true;
-            }            
+            }
           })
           .catch((error) => {
             console.log(error);
