@@ -35,7 +35,7 @@
                     aria-describedby="client_name"
                   />
                 </div>
-                <div class="col-lg-1 col-md-1 col-sm-12">
+                <div class="col-lg-3 col-md-3 col-sm-12">
                   <button
                     type="button"
                     class="btn btn-danger btn-sm"
@@ -44,15 +44,14 @@
                   >
                     Reset
                   </button>
-                </div>
-                <div class="col-lg-1 col-md-12 col-sm-12">
                   <button
+                  style="margin-left:2px"
                     type="button"
-                    class="btn btn-info btn-sm"
+                    class="btn btn-warning btn-sm ml-2"
                     @click="archiveInvoices()"
                     :disabled="saving"
                   >
-                    Achive
+                    Archived Invoices
                   </button>
                 </div>
               </form>
@@ -64,7 +63,7 @@
                 <tr>
                   <th>Invoice</th>
                   <th>Due Date</th>
-                  <th>Actions</th>
+                  <th class="text-end">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -84,7 +83,7 @@
                   </td>
 
                   <td>{{ invoice.due_date }}</td>
-                  <td>
+                  <td class="text-end">
                     <button
                       class="btn btn-warning action-btn"
                       @click="downloadPdf(invoice.id)"

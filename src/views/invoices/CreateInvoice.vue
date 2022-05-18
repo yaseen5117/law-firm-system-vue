@@ -31,6 +31,14 @@
                   </p>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-md-12 text-end">
+                  <ConfirmPopup></ConfirmPopup>
+                  <button v-if="this.$route.params.invoice_id" v-show="invoice.invoice_status_id!=3"  @click="markInvoicePaidConfirmation($event)" type="button" class="btn btn-sm btn-success">Mark as Paid</button>
+                  <button v-if="this.$route.params.invoice_id" v-show="invoice.invoice_status_id==3"  type="button" class="btn btn-sm btn-success">Paid at {{invoice.paid_date}}</button>
+                  
+                </div>
+              </div>
               <hr />
 
               <div class="row">
@@ -351,10 +359,16 @@ import Editor from "primevue/editor";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import OverlayPanel from 'primevue/overlaypanel';
+import ConfirmPopup from 'primevue/confirmpopup';
+import ConfirmDialog from 'primevue/confirmdialog';
+
+
 
 
 export default {
   components: {
+    ConfirmPopup,
+    
     PageHeader,
     OverlayPanel,
     Editor,
@@ -432,7 +446,57 @@ export default {
     this.getInvoiceTemplates();
     this.getInvoice();
   },
-  methods: {     
+  methods: {
+    
+    markInvoicePaidConfirmation(event) {
+         this.$confirm.require({
+                target: event.currentTarget,
+                message: 'Are you sure you want to proceed?',
+                icon: 'pi pi-exclamation-triangle',
+                accept: () => {
+                    this.markInvoicePaid();
+                    
+                },
+                reject: () => {
+                    //callback to execute when user rejects the action
+                }
+            });
+    },
+    markInvoicePaid(){
+      var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+
+        axios
+          .post(this.base_url + "/api/invoices/mark_paid", this.invoice, {
+            headers,
+          })
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "Paid Successfully!",
+                });
+                //this.$router.push({ path: "/invoices" });
+              }
+              console.log(response);
+              this.saving = false;
+              this.invoice.invoice_status_id = 3;
+              this.invoice.paid_date = response.data.paid_at;
+            },
+            (error) => {
+              this.saving = false;
+              console.log(error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error,
+              });
+            }
+          );
+    },
     showTemplates(event) {
         this.$refs.op.toggle(event);
     },
