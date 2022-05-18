@@ -36,7 +36,7 @@
                         aria-describedby="client_name"
                       />
                     </div>
-                    <div class="col-lg-1 col-md-1 col-sm-12">
+                    <div class="col-lg-3 col-md-3 col-sm-12">
                       <button
                         type="button"
                         class="btn btn-danger btn-sm"
@@ -45,18 +45,17 @@
                       >
                         Reset
                       </button>
-                    </div>
-                    <div class="col-lg-3 col-md-12 col-sm-12">
                       <button
+                        style="margin-left:2px"
                         type="button"
-                        class="btn btn-info btn-sm"
+                        class="btn btn-warning btn-sm "
                         @click="filters.is_archive = !filters.is_archive"
                         :disabled="saving"
                       >
                         {{
                           filters.is_archive
-                            ? "New Expenses"
-                            : "Archived Expenses"
+                            ? "New Invoices"
+                            : "Archived Invoices"
                         }}
                       </button>
                     </div>
@@ -64,12 +63,13 @@
                 </Transition>
               </div>
               <div class="col-md-12">
-                <table class="table table-striped" v-if="isLoaded">
+                <div class="table-responsive">
+                  <table class="table table-striped" v-if="isLoaded">
                   <thead>
                     <tr>
                       <th>Invoice</th>
                       <th>Due Date</th>
-                      <th>Actions</th>
+                      <th  class="text-end">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -89,14 +89,14 @@
                       </td>
 
                       <td>{{ invoice.due_date }}</td>
-                      <td>
+                      <td class="text-end">
                         <button
                           class="btn btn-warning action-btn"
                           @click="downloadPdf(invoice.id)"
                           style="margin-right: 2px"
                           :disabled="saving"
                         >
-                          Download PDF
+                          PDF
                         </button>
                         <router-link
                           class="btn btn-sm btn-success action-btn"
@@ -127,6 +127,7 @@
                     </tr>
                   </tbody>
                 </table>
+                </div>
                 <div v-if="!isLoaded" class="col-md-12">
                   <p class="alert alert-warning">Loading....</p>
                 </div>
