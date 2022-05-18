@@ -50,11 +50,12 @@
                       <button
                         type="button"
                         class="btn btn-info btn-sm"
-                        @click="archiveInvoices()"
+                        @click="filters.is_archive = !filters.is_archive;"                       
                         :disabled="saving"
                       >
-                        Achive
+                        {{filters.is_archive?'New Expenses':'Archived Expenses'}}
                       </button>
+                       <!-- @click="archiveInvoices()" -->
                     </div>
                   </form>
                 </Transition>
