@@ -19,6 +19,8 @@ import Dropdown from 'primevue/dropdown';
 import Image from 'primevue/image';
 import BlockUI from 'primevue/blockui';
 import Sidebar from 'primevue/sidebar';
+import ConfirmationService from 'primevue/confirmationservice';
+
 
 
 
@@ -27,7 +29,12 @@ import Sidebar from 'primevue/sidebar';
 //app.component("hello-world", HelloWorld);
 
 
-createApp(App).use(store).use(router).use(PrimeVue).use(Notifications)
+createApp(App)
+.use(store)
+.use(router)
+.use(PrimeVue)
+.use(Notifications)
+.use(ConfirmationService)
 .use('file-upload', VueUploadComponent)
 .directive('tooltip', Tooltip)
 .component('AutoComplete',AutoComplete)

@@ -16,7 +16,7 @@
                   <h1>The Law and Policy Chambers</h1>
                 </div>
                 <div class="col-md-6">
-                  <p class="text-left">
+                  <p class="text-start">
                     <strong
                       >Office No. 5, Saeed Plaza, Plot 71,<br />
                       I & T Center, opposite<br />
@@ -26,13 +26,21 @@
                   </p>
                 </div>
                 <div class="col-md-6">
-                  <p class="text-right">
+                  <p class="text-end">
                     <strong>
                       Phone: (+92301) 5011568 <br />
                       (+9251) 8431759 <br />
                       Email: umer.gilani@lawandpolicychambers.com <br />
                     </strong>
                   </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 text-end">
+                  <ConfirmPopup></ConfirmPopup>
+                  <button v-if="this.$route.params.invoice_id" v-show="invoice.invoice_status_id!=3"  @click="markInvoicePaidConfirmation($event)" type="button" class="btn btn-sm btn-success">Mark as Paid</button>
+                  <button v-if="this.$route.params.invoice_id" v-show="invoice.invoice_status_id==3"  type="button" class="btn btn-sm btn-success">Paid at {{invoice.paid_date}}</button>
+                  
                 </div>
               </div>
               <hr />
@@ -372,10 +380,21 @@ import PageHeader from "../shared/PageHeader.vue";
 import Editor from "primevue/editor";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+<<<<<<< HEAD
 import OverlayPanel from "primevue/overlaypanel";
+=======
+import OverlayPanel from 'primevue/overlaypanel';
+import ConfirmPopup from 'primevue/confirmpopup';
+import ConfirmDialog from 'primevue/confirmdialog';
+
+
+
+>>>>>>> fdd340de6810d1a254ea6df628526e524081e4fb
 
 export default {
   components: {
+    ConfirmPopup,
+    
     PageHeader,
     OverlayPanel,
     Editor,
@@ -455,6 +474,59 @@ export default {
     this.getInvoice();
   },
   methods: {
+<<<<<<< HEAD
+=======
+    
+    markInvoicePaidConfirmation(event) {
+         this.$confirm.require({
+                target: event.currentTarget,
+                message: 'Are you sure you want to proceed?',
+                icon: 'pi pi-exclamation-triangle',
+                accept: () => {
+                    this.markInvoicePaid();
+                    
+                },
+                reject: () => {
+                    //callback to execute when user rejects the action
+                }
+            });
+    },
+    markInvoicePaid(){
+      var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+
+        axios
+          .post(this.base_url + "/api/invoices/mark_paid", this.invoice, {
+            headers,
+          })
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "Paid Successfully!",
+                });
+                //this.$router.push({ path: "/invoices" });
+              }
+              console.log(response);
+              this.saving = false;
+              this.invoice.invoice_status_id = 3;
+              this.invoice.paid_date = response.data.paid_at;
+            },
+            (error) => {
+              this.saving = false;
+              console.log(error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error,
+              });
+            }
+          );
+    },
+>>>>>>> fdd340de6810d1a254ea6df628526e524081e4fb
     showTemplates(event) {
       this.$refs.op.toggle(event);
     },
