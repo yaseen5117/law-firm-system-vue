@@ -93,7 +93,7 @@
                 </svg>
                 <i class="bx bx-arch"></i>
               </div>
-              <h4><a href="">Accounts</a></h4>
+              <h4><router-link to='invoices'>Accounts</router-link></h4>
               <p>Contains all Details of Accounts. Click to Open all Details.</p>
             </div>
           </div>
