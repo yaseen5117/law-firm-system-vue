@@ -24,7 +24,7 @@
                     >
                     </datepicker>
                   </div>
-                  <div class="col-lg-2 col-md-2 col-sm-12">
+                  <div class="col-lg-2 col-md-2 col-sm-6 col-6">
                     <label for="">Case #</label>
                     <input
                       type="text"
@@ -34,7 +34,7 @@
                       aria-describedby="Case"
                     />
                   </div>
-                  <div class="col-lg-2 col-md-2 col-sm-12">
+                  <div class="col-lg-1 col-md-1 col-sm-6 col-6">
                     <label for="">Year</label>
                     <input
                       type="text"
@@ -44,7 +44,7 @@
                       aria-describedby="year"
                     />
                   </div>
-                  <div class="col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-2 col-md-2 col-sm-12 ">
                     <label for="">Court</label>
                     <select
                       class="form-control form-control-sm"
@@ -72,57 +72,54 @@
                     />
                   </div>
 
-                  <div class="col-lg-1 col-md-1 col-sm-12">
+                  <div class="col-lg-3 col-md-3 col-sm-12 mt-lg-4 mt-md-4 mt">
                     <button
                       type="button"
-                      class="btn btn-danger btn-sm mt-lg-4 mt-md-4 mt"
+                      class="btn btn-danger btn-sm  mr-md-2"
                       @click="reset()"
                     >
                       Reset
+                    </button>
+
+                    <router-link
+                      v-if="this.user.is_admin"
+                      style="margin-left: 2px"
+                      class="btn btn-success btn-sm mr-md-2"
+                      :to="'/petitions/create'"
+                      >New Case</router-link
+                    >
+
+                    <!-- <button
+                      class="btn btn-secondary btn-sm mr-md-2"
+                      style="margin-right: 2px"
+                      v-if="showSearchForm"
+                      @click="showSearchForm = !showSearchForm"
+                    >
+                      Hide Filters
+                    </button> -->
+                    <!-- <button
+                      class="btn btn-warning btn-sm mr-md-2"
+                      style="margin-right: 2px"
+                      v-else-if="!showSearchForm"
+                      @click="showSearchForm = !showSearchForm"
+                    >
+                      Show Filters
+                    </button> -->
+                    
+                    <button
+                      class="btn btn-warning btn-sm mr-md-2"
+                      style="margin-left: 2px"
+                      @click="filters.archived = !filters.archived;"
+                      
+                    >
+                    {{filters.archived?'New Cases':'Archived'}}
+                      
                     </button>
                   </div>
                 </form>
               </Transition>
             </div>
             <!-- search filters -->
-            <div class="col-lg-12 col-md-12 col-sm-12">
-              <router-link
-                v-if="this.user.is_admin"
-                style="margin-right: 2px"
-                class="btn btn-success btn-sm"
-                :to="'/petitions/create'"
-                >New Case</router-link
-              >
-
-              <button
-                class="btn btn-secondary btn-sm"
-                style="margin-right: 2px"
-                v-if="showSearchForm"
-                @click="showSearchForm = !showSearchForm"
-              >
-                Hide Filters
-              </button>
-              <button
-                class="btn btn-warning btn-sm"
-                style="margin-right: 2px"
-                v-else-if="!showSearchForm"
-                @click="showSearchForm = !showSearchForm"
-              >
-                Show Filters
-              </button>
-              
-              <button
-                class="btn btn-warning btn-sm"
-                style="margin-right: 2px"
-                @click="filters.archived = !filters.archived;"
-                
-              >
-              {{filters.archived?'New Cases':'Archived Cases'}}
-                
-              </button>
-              
-
-            </div>
             <div class="col-lg-12 col-md-12 col-sm-12 mt-2">
               <div v-if="isLoaded" class="row">
                 <div
