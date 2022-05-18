@@ -1,133 +1,143 @@
 <template>
-  <main id="main">
-    <page-header
-      :title="'Invoices'"
-      :petition="null"
-      :route_object="route_obj"
-      :header_button="header_button"
-      :header_button_text="header_button_text"
-    />
-    <section id="services" class="services section-bg">
-      <BlockUI :blocked="invoices" :fullScreen="true">
-      <div class="container" data-aos="fade-up">
-        <div class="row">
-          <div class="col-12 mb-2">
-            <Transition name="fade">
-              <form class="row gy-2 gx-3 align-items-center expense">
-                <div class="col-lg-3 col-md-3 col-sm-6">
-                  <input
-                    type="text"
-                    id="invoice_no"
-                    v-model="filters.invoice_no"
-                    class="form-control form-control-sm"
-                    placeholder="Invoice Number"
-                    aria-describedby="invoice_no"
-                  />
-                </div>
+  <BlockUI :blocked="!isLoaded" :fullScreen="true">
+    <main id="main">
+      <page-header
+        :title="'Invoices'"
+        :petition="null"
+        :route_object="route_obj"
+        :header_button="header_button"
+        :header_button_text="header_button_text"
+      />
+      <section id="services" class="services section-bg">
+        <BlockUI :blocked="invoices" :fullScreen="true">
+          <div class="container" data-aos="fade-up">
+            <div class="row">
+              <div class="col-12 mb-2">
+                <Transition name="fade">
+                  <form class="row gy-2 gx-3 align-items-center expense">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                      <input
+                        type="text"
+                        id="invoice_no"
+                        v-model="filters.invoice_no"
+                        class="form-control form-control-sm"
+                        placeholder="Invoice Number"
+                        aria-describedby="invoice_no"
+                      />
+                    </div>
 
-                <div class="col-lg-3 col-md-3 col-sm-6">
-                  <input
-                    placeholder="Client Name"
-                    v-model="filters.client_name"
-                    type="text"
-                    id="client_name"
-                    class="form-control form-control-sm"
-                    aria-describedby="client_name"
-                  />
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-12">
-                  <button
-                    type="button"
-                    class="btn btn-danger btn-sm"
-                    @click="reset()"
-                    :disabled="saving"
-                  >
-                    Reset
-                  </button>
-                  <button
-                  style="margin-left:2px"
-                    type="button"
-                    class="btn btn-warning btn-sm ml-2"
-                    @click="archiveInvoices()"
-                    :disabled="saving"
-                  >
-                    Archived Invoices
-                  </button>
-                </div>
-              </form>
-            </Transition>
-          </div>
-          <div class="col-md-12">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Invoice</th>
-                  <th>Due Date</th>
-                  <th class="text-end">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  v-for="(invoice, invoice_index) in invoices"
-                  :key="invoice_index"
-                >
-                  <td>
-                    {{ invoice.invoice_no }}
-                    <small style="display: block" class="text-muted"
-                      >{{ invoice.client ? invoice.client.name : "" }}
-                      <span class="badge rounded-pill bg-primary"
-                        >{{invoice.status?invoice.status.title:'Draft'}}</span
-                      ></small
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                      <input
+                        placeholder="Client Name"
+                        v-model="filters.client_name"
+                        type="text"
+                        id="client_name"
+                        class="form-control form-control-sm"
+                        aria-describedby="client_name"
+                      />
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-12">
+                      <button
+                        type="button"
+                        class="btn btn-danger btn-sm"
+                        @click="reset()"
+                        :disabled="saving"
+                      >
+                        Reset
+                      </button>
+                    </div>
+                    <div class="col-lg-3 col-md-12 col-sm-12">
+                      <button
+                        type="button"
+                        class="btn btn-info btn-sm"
+                        @click="filters.is_archive = !filters.is_archive"
+                        :disabled="saving"
+                      >
+                        {{
+                          filters.is_archive
+                            ? "New Expenses"
+                            : "Archived Expenses"
+                        }}
+                      </button>
+                    </div>
+                  </form>
+                </Transition>
+              </div>
+              <div class="col-md-12">
+                <table class="table table-striped" v-if="isLoaded">
+                  <thead>
+                    <tr>
+                      <th>Invoice</th>
+                      <th>Due Date</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="(invoice, invoice_index) in invoices"
+                      :key="invoice_index"
                     >
-                    <small>Created at:{{ invoice.created_at }}</small>
-                  </td>
+                      <td>
+                        {{ invoice.invoice_no }}
+                        <small style="display: block" class="text-muted"
+                          >{{ invoice.client ? invoice.client.name : "" }}
+                          <span class="badge rounded-pill bg-primary">{{
+                            invoice.status ? invoice.status.title : "Draft"
+                          }}</span></small
+                        >
+                        <small>Created at:{{ invoice.created_at }}</small>
+                      </td>
 
-                  <td>{{ invoice.due_date }}</td>
-                  <td class="text-end">
-                    <button
-                      class="btn btn-warning action-btn"
-                      @click="downloadPdf(invoice.id)"
-                      style="margin-right: 2px"
-                      :disabled="saving"
-                    >
-                      Download PDF
-                    </button>
-                    <router-link
-                      class="btn btn-sm btn-success action-btn"
-                      :to="{
-                        name: 'edit-invoice',
-                        params: { invoice_id: invoice.id },
-                      }"
-                      href="javascript:void"
-                      style="margin-right: 2px"
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      title="Edit"
-                    >
-                      Edit
-                    </router-link>
-                    <a
-                      class="btn btn-sm btn-danger action-btn"
-                      @click="deleteInvoice(invoice.id, invoice_index)"
-                      href="javascript:void"
-                      style="margin-right: 2px"
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      title="Delete"
-                    >
-                      Delete
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                      <td>{{ invoice.due_date }}</td>
+                      <td>
+                        <button
+                          class="btn btn-warning action-btn"
+                          @click="downloadPdf(invoice.id)"
+                          style="margin-right: 2px"
+                          :disabled="saving"
+                        >
+                          Download PDF
+                        </button>
+                        <router-link
+                          class="btn btn-sm btn-success action-btn"
+                          :to="{
+                            name: 'edit-invoice',
+                            params: { invoice_id: invoice.id },
+                          }"
+                          href="javascript:void"
+                          style="margin-right: 2px"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Edit"
+                        >
+                          Edit
+                        </router-link>
+                        <a
+                          class="btn btn-sm btn-danger action-btn"
+                          @click="deleteInvoice(invoice.id, invoice_index)"
+                          href="javascript:void"
+                          style="margin-right: 2px"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Delete"
+                        >
+                          Delete
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div v-if="!isLoaded" class="col-md-12">
+                  <p class="alert alert-warning">Loading....</p>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      </BlockUI>
-    </section>
-  </main>
-  <!-- End #main -->
+        </BlockUI>
+      </section>
+    </main>
+    <!-- End #main -->
+  </BlockUI>
 </template>
     
 <script>
@@ -162,6 +172,7 @@ export default {
         client_name: "",
         is_archive: "",
       },
+      isLoaded: false,
     };
   },
   validations() {
@@ -175,28 +186,6 @@ export default {
     this.getInvoices();
   },
   methods: {
-    archiveInvoices() {
-      this.saving = true;
-      var headers = {
-        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-      };
-      this.filters.is_archive = true;
-      let url = this.base_url + "/api/invoices";
-      axios
-        .get(url, { headers, params: this.filters })
-        .then((response) => {
-          this.saving = false;
-          this.invoices = response.data.invoices;
-        })
-        .catch((error) => {
-          this.saving = false;
-          this.$notify({
-            type: "error",
-            title: "Something went wrong!",
-            text: error.response.data.error,
-          });
-        });
-    },
     reset() {
       this.saving = true;
       this.filters = {
@@ -208,6 +197,7 @@ export default {
       this.saving = false;
     },
     getInvoices() {
+      this.isLoaded = false;
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
@@ -216,6 +206,7 @@ export default {
         .get(url, { headers, params: this.filters })
         .then((response) => {
           this.invoices = response.data.invoices;
+          this.isLoaded = true;
         })
         .catch((error) => {
           this.$notify({

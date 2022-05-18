@@ -501,7 +501,9 @@ export default {
         this.$refs.op.toggle(event);
     },
     selectTemplate(invoice_template) {
-        this.invoice.invoice_meta.content = invoice_template.content;
+        var content = invoice_template.content.split('[total_amount]').join(this.total_amount);
+        this.invoice.invoice_meta.content = content.split('[due_date]').join(this.invoice.due_date);
+        //this.invoice.invoice_meta.content = invoice_template.content;
         this.invoice.invoice_meta.subject = invoice_template.subject;
     },
     removeInvoiceExpenses: function (obj, index, invoiceExpenseId) {      
@@ -648,7 +650,7 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
-                //this.$router.push({ path: "/invoices" });
+                this.$router.push({ path: "/invoices" });
               }
               console.log(response);
               this.saving = false;
@@ -681,6 +683,9 @@ export default {
             this.invoice = response.data.invoice;
             this.invoice.selectedClient = response.data.invoice.client;
             this.invoice.invoice_meta = response.data.invoice.invoice_meta;
+            if(response.data.invoice.invoice_status_id == 2){
+              this.isShowEmailContent = true;
+            }            
           })
           .catch((error) => {
             console.log(error);
