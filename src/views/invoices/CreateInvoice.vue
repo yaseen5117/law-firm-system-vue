@@ -716,9 +716,9 @@ export default {
             response.data.invoice.client.contact_persons.forEach((element) => {
               this.contact_persons_name.push(element.name);
             });
-            if (response.data.invoice.invoice_status_id == 2) {
-              this.isShowEmailContent = true;
-            }
+            // if (response.data.invoice.invoice_status_id == 2) {
+            //   this.isShowEmailContent = true;
+            // }
           })
           .catch((error) => {
             console.log(error);
