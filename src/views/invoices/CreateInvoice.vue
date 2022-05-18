@@ -188,23 +188,16 @@
 
               <div class="row">
                 <div class="col-md-12">
-                  <table class="table table-striped">
-                    <tr>
-                      <th colspan="2" width="65%">Professional Services</th>
-                      <th>Amount</th>
-                    </tr>
-                    <tr>
-                      <td colspan="2">
-                        <textarea
-                          v-model="invoice.invoice_meta.services"
-                          type="text"
-                          class="form-control"
-                          rows="2"
-                        ></textarea>
-                      </td>
-
-                      <td>
-                        <div class="input-group">
+                  <p><strong>Professional Services</strong></p>
+                  </div>
+                <div class="col-md-8">
+                  <input
+                      v-model="invoice.invoice_meta.services"
+                      class="form-control"
+                    />
+                </div>
+                <div class="col-md-4">
+                  <div class="input-group">
                           <span class="input-group-text">RS</span>
                           <input
                             v-model="invoice.amount"
@@ -214,16 +207,14 @@
                             placeholder="25000"
                           />
                         </div>
-                      </td>
-                    </tr>
-                  </table>
+                
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-2">
-                  <label for=""
-                    ><input type="checkbox" v-model="invoice.apply_tax" /> Apply
+                  <label for="apply_tax"
+                    ><input type="checkbox" id="apply_tax" v-model="invoice.apply_tax" /> Apply
                     Tax</label
                   >
                 </div>
@@ -300,7 +291,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <label for=""
+                  <label 
                     ><input
                       type="checkbox"
                       @click="isShowEmailContent = !isShowEmailContent"
