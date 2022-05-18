@@ -586,7 +586,7 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
-                //this.$router.push({ path: "/invoices" });
+                this.$router.push({ path: "/invoices" });
               }
               console.log(response);
               this.saving = false;
