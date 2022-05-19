@@ -273,8 +273,9 @@ export default {
       }
     },
     downloadPdf(invoiceId) {
-      let url = this.base_url + "/api/download_pdf/" + invoiceId;
-      //  let url = "http://localhost:8000/download_pdf";
+      // https://api.elawfirmpk.com/
+      // let url = this.base_url + "/api/download_pdf/" + invoiceId;
+       let url = "https://api.elawfirmpk.com/download_pdf";
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
@@ -282,6 +283,7 @@ export default {
       axios
         .get(url, { headers })
         .then((response) => {
+          console.log(response);
           this.$notify({
             type: "success",
             title: "Success",
