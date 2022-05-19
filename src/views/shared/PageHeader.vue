@@ -10,7 +10,8 @@
 
           <ol  style="font-size:12px">
             <li><router-link to="/dashboard">Home</router-link></li>
-            <li><router-link to="/petitions">Case Files</router-link></li>
+            <li v-if="showInvoices" ><router-link to="/invoices">Invoices</router-link></li>
+            <li v-if="!hideCaseFiles"><router-link to="/petitions">Case Files</router-link></li>
             <li v-if="petition"><router-link :to="{
                                   name: 'case-detail',
                                   params: { id: petition?petition.id:'#' },
@@ -34,7 +35,7 @@
 
 <script>
 export default {
-  props: ["title", "petition","hideBreadCrumbs",'hide','route_object','header_button_text','header_button'],
+  props: ["title", "petition","hideBreadCrumbs",'hide','route_object','header_button_text','header_button','showInvoices','hideCaseFiles'],
 };
 </script>
 

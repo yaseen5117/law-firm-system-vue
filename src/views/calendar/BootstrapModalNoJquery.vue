@@ -36,11 +36,12 @@
                 <Dropdown v-model="petition_hearing_event.petition_id" 
                 
                 :options="petitions" 
-                optionLabel="case_no" 
+                optionLabel="petition_standard_title_with_petitioner" 
                 class="form-control"
                 optionValue="id" 
                 placeholder="Select a Case" 
                 :filter="true" 
+                
                 :showClear="true" 
                 appendTo="self"
                 required

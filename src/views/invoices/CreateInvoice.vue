@@ -1,6 +1,7 @@
 <template>
   <main id="main">
-    <page-header :title="page_title" :petition="null" />
+    <page-header :title="page_title" :petition="null"  :hideCaseFiles="true"
+        :showInvoices="true"/>
     <section id="services" class="services section-bg">
       <BlockUI
         :blocked="invoice"
@@ -314,6 +315,7 @@
                       />
                     </strong>
                   </p>
+                  
                   <Editor
                     v-model="invoice.invoice_meta.content"
                     editorStyle="height: 320px"

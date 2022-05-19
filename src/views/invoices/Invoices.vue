@@ -4,6 +4,8 @@
       <page-header
         :title="'Invoices'"
         :petition="null"
+        :hideCaseFiles="true"
+        :showInvoices="true"
         :route_object="route_obj"
         :header_button="header_button"
         :header_button_text="header_button_text"
@@ -78,7 +80,16 @@
                       :key="invoice_index"
                     >
                       <td>
-                        {{ invoice.invoice_no }}
+                        <router-link
+                          style="color:black"
+                          :to="{
+                            name: 'edit-invoice',
+                            params: { invoice_id: invoice.id },
+                          }"
+                          href="javascript:void"
+                        >{{ invoice.invoice_no }}
+                        
+                        
                         <small style="display: block" class="text-muted"
                           >{{ invoice.client ? invoice.client.name : "" }}
                           <span class="badge rounded-pill bg-primary">{{
@@ -86,18 +97,13 @@
                           }}</span></small
                         >
                         <small>Created at:{{ invoice.created_at }}</small>
+
+                        </router-link>
                       </td>
 
                       <td>{{ invoice.due_date }}</td>
                       <td class="text-end">
-                        <button
-                          class="btn btn-warning action-btn"
-                          @click="downloadPdf(invoice.id)"
-                          style="margin-right: 2px"
-                          :disabled="saving"
-                        >
-                          PDF
-                        </button>
+
                         <router-link
                           class="btn btn-sm btn-success action-btn"
                           :to="{
@@ -112,6 +118,9 @@
                         >
                           Edit
                         </router-link>
+                        <a class="btn btn-warning action-btn" :href="'https://api.elawfirmpk.com/download_pdf/'+invoice.id" download="" >PDF</a>
+                        
+                        
                         <a
                           class="btn btn-sm btn-danger action-btn"
                           @click="deleteInvoice(invoice.id, invoice_index)"
