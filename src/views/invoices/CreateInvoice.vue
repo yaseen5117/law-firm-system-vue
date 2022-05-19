@@ -52,20 +52,21 @@
                       <div class="col-md-3">
                         <label for="">Select Client</label>
 
-                        <span
+                        <label class=""
                           v-show="invoice.invoiceable_id"
                           style="margin-left: 5px"
-                          for=""
+                          for="edit_client"
                           data-bs-toggle="tooltip"
                           data-bs-placement="top"
                           title="Make changes to user's profile"
-                          ><input
+                          ><input 
+                            id="edit_client"
                             type="checkbox"
                             @change="
                               this.isDisabled = !this.isDisabled;
                               invoice.edit_client = !invoice.edit_client;
                             "
-                          />Edit client</span
+                          /> <small>Edit client</small></label
                         >
                         <Dropdown
                           v-model="invoice.invoiceable_id"
