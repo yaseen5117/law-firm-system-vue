@@ -4,6 +4,8 @@
       <page-header
         :title="'Invoices'"
         :petition="null"
+        :hideCaseFiles="true"
+        :showInvoices="true"
         :route_object="route_obj"
         :header_button="header_button"
         :header_button_text="header_button_text"
@@ -90,14 +92,7 @@
 
                       <td>{{ invoice.due_date }}</td>
                       <td class="text-end">
-                        <button
-                          class="btn btn-warning action-btn"
-                          @click="downloadPdf(invoice.id)"
-                          style="margin-right: 2px"
-                          :disabled="saving"
-                        >
-                          PDF
-                        </button>
+
                         <router-link
                           class="btn btn-sm btn-success action-btn"
                           :to="{
@@ -112,6 +107,15 @@
                         >
                           Edit
                         </router-link>
+                        <button
+                          class="btn btn-warning action-btn"
+                          @click="downloadPdf(invoice.id)"
+                          style="margin-right: 2px"
+                          :disabled="saving"
+                        >
+                          PDF
+                        </button>
+                        
                         <a
                           class="btn btn-sm btn-danger action-btn"
                           @click="deleteInvoice(invoice.id, invoice_index)"
