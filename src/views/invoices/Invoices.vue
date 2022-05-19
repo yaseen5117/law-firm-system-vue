@@ -80,7 +80,16 @@
                       :key="invoice_index"
                     >
                       <td>
-                        {{ invoice.invoice_no }}
+                        <router-link
+                          style="color:black"
+                          :to="{
+                            name: 'edit-invoice',
+                            params: { invoice_id: invoice.id },
+                          }"
+                          href="javascript:void"
+                        >{{ invoice.invoice_no }}
+                        
+                        
                         <small style="display: block" class="text-muted"
                           >{{ invoice.client ? invoice.client.name : "" }}
                           <span class="badge rounded-pill bg-primary">{{
@@ -88,6 +97,8 @@
                           }}</span></small
                         >
                         <small>Created at:{{ invoice.created_at }}</small>
+
+                        </router-link>
                       </td>
 
                       <td>{{ invoice.due_date }}</td>
@@ -107,14 +118,8 @@
                         >
                           Edit
                         </router-link>
-                        <button
-                          class="btn btn-warning action-btn"
-                          @click="downloadPdf(invoice.id)"
-                          style="margin-right: 2px"
-                          :disabled="saving"
-                        >
-                          PDF
-                        </button>
+                        <a class="btn btn-warning action-btn" :href="'https://api.elawfirmpk.com/download_pdf/'+invoice.id" download="" >PDF</a>
+                        
                         
                         <a
                           class="btn btn-sm btn-danger action-btn"
