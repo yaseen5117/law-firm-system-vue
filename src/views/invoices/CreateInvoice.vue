@@ -633,7 +633,7 @@ export default {
     onChange(event) {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-      };
+      };      
       let url = this.base_url + "/api/users/" + event.value;
       axios
         .get(url, { headers })
@@ -642,6 +642,7 @@ export default {
           this.invoice.selectedClient = response.data.user;
           this.invoice.due_date = response.data.invoice_date;
           this.invoice.invoice_no = response.data.user.next_invoice_num;
+          this.contact_persons_name = [];
           response.data.user.contact_persons.forEach((element) => {
             this.contact_persons_name.push(element.name);
           });

@@ -11,7 +11,7 @@
             <div class="card-body align-center case_heading">
              
                 <h6>
-                  <u>BEFORE THE {{ petition.court.title }} <router-link style="    margin-right: 2px;" :to="{ name: 'edit-petition', params: {id: petition.id}}" class="" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-edit"></i></router-link></u>
+                  <u>BEFORE THE {{ petition.court.title }} <router-link style="    margin-right: 2px;" :to="{ name: 'edit-petition', params: {id: petition.id}}" class="" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-edit"></i></router-link><a class="btn btn-warning action-btn" :href="'https://api.elawfirmpk.com/download_petition_pdf/'+petition.id" download="">Download PDF</a></u>
                 </h6>
                 <p><strong>{{ petition.petition_standard_title }}</strong></p>
                 <p>{{ petition.petitioner_names }}</p>
@@ -271,8 +271,7 @@ export default {
   created() {
     this.getCaseDetails();
   },
-  methods: {
-
+  methods: {     
     searchForAutocomplete(event) {
       setTimeout(() => {
         if (!event.query.trim().length) {
