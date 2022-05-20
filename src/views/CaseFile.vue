@@ -2,7 +2,9 @@
 <BlockUI :blocked="!isLoaded" :fullScreen="true">
   <div class="case_file">
     <main id="main">
-      <page-header title="Case Files" />
+      <page-header title="Case Files" :route_object="route_obj"
+        :header_button="header_button"
+        :header_button_text="header_button_text"/>
       <!-- ======= Services Section ======= -->
       <section id="services" class="services section-bg">
         <div class="container" data-aos="fade-up">
@@ -81,13 +83,13 @@
                       Reset
                     </button>
 
-                    <router-link
+                    <!-- <router-link
                       v-if="this.user.is_admin"
                       style="margin-left: 2px"
                       class="btn btn-success btn-sm mr-md-2"
                       :to="'/petitions/create'"
                       >New Case</router-link
-                    >
+                    > -->
 
                     <!-- <button
                       class="btn btn-secondary btn-sm mr-md-2"
@@ -246,6 +248,11 @@ export default {
   name: "CaseFile",
   data() {
     return {
+      route_obj: {
+        name: "create-petition",
+      },
+      header_button: true,
+      header_button_text: "New Case",
       base_url: process.env.VUE_APP_SERVICE_URL,
       petitions: Array,
       filters: {

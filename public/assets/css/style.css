@@ -1644,7 +1644,12 @@ h2 span {
   top: 50%;
 }
 .btn-danger{
+  color: #f3be32;
   background: rgb(143 58 48) !important;
+}
+.btn-danger:hover{
+  color: #f3be32;
+  font-weight: bold;
 }
 .p-dropdown	{
   width: 100%;

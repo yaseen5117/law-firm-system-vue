@@ -1,7 +1,9 @@
 <template>
 <BlockUI :blocked="blockPanel" :fullScreen="true" :autoZIndex="true" :baseZIndex="99999">
   <main id="main">
-    <page-header title="Users" />
+    <page-header title="Users" :route_object="route_obj"
+        :header_button="header_button"
+        :header_button_text="header_button_text"/>
 
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
@@ -81,14 +83,14 @@
             </Transition>
           </div>
           <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
-            <router-link
+            <!-- <router-link
               style="margin-right: 2px"
               class="btn btn-success btn-sm"
               :to="'/users/create'"
               >New User</router-link
-            >
+            > -->
 
-            <button
+            <!-- <button
               class="btn btn-secondary btn-sm"
               v-if="showSearchForm"
               @click="showSearchForm = !showSearchForm"
@@ -101,7 +103,7 @@
               @click="showSearchForm = !showSearchForm"
             >
               Show Filters
-            </button>
+            </button> -->
           </div>
           <div class="table-responsive">
             <div class="col-lg-12 col-md-12 col-sm-12">
@@ -244,6 +246,11 @@ export default {
   },
   data() {
     return {
+      route_obj: {
+        name: "create-user",
+      },
+      header_button: true,
+      header_button_text: "New User",
       base_url: process.env.VUE_APP_SERVICE_URL,
       users: [],
       roles: [],
