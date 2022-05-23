@@ -56,7 +56,7 @@
                       >
                         {{
                           filters.is_archive
-                            ? "New Invoices"
+                            ? "Active Invoices"
                             : "Archived Invoices"
                         }}
                       </button>

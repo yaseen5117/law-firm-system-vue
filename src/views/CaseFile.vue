@@ -114,7 +114,7 @@
                       @click="filters.archived = !filters.archived;"
                       
                     >
-                    {{filters.archived?'New Cases':'Archived'}}
+                    {{filters.archived?'Active Cases':'Archived'}}
                       
                     </button>
                   </div>
