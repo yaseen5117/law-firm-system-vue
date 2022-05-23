@@ -20,7 +20,7 @@ import Image from 'primevue/image';
 import BlockUI from 'primevue/blockui';
 import Sidebar from 'primevue/sidebar';
 import ConfirmationService from 'primevue/confirmationservice';
-
+import Dialog from 'primevue/dialog';
 
 
 
@@ -45,5 +45,6 @@ createApp(App)
 .component('InputMask',InputMask)
 .component('Calendar',Calendar)
 .component('Sidebar',Sidebar)
+.component('Dialog',Dialog)
 .mount('#app')
 

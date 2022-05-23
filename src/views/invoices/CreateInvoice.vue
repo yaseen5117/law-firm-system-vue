@@ -1,5 +1,5 @@
 <template>
-  <main id="main">
+  <main id="main">  
     <page-header :title="page_title" :petition="null"  :hideCaseFiles="true"
         :showInvoices="true"/>
     <section id="services" class="services section-bg">
@@ -39,8 +39,8 @@
               <div class="row">
                 <div class="col-md-12 text-end">
                   <a style="margin-right: 3px" v-if="this.$route.params.invoice_id" class="btn btn-sm btn-warning" :href="'https://api.elawfirmpk.com/download_pdf/'+invoice.id" download="" >Download PDF</a>
-                  <ConfirmPopup></ConfirmPopup>
-                  <button v-if="this.$route.params.invoice_id" v-show="invoice.invoice_status_id!=3"  @click="markInvoicePaidConfirmation($event)" type="button" class="btn btn-sm btn-success">Mark as Paid</button>
+                  <!-- <ConfirmPopup></ConfirmPopup> -->
+                  <button v-if="this.$route.params.invoice_id" v-show="invoice.invoice_status_id!=3"  @click="openModal()" type="button" class="btn btn-sm btn-success">Mark as Paid</button>
                   <button v-if="this.$route.params.invoice_id" v-show="invoice.invoice_status_id==3"  type="button" class="btn btn-sm btn-success">Paid at {{invoice.paid_date}}</button>
                   
                 </div>
@@ -366,6 +366,9 @@
       </div>
     </section>
   </main>
+    <invoice-mark-paid-modal 
+    v-model:visible="displayModal"    
+    title="Paid Invoice Dialog"/>
   <!-- End #main -->
 </template>
     
@@ -378,6 +381,7 @@ import { required } from "@vuelidate/validators";
 import OverlayPanel from 'primevue/overlaypanel';
 import ConfirmPopup from 'primevue/confirmpopup';
 import ConfirmDialog from 'primevue/confirmdialog';
+import InvoiceMarkPaidModal from "./InvoiceMarkPaidModal.vue";
 
 
 
@@ -385,7 +389,7 @@ import ConfirmDialog from 'primevue/confirmdialog';
 export default {
   components: {
     ConfirmPopup,
-    
+    InvoiceMarkPaidModal,
     PageHeader,
     OverlayPanel,
     Editor,
@@ -426,6 +430,7 @@ export default {
       isDisabled: true,
       isShowEmailContent: false,
       contact_persons_name: [],
+      displayModal: false,         
     };
   },
   watch: {
@@ -466,20 +471,12 @@ export default {
   },
   methods: {
     
-    markInvoicePaidConfirmation(event) {
-         this.$confirm.require({
-                target: event.currentTarget,
-                message: 'Are you sure you want to proceed?',
-                icon: 'pi pi-exclamation-triangle',
-                accept: () => {
-                    this.markInvoicePaid();
-                    
-                },
-                reject: () => {
-                    //callback to execute when user rejects the action
-                }
-            });
+    openModal() {          
+      this.displayModal = true;           
     },
+    closeModal() {
+            this.displayModal = false;
+        }, 
     markInvoicePaid(){
       var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
@@ -709,7 +706,7 @@ export default {
           .then((response) => {
             // console.log('success');
             // console.log(response.data.invoice.client);
-            this.invoice = response.data.invoice;
+            this.invoice = response.data.invoice;            
             this.invoice.selectedClient = response.data.invoice.client;
             this.invoice.invoice_meta = response.data.invoice.invoice_meta;
             response.data.invoice.client.contact_persons.forEach((element) => {
