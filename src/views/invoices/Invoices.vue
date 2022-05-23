@@ -111,21 +111,21 @@
                             params: { invoice_id: invoice.id },
                           }"
                           href="javascript:void"
-                          style="margin-right: 2px"
+                          style="margin-left: 2px"
                           data-bs-toggle="tooltip"
                           data-bs-placement="top"
                           title="Edit"
                         >
                           Edit
                         </router-link>
-                        <a class="btn btn-warning action-btn" :href="'https://api.elawfirmpk.com/download_pdf/'+invoice.id" download="" >PDF</a>
+                        <a  style="margin-left: 2px" class="btn btn-warning action-btn" :href="'https://api.elawfirmpk.com/download_pdf/'+invoice.id" download="" >Download</a>
                         
                         
                         <a
                           class="btn btn-sm btn-danger action-btn"
                           @click="deleteInvoice(invoice.id, invoice_index)"
                           href="javascript:void"
-                          style="margin-right: 2px"
+                          style="margin-left: 2px"
                           data-bs-toggle="tooltip"
                           data-bs-placement="top"
                           title="Delete"
