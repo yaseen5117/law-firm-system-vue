@@ -118,7 +118,7 @@
                         >
                           Edit
                         </router-link>
-                        <a class="btn btn-warning action-btn" :href="'https://api.elawfirmpk.com/download_pdf/'+invoice.id" download="" >PDF</a>
+                        <a class="btn btn-warning action-btn" :href="'https://api.elawfirmpk.com/download_pdf/'+invoice.id" download="" >Download</a>
                         
                         
                         <a
