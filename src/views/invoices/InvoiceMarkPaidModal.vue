@@ -82,6 +82,7 @@ import FileUpload from "../petition-index/FileUpload.vue";
 import moment from "moment";
 
 export default {
+  emits: ["afterSubmit"],
   props: ["title"],
   components: {
     FileUpload,
@@ -122,11 +123,12 @@ export default {
                 this.$notify({
                   type: "success",
                   title: "Success",
-                  text: "Files Uploaded Successfully!",
+                  text: "Successfully Mark as Paid Invoice!",
                 });
-
                 this.saving = false;
                 console.log(response.data);
+                this.$emit("close-modal-event");    
+                this.$emit("afterSubmit", "Reloading the Data of Invoice");                
               }
             },
             (error) => {

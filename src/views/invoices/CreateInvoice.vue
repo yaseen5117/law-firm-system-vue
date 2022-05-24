@@ -367,7 +367,9 @@
     </section>
   </main>
     <invoice-mark-paid-modal 
-    v-model:visible="displayModal"    
+    v-model:visible="displayModal"  
+    @close-modal-event="closeModal"  
+    @afterSubmit="getInvoice()"
     title="Paid Invoice Dialog"/>
   <!-- End #main -->
 </template>
