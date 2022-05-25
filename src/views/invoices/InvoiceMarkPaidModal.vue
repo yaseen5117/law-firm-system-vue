@@ -29,7 +29,7 @@
               <label>
                 Paid Amount
                 <InputNumber                 
-                v-model="invoice.amount" 
+                v-model="invoice.paid_amount" 
                 mode="decimal" 
                 :minFractionDigits="2" 
                 :maxFractionDigits="5" 
