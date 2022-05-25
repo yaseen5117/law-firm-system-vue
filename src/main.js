@@ -21,8 +21,7 @@ import BlockUI from 'primevue/blockui';
 import Sidebar from 'primevue/sidebar';
 import ConfirmationService from 'primevue/confirmationservice';
 import Dialog from 'primevue/dialog';
-
-
+import InputNumber from 'primevue/inputnumber';
 
 
 
@@ -46,5 +45,6 @@ createApp(App)
 .component('Calendar',Calendar)
 .component('Sidebar',Sidebar)
 .component('Dialog',Dialog)
+.component('InputNumber',InputNumber)
 .mount('#app')
 

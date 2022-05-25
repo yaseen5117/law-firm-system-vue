@@ -71,6 +71,7 @@
                     <tr>
                       <th>Invoice</th>
                       <th>Due Date</th>
+                      <th></th>
                       <th  class="text-end">Actions</th>
                     </tr>
                   </thead>
@@ -102,6 +103,22 @@
                       </td>
 
                       <td>{{ invoice.due_date }}</td>
+                      <td>
+                        <button 
+                          v-show="invoice.invoice_status_id!=3" 
+                          @click="openModal(invoice)" 
+                          type="button" 
+                          class="btn btn-sm btn-success action-btn">
+                          Mark as Paid
+                        </button>
+                        <button                             
+                            v-show="invoice.invoice_status_id==3"  
+                            type="button" 
+                            class="btn btn-sm btn-success action-btn">
+                            Paid at 
+                            {{invoice.paid_date}}
+                          </button>
+                      </td>
                       <td class="text-end">
 
                         <router-link
@@ -146,6 +163,14 @@
         </BlockUI>
       </section>
     </main>
+    <invoice-mark-paid-modal 
+    v-model:visible="displayModal"  
+    @close-modal-event="closeModal"  
+    @afterSubmit="getInvoices()"
+    @closeModal="closeModal()"
+    :invoice="invoice" 
+    :excute="excute"   
+    title="Paid Invoice Dialog"/>
     <!-- End #main -->
   </BlockUI>
 </template>
@@ -156,11 +181,13 @@ import PageHeader from "../shared/PageHeader.vue";
 import Editor from "primevue/editor";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import InvoiceMarkPaidModal from "./InvoiceMarkPaidModal.vue";
 
 export default {
   components: {
     PageHeader,
     Editor,
+    InvoiceMarkPaidModal,
   },
   setup() {
     return {
@@ -169,6 +196,10 @@ export default {
   },
   data() {
     return {
+      excute: false,
+      invoice_id: "",
+      invoice: {},
+      displayModal: false,
       saving: false,
       route_obj: {
         name: "create-invoice",
@@ -196,6 +227,14 @@ export default {
     this.getInvoices();
   },
   methods: {
+     openModal(invoice) {   
+       this.invoice = invoice;  
+       this.excute = true;      
+      this.displayModal = true;           
+    },
+    closeModal() {
+            this.displayModal = false;
+        }, 
     reset() {
       this.saving = true;
       this.filters = {
