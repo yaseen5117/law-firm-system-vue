@@ -725,6 +725,10 @@ export default {
             this.invoice = response.data.invoice;            
             this.invoice.selectedClient = response.data.invoice.client;
             this.invoice.invoice_meta = response.data.invoice.invoice_meta;
+            if(!this.invoice.paid_amount){
+              this.invoice.paid_amount = this.invoice.amount;
+            }
+
             response.data.invoice.client.contact_persons.forEach((element) => {
               this.contact_persons_name.push(element.name);
             });
