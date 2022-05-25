@@ -59,7 +59,7 @@
           </div>
           <div class="form-group">
             <div class="col-lg-12 col-md-12 col-sm-12">
-             
+
                 <file-upload
                   type="App\Models\Invoice"
                   :attachmentable_id="invoice.id"
@@ -68,12 +68,15 @@
              
             </div>
 
-            <div class="form-group mt-3" style="float: right">
-              <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="form-group mt-3 text-end" >
+              <div class="col-lg-3 col-md-3 col-sm-12">
+                <InvoiceThumb :base_url="base_url" :invoice="invoice" />
+              </div>
+              <div class="col-lg-9 col-md-9 col-sm-12" style="float:right">
                 <button class="btn btn-success btn-sm" :disabled="saving">
                   Mark as Paid
                 </button>
-                <button type="button" class="btn btn-primary btn-sm" style="margin-left: 5px" @click="closeModal()">Close</button>
+                <button type="button" class="btn btn-primary btn-sm " style="margin-left: 5px" @click="closeModal()">Close</button>
               </div>
             </div>
           </div>
@@ -91,6 +94,7 @@
 <script>
 import axios from "axios";
 import FileUpload from "../petition-index/FileUpload.vue";
+import InvoiceThumb from "../invoices/InvoiceThumb.vue";
 import moment from "moment";
 
 export default {
@@ -98,6 +102,7 @@ export default {
   props: ["title","invoice","excute"],
   components: {
     FileUpload,
+    InvoiceThumb,
   },
   data() {
     return {      

@@ -109,7 +109,7 @@
                           @click="openModal(invoice)" 
                           type="button" 
                           
-                          class="btn btn-sm btn-success action-btn ">
+                          class="btn btn-sm btn-primary action-btn ">
                           Mark as Paid
                         </button>
                         <button                             
@@ -119,6 +119,8 @@
                             class="btn btn-sm btn-success action-btn">
                             Show Payment Details
                           </button>
+
+                          <InvoiceThumb v-show="invoice.attachment"   :base_url="base_url" :invoice="invoice" />
                       </td>
                       <td class="text-end">
 
@@ -183,9 +185,11 @@ import Editor from "primevue/editor";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import InvoiceMarkPaidModal from "./InvoiceMarkPaidModal.vue";
+import InvoiceThumb from "../invoices/InvoiceThumb.vue";
 
 export default {
   components: {
+    InvoiceThumb,
     PageHeader,
     Editor,
     InvoiceMarkPaidModal,
