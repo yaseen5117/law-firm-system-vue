@@ -2,26 +2,32 @@
   <BlockUI :blocked="!isLoaded" :fullScreen="true">
     <main id="main">
       <page-header
-        :title="'Contracts/My Agreements'"      
+        :title="'Contracts/My Agreements'"    
+        :petition="null"
+        :hideCaseFiles="true"
+        :showInvoices="false"    
+         :route_object="route_obj"    
+        :header_button="header_button"
+        :header_button_text="header_button_text"  
       />
       <section id="services" class="services section-bg">
         <BlockUI :blocked="invoices" :fullScreen="true">
           <div class="container" data-aos="fade-up">
             <div class="row">
-              <!-- <div class="col-12 mb-2">
+              <div class="col-12 mb-2">
                 <Transition name="fade">
                   <form class="row gy-2 gx-3 align-items-center expense">
                     <div class="col-lg-3 col-md-3 col-sm-6">
                       <input
                         type="text"
-                        id="invoice_no"                      
+                        id="title"                      
                         class="form-control form-control-sm"
-                        placeholder="Invoice Number"
-                        aria-describedby="invoice_no"
+                        placeholder="Title"
+                        aria-describedby="title"
                       />
                     </div>
 
-                    <div class="col-lg-3 col-md-3 col-sm-6">
+                    <!-- <div class="col-lg-3 col-md-3 col-sm-6">
                       <input
                         placeholder="Client Name"                        
                         type="text"
@@ -29,7 +35,7 @@
                         class="form-control form-control-sm"
                         aria-describedby="client_name"
                       />
-                    </div>
+                    </div> -->
                     <div class="col-lg-3 col-md-3 col-sm-12">
                       <button
                         type="button"
@@ -39,7 +45,7 @@
                       >
                         Reset
                       </button>
-                      <button
+                      <!-- <button
                         style="margin-left:2px"
                         type="button"
                         class="btn btn-warning btn-sm "
@@ -51,19 +57,18 @@
                             ? "Active Invoices"
                             : "Archived Invoices"
                         }}
-                      </button>
+                      </button> -->
                     </div>
                   </form>
                 </Transition>
-              </div> -->
+              </div>
               <div class="col-md-12">
                 <div class="table-responsive">
                   <table class="table table-striped" v-if="isLoaded">
                   <thead>
                     <tr>
-                      <th>Invoice</th>
-                      <th>Due Date</th>
-                      <th></th>
+                      <th>Category</th>
+                      <th>Title</th>                       
                       <th  class="text-end">Actions</th>
                     </tr>
                   </thead>
@@ -73,15 +78,10 @@
                       :key="contract_and_agreemnet_index"
                     >
                       <td>
-                         {{contractAndAgreemnet.title}}
+                         {{contractAndAgreemnet.contract_category_id}}
                       </td>
-
-                      <td> </td>
-                      <td>
-                      
-                      </td>
-                      <td class="text-end">
-                        
+                      <td>{{contractAndAgreemnet.title}}</td>                      
+                      <td class="text-end">                        
                       </td>
                     </tr>
                   </tbody>
@@ -121,11 +121,11 @@ export default {
     return {    
       
       saving: false,
-    //   route_obj: {
-    //     name: "create-invoice",
-    //   },
+      route_obj: {
+        name: "create-contract-and_agreement",
+      },
       header_button: true,
-      header_button_text: "Create Invoice",
+      header_button_text: "Create Contract and Agreement",
       base_url: process.env.VUE_APP_SERVICE_URL,      
       filters: {
         invoice_no: "",

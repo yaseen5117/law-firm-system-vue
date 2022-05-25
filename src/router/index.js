@@ -48,6 +48,7 @@ import CreateInvoice from '../views/invoices/CreateInvoice'
 import Invoices from '../views/invoices/Invoices'
 
 import ContractAndAgreementIndex from '../views/contract-and-agreement/ContractAndAgreementIndex'
+import ContractAndAgreementCreateUpdate from '../views/contract-and-agreement/CreateUpdate'
 
 const routes = [
   {
@@ -404,6 +405,14 @@ const routes = [
       auth: true ,
     },
   },  
+  {
+    path: '/create-contract-and_agreement',
+    name: 'create-contract-and_agreement',
+    component: ContractAndAgreementCreateUpdate,
+    meta: { 
+      auth: true ,
+    },
+  },
   //Contracts and Agreements
 
 ]
