@@ -4,12 +4,15 @@
     :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
     :style="{ width: '45vw' }"
     :modal="true"
+    :showHeader="false"
+    :closeOnEscape="true"
+    :dismissableMask="true"   
   >
-    <div class="container">
+    <div class="container mt-5">
       <form @submit.prevent="submitForm($event)" enctype="multipart/form-data">
         <div class="row">
-          <div class="form-group">
-            <div class="col-lg-12 col-md-12 col-sm-12">
+          
+            <div class="col-lg-6 col-md-6 col-sm-6">              
               <label>
                 Paid Date
                 <InputMask
@@ -17,23 +20,31 @@
                   placeholder="dd/mm/yyyy"
                   v-model="invoice.paid_date"
                   type="text"
-                  class="form-control"
+                  class="p-inputtext-sm form-control"
+                   
                 />
               </label>
             </div>
-          </div>
-          <div class="form-group">
-            <div class="col-lg-12 col-md-12 col-sm-12">
+             <div class="col-lg-6 col-md-6 col-sm-6">
               <label>
-                Amount Paid
-                <input
-                  type="text"
-                  v-model="invoice.paid_amount"
-                  class="form-control"
+                Paid Amount
+                <InputNumber                 
+                v-model="invoice.amount" 
+                mode="decimal" 
+                :minFractionDigits="2" 
+                :maxFractionDigits="5" 
+                :useGrouping="false"          
+                class="p-inputtext-sm"
+                style="width: 100%"
                 />
+                <!-- <input
+                  type="number"
+                  v-model="invoice.amount"
+                  class="form-control"
+                /> -->
               </label>
             </div>
-          </div>
+                 
           <div class="form-group">
             <div class="col-lg-12 col-md-12 col-sm-12">
               <label>
@@ -48,17 +59,18 @@
           </div>
           <div class="form-group">
             <div class="col-lg-12 col-md-12 col-sm-12">
-              <label>
-                Receipt
+             
                 <file-upload
                   type="App\Models\Invoice"
                   :attachmentable_id="id"
+                  receipt="true"
                 />
-              </label>
+             
             </div>
 
             <div class="form-group mt-3" style="float: right">
               <div class="col-lg-12 col-md-12 col-sm-12">
+                <button type="button" class="btn btn-primary btn-sm" style="margin-right: 5px" @click="closeModal()">Close</button>
                 <button class="btn btn-success btn-sm" :disabled="saving">
                   Mark as Paid
                 </button>
@@ -82,26 +94,23 @@ import FileUpload from "../petition-index/FileUpload.vue";
 import moment from "moment";
 
 export default {
-  emits: ["afterSubmit"],
-  props: ["title"],
+  emits: ["afterSubmit","closeModal"],
+  props: ["title","invoice","excute"],
   components: {
     FileUpload,
   },
   data() {
-    return {
+    return {      
       title: this.title,
-      base_url: process.env.VUE_APP_SERVICE_URL,
-      invoice: {
-        paid_amount: "",
-      },
-      id: this.$route.params.invoice_id,
-      saving: false,
+      base_url: process.env.VUE_APP_SERVICE_URL,       
+      saving: false,       
     };
-  },
-  created() {
-    this.getInvoice();
-  },
+  },    
+    
   methods: {
+    closeModal() {
+      this.$emit("closeModal", "Hide Dialog/Modal");
+    },
     submitForm: function (event) {
       this.saving = true;
       const config = {
@@ -142,35 +151,7 @@ export default {
             }
           );
       }
-    },
-    getInvoice() {
-      if (this.$route.params.invoice_id) {
-        var headers = {
-          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-        };
-
-        var url =
-          this.base_url + "/api/invoices/" + this.$route.params.invoice_id;
-        axios
-          .get(url, { headers })
-          .then((response) => {
-            this.invoice = response.data.invoice;
-            this.invoice.paid_amount = response.data.invoice.amount;
-            if (!response.data.invoice.paid_date) {
-              this.invoice.paid_date = response.data.today_date;
-            }
-            console.log(response.data.invoice);
-          })
-          .catch((error) => {
-            console.log(error);
-            this.$notify({
-              type: "error",
-              title: "Something went wrong!",
-              text: error,
-            });
-          });
-      }
-    },
+    }, 
   },
 };
 </script>

@@ -40,7 +40,7 @@
                 <div class="col-md-12 text-end">
                   <a style="margin-right: 3px" v-if="this.$route.params.invoice_id" class="btn btn-sm btn-warning" :href="'https://api.elawfirmpk.com/download_pdf/'+invoice.id" download="" >Download PDF</a>
                   <!-- <ConfirmPopup></ConfirmPopup> -->
-                  <button v-if="this.$route.params.invoice_id" v-show="invoice.invoice_status_id!=3"  @click="openModal()" type="button" class="btn btn-sm btn-success">Mark as Paid</button>
+                  <button v-if="this.$route.params.invoice_id" v-show="invoice.invoice_status_id!=3"  @click="openModal(invoice)" type="button" class="btn btn-sm btn-success">Mark as Paid</button>
                   <button v-if="this.$route.params.invoice_id" v-show="invoice.invoice_status_id==3"  type="button" class="btn btn-sm btn-success">Paid at {{invoice.paid_date}}</button>
                   
                 </div>
@@ -62,6 +62,7 @@
                           data-bs-placement="top"
                           title="Make changes to user's profile"
                           ><input 
+                          :disabled="invoice.invoice_status_id==3"
                             id="edit_client"
                             type="checkbox"
                             @change="
@@ -73,6 +74,7 @@
                         <Dropdown
                           v-model="invoice.invoiceable_id"
                           :options="clients"
+                          :disabled="invoice.invoice_status_id==3"
                           optionLabel="label"
                           optionValue="value"
                           placeholder="Select a Client"
@@ -107,6 +109,7 @@
                           mask="99/99/9999"
                           placeholder="dd/mm/yyyy"
                           type="text"
+                          :disabled="invoice.invoice_status_id==3"
                           class="form-control"
                         />
                       </div>
@@ -115,6 +118,7 @@
                         <Dropdown
                           v-model="invoice.invoice_status_id"
                           :options="invoice_statuses"
+                          :disabled="invoice.invoice_status_id==3"
                           optionLabel="title"
                           optionValue="id"
                           placeholder="Invoice Status"
@@ -170,7 +174,7 @@
                     <div class="row">
                       <div class="col-md-3">
                         <label for="">Attention</label>
-                        <input type="text" class="form-control" />
+                        <input :disabled="invoice.invoice_status_id==3" type="text" class="form-control" />
                       </div>
                       <div class="col-md-9">
                         <label for="">CC</label>
@@ -196,6 +200,7 @@
                 <div class="col-md-8">
                   <input
                       v-model="invoice.invoice_meta.services"
+                      :disabled="invoice.invoice_status_id==3"
                       class="form-control"
                     />
                 </div>
@@ -204,6 +209,7 @@
                           <span class="input-group-text">RS</span>
                           <input
                             v-model="invoice.amount"
+                            :disabled="invoice.invoice_status_id==3"
                             type="number"
                             min="0"
                             class="form-control"
@@ -217,7 +223,7 @@
               <div class="row">
                 <div class="col-md-2">
                   <label for="apply_tax"
-                    ><input type="checkbox" id="apply_tax" v-model="invoice.apply_tax" /> Apply
+                    ><input type="checkbox" id="apply_tax" :disabled="invoice.invoice_status_id==3" v-model="invoice.apply_tax" /> Apply
                     Tax</label
                   >
                 </div>
@@ -252,6 +258,7 @@
                           type="text"
                           class="form-control"
                           v-model="invoice_expense.expense"
+                          :disabled="invoice.invoice_status_id==3"
                         />
                       </div>
                       <div class="col-md-4">
@@ -260,12 +267,14 @@
                           <span class="input-group-text">RS</span>
                           <input
                             v-model="invoice_expense.amount"
+                            :disabled="invoice.invoice_status_id==3"
                             type="number"
                             class="form-control"
                             placeholder="300"
                           />
                           <button
                             type="button"
+                            :disabled="invoice.invoice_status_id==3"
                             @click="
                               removeInvoiceExpenses(
                                 invoice.invoice_expenses,
@@ -280,7 +289,7 @@
                       </div>
                     </div>
                   </div>
-                  <button type="button" @click="addInvoiceExpenses()">
+                  <button type="button" :disabled="invoice.invoice_status_id==3" @click="addInvoiceExpenses()">
                     <span class="fa fa-plus"></span> Add Expenses
                   </button>
                 </div>
@@ -297,6 +306,7 @@
                   <label 
                     ><input
                       type="checkbox"
+                      :disabled="invoice.invoice_status_id==3"
                       @click="isShowEmailContent = !isShowEmailContent"
                       v-model="invoice.sendEmail"
                     />
@@ -352,7 +362,7 @@
                     <strong>Total: </strong>{{ total_amount }}
                   </p>
                   <button
-                    :disabled="saving"
+                    :disabled="invoice.invoice_status_id==3 || saving"                     
                     style="float: right"
                     class="btn btn-success btn-sm"
                   >
@@ -367,9 +377,11 @@
     </section>
   </main>
     <invoice-mark-paid-modal 
-    v-model:visible="displayModal"  
+    v-model:visible="displayModal" 
     @close-modal-event="closeModal"  
     @afterSubmit="getInvoice()"
+    @closeModal="closeModal()"
+    :invoice="invoice"
     title="Paid Invoice Dialog"/>
   <!-- End #main -->
 </template>
@@ -403,6 +415,7 @@ export default {
   },
   data() {
     return {
+      invoice_id: "",
       page_title: this.$route.params.invoice_id
         ? "Edit Invoice"
         : "Create New Invoice",
@@ -473,7 +486,8 @@ export default {
   },
   methods: {
     
-    openModal() {          
+    openModal(invoice_id) {  
+      this.invoice_id = invoice_id;        
       this.displayModal = true;           
     },
     closeModal() {
