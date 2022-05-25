@@ -47,6 +47,8 @@ import OpinionIndex from '../views/opinions/OpinionIndex'
 import CreateInvoice from '../views/invoices/CreateInvoice'
 import Invoices from '../views/invoices/Invoices'
 
+import ContractAndAgreementIndex from '../views/contract-and-agreement/ContractAndAgreementIndex'
+
 const routes = [
   {
     path: '/login',
@@ -393,6 +395,16 @@ const routes = [
       auth: true ,
     },
   },
+  //Contracts and Agreements
+  {
+    path: '/contract-and-agreement',
+    name: 'contract-and-agreement',
+    component: ContractAndAgreementIndex,
+    meta: { 
+      auth: true ,
+    },
+  },  
+  //Contracts and Agreements
 
 ]
 
