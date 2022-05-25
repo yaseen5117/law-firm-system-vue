@@ -386,12 +386,14 @@ export default {
           .then(
             (response) => {
               if (response.status === 200) {
+                var petition_id = response.data.petition_id;
                 this.$notify({
                   type: "success",
                   title: "Success",
                   text: "Saved Successfully!",
+                  
                 });
-                this.$router.push({ path: "/petitions" });
+                this.$router.push({ path: "/petitions/"+petition_id });
               }
               console.log(response);
               this.saving = false;

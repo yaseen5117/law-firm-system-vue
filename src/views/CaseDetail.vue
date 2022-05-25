@@ -1,7 +1,7 @@
 <template>
 
   <main id="main">
-    <page-header title="Petition" />
+    
     <nav-components activeNavPill = 'petition' :petition_id="petition.id"  />
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
@@ -9,9 +9,16 @@
         <div class="row">
           <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="card-body align-center case_heading">
-             
+                <div class="text-end">
+                  <router-link class="btn btn-primary action-btn" style="    margin-right: 2px;" :to="{ name: 'edit-petition', params: {id: petition.id}}"  role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-edit"></i> Edit Petition</router-link> 
+                  
+                  <a class="btn btn-warning action-btn" :href="'https://api.elawfirmpk.com/download_petition_pdf/'+petition.id" download=""><i class="fa fa-download"></i> Download PDF</a>
+                </div>
                 <h6>
-                  <u>BEFORE THE {{ petition.court.title }} <router-link style="    margin-right: 2px;" :to="{ name: 'edit-petition', params: {id: petition.id}}" class="" role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-edit"></i></router-link><a class="btn btn-warning action-btn" :href="'https://api.elawfirmpk.com/download_petition_pdf/'+petition.id" download="">Download PDF</a></u>
+                  <u >BEFORE THE {{ petition.court ? petition.court.title : "Court NA" }} 
+                  
+                  
+                  </u>
                 </h6>
                 <p><strong>{{ petition.petition_standard_title }}</strong></p>
                 <p>{{ petition.petitioner_names }}</p>
