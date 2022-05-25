@@ -108,12 +108,14 @@
                           v-show="invoice.invoice_status_id!=3" 
                           @click="openModal(invoice)" 
                           type="button" 
-                          class="btn btn-sm btn-success action-btn">
+                          
+                          class="btn btn-sm btn-success action-btn ">
                           Mark as Paid
                         </button>
                         <button                             
                             v-show="invoice.invoice_status_id==3"  
                             type="button" 
+                            @click="openModal(invoice)" 
                             class="btn btn-sm btn-success action-btn">
                             Paid at 
                             {{invoice.paid_date}}

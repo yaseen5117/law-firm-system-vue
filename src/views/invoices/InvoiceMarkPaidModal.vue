@@ -70,10 +70,10 @@
 
             <div class="form-group mt-3" style="float: right">
               <div class="col-lg-12 col-md-12 col-sm-12">
-                <button type="button" class="btn btn-primary btn-sm" style="margin-right: 5px" @click="closeModal()">Close</button>
                 <button class="btn btn-success btn-sm" :disabled="saving">
                   Mark as Paid
                 </button>
+                <button type="button" class="btn btn-primary btn-sm" style="margin-left: 5px" @click="closeModal()">Close</button>
               </div>
             </div>
           </div>
