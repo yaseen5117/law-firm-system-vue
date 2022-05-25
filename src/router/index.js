@@ -66,7 +66,15 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    beforeEnter(to, from, next) {
+      var isloggedin = localStorage.getItem("lfms_user");
+      if (isloggedin) {
+        next('/dashboard');
+      } else {
+        next();
+      } 
+    }
   }, 
   {
     path: '/dashboard',

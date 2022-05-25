@@ -41,7 +41,7 @@
                   <a style="margin-right: 3px" v-if="this.$route.params.invoice_id" class="btn btn-sm btn-warning" :href="'https://api.elawfirmpk.com/download_pdf/'+invoice.id" download="" >Download PDF</a>
                   <!-- <ConfirmPopup></ConfirmPopup> -->
                   <button v-if="this.$route.params.invoice_id" v-show="invoice.invoice_status_id!=3"  @click="openModal(invoice)" type="button" class="btn btn-sm btn-success">Mark as Paid</button>
-                  <button v-if="this.$route.params.invoice_id" v-show="invoice.invoice_status_id==3"  type="button" class="btn btn-sm btn-success">Paid at {{invoice.paid_date}}</button>
+                  <button v-if="this.$route.params.invoice_id" @click="openModal(invoice)"  v-show="invoice.invoice_status_id==3"  type="button" class="btn btn-sm btn-success">Show Payment Details</button>
                   
                 </div>
               </div>

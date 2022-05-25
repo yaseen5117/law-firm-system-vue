@@ -117,8 +117,7 @@
                             type="button" 
                             @click="openModal(invoice)" 
                             class="btn btn-sm btn-success action-btn">
-                            Paid at 
-                            {{invoice.paid_date}}
+                            Show Payment Details
                           </button>
                       </td>
                       <td class="text-end">
