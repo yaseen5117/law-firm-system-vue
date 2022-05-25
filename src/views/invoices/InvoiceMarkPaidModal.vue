@@ -62,7 +62,7 @@
              
                 <file-upload
                   type="App\Models\Invoice"
-                  :attachmentable_id="id"
+                  :attachmentable_id="invoice.id"
                   receipt="true"
                 />
              
