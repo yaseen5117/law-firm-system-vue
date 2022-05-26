@@ -106,7 +106,7 @@
                       <td>
                         <button 
                           v-show="invoice.invoice_status_id!=3" 
-                          @click="openModal(invoice)" 
+                          @click="setupMarkPaid(invoice)" 
                           type="button" 
                           
                           class="btn btn-sm btn-primary action-btn ">
@@ -232,6 +232,20 @@ export default {
     this.getInvoices();
   },
   methods: {
+    setupMarkPaid(invoice){
+      if(!invoice.paid_amount){
+        invoice.paid_amount = invoice.amount;
+      }
+      if(!invoice.paid_date){
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        today = dd + '/' + mm + '/' + yyyy;
+        invoice.paid_date = today;
+      }
+      this.openModal(invoice)
+    },
      openModal(invoice) {   
        this.invoice = invoice;  
        this.excute = true;      
