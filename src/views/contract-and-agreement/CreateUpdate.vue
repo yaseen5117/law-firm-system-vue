@@ -58,7 +58,7 @@
                 <div class="row">
                   <div class="col-lg-2 col-md-2 col-sm-3">
                     <button :disabled="saving" class="btn btn-success btn-sm">
-                      Save
+                      {{button_title}}
                     </button>
                   </div>
                 </div>
@@ -103,6 +103,9 @@ export default {
       page_title: this.$route.params.contract_agreement_id
         ? "Edit Contract / Agreement"
         : "Add New Contract / Agreement",
+      button_title: this.$route.params.contract_agreement_id
+        ? "Update"
+        : "Save",
       base_url: process.env.VUE_APP_SERVICE_URL,
       contract_and_agreement: {},
       files: "",
