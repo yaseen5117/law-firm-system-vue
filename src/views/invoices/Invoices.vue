@@ -38,6 +38,17 @@
                         aria-describedby="client_name"
                       />
                     </div>
+                    
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                      <Dropdown
+                      v-model="filters.invoice_status_id"
+                        :options="invoice_statuses"
+                        optionLabel="title"
+                        optionValue="id"
+                        placeholder="Status"
+                        :filter="true"
+                      />
+                    </div>
                     <div class="col-lg-3 col-md-3 col-sm-12">
                       <button
                         type="button"
@@ -203,6 +214,21 @@ export default {
     return {
       excute: false,
       invoice_id: "",
+      invoice_statuses: [
+        {
+          id:1,
+          title:"Draft",
+        },
+        {
+          id:2,
+          title:"Sent",
+        },
+        {
+          id:3,
+          title:"Paid",
+        }
+
+      ],
       invoice: {},
       displayModal: false,
       saving: false,
