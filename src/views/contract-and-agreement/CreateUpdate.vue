@@ -5,36 +5,63 @@
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="col-12">
-            <form @submit.prevent="submitForm($event)">
+            <form
+              @submit.prevent="submitForm($event)"
+              enctype="multipart/form-data"
+            >
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label>Category<span style="color: red">*</span></label>
+                    <label>Category</label>
                     <Dropdown
                       v-model="contract_and_agreement.contract_category_id"
                       :options="categories"
-                      optionLabel="contract_category_id"
+                      optionLabel="title"
                       optionValue="contract_category_id"
                       placeholder="Select a Category"
                       :filter="true"
                       appendTo="self"
-                      filterPlaceholder="Find by Category Name"                      
+                      class="p-inputtext-sm p-dropdown"
+                      filterPlaceholder="Find by Category Name"
                     />
-                   
                   </div>
-                  <div class="col-lg-4 col-md-4 col-sm-12">
-                    <label>Title <span style="color: red">*</span></label>
-                    <input                      
-                      class="form-control"                      
-                    />                   
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <label>Title</label>
+                    <input
+                      class="form-control"
+                      v-model="contract_and_agreement.title"
+                      v-bind:class="{
+                        'error-boarder': v$.contract_and_agreement.title.$error,
+                      }"
+                      @blur="v$.contract_and_agreement.title.$touch"
+                    />
+                    <span
+                      v-if="v$.contract_and_agreement.title.$error"
+                      class="errorMessage"
+                      >Title field is required.</span
+                    >
                   </div>
-                  
+                  <div class="col-lg-3 col-md-3 col-sm-12">
+                    <label>File</label>
+                    <input
+                      accept="image/png, image/jpeg, image/jpg"
+                      type="file"
+                      id="file"
+                      class="form-control"
+                      @change="onChange"
+                      ref="fileupload"
+                    />
+                  </div>
                 </div>
               </div>
               <div class="form-group">
-                <button :disabled="saving" class="btn btn-success btn-sm">
-                  Save
-                </button>
+                <div class="row">
+                  <div class="col-lg-2 col-md-2 col-sm-3">
+                    <button :disabled="saving" class="btn btn-success btn-sm">
+                      Save
+                    </button>
+                  </div>
+                </div>
               </div>
             </form>
           </div>
@@ -51,6 +78,7 @@ import PageHeader from "../shared/PageHeader.vue";
 import useVuelidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
 import Multiselect from "@vueform/multiselect";
+import { formatDate } from "@fullcalendar/common";
 
 export default {
   components: {
@@ -65,37 +93,36 @@ export default {
   data() {
     return {
       categories: [
-        { contract_category_id: 1 },
-        { contract_category_id: 2 },
-        { contract_category_id: 3 },
-        { contract_category_id: 4 },
-        { contract_category_id: 5 },
+        { contract_category_id: 1, title: "Category-1" },
+        { contract_category_id: 2, title: "Category-2" },
+        { contract_category_id: 3, title: "Category-3" },
+        { contract_category_id: 4, title: "Category-4" },
+        { contract_category_id: 5, title: "Category-5" },
       ],
       saving: false,
-      page_title: this.$route.params.id
-        ? "Edit Contract and Agreement"
-        : "Add New Contract and Agreement",
+      page_title: this.$route.params.contract_agreement_id
+        ? "Edit Contract / Agreement"
+        : "Add New Contract / Agreement",
       base_url: process.env.VUE_APP_SERVICE_URL,
-      contract_and_agreement: {
-         
-      },     
+      contract_and_agreement: {},
+      files: "",
     };
   },
   validations() {
     return {
-    //   petition: {
-    //     petition_type_id: { required },
-    //     title: { required },
-    //     case_no: { required },
-    //     court_id: { required },
-    //   },
+      contract_and_agreement: {
+        title: { required },
+      },
     };
   },
   created() {
-   
+    this.getContractAndAgreement();
   },
   activated() {},
   methods: {
+    onChange(e) {
+      this.files = e.target.files;
+    },
     submitForm: function (event) {
       this.v$.$validate();
       if (!this.v$.$error) {
@@ -105,21 +132,34 @@ export default {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
+        let formData = new FormData();
 
+        for (var i = 0; i < this.files.length; i++) {
+          let file = this.files[i];
+          formData.append("files[" + i + "]", file);
+        }
+
+        formData.append(
+          "contract_category_id",
+          this.contract_and_agreement.contract_category_id
+        );
+        formData.append("title", this.contract_and_agreement.title);
+        if (this.contract_and_agreement.id) {
+          formData.append("id", this.contract_and_agreement.id);
+        }
         axios
-          .post(this.base_url + "/api/petitions", this.petition, {
+          .post(this.base_url + "/api/contracts_and_agreements", formData, {
             headers,
           })
           .then(
             (response) => {
               if (response.status === 200) {
-                var petition_id = response.data.petition_id;
                 this.$notify({
                   type: "success",
                   title: "Success",
                   text: "Saved Successfully!",
                 });
-                this.$router.push({ path: "/petitions/" + petition_id });
+                this.$router.push({ path: "/contract-and-agreement" });
               }
               console.log(response);
               this.saving = false;
@@ -135,10 +175,39 @@ export default {
             }
           );
       }
-    }, 
+    },
+    getContractAndAgreement() {
+      if (this.$route.params.contract_agreement_id) {
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+
+        var url =
+          this.base_url +
+          "/api/contracts_and_agreements/" +
+          this.$route.params.contract_agreement_id;
+        axios
+          .get(url, { headers })
+          .then((response) => {
+            this.contract_and_agreement = response.data.contract_and_agreement;
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error,
+            });
+          });
+      }
+    },
   },
 };
 </script>
 
 <style>
+section {
+  padding: 100px 0;
+  overflow: visible !important;
+}
 </style>
