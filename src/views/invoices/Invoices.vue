@@ -120,7 +120,7 @@
                             Show Payment Details
                           </button>
 
-                          <InvoiceThumb v-show="invoice.attachment"   :base_url="base_url" :invoice="invoice" />
+                          <InvoiceThumb v-show="invoice.attachment" folder_name="invoices"  :base_url="base_url" :invoice="invoice" />
                       </td>
                       <td class="text-end">
 

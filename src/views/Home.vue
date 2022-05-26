@@ -6,7 +6,7 @@
     <div class="container-fluid" data-aos="fade-up">
       <div class="row justify-content-center">
         <div class="col-xl-5 col-lg-6 pt-3 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
-          <h1>Welcome to <br> E-Law Firm</h1>
+          <h1>Welcome to <br>E LAW FIRM</h1>
           <!-- <h2>We are team of talented designers making websites with Bootstrap</h2> -->
           <div v-if="!this.user"><router-link :to="{
                           name: 'Login',                           

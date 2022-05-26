@@ -421,6 +421,14 @@ const routes = [
       auth: true ,
     },
   },
+  {
+    path: '/contract-and_agreement/edit/:contract_agreement_id',
+    name: 'edit-contract-and_agreement',    
+    component: ContractAndAgreementCreateUpdate,
+    meta: { 
+      auth: true ,
+    },
+  },
   //Contracts and Agreements
 
 ]

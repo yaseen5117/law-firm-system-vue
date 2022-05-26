@@ -20,22 +20,27 @@
                     <div class="col-lg-3 col-md-3 col-sm-6">
                       <input
                         type="text"
-                        id="title"                      
-                        class="form-control form-control-sm"
+                        id="title"      
+                        v-model="filters.title"                
+                        class="form-control"
                         placeholder="Title"
                         aria-describedby="title"
                       />
                     </div>
 
-                    <!-- <div class="col-lg-3 col-md-3 col-sm-6">
-                      <input
-                        placeholder="Client Name"                        
-                        type="text"
-                        id="client_name"
-                        class="form-control form-control-sm"
-                        aria-describedby="client_name"
-                      />
-                    </div> -->
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                      <Dropdown
+                      v-model="filters.contract_category_id"
+                      :options="categories"
+                      optionLabel="title"
+                      optionValue="contract_category_id"
+                      placeholder="Select a Category"
+                      :filter="true"
+                      appendTo="self"
+                      class="p-inputtext-sm"
+                      filterPlaceholder="Find by Category Name"                      
+                    />
+                    </div>
                     <div class="col-lg-3 col-md-3 col-sm-12">
                       <button
                         type="button"
@@ -44,20 +49,7 @@
                         :disabled="saving"
                       >
                         Reset
-                      </button>
-                      <!-- <button
-                        style="margin-left:2px"
-                        type="button"
-                        class="btn btn-warning btn-sm "
-                        @click="filters.is_archive = !filters.is_archive"
-                        :disabled="saving"
-                      >
-                        {{
-                          filters.is_archive
-                            ? "Active Invoices"
-                            : "Archived Invoices"
-                        }}
-                      </button> -->
+                      </button>                      
                     </div>
                   </form>
                 </Transition>
@@ -68,7 +60,8 @@
                   <thead>
                     <tr>
                       <th>Category</th>
-                      <th>Title</th>                       
+                      <th>Title</th>
+                      <th>Attachment</th>                       
                       <th  class="text-end">Actions</th>
                     </tr>
                   </thead>
@@ -77,12 +70,45 @@
                       v-for="(contractAndAgreemnet, contract_and_agreemnet_index) in contractsAndAgreemnets"
                       :key="contract_and_agreemnet_index"
                     >
+                     
                       <td>
                          {{contractAndAgreemnet.contract_category_id}}
                       </td>
-                      <td>{{contractAndAgreemnet.title}}</td>                      
-                      <td class="text-end">                        
+                      <td>{{contractAndAgreemnet.title}}</td>   
+                      <td>
+                        <InvoiceThumb v-show="contractAndAgreemnet.attachment" folder_name="contracts-and-agreements" :base_url="base_url" :invoice="contractAndAgreemnet" />
+                        </td>                   
+                      <td class="text-end">
+
+                        <router-link
+                          class="btn btn-sm btn-success action-btn"
+                          :to="{
+                            name: 'edit-contract-and_agreement',
+                            params: { contract_agreement_id: contractAndAgreemnet.id },
+                          }"
+                          href="javascript:void"
+                          style="margin-left: 2px"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Edit"
+                        >
+                          Edit
+                        </router-link>
+                        
+                        
+                        <a
+                          class="btn btn-sm btn-danger action-btn"
+                          @click="deleteContactAndAgreement(contractAndAgreemnet.id, contract_and_agreemnet_index)"
+                          href="javascript:void"
+                          style="margin-left: 2px"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Delete"
+                        >
+                          Delete
+                        </a>
                       </td>
+                       
                     </tr>
                   </tbody>
                 </table>
@@ -103,14 +129,14 @@
 <script>
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
-import Editor from "primevue/editor";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import InvoiceThumb from "../invoices/InvoiceThumb.vue";
 
 export default {
   components: {
-    PageHeader,
-    Editor,   
+    PageHeader, 
+    InvoiceThumb
   },
   setup() {
     return {
@@ -119,7 +145,13 @@ export default {
   },
   data() {
     return {    
-      
+      categories: [
+        { contract_category_id: 1, title: 'Category-1' },
+        { contract_category_id: 2, title: 'Category-2' },
+        { contract_category_id: 3, title: 'Category-3' },
+        { contract_category_id: 4, title: 'Category-4' },
+        { contract_category_id: 5, title: 'Category-5' },
+      ],
       saving: false,
       route_obj: {
         name: "create-contract-and_agreement",
@@ -127,11 +159,7 @@ export default {
       header_button: true,
       header_button_text: "Create Contract and Agreement",
       base_url: process.env.VUE_APP_SERVICE_URL,      
-      filters: {
-        invoice_no: "",
-        client_name: "",
-        is_archive: "",
-      },
+      filters: {},
       isLoaded: false,
       contractsAndAgreemnets: [],
     };
@@ -156,7 +184,7 @@ export default {
       axios
         .get(url, {
           headers,
-        //   params: this.filters,
+          params: this.filters,
         })
         .then((response) => {    
             this.contractsAndAgreemnets = response.data.contracts_and_agreemnets;    
@@ -167,14 +195,45 @@ export default {
           console.log(error);
         });
     },
+    deleteContactAndAgreement(contract_agreeent_id,contract_and_agreemnet_index) {
+      if (confirm("Do you really want to delmete?")) {
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+
+        axios
+          .delete(this.base_url + "/api/contracts_and_agreements/" + contract_agreeent_id, {
+            headers,
+          })
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "Deleted Successfully!",
+                });                
+                this.contractsAndAgreemnets.splice(
+                  contract_and_agreemnet_index,
+                  1
+                ); //removing record from list/index after deleting record from DB
+              }
+            },
+            (error) => {
+              console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
+            }
+          );
+      }
+    },
     reset() {
       this.saving = true;
-      this.filters = {
-        invoice_no: "",
-        client_name: "",
-        is_archive: "",
-      };
-    //   this.getInvoices();
+      this.filters = {};
+      this.getContractAndAgreement();
       this.saving = false;
     },    
   },
@@ -184,7 +243,7 @@ export default {
       handler() {
         if (!this.awaitingSearch) {
           setTimeout(() => {
-            // this.getInvoices();
+            this.getContractAndAgreement();
             this.awaitingSearch = false;
           }, 1500); // 1 sec delay
         }

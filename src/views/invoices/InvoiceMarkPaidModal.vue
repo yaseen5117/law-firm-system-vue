@@ -70,7 +70,7 @@
 
             <div class="form-group mt-3 text-end" >
               <div class="col-lg-3 col-md-3 col-sm-12">
-                <InvoiceThumb :base_url="base_url" :invoice="invoice" />
+                <InvoiceThumb :base_url="base_url" folder_name="invoices" :invoice="invoice" />
               </div>
               <div class="col-lg-9 col-md-9 col-sm-12" style="float:right">
                 <button class="btn btn-success btn-sm" :disabled="saving">
