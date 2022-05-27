@@ -16,61 +16,104 @@
             <div class="row">
               <div class="col-12 mb-2">
                 <Transition name="fade">
-                  <form class="row gy-2 gx-3 align-items-center expense">
-                    <div class="col-lg-3 col-md-3 col-sm-6">
-                      <input
-                        type="text"
-                        id="invoice_no"
-                        v-model="filters.invoice_no"
-                        class="form-control form-control-sm"
-                        placeholder="Invoice Number"
-                        aria-describedby="invoice_no"
-                      />
-                    </div>
+                  <form>
+                    <div class="gy-2 gx-3 align-items-center expense">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-lg-3 col-md-3 col-sm-6">
+                            <Calendar
+                              class="p-calendar p-inputtext-sm"
+                              style="width: 100%"
+                              v-model="filters.start_to_end_date"
+                              selectionMode="range"
+                              dateFormat="dd/mm/yy"
+                              @date-select="Test"
+                              :manualInput="false"
+                            />
+                          </div>
+                          <div
+                            class="col-lg-2 col-md-2 col-sm-6"
+                            v-if="showDateType"
+                          >
+                            <select
+                              class="form-select"
+                              v-model="filters.date_type"
+                            >
+                              <option
+                                class="text-capitalize"
+                                v-for="date_type in date_types"
+                                :key="date_type.label"
+                                :value="date_type.label"
+                              >
+                                {{ date_type.title }}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="col-lg-2 col-md-2 col-sm-6">
+                            <input
+                              type="text"
+                              id="invoice_no"
+                              v-model="filters.invoice_no"
+                              class="form-control input-sm"
+                              placeholder="Invoice Number"
+                              aria-describedby="invoice_no"
+                            />
+                          </div>
 
-                    <div class="col-lg-3 col-md-3 col-sm-6">
-                      <input
-                        placeholder="Client Name"
-                        v-model="filters.client_name"
-                        type="text"
-                        id="client_name"
-                        class="form-control form-control-sm"
-                        aria-describedby="client_name"
-                      />
-                    </div>
-                    
-                    <div class="col-lg-3 col-md-3 col-sm-6">
-                      <Dropdown
-                      v-model="filters.invoice_status_id"
-                        :options="invoice_statuses"
-                        optionLabel="title"
-                        optionValue="id"
-                        placeholder="Status"
-                        :filter="true"
-                      />
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12">
-                      <button
-                        type="button"
-                        class="btn btn-danger btn-sm"
-                        @click="reset()"
-                        :disabled="saving"
-                      >
-                        Reset
-                      </button>
-                      <button
-                        style="margin-left:2px"
-                        type="button"
-                        class="btn btn-warning btn-sm "
-                        @click="filters.is_archive = !filters.is_archive"
-                        :disabled="saving"
-                      >
-                        {{
-                          filters.is_archive
-                            ? "Active Invoices"
-                            : "Archived Invoices"
-                        }}
-                      </button>
+                          <div class="col-lg-3 col-md-3 col-sm-6">
+                            <input
+                              placeholder="Client Name"
+                              v-model="filters.client_name"
+                              type="text"
+                              id="client_name"
+                              class="form-control input-sm"
+                              aria-describedby="client_name"
+                            />
+                          </div>
+                          <div class="col-lg-2 col-md-2 col-sm-6">
+                            <select
+                              class="form-select"
+                              v-model="filters.invoice_status_id"
+                            >
+                              <option
+                                class="text-capitalize"
+                                v-for="invoice_status in invoice_statuses"
+                                :key="invoice_status.id"
+                                :value="invoice_status.id"
+                              >
+                                {{ invoice_status.title }}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-lg-3 col-md-3 col-sm-12">
+                            <button
+                              type="button"
+                              class="btn btn-danger btn-sm"
+                              @click="reset()"
+                              :disabled="saving"
+                            >
+                              Reset
+                            </button>
+                            <button
+                              style="margin-left: 2px"
+                              type="button"
+                              class="btn btn-warning btn-sm"
+                              @click="filters.is_archive = !filters.is_archive"
+                              :disabled="saving"
+                            >
+                              {{
+                                filters.is_archive
+                                  ? "Active Invoices"
+                                  : "Archived Invoices"
+                              }}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </form>
                 </Transition>
@@ -78,95 +121,106 @@
               <div class="col-md-12">
                 <div class="table-responsive">
                   <table class="table table-striped" v-if="isLoaded">
-                  <thead>
-                    <tr>
-                      <th>Invoice</th>
-                      <th>Due Date</th>
-                      <th></th>
-                      <th  class="text-end">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      v-for="(invoice, invoice_index) in invoices"
-                      :key="invoice_index"
-                    >
-                      <td>
-                        <router-link
-                          style="color:black"
-                          :to="{
-                            name: 'edit-invoice',
-                            params: { invoice_id: invoice.id },
-                          }"
-                          href="javascript:void"
-                        >{{ invoice.invoice_no }}
-                        
-                        
-                        <small style="display: block" class="text-muted"
-                          >{{ invoice.client ? invoice.client.name : "" }}
-                          <span class="badge rounded-pill bg-primary">{{
-                            invoice.status ? invoice.status.title : "Draft"
-                          }}</span></small
-                        >
-                        <small>Created at:{{ invoice.created_at }}</small>
+                    <thead>
+                      <tr>
+                        <th>Invoice</th>
+                        <th>Due Date</th>
+                        <th></th>
+                        <th class="text-end">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="(invoice, invoice_index) in invoices"
+                        :key="invoice_index"
+                      >
+                        <td>
+                          <router-link
+                            style="color: black"
+                            :to="{
+                              name: 'edit-invoice',
+                              params: { invoice_id: invoice.id },
+                            }"
+                            href="javascript:void"
+                            >{{ invoice.invoice_no }}
 
-                        </router-link>
-                      </td>
+                            <small style="display: block" class="text-muted"
+                              >{{ invoice.client ? invoice.client.name : "" }}
+                              <span class="badge rounded-pill bg-primary">{{
+                                invoice.status ? invoice.status.title : "Draft"
+                              }}</span></small
+                            >
+                            <small>Created at:{{ invoice.created_at }}</small>
+                          </router-link>
+                        </td>
 
-                      <td>{{ invoice.due_date }}</td>
-                      <td>
-                        <button 
-                          v-show="invoice.invoice_status_id!=3" 
-                          @click="setupMarkPaid(invoice)" 
-                          type="button" 
-                          
-                          class="btn btn-sm btn-primary action-btn ">
-                          Mark as Paid
-                        </button>
-                        <button                             
-                            v-show="invoice.invoice_status_id==3"  
-                            type="button" 
-                            @click="openModal(invoice)" 
-                            class="btn btn-sm btn-success action-btn">
+                        <td>{{ invoice.due_date }}</td>
+                        <td>
+                          <button
+                            v-show="invoice.invoice_status_id != 3"
+                            @click="setupMarkPaid(invoice)"
+                            type="button"
+                            class="btn btn-sm btn-primary action-btn"
+                          >
+                            Mark as Paid
+                          </button>
+                          <button
+                            v-show="invoice.invoice_status_id == 3"
+                            type="button"
+                            @click="openModal(invoice)"
+                            class="btn btn-sm btn-success action-btn"
+                          >
                             Show Payment Details
                           </button>
 
-                          <InvoiceThumb v-show="invoice.attachment" folder_name="invoices"  :base_url="base_url" :invoice="invoice" />
-                      </td>
-                      <td class="text-end">
+                          <InvoiceThumb
+                            v-show="invoice.attachment"
+                            folder_name="invoices"
+                            :base_url="base_url"
+                            :invoice="invoice"
+                          />
+                        </td>
+                        <td class="text-end">
+                          <router-link
+                            class="btn btn-sm btn-success action-btn"
+                            :to="{
+                              name: 'edit-invoice',
+                              params: { invoice_id: invoice.id },
+                            }"
+                            href="javascript:void"
+                            style="margin-left: 2px"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Edit"
+                          >
+                            Edit
+                          </router-link>
+                          <a
+                            style="margin-left: 2px"
+                            class="btn btn-warning action-btn"
+                            :href="
+                              'https://api.elawfirmpk.com/download_pdf/' +
+                              invoice.id
+                            "
+                            download=""
+                            >Download</a
+                          >
 
-                        <router-link
-                          class="btn btn-sm btn-success action-btn"
-                          :to="{
-                            name: 'edit-invoice',
-                            params: { invoice_id: invoice.id },
-                          }"
-                          href="javascript:void"
-                          style="margin-left: 2px"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="top"
-                          title="Edit"
-                        >
-                          Edit
-                        </router-link>
-                        <a  style="margin-left: 2px" class="btn btn-warning action-btn" :href="'https://api.elawfirmpk.com/download_pdf/'+invoice.id" download="" >Download</a>
-                        
-                        
-                        <a
-                          class="btn btn-sm btn-danger action-btn"
-                          @click="deleteInvoice(invoice.id, invoice_index)"
-                          href="javascript:void"
-                          style="margin-left: 2px"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="top"
-                          title="Delete"
-                        >
-                          Delete
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                          <a
+                            class="btn btn-sm btn-danger action-btn"
+                            @click="deleteInvoice(invoice.id, invoice_index)"
+                            href="javascript:void"
+                            style="margin-left: 2px"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Delete"
+                          >
+                            Delete
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
                 <div v-if="!isLoaded" class="col-md-12">
                   <p class="alert alert-warning">Loading....</p>
@@ -177,14 +231,15 @@
         </BlockUI>
       </section>
     </main>
-    <invoice-mark-paid-modal 
-    v-model:visible="displayModal"  
-    @close-modal-event="closeModal"  
-    @afterSubmit="getInvoices()"
-    @closeModal="closeModal()"
-    :invoice="invoice" 
-    :excute="excute"   
-    title="Paid Invoice Dialog"/>
+    <invoice-mark-paid-modal
+      v-model:visible="displayModal"
+      @close-modal-event="closeModal"
+      @afterSubmit="getInvoices()"
+      @closeModal="closeModal()"
+      :invoice="invoice"
+      :excute="excute"
+      title="Paid Invoice Dialog"
+    />
     <!-- End #main -->
   </BlockUI>
 </template>
@@ -212,22 +267,40 @@ export default {
   },
   data() {
     return {
+      showDateType: false,
       excute: false,
       invoice_id: "",
       invoice_statuses: [
         {
-          id:1,
-          title:"Draft",
+          id: "",
+          title: "Select Status",
         },
         {
-          id:2,
-          title:"Sent",
+          id: 1,
+          title: "Draft",
         },
         {
-          id:3,
-          title:"Paid",
-        }
-
+          id: 2,
+          title: "Sent",
+        },
+        {
+          id: 3,
+          title: "Paid",
+        },
+      ],
+      date_types: [
+        {
+          label: "created_at",
+          title: "Created Date",
+        },
+        {
+          label: "due_date",
+          title: "Due Date",
+        },
+        {
+          label: "paid_date",
+          title: "Paid Date",
+        },
       ],
       invoice: {},
       displayModal: false,
@@ -243,6 +316,9 @@ export default {
         invoice_no: "",
         client_name: "",
         is_archive: "",
+        start_to_end_date: "",
+        date_type: "created_at",
+        invoice_status_id: "",
       },
       isLoaded: false,
     };
@@ -258,35 +334,42 @@ export default {
     this.getInvoices();
   },
   methods: {
-    setupMarkPaid(invoice){
-      if(!invoice.paid_amount){
+    Test(event) {
+      if (this.filters.start_to_end_date[1]) {
+        this.showDateType = true;
+      }
+    },
+    setupMarkPaid(invoice) {
+      if (!invoice.paid_amount) {
         invoice.paid_amount = invoice.amount;
       }
-      if(!invoice.paid_date){
+      if (!invoice.paid_date) {
         var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var dd = String(today.getDate()).padStart(2, "0");
+        var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
         var yyyy = today.getFullYear();
-        today = dd + '/' + mm + '/' + yyyy;
+        today = dd + "/" + mm + "/" + yyyy;
         invoice.paid_date = today;
       }
-      this.openModal(invoice)
+      this.openModal(invoice);
     },
-     openModal(invoice) {   
-       this.invoice = invoice;  
-       this.excute = true;      
-      this.displayModal = true;           
+    openModal(invoice) {
+      this.invoice = invoice;
+      this.excute = true;
+      this.displayModal = true;
     },
     closeModal() {
-            this.displayModal = false;
-        }, 
+      this.displayModal = false;
+    },
     reset() {
       this.saving = true;
       this.filters = {
         invoice_no: "",
         client_name: "",
         is_archive: "",
+        start_to_end_date: "",
       };
+      this.showDateType = false;
       this.getInvoices();
       this.saving = false;
     },
@@ -368,7 +451,7 @@ export default {
     downloadPdf(invoiceId) {
       // https://api.elawfirmpk.com/
       // let url = this.base_url + "/api/download_pdf/" + invoiceId;
-       let url = "https://api.elawfirmpk.com/download_pdf/"+ invoiceId;
+      let url = "https://api.elawfirmpk.com/download_pdf/" + invoiceId;
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };

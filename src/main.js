@@ -21,7 +21,7 @@ import BlockUI from 'primevue/blockui';
 import Sidebar from 'primevue/sidebar';
 import ConfirmationService from 'primevue/confirmationservice';
 import Dialog from 'primevue/dialog';
-import InputNumber from 'primevue/inputnumber';
+import InputNumber from 'primevue/inputnumber'; 
 
 
 
