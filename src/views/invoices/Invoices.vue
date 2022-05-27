@@ -29,6 +29,7 @@
                               dateFormat="dd/mm/yy"
                               @date-select="Test"
                               :manualInput="false"
+                              placeholder ="Select dates to filter"
                             />
                           </div>
                           <div
@@ -221,6 +222,9 @@
                       </tr>
                     </tbody>
                   </table>
+                  <Paginator v-show="pagination_info.total>0" v-model:first="pagination_info.from" v-model:rows="pagination_info.per_page" :totalRecords="pagination_info.total" @page="onPage($event)"></Paginator>
+
+              <p v-show="pagination_info.total>0"><small>Showing from {{pagination_info.from}} to {{pagination_info.to}} of {{pagination_info.total}}</small></p>
                 </div>
                 <div v-if="!isLoaded" class="col-md-12">
                   <p class="alert alert-warning">Loading....</p>
@@ -273,7 +277,7 @@ export default {
       invoice_statuses: [
         {
           id: "",
-          title: "Status",
+          title: "All",
         },
         {
           id: 1,
@@ -302,6 +306,7 @@ export default {
           title: "Paid Date",
         },
       ],
+      pagination_info: [],
       invoice: {},
       displayModal: false,
       saving: false,
@@ -334,6 +339,12 @@ export default {
     this.getInvoices();
   },
   methods: {
+
+    onPage(event) {
+      this.isLoaded = false;
+      var new_page_no = event.page+1; //adding 1 because event.page returns index of page # clicked.
+      this.filters.page=new_page_no;
+    },
     Test(event) {
       if (this.filters.start_to_end_date[1]) {
         this.showDateType = true;
@@ -382,7 +393,8 @@ export default {
       axios
         .get(url, { headers, params: this.filters })
         .then((response) => {
-          this.invoices = response.data.invoices;
+          this.invoices = response.data.invoices.data;
+          this.pagination_info = response.data.invoices;
           this.isLoaded = true;
         })
         .catch((error) => {
