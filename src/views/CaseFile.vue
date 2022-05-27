@@ -353,7 +353,9 @@ export default {
     },
 
     reset() {
-      this.filters = {};
+      this.filters = {
+        court_id:""
+      };
       this.getCaseFiles();
     },
   },
