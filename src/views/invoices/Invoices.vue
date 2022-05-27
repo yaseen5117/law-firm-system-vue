@@ -378,6 +378,7 @@ export default {
         invoice_no: "",
         client_name: "",
         is_archive: "",
+        invoice_status_id: "",
         start_to_end_date: "",
       };
       this.showDateType = false;
