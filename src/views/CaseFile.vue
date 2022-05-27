@@ -49,7 +49,7 @@
                   <div class="col-lg-2 col-md-2 col-sm-12 ">
                     <label for="">Court</label>
                     <select
-                      class="form-control form-control-sm"
+                      class="form-select form-select-sm"
                       v-model="filters.court_id"
                     >
                       <option value="">--All--</option>
