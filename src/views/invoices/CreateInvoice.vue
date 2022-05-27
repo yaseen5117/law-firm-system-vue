@@ -1,7 +1,11 @@
 <template>
-  <main id="main">  
-    <page-header :title="page_title" :petition="null"  :hideCaseFiles="true"
-        :showInvoices="true"/>
+  <main id="main">
+    <page-header
+      :title="page_title"
+      :petition="null"
+      :hideCaseFiles="true"
+      :showInvoices="true"
+    />
     <section id="services" class="services section-bg">
       <BlockUI
         :blocked="invoice"
@@ -38,13 +42,36 @@
               </div>
               <div class="row">
                 <div class="col-md-12 text-end">
-                  
-                  <a style="margin-right: 3px" v-if="this.$route.params.invoice_id" class="btn btn-sm btn-warning action-btn" :href="'https://api.elawfirmpk.com/download_pdf/'+invoice.id" download="" >Download PDF</a>
+                  <a
+                    style="margin-right: 3px"
+                    v-if="this.$route.params.invoice_id"
+                    class="btn btn-sm btn-warning action-btn"
+                    :href="
+                      'https://api.elawfirmpk.com/download_pdf/' + invoice.id
+                    "
+                    download=""
+                    >Download PDF</a
+                  >
                   <!-- <ConfirmPopup></ConfirmPopup> -->
-                  <button v-if="this.$route.params.invoice_id" v-show="invoice.invoice_status_id!=3"  @click="openModal(invoice)" type="button" class="btn btn-sm btn-primary action-btn">Mark as Paid</button>
+                  <button
+                    v-if="this.$route.params.invoice_id"
+                    v-show="invoice.invoice_status_id != 3"
+                    @click="openModal(invoice)"
+                    type="button"
+                    class="btn btn-sm btn-primary action-btn"
+                  >
+                    Mark as Paid
+                  </button>
 
-                  <button v-if="this.$route.params.invoice_id" @click="openModal(invoice)"  v-show="invoice.invoice_status_id==3"  type="button" class="btn btn-sm btn-success action-btn">Show Payment Details</button>
-                  
+                  <button
+                    v-if="this.$route.params.invoice_id"
+                    @click="openModal(invoice)"
+                    v-show="invoice.invoice_status_id == 3"
+                    type="button"
+                    class="btn btn-sm btn-success action-btn"
+                  >
+                    Show Payment Details
+                  </button>
                 </div>
               </div>
               <hr />
@@ -56,27 +83,29 @@
                       <div class="col-md-3">
                         <label for="">Select Client</label>
 
-                        <label class=""
+                        <label
+                          class=""
                           v-show="invoice.invoiceable_id"
                           style="margin-left: 5px"
                           for="edit_client"
                           data-bs-toggle="tooltip"
                           data-bs-placement="top"
                           title="Make changes to user's profile"
-                          ><input 
-                          :disabled="invoice.invoice_status_id==3"
+                          ><input
+                            :disabled="invoice.invoice_status_id == 3"
                             id="edit_client"
                             type="checkbox"
                             @change="
                               this.isDisabled = !this.isDisabled;
                               invoice.edit_client = !invoice.edit_client;
                             "
-                          /> <small>Edit client</small></label
+                          />
+                          <small>Edit client</small></label
                         >
                         <Dropdown
                           v-model="invoice.invoiceable_id"
                           :options="clients"
-                          :disabled="invoice.invoice_status_id==3"
+                          :disabled="invoice.invoice_status_id == 3"
                           optionLabel="label"
                           optionValue="value"
                           placeholder="Select a Client"
@@ -111,7 +140,7 @@
                           mask="99/99/9999"
                           placeholder="dd/mm/yyyy"
                           type="text"
-                          :disabled="invoice.invoice_status_id==3"
+                          :disabled="invoice.invoice_status_id == 3"
                           class="form-control"
                         />
                       </div>
@@ -120,7 +149,7 @@
                         <Dropdown
                           v-model="invoice.invoice_status_id"
                           :options="invoice_statuses"
-                          :disabled="invoice.invoice_status_id==3"
+                          :disabled="invoice.invoice_status_id == 3"
                           optionLabel="title"
                           optionValue="id"
                           placeholder="Invoice Status"
@@ -176,7 +205,11 @@
                     <div class="row">
                       <div class="col-md-3">
                         <label for="">Attention</label>
-                        <input :disabled="invoice.invoice_status_id==3" type="text" class="form-control" />
+                        <input
+                          :disabled="invoice.invoice_status_id == 3"
+                          type="text"
+                          class="form-control"
+                        />
                       </div>
                       <div class="col-md-9">
                         <label for="">CC</label>
@@ -198,35 +231,43 @@
               <div class="row">
                 <div class="col-md-12">
                   <p><strong>Professional Services</strong></p>
-                  </div>
+                </div>
                 <div class="col-md-8">
-                  <input
+                  <div class="form-group">
+                    <input
                       v-model="invoice.invoice_meta.services"
-                      :disabled="invoice.invoice_status_id==3"
+                      :disabled="invoice.invoice_status_id == 3"
                       class="form-control"
                     />
+                  </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="input-group">
-                          <span class="input-group-text">RS</span>
-                          <input
-                            v-model="invoice.amount"
-                            :disabled="invoice.invoice_status_id==3"
-                            type="number"
-                            min="0"
-                            class="form-control"
-                            placeholder="25000"
-                          />
-                        </div>
-                
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-text">RS</span>
+                      <input
+                        v-model="invoice.amount"
+                        :disabled="invoice.invoice_status_id == 3"
+                        type="number"
+                        min="0"
+                        class="form-control"
+                        placeholder="25000"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-2">
                   <label for="apply_tax"
-                    ><input type="checkbox" id="apply_tax" :disabled="invoice.invoice_status_id==3" v-model="invoice.apply_tax" /> Apply
-                    Tax</label
+                    ><input
+                      type="checkbox"
+                      id="apply_tax"
+                      :disabled="invoice.invoice_status_id == 3"
+                      v-model="invoice.apply_tax"
+                    />
+                    Apply Tax</label
                   >
                 </div>
 
@@ -260,7 +301,7 @@
                           type="text"
                           class="form-control"
                           v-model="invoice_expense.expense"
-                          :disabled="invoice.invoice_status_id==3"
+                          :disabled="invoice.invoice_status_id == 3"
                         />
                       </div>
                       <div class="col-md-4">
@@ -269,14 +310,14 @@
                           <span class="input-group-text">RS</span>
                           <input
                             v-model="invoice_expense.amount"
-                            :disabled="invoice.invoice_status_id==3"
+                            :disabled="invoice.invoice_status_id == 3"
                             type="number"
                             class="form-control"
                             placeholder="300"
                           />
                           <button
                             type="button"
-                            :disabled="invoice.invoice_status_id==3"
+                            :disabled="invoice.invoice_status_id == 3"
                             @click="
                               removeInvoiceExpenses(
                                 invoice.invoice_expenses,
@@ -291,7 +332,11 @@
                       </div>
                     </div>
                   </div>
-                  <button type="button" :disabled="invoice.invoice_status_id==3" @click="addInvoiceExpenses()">
+                  <button
+                    type="button"
+                    :disabled="invoice.invoice_status_id == 3"
+                    @click="addInvoiceExpenses()"
+                  >
                     <span class="fa fa-plus"></span> Add Expenses
                   </button>
                 </div>
@@ -305,10 +350,10 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <label 
+                  <label
                     ><input
                       type="checkbox"
-                      :disabled="invoice.invoice_status_id==3"
+                      :disabled="invoice.invoice_status_id == 3"
                       @click="isShowEmailContent = !isShowEmailContent"
                       v-model="invoice.sendEmail"
                     />
@@ -328,7 +373,7 @@
                       />
                     </strong>
                   </p>
-                  
+
                   <Editor
                     v-model="invoice.invoice_meta.content"
                     editorStyle="height: 320px"
@@ -364,7 +409,7 @@
                     <strong>Total: </strong>{{ total_amount }}
                   </p>
                   <button
-                    :disabled="invoice.invoice_status_id==3 || saving"                     
+                    :disabled="invoice.invoice_status_id == 3 || saving"
                     style="float: right"
                     class="btn btn-success btn-sm"
                   >
@@ -378,13 +423,14 @@
       </div>
     </section>
   </main>
-    <invoice-mark-paid-modal 
-    v-model:visible="displayModal" 
-    @close-modal-event="closeModal"  
+  <invoice-mark-paid-modal
+    v-model:visible="displayModal"
+    @close-modal-event="closeModal"
     @afterSubmit="getInvoice()"
     @closeModal="closeModal()"
     :invoice="invoice"
-    title="Paid Invoice Dialog"/>
+    title="Paid Invoice Dialog"
+  />
   <!-- End #main -->
 </template>
     
@@ -394,13 +440,10 @@ import PageHeader from "../shared/PageHeader.vue";
 import Editor from "primevue/editor";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
-import OverlayPanel from 'primevue/overlaypanel';
-import ConfirmPopup from 'primevue/confirmpopup';
-import ConfirmDialog from 'primevue/confirmdialog';
+import OverlayPanel from "primevue/overlaypanel";
+import ConfirmPopup from "primevue/confirmpopup";
+import ConfirmDialog from "primevue/confirmdialog";
 import InvoiceMarkPaidModal from "./InvoiceMarkPaidModal.vue";
-
-
-
 
 export default {
   components: {
@@ -447,7 +490,7 @@ export default {
       isDisabled: true,
       isShowEmailContent: false,
       contact_persons_name: [],
-      displayModal: false,         
+      displayModal: false,
     };
   },
   watch: {
@@ -487,48 +530,47 @@ export default {
     this.getInvoice();
   },
   methods: {
-    
-    openModal(invoice_id) {  
-      this.invoice_id = invoice_id;        
-      this.displayModal = true;           
+    openModal(invoice_id) {
+      this.invoice_id = invoice_id;
+      this.displayModal = true;
     },
     closeModal() {
-            this.displayModal = false;
-        }, 
-    markInvoicePaid(){
+      this.displayModal = false;
+    },
+    markInvoicePaid() {
       var headers = {
-          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
 
-        axios
-          .post(this.base_url + "/api/invoices/mark_paid", this.invoice, {
-            headers,
-          })
-          .then(
-            (response) => {
-              if (response.status === 200) {
-                this.$notify({
-                  type: "success",
-                  title: "Success",
-                  text: "Paid Successfully!",
-                });
-                //this.$router.push({ path: "/invoices" });
-              }
-              console.log(response);
-              this.saving = false;
-              this.invoice.invoice_status_id = 3;
-              this.invoice.paid_date = response.data.paid_at;
-            },
-            (error) => {
-              this.saving = false;
-              console.log(error);
+      axios
+        .post(this.base_url + "/api/invoices/mark_paid", this.invoice, {
+          headers,
+        })
+        .then(
+          (response) => {
+            if (response.status === 200) {
               this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error,
+                type: "success",
+                title: "Success",
+                text: "Paid Successfully!",
               });
+              //this.$router.push({ path: "/invoices" });
             }
-          );
+            console.log(response);
+            this.saving = false;
+            this.invoice.invoice_status_id = 3;
+            this.invoice.paid_date = response.data.paid_at;
+          },
+          (error) => {
+            this.saving = false;
+            console.log(error);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error,
+            });
+          }
+        );
     },
     showTemplates(event) {
       this.$refs.op.toggle(event);
@@ -537,9 +579,7 @@ export default {
       var content = invoice_template.content
         .split("[total_amount]")
         .join(this.total_amount);
-      content = content
-        .split("[due_date]")
-        .join(this.invoice.due_date);
+      content = content.split("[due_date]").join(this.invoice.due_date);
       this.invoice.invoice_meta.content = content
         .split("[client_name]")
         .join(this.invoice.selectedClient.name);
@@ -649,7 +689,7 @@ export default {
     onChange(event) {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-      };      
+      };
       let url = this.base_url + "/api/users/" + event.value;
       axios
         .get(url, { headers })
@@ -724,10 +764,10 @@ export default {
           .then((response) => {
             // console.log('success');
             // console.log(response.data.invoice.client);
-            this.invoice = response.data.invoice;            
+            this.invoice = response.data.invoice;
             this.invoice.selectedClient = response.data.invoice.client;
             this.invoice.invoice_meta = response.data.invoice.invoice_meta;
-            if(!this.invoice.paid_amount){
+            if (!this.invoice.paid_amount) {
               this.invoice.paid_amount = this.invoice.amount;
             }
 
