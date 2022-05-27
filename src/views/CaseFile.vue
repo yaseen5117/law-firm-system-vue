@@ -109,6 +109,7 @@
                     </button> -->
                     
                     <button
+                    type="button"
                       class="btn btn-warning btn-sm mr-md-2"
                       style="margin-left: 2px"
                       @click="filters.archived = !filters.archived;"
@@ -225,6 +226,11 @@
               <div v-if="!isLoaded" class="col-md-12">
                 <p class="alert alert-warning">Loading....</p>
               </div>
+
+              <Paginator v-show="isLoaded && petitions_pagination_info.total>0" v-model:first="petitions_pagination_info.from" v-model:rows="petitions_pagination_info.per_page" :totalRecords="petitions_pagination_info.total" @page="onPage($event)"></Paginator>
+
+              <p v-show="isLoaded && petitions_pagination_info.total>0"><small>Showing from {{petitions_pagination_info.from}} to {{petitions_pagination_info.to}} of {{petitions_pagination_info.total}}</small></p>
+
             </div>
           </div>
         </div>
@@ -254,6 +260,7 @@ export default {
       header_button: true,
       header_button_text: "New Case",
       base_url: process.env.VUE_APP_SERVICE_URL,
+      petitions_pagination_info: Array,
       petitions: Array,
       filters: {
         court_id: "",
@@ -270,6 +277,19 @@ export default {
   },
   computed: mapState(["user"]),
   methods: {
+
+    onPage(event) {
+      this.isLoaded = false;
+      var new_page_no = event.page+1; //adding 1 because event.page returns index of page # clicked.
+      this.filters = {
+        page:new_page_no
+      };
+
+      //event.page: New page number
+        //event.first: Index of first record
+        //event.rows: Number of rows to display in new page
+        //event.pageCount: Total number of pages
+    },
     getCourts() {
       let url = this.base_url + "/api/courts";
       axios
@@ -297,7 +317,8 @@ export default {
           params: this.filters,
         })
         .then((response) => {
-          this.petitions = response.data.petitions;
+          this.petitions = response.data.petitions.data;
+          this.petitions_pagination_info = response.data.petitions;
           console.log(this.petitions);
           this.isLoaded = true;
         })
@@ -347,7 +368,7 @@ export default {
           setTimeout(() => {
             this.getCaseFiles();
             this.awaitingSearch = false;
-          }, 1500); // 1 sec delay
+          }, 800); // 1 sec delay
         }
         this.awaitingSearch = true;
       },

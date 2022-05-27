@@ -54,6 +54,7 @@ export default createStore({
         console.log("Loged in user load from Database -->", response.data);
         commit('authUser', response.data);
       }).catch(error=>{
+        localStorage.removeItem("lfms_user");
         commit('authUser', null);
       })
           

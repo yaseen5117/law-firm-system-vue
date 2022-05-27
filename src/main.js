@@ -22,6 +22,7 @@ import Sidebar from 'primevue/sidebar';
 import ConfirmationService from 'primevue/confirmationservice';
 import Dialog from 'primevue/dialog';
 import InputNumber from 'primevue/inputnumber'; 
+import Paginator from 'primevue/paginator';
 
 
 
@@ -37,6 +38,7 @@ createApp(App)
 .use('file-upload', VueUploadComponent)
 .directive('tooltip', Tooltip)
 .component('AutoComplete',AutoComplete)
+.component('Paginator',Paginator)
 .component('Image',Image)
 .component('Dropdown',Dropdown)
 .component('datepicker',Datepicker)
