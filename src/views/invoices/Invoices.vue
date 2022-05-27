@@ -20,7 +20,7 @@
                     <div class="gy-2 gx-3 align-items-center expense">
                       <div class="form-group">
                         <div class="row">
-                          <div class="col-lg-3 col-md-3 col-sm-6">
+                          <div class="col-lg-3 col-md-3 col-sm-6 padding">
                             <Calendar
                               class="p-calendar p-inputtext-sm"
                               style="width: 100%"
@@ -32,7 +32,7 @@
                             />
                           </div>
                           <div
-                            class="col-lg-2 col-md-2 col-sm-6"
+                            class="col-lg-2 col-md-2 col-sm-6 padding"
                             v-if="showDateType"
                           >
                             <select
@@ -49,7 +49,7 @@
                               </option>
                             </select>
                           </div>
-                          <div class="col-lg-2 col-md-2 col-sm-6">
+                          <div class="col-lg-2 col-md-2 col-sm-6 padding">
                             <input
                               type="text"
                               id="invoice_no"
@@ -60,7 +60,7 @@
                             />
                           </div>
 
-                          <div class="col-lg-3 col-md-3 col-sm-6">
+                          <div class="col-lg-3 col-md-3 col-sm-6 padding">
                             <input
                               placeholder="Client Name"
                               v-model="filters.client_name"
@@ -70,7 +70,7 @@
                               aria-describedby="client_name"
                             />
                           </div>
-                          <div class="col-lg-2 col-md-2 col-sm-6">
+                          <div class="col-lg-2 col-md-2 col-sm-6 padding">
                             <select
                               class="form-select"
                               v-model="filters.invoice_status_id"
