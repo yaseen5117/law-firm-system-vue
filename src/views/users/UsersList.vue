@@ -400,7 +400,7 @@ export default {
     reset() {
       this.filters = {
         role_id: "",
-        is_approved: "",
+        is_approved: 2,
       };
       this.getUsers();
     },
