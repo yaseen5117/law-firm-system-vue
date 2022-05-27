@@ -38,12 +38,11 @@
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-12">
                   <select
-                    class="form-control form-control-sm"
+                    class="form-select form-select-sm"
                     aria-describedby="Role"
                     v-model="filters.role_id"
                   >
                     <option value="">--Roles--</option>
-
                     <option
                       class="text-capitalize"
                       v-for="role in roles"
@@ -56,7 +55,7 @@
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-12">                 
                   <select
-                    class="form-control form-control-sm"
+                    class="form-select form-select-sm"
                     aria-describedby="Role"
                     v-model="filters.is_approved"
                   >
@@ -225,6 +224,9 @@
                   </tr>
                 </tbody>
               </table>
+              <Paginator v-show="pagination_info.total>0" v-model:first="pagination_info.from" v-model:rows="pagination_info.per_page" :totalRecords="pagination_info.total" @page="onPage($event)"></Paginator>
+
+              <p v-show="pagination_info.total>0"><small>Showing from {{pagination_info.from}} to {{pagination_info.to}} of {{pagination_info.total}}</small></p>
             </div>
           </div>
         </div>
@@ -253,6 +255,7 @@ export default {
       header_button_text: "New User",
       base_url: process.env.VUE_APP_SERVICE_URL,
       users: [],
+      pagination_info: [],
       roles: [],
       id: this.$route.params.id, //this is the id from the browser
       new_petition_index: {},
@@ -260,7 +263,7 @@ export default {
       showSearchForm: true,
       filters: {
         role_id: "",
-        is_approved: "0",
+        is_approved: 2,
       },
       statuses: 
       [
@@ -274,7 +277,7 @@ export default {
           name: 'Approved'
         },
         {
-          id: "0",
+          id: 0,
           name: 'Pending Approval'
         },
                 
@@ -289,7 +292,16 @@ export default {
       user.is_approved = param;
       this.editUser(user);
     },
+    onPage(event) {
+      this.isLoaded = false;
+      var new_page_no = event.page+1; //adding 1 because event.page returns index of page # clicked.
+      this.filters.page=new_page_no;
 
+      //event.page: New page number
+        //event.first: Index of first record
+        //event.rows: Number of rows to display in new page
+        //event.pageCount: Total number of pages
+    },
     getUsers() {
       this.blockPanel = true;
       let url = this.base_url + "/api/users";
@@ -303,7 +315,8 @@ export default {
         })
         .then((response) => {
           this.blockPanel = false;
-          this.users = response.data.users;
+          this.users = response.data.users.data;
+          this.pagination_info = response.data.users;
           this.roles = response.data.roles;
         })
         .catch((error) => {

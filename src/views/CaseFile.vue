@@ -281,9 +281,9 @@ export default {
     onPage(event) {
       this.isLoaded = false;
       var new_page_no = event.page+1; //adding 1 because event.page returns index of page # clicked.
-      this.filters = {
-        page:new_page_no
-      };
+      
+
+      this.filters.page=new_page_no;
 
       //event.page: New page number
         //event.first: Index of first record
