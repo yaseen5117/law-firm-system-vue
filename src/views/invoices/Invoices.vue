@@ -273,7 +273,7 @@ export default {
       invoice_statuses: [
         {
           id: "",
-          title: "Select Status",
+          title: "Status",
         },
         {
           id: 1,
