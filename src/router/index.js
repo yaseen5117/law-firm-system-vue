@@ -49,6 +49,9 @@ import Invoices from '../views/invoices/Invoices'
 
 import ContractAndAgreementIndex from '../views/contract-and-agreement/ContractAndAgreementIndex'
 import ContractAndAgreementCreateUpdate from '../views/contract-and-agreement/CreateUpdate'
+import CreateUpdateLink from '../views/Links/CreateUpdateLink'
+import LinkIndex from '../views/Links/LinkIndex'
+
 
 const routes = [
   {
@@ -430,6 +433,33 @@ const routes = [
     },
   },
   //Contracts and Agreements
+
+  //Links
+  {
+    path: '/links',
+    name: 'links',
+    component: LinkIndex,
+    meta: { 
+      auth: true ,
+    },
+  },
+  {
+    path: '/create-link',
+    name: 'create-link',    
+    component: CreateUpdateLink,
+    meta: { 
+      auth: true ,
+    },
+  },
+  {
+    path: '/link/edit/:link_id',
+    name: 'edit-link',       
+    component: CreateUpdateLink,
+    meta: { 
+      auth: true ,
+    },
+  },
+  //Links
 
 ]
 
