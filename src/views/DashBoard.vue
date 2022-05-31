@@ -53,7 +53,7 @@
             </div>
           </div>
 
-          <div @click="gotoLink('contract-and-agreement')" v-if="this.user.is_admin" class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+          <div @click="gotoLink('contract-and-agreement')" v-if="this.user.is_admin" class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
             <div class="icon-box iconbox-yellow border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -119,7 +119,7 @@
             </div>
           </div>
 
-          <div  v-if="this.user.is_admin" class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
+          <div @click="gotoLink('links')" v-if="this.user.is_admin" class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
             <div class="icon-box iconbox-orange border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -127,7 +127,7 @@
                 </svg>
                 <i class="bx bx-file"></i>
               </div>
-              <h4><a href="">Others</a></h4>
+              <h4><router-link to="links">Others</router-link></h4>
               <p>Contains all Details of Others sections. Click to Open all Details.</p>
             </div>
           </div>
