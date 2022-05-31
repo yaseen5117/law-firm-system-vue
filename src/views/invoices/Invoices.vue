@@ -120,11 +120,17 @@
                 </Transition>
               </div>
               <div class="col-md-12">
+                <div class="invoices_stats text-end">
+                  <p><strong>Total: </strong>Rs: {{ invoices_stats.total }}/-</p>
+                  <p><strong>Total Paid: </strong>Rs: {{ invoices_stats.total_paid }}/-</p>
+                  <p><strong>Total Due: </strong>Rs: {{ invoices_stats.total_due }}/-</p>
+                </div>
                 <div class="table-responsive">
                   <table class="table table-striped" v-if="isLoaded">
                     <thead>
                       <tr>
                         <th>Invoice</th>
+                        <th>Amount</th>
                         <th>Due Date</th>
                         <th></th>
                         <th class="text-end">Actions</th>
@@ -143,7 +149,7 @@
                               params: { invoice_id: invoice.id },
                             }"
                             href="javascript:void"
-                            >{{ invoice.invoice_no }}
+                            >{{ invoice.invoice_no }} 
 
                             <small style="display: block" class="text-muted"
                               >{{ invoice.client ? invoice.client.name : "" }}
@@ -155,6 +161,7 @@
                           </router-link>
                         </td>
 
+                        <td>Rs: {{ invoice.amount }}/-</td>
                         <td>{{ invoice.due_date }}</td>
                         <td>
                           <button
@@ -230,6 +237,24 @@
               <p v-show="pagination_info.total>0"><small>Showing from {{pagination_info.from}} to {{pagination_info.to}} of {{pagination_info.total}}</small></p>
                 </div>
                 
+                  
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-3">
+                  <p v-show="pagination_info.total>0"><small>Showing from {{pagination_info.from}} to {{pagination_info.to}} of {{pagination_info.total}}</small></p>
+                </div>
+                <div class="col-md-6">
+                  <Paginator v-show="pagination_info.total>0" v-model:first="pagination_info.from" v-model:rows="pagination_info.per_page" :totalRecords="pagination_info.total" @page="onPage($event)"></Paginator>
+                </div>
+                <div class="col-md-12">
+
+                  <div v-if="!isLoaded" class="col-md-12">
+                    <p class="alert alert-warning">Loading....</p>
+                  </div>
+                </div>
+                </div>
               </div>
             </div>
           </div>
@@ -275,6 +300,7 @@ export default {
       showDateType: false,
       excute: false,
       invoice_id: "",
+      invoices_stats: {},
       invoice_statuses: [
         {
           id: "",
@@ -338,6 +364,8 @@ export default {
   },
   created() {
     this.getInvoices();
+    this.getInvoicesStats();
+    
   },
   methods: {
 
@@ -371,6 +399,7 @@ export default {
       this.displayModal = true;
     },
     closeModal() {
+      this.getInvoices()
       this.displayModal = false;
     },
     reset() {
@@ -396,6 +425,7 @@ export default {
         .then((response) => {
           this.invoices = response.data.invoices.data;
           this.pagination_info = response.data.invoices;
+          //this.invoices_stats = response.data.invoices_stats;
           this.isLoaded = true;
         })
         .catch((error) => {
@@ -404,6 +434,23 @@ export default {
             title: "Something went wrong!",
             text: error.response.data.error,
           });
+        });
+    },
+    getInvoicesStats() {
+      //*********************************************************************/
+      //not calling it any more because managing stats in getInvoices function//
+      //*********************************************************************/
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      let url = this.base_url + "/api/invoices/stats";
+      axios
+        .get(url, { headers, params: this.filters })
+        .then((response) => {
+          this.invoices_stats = response.data.invoices_stats;
+          
+        })
+        .catch((error) => {
         });
     },
     onChange(event) {

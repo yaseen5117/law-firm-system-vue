@@ -15,7 +15,7 @@
               }"
               id="petition"
             >
-              Petitions
+              Petition
             </router-link>
           </li>
           <li class="nav-item" role="">

@@ -334,6 +334,7 @@
     <page-number-side-bar :petition_index_details="petition_index_details" />
     <annexure-right-side-bar
       :petition_index="petition_index"
+      :petition="petition"
       url="petition-index-details"
     />
   </main>
