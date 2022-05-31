@@ -1697,3 +1697,8 @@ label{
 .row .padding{
   padding-top: 5px;
 }
+
+.invoices_stats{
+  font-size: 11px;
+  line-height: 1px;
+}
