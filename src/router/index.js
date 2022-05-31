@@ -51,6 +51,7 @@ import ContractAndAgreementIndex from '../views/contract-and-agreement/ContractA
 import ContractAndAgreementCreateUpdate from '../views/contract-and-agreement/CreateUpdate'
 import CreateUpdateLink from '../views/Links/CreateUpdateLink'
 import LinkIndex from '../views/Links/LinkIndex'
+import GeneralSettings from '../views/settings/GeneralSettings'
 
 
 const routes = [
@@ -461,6 +462,16 @@ const routes = [
   },
   //Links
 
+  //General settings
+  {
+    path: '/settings',
+    name: 'settings',
+    component: GeneralSettings,
+    meta: { 
+      auth: true ,
+    },
+  },
+  //General settings
 ]
 
 const router = createRouter({

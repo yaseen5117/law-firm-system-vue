@@ -222,13 +222,14 @@
                       </tr>
                     </tbody>
                   </table>
+                  <div v-if="!isLoaded" class="col-md-12">
+                  <p class="alert alert-warning">Loading....</p>
+                </div>
                   <Paginator v-show="pagination_info.total>0" v-model:first="pagination_info.from" v-model:rows="pagination_info.per_page" :totalRecords="pagination_info.total" @page="onPage($event)"></Paginator>
 
               <p v-show="pagination_info.total>0"><small>Showing from {{pagination_info.from}} to {{pagination_info.to}} of {{pagination_info.total}}</small></p>
                 </div>
-                <div v-if="!isLoaded" class="col-md-12">
-                  <p class="alert alert-warning">Loading....</p>
-                </div>
+                
               </div>
             </div>
           </div>
@@ -381,8 +382,7 @@ export default {
         invoice_status_id: "",
         start_to_end_date: "",
       };
-      this.showDateType = false;
-      this.getInvoices();
+      this.showDateType = false;      
       this.saving = false;
     },
     getInvoices() {

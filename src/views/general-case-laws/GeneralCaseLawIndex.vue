@@ -1,8 +1,10 @@
 <template>
+<BlockUI :blocked="!isLoaded" :fullScreen="true">
   <main id="main" class="margintop85">  
       <page-header :title="page_title" :hideBreadCrumbs="true" />       
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg mt-3">
+      <BlockUI :blocked="general_case_laws" :fullScreen="true">
       <div class="container" data-aos="fade-up">
         <div class="row">   
           <!-- search filters -->
@@ -53,7 +55,7 @@
             </div>             
           <div class="table-responsive">
             <div class="col-lg-12 col-md-12 col-sm-12">
-              <table class="table table-striped">
+              <table class="table table-striped" v-if="isLoaded">
                 <thead>
                   <th>Case Title</th>
                   <th>Citation</th>
@@ -246,13 +248,18 @@
                 </tbody>
               </table>
             </div>
+             <div v-if="!isLoaded" class="col-md-12">
+                  <p class="alert alert-warning">Loading....</p>
+                </div>
           </div>
         </div>
       </div>
+      </BlockUI>
     </section>
     <!-- End Services Section -->
   </main>
   <!-- End #main -->
+</BlockUI>
 </template>
 
 <script>
@@ -282,6 +289,7 @@ export default {
       filters: {}, 
       defaultDocumentDiscriptions:["Power of Attorney","Writ Petition along with Affidavit","Application for stay cm","Application for Exemption"],
       filteredCaseTitle: null,
+      isLoaded: false,
     };
   },
   validations() {
@@ -298,7 +306,7 @@ export default {
       handler() {
         if (!this.awaitingSearch) {
             setTimeout(() => {
-              this.getCaseFiles();
+              this.getGeneralCaseLaws();
               this.awaitingSearch = false;
             }, 1500); // 1 sec delay
           }
@@ -324,10 +332,10 @@ export default {
       }, 250);
     }, 
     reset() {
-      this.filters = {};
-      this.getGeneralCaseLaws();
+      this.filters = {};       
     },
     getGeneralCaseLaws() {
+      this.isLoaded = false;
        var headers = {
           Authorization:
             `Bearer ` + localStorage.getItem("lfms_user"),
@@ -344,6 +352,7 @@ export default {
           this.general_case_laws = response.data.general_case_Laws;
           console.log(response.data.page_title);
           console.log(response.data.general_case_Laws);
+          this.isLoaded = true;
         })
         .catch((error) => {
           console.log(error);

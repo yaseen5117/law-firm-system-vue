@@ -21,7 +21,8 @@
                       <tr>
                         <th>Title</th>
                         <th>Url</th>   
-                        <th>Description</th>                     
+                        <th>Description</th>   
+                        <th>Display Order</th>                  
                         <th class="text-end">Actions</th>
                       </tr>
                     </thead>
@@ -34,8 +35,13 @@
                            {{link.title}}
                         </td>
 
-                        <td>{{ link.url }}</td>
+                        <td>
+                          <a :href="link.url" target="_blank">
+                            {{ link.url }}
+                          </a>
+                          </td>
                         <td>{{link.description}}</td>
+                        <td>{{link.display_order}}</td>
                         <td class="text-end">
                           <router-link
                             class="btn btn-sm btn-success action-btn"

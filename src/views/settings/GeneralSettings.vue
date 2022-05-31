@@ -4,61 +4,47 @@
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="row">
-          <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="col-lg-4 col-md-4 col-sm-12">
             <form @submit.prevent="submitForm($event)">
               <div class="form-group row">
                 <div class="col-sm-12">
                   <label for="">
-                    Title
+                    Site Name
                     <input
-                      v-model="linkData.title"
+                      v-model="setting.site_name"
                       type="text"
                       class="form-control"
-                      id=""
-                      @blur="v$.linkData.title.$touch"
-                      v-bind:class="{
-                        'error-boarder': v$.linkData.title.$error,
-                      }"
+                      id=""                     
                     />
-                    <span v-if="v$.linkData.title.$error" class="errorMessage"
-                      >Title field is required.</span
-                    >
                   </label>
                 </div>
               </div>
               <div class="form-group row">
                 <div class="col-sm-12">
                   <label for="">
-                    URL <span style="font-size: 12px; color: red">(Note: Sample URL: https://en.wikipedia.org/wiki/Main_Page)</span>
+                    Site Email 
                     <input
-                      v-model="linkData.url"
+                      v-model="setting.site_email"
                       type="text"
                       class="form-control"
                       id=""
-                      @blur="v$.linkData.url.$touch"
-                      v-bind:class="{
-                        'error-boarder': v$.linkData.url.$error,
-                      }"
-                    />
-                    <span v-if="v$.linkData.url.$error" class="errorMessage"
-                      >URL field is required.</span
-                    >
+                     />
                   </label>
                 </div>
-              </div>
-              <div class="form-group row">
+              </div>          
+               <div class="form-group row">
                 <div class="col-sm-12">
                   <label for="">
-                    Description
-                    <textarea
-                      v-model="linkData.description"
+                    Site Phone 
+                    <input
+                      v-model="setting.site_phone"
                       type="text"
                       class="form-control"
-                      rows="4"
-                    />
+                      id=""
+                     />
                   </label>
                 </div>
-              </div>
+              </div>   
               <div class="form-group row">
                 <div class="col-sm-2">
                   <button :disabled="saving" class="btn btn-success btn-sm">
@@ -79,14 +65,12 @@
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
 import useVuelidate from "@vuelidate/core";
-import { required, email, helpers } from "@vuelidate/validators";
-import Multiselect from "@vueform/multiselect";
-import { formatDate } from "@fullcalendar/common";
+import { required, email, helpers } from "@vuelidate/validators"; 
+ 
 
 export default {
   components: {
-    PageHeader,
-    Multiselect,
+    PageHeader,   
   },
   setup() {
     return {
@@ -96,35 +80,28 @@ export default {
   data() {
     return {
       saving: false,
-      page_title: this.$route.params.link_id ? "Edit Link" : "Add New Link",
-      button_title: this.$route.params.link_id ? "Update" : "Save",
+      page_title: "General Settings",
+      button_title: "Save",
       base_url: process.env.VUE_APP_SERVICE_URL,
-      linkData: {},
+      setting: {},
     };
   },
-  validations() {
-    return {
-      linkData: {
-        title: { required },
-        url: { required },
-      },
-    };
-  },
+ 
   created() {
-    this.getLink();
+    this.getGeneralSettings();
   },
-  activated() {},
+ 
   methods: {
-    getLink() {
-      if (this.$route.params.link_id) {
+    getGeneralSettings() {
+      if (true) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
-        let url = this.base_url + "/api/links/" + this.$route.params.link_id;
+        let url = this.base_url + "/api/settings";
         axios
           .get(url, { headers })
           .then((response) => {
-            this.linkData = response.data.link;
+            this.setting = response.data.setting;
           })
           .catch((error) => {
             this.$notify({
@@ -136,8 +113,8 @@ export default {
       }
     },
     submitForm: function (event) {
-      this.v$.$validate();
-      if (!this.v$.$error) {
+       
+      if (true) {
         event.preventDefault();
 
         this.saving = true;
@@ -146,7 +123,7 @@ export default {
         };
 
         axios
-          .post(this.base_url + "/api/links", this.linkData, {
+          .post(this.base_url + "/api/settings", this.setting, {
             headers,
           })
           .then(
@@ -157,7 +134,7 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
-                this.$router.push({ path: "/links" });
+                this.$router.push({ path: "/settings" });
               }
               console.log(response);
               this.saving = false;

@@ -396,8 +396,7 @@ export default {
       this.filters = {
         role_id: "",
         is_approved: 2,
-      };
-      this.getUsers();
+      };      
     },
   },
   mounted() {

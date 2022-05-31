@@ -17,7 +17,7 @@
                       v-model="contract_and_agreement.contract_category_id"
                       :options="categories"
                       optionLabel="title"
-                      optionValue="contract_category_id"
+                      optionValue="id"
                       placeholder="Select a Category"
                       :filter="true"
                       appendTo="self"
@@ -92,13 +92,7 @@ export default {
   },
   data() {
     return {
-      categories: [
-        { contract_category_id: 1, title: "Category-1" },
-        { contract_category_id: 2, title: "Category-2" },
-        { contract_category_id: 3, title: "Category-3" },
-        { contract_category_id: 4, title: "Category-4" },
-        { contract_category_id: 5, title: "Category-5" },
-      ],
+      categories: [],
       saving: false,
       page_title: this.$route.params.contract_agreement_id
         ? "Edit Contract / Agreement"
@@ -120,6 +114,7 @@ export default {
   },
   created() {
     this.getContractAndAgreement();
+    this.getContractCategories();
   },
   activated() {},
   methods: {
@@ -204,6 +199,30 @@ export default {
           });
       }
     },
+    getContractCategories(){
+      if (true) {
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+
+        var url =
+          this.base_url + "/api/contract_categories"
+          
+        axios
+          .get(url, { headers })
+          .then((response) => {
+            this.categories = response.data.categories;
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error,
+            });
+          });
+      }
+    }
   },
 };
 </script>
