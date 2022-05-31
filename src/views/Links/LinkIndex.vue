@@ -5,7 +5,7 @@
         :title="'Links'"
         :petition="null"
         :hideCaseFiles="true"
-        :showInvoices="true"
+        :showInvoices="false"
         :route_object="route_obj"
         :header_button="header_button"
         :header_button_text="header_button_text"
