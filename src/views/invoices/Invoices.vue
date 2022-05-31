@@ -356,6 +356,7 @@ export default {
   },
   created() {
     this.getInvoices();
+    this.getInvoicesStats();
     
   },
   methods: {
@@ -417,7 +418,7 @@ export default {
         .then((response) => {
           this.invoices = response.data.invoices.data;
           this.pagination_info = response.data.invoices;
-          this.invoices_stats = response.data.invoices_stats;
+          //this.invoices_stats = response.data.invoices_stats;
           this.isLoaded = true;
         })
         .catch((error) => {
