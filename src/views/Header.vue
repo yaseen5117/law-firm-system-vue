@@ -3,10 +3,10 @@
   <header id="header" class="fixed-top">
   
     <div class="container d-flex align-items-center justify-content-between">
-      <h1 class="logo"><router-link to="/">E Law Firm</router-link></h1>
+      <h1 class="logo"><router-link to="/">{{this.globalGeneralSetting.site_name}}</router-link></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-
+ 
       <nav id="navbar" class="navbar">
         <ul>
           <li v-show="!this.user">
@@ -74,6 +74,7 @@
       <!-- .navbar -->
     </div>
   </header>
+  
   <!-- End Header -->
 </template>
 
@@ -82,7 +83,7 @@ import { mapState } from "vuex";
 import PageLoader from "./shared/PageLoader.vue";
 export default {
   name: "Header",
-  computed: mapState(["user"]),
+  computed: mapState(["user","globalGeneralSetting"]),
   components: {
     PageLoader,     
   },

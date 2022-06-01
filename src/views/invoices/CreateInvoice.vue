@@ -18,26 +18,17 @@
             <div class="col-12">
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <h1>The Law and Policy Chambers</h1>
+                  <h1>{{this.globalGeneralSetting.invoice_heading}}</h1>
                 </div>
                 <div class="col-md-6">
-                  <p class="text-start">
-                    <strong
-                      >Office No. 5, Saeed Plaza, Plot 71,<br />
-                      I & T Center, opposite<br />
-                      Islamabad High Court, Sector G-10/1<br />
-                      Islamabad 44000, Pakistan<br
-                    /></strong>
-                  </p>
+                  <div class="text-start">
+                    <span v-html="this.globalGeneralSetting.invoice_address"></span>                      
+                  </div>
                 </div>
                 <div class="col-md-6">
-                  <p class="text-end">
-                    <strong>
-                      Phone: (+92301) 5011568 <br />
-                      (+9251) 8431759 <br />
-                      Email: umer.gilani@lawandpolicychambers.com <br />
-                    </strong>
-                  </p>
+                  <div class="text-end">
+                     <span v-html="this.globalGeneralSetting.invoice_phone"></span>                      
+                  </div>
                 </div>
               </div>
               <div class="row">
@@ -444,8 +435,10 @@ import OverlayPanel from "primevue/overlaypanel";
 import ConfirmPopup from "primevue/confirmpopup";
 import ConfirmDialog from "primevue/confirmdialog";
 import InvoiceMarkPaidModal from "./InvoiceMarkPaidModal.vue";
+import { mapState } from "vuex";
 
 export default {
+    computed: mapState(["globalGeneralSetting"]),
   components: {
     ConfirmPopup,
     InvoiceMarkPaidModal,

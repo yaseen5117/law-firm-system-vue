@@ -12,11 +12,15 @@ export default createStore({
     servers: [],
     salesStatuses: [],
     customers: [],
-    productsInBag: []
+    productsInBag: [],
+    globalGeneralSetting: {},
   },
   mutations: {
     authUser (state, user) {
       state.user = user;
+    },
+    loadGeneralSettings (state, generalSetting) {
+      state.globalGeneralSetting = generalSetting;
     },
     loadProducts (state, products) {
       state.products = products;
@@ -56,6 +60,19 @@ export default createStore({
       }).catch(error=>{
         localStorage.removeItem("lfms_user");
         commit('authUser', null);
+      })
+          
+    },
+
+    loadGeneralSettings({ commit }) {
+      
+      var headers = { Authorization: `Bearer `+localStorage.getItem("lfms_user") };
+      axios.get(process.env.VUE_APP_SERVICE_URL + '/api/settings', {headers})
+      .then(response => {
+        console.log("General Settings load from Database -->", response.data);
+        commit('loadGeneralSettings', response.data.setting);
+      }).catch(error=>{
+        commit('loadGeneralSettings', null);
       })
           
     },

@@ -21,6 +21,7 @@ export default {
   },
   created(){
     this.$store.dispatch("authUser");
+    this.$store.dispatch("loadGeneralSettings");
   },
     
 };

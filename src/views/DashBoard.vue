@@ -3,8 +3,7 @@
      <main id="main">
       <!-- ======= Services Section ======= -->
       <section id="services" style="margin-top:100px" class="services section-bg">
-      <div class="container" data-aos="fade-up"> 
-        
+      <div class="container" data-aos="fade-up">         
         <div class="row gy-4"  >
           <div v-if="this.user.is_admin" @click="gotoLink('petitions-calendar')"  class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
             <div class="icon-box iconbox-blue border">
@@ -148,7 +147,7 @@ import { mapState } from "vuex";
 
 export default {
   name: 'DashBoard',
-  computed: mapState(["user"]),
+  computed: mapState(["user","globalGeneralSetting"]),
   methods:{
     gotoLink(path) {
       this.$router.push({ path: path  });
