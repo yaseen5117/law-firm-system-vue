@@ -340,5 +340,16 @@ export default {
 </script>
 
 <style>
-
+.nav .nav-link{  
+  border: 1px solid rgb(143 58 48);
+  color: rgb(143 58 48);
+} 
+.nav .nav-link:hover {
+  background-color: rgb(143 58 48);
+  color: #f3be32;  
+}
+.nav .nav-link.active {
+    color: #f3be32;
+     background-color: rgb(143 58 48);
+}
 </style>
