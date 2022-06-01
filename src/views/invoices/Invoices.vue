@@ -29,7 +29,7 @@
                               dateFormat="dd/mm/yy"
                               @date-select="Test"
                               :manualInput="false"
-                              placeholder ="Select dates to filter"
+                              placeholder="Select dates to filter"
                             />
                           </div>
                           <div
@@ -121,9 +121,17 @@
               </div>
               <div class="col-md-12">
                 <div class="invoices_stats text-end">
-                  <p><strong>Total: </strong>Rs: {{ invoices_stats.total }}/-</p>
-                  <p><strong>Total Paid: </strong>Rs: {{ invoices_stats.total_paid }}/-</p>
-                  <p><strong>Total Due: </strong>Rs: {{ invoices_stats.total_due }}/-</p>
+                  <p>
+                    <strong>Total: </strong>Rs: {{ invoices_stats.total }}/-
+                  </p>
+                  <p>
+                    <strong>Total Paid: </strong>Rs:
+                    {{ invoices_stats.total_paid }}/-
+                  </p>
+                  <p>
+                    <strong>Total Due: </strong>Rs:
+                    {{ invoices_stats.total_due }}/-
+                  </p>
                 </div>
                 <div class="table-responsive">
                   <table class="table table-striped" v-if="isLoaded">
@@ -149,7 +157,7 @@
                               params: { invoice_id: invoice.id },
                             }"
                             href="javascript:void"
-                            >{{ invoice.invoice_no }} 
+                            >{{ invoice.invoice_no }}
 
                             <small style="display: block" class="text-muted"
                               >{{ invoice.client ? invoice.client.name : "" }}
@@ -230,34 +238,27 @@
                     </tbody>
                   </table>
                   <div v-if="!isLoaded" class="col-md-12">
-                  <p class="alert alert-warning">Loading....</p>
-                </div>
-                  <Paginator v-show="pagination_info.total>0" v-model:first="pagination_info.from" v-model:rows="pagination_info.per_page" :totalRecords="pagination_info.total" @page="onPage($event)"></Paginator>
-
-              <p v-show="pagination_info.total>0"><small>Showing from {{pagination_info.from}} to {{pagination_info.to}} of {{pagination_info.total}}</small></p>
-                </div>
-                
-                  
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="col-md-3">
-                  <p v-show="pagination_info.total>0"><small>Showing from {{pagination_info.from}} to {{pagination_info.to}} of {{pagination_info.total}}</small></p>
-                </div>
-                <div class="col-md-6">
-                  <Paginator v-show="pagination_info.total>0" v-model:first="pagination_info.from" v-model:rows="pagination_info.per_page" :totalRecords="pagination_info.total" @page="onPage($event)"></Paginator>
-                </div>
-                <div class="col-md-12">
-
-                  <div v-if="!isLoaded" class="col-md-12">
                     <p class="alert alert-warning">Loading....</p>
                   </div>
-                </div>
+                  <Paginator
+                    v-show="pagination_info.total > 0"
+                    v-model:first="pagination_info.from"
+                    v-model:rows="pagination_info.per_page"
+                    :totalRecords="pagination_info.total"
+                    @page="onPage($event)"
+                  ></Paginator>
+
+                  <p v-show="pagination_info.total > 0">
+                    <small
+                      >Showing from {{ pagination_info.from }} to
+                      {{ pagination_info.to }} of
+                      {{ pagination_info.total }}</small
+                    >
+                  </p>
                 </div>
               </div>
             </div>
-        
+          </div>
         </BlockUI>
       </section>
     </main>
@@ -365,14 +366,12 @@ export default {
   created() {
     this.getInvoices();
     this.getInvoicesStats();
-    
   },
   methods: {
-
     onPage(event) {
       this.isLoaded = false;
-      var new_page_no = event.page+1; //adding 1 because event.page returns index of page # clicked.
-      this.filters.page=new_page_no;
+      var new_page_no = event.page + 1; //adding 1 because event.page returns index of page # clicked.
+      this.filters.page = new_page_no;
     },
     Test(event) {
       if (this.filters.start_to_end_date[1]) {
@@ -399,7 +398,7 @@ export default {
       this.displayModal = true;
     },
     closeModal() {
-      this.getInvoices()
+      this.getInvoices();
       this.displayModal = false;
     },
     reset() {
@@ -411,7 +410,7 @@ export default {
         invoice_status_id: "",
         start_to_end_date: "",
       };
-      this.showDateType = false;      
+      this.showDateType = false;
       this.saving = false;
     },
     getInvoices() {
@@ -448,10 +447,8 @@ export default {
         .get(url, { headers, params: this.filters })
         .then((response) => {
           this.invoices_stats = response.data.invoices_stats;
-          
         })
-        .catch((error) => {
-        });
+        .catch((error) => {});
     },
     onChange(event) {
       var headers = {
