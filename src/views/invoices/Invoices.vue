@@ -257,7 +257,7 @@
                 </div>
               </div>
             </div>
-          </div>
+        
         </BlockUI>
       </section>
     </main>
