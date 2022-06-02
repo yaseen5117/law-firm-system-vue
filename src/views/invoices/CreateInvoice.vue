@@ -20,12 +20,14 @@
                 <div class="col-md-12 text-center">
                   <h1>{{this.globalGeneralSetting.invoice_heading}}</h1>
                 </div>
-                <div class="col-md-6">
+              </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
                   <div class="text-start">
                     <span v-html="this.globalGeneralSetting.invoice_address"></span>                      
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 col-sm-6">
                   <div class="text-end">
                      <span v-html="this.globalGeneralSetting.invoice_phone"></span>                      
                   </div>
