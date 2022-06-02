@@ -36,7 +36,7 @@
                   <button
 
                     type="button"
-                    class="btn btn-danger btn-sm mt-lg-4 mt-md-4 mt-sm-2"
+                    class="btn btn-danger btn-sm mt-lg-4 mt-md-4 mt-2"
                     @click="reset()"
                   >
                     Reset
@@ -46,7 +46,7 @@
               </Transition>
             </div>
             <!-- search filters -->
-            <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+            <div style="display: none" class="col-lg-12 col-md-12 col-sm-12 mb-3">
               
                 <button class="btn btn-secondary btn-sm " v-if="showSearchForm" @click="showSearchForm=!showSearchForm" >Hide Filters</button>
                 <button class="btn btn-warning btn-sm" v-else-if="!showSearchForm" @click="showSearchForm=!showSearchForm;">Show Filters</button>
