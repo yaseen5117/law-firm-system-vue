@@ -105,11 +105,12 @@
                           <div class="form-group">
                             <label for="">
                               Site Phone
-                              <input
+                              <InputMask
                                 v-model="setting.site_phone"
                                 type="text"
                                 class="form-control"
                                 id=""
+                                mask="9999-9999999"
                               />
                             </label>
                           </div>
@@ -119,13 +120,12 @@
                   </div>
                   <div class="col-sm-4">     
                     <label for="">Additional Email</label>                            
-                    <div v-for="(additionalEmail) in setting.additionalemails"
-                          :key="additionalEmail">            
-                     <div class="row">
+                    <div v-for="(additionalEmail,i) in setting.additionalemails" :key="additionalEmail.id">            
+                     <div class="row"> 
                         <div class="col-sm-12">
                           <div class="form-group">
                             <label for="">                                               
-                              <input v-model="additionalEmail.additional_email" type="email" class="form-control">                              
+                              <input v-model="setting.additionalemails[i]" type="email" class="form-control">                              
                             </label>
                           </div>
                         </div>
@@ -162,9 +162,9 @@
                   <div class="row form-group">
                     <div class="col-sm-6">
                       <label for="">
-                        Invoice Address
+                        Invoice Heading Left
                         <Editor
-                          v-model="setting.invoice_address"
+                          v-model="setting.invoice_heading_left"
                           editorStyle="height: 120px"
                         />
                       </label>
@@ -173,10 +173,11 @@
                       <div class="row">
                         <div class="col-sm-12 form-group">
                           <label for="">
-                            Invoice Contacts
+                            Invoice Heading Right
                             <Editor
-                              v-model="setting.invoice_phone"
+                              v-model="setting.invoice_heading_right"
                               editorStyle="height: 120px"
+
                             />
                           </label>
                         </div>
@@ -243,7 +244,7 @@ export default {
   methods: {    
     addMoreAdditionalEmail() {
       var single_new_email = {
-        additional_email: "",
+         
       };      
       this.setting.additionalemails.push(single_new_email);
     },
@@ -284,7 +285,7 @@ export default {
         axios
           .get(url, { headers })
           .then((response) => {
-            this.setting = response.data.setting;
+            this.setting = response.data.setting;          
           })
           .catch((error) => {
             this.$notify({

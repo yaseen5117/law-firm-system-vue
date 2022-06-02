@@ -57,6 +57,7 @@
                   <li><router-link class="nav-link" to="/settings">General Settings</router-link></li>
                   <li><router-link class="nav-link" to="/courts">Courts</router-link></li>
                   <li><router-link to="/petition-types">Case Types</router-link></li>
+                  <li><router-link to="/order-sheet-types">Order Sheet Types</router-link></li>
                   <li><router-link to="/contact-requests">Contact Requests</router-link></li>
                   <!-- <li><a href="#">System Setting 4</a></li> -->
                 </ul>
