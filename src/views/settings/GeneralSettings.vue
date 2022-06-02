@@ -6,7 +6,7 @@
         <div class="row">
           <div class="col-sm-2">
             <div
-              class="nav flex-column nav-pills me-3 nav-stacked"
+              class="nav flex-column nav-pills me-3 nav-stacked mb-2"
               id="v-pills-tab"
               role="tablist"
               aria-orientation="vertical"
@@ -117,17 +117,15 @@
                       </div>
                      
                   </div>
-                  <div class="col-sm-4">                    
+                  <div class="col-sm-4">     
+                    <label for="">Additional Email</label>                            
                     <div v-for="(additionalEmail) in setting.additionalemails"
                           :key="additionalEmail">            
                      <div class="row">
                         <div class="col-sm-12">
                           <div class="form-group">
-                            <label for="">
-                              Additional Email
-                                
-                              <input v-model="additionalEmail.additional_email" type="email" class="form-control">
-                              
+                            <label for="">                                               
+                              <input v-model="additionalEmail.additional_email" type="email" class="form-control">                              
                             </label>
                           </div>
                         </div>
@@ -138,6 +136,7 @@
                         <button
                     type="button"                     
                     @click="addMoreAdditionalEmail()"
+                    class="mb-2"
                   >
                     <span class="fa fa-plus"></span> Add additional Email
                   </button>
