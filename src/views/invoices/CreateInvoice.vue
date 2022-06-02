@@ -494,13 +494,13 @@ export default {
       handler() {
         var sum_invoice_expenses = 0.0;
         var tax_amount = 0.0;
-
+        this.invoice.amount = parseFloat(this.invoice.amount)>0?parseFloat(this.invoice.amount):0.00;
         this.invoice.invoice_expenses.forEach((invoice_expense, index) => {
-          sum_invoice_expenses = sum_invoice_expenses + invoice_expense.amount;
+          sum_invoice_expenses = sum_invoice_expenses + parseFloat(invoice_expense.amount);
         });
-        if (this.invoice.apply_tax && this.invoice.tax_percentage > 0) {
+        if (this.invoice.apply_tax && parseFloat(this.invoice.tax_percentage) > 0) {
           tax_amount =
-            (this.invoice.tax_percentage * this.invoice.amount) / 100;
+            (this.invoice.tax_percentage * parseFloat(this.invoice.amount)) / 100;
         }
         this.total_amount =
           parseFloat(this.invoice.amount) +
