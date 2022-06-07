@@ -177,7 +177,7 @@
                       :style="'width:100%'"
                       :inputStyle="'width:100%'"
                       @blur="v$.new_petition_index.document_description.$touch"
-
+                      ref="documentDescription"
                     />
                      <span
                       v-if="v$.new_petition_index.document_description.$error"
@@ -342,7 +342,10 @@ export default {
                 });
                 this.saving = false;
                 this.new_petition_index = {};
-                setTimeout(() => { this.v$.$reset() }, 0)
+                setTimeout(() => {
+                  this.v$.$reset();
+                  this.$refs.documentDescription.focus();
+                }, 0);              
                 this.getCaseDetails();
               }
             },

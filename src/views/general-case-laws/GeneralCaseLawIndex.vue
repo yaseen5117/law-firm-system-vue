@@ -187,6 +187,7 @@
                         @blur="v$.new_general_case_law.case_title.$touch"
                       :style="'width:100%'"
                       :inputStyle="'width:100%'"
+                      ref="caseTitle"
                     />
                       <!-- <input
                         class="form-control"
@@ -385,7 +386,10 @@ export default {
                 });
                 this.saving = false;
                 this.new_general_case_law = {};
-                setTimeout(() => { this.v$.$reset() }, 0)
+                setTimeout(() => { 
+                  this.v$.$reset();
+                  this.$refs.caseTitle.focus(); 
+                  }, 0)
                 this.getGeneralCaseLaws();
               }
             },

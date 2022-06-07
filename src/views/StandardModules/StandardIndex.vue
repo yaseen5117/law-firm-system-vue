@@ -155,6 +155,7 @@
                         class="form-control"
                         v-model="new_standard_index.document_description"
                         v-on:keyup.enter="submitPetitionIndex()"
+                        ref="documentDescription"
                       />
                     </td>
                     <td>
@@ -298,6 +299,9 @@ export default {
                 });
                 this.saving = false;
                 this.new_standard_index = {};
+                setTimeout(() => {                 
+                  this.$refs.documentDescription.focus();
+                }, 0); 
                 this.getModuleIndex();
               }
             },

@@ -198,7 +198,7 @@
                       placeholder="Select a Client" 
                       :filter="true" 
                       :showClear="true" 
-                      appendTo="body"  
+                      appendTo="self"  
                       filterPlaceholder="Find by Client Name" 
                       />
                      
