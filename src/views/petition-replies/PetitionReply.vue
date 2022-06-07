@@ -347,8 +347,11 @@ export default {
                 });
                 this.saving = false;
                 this.new_petition_reply = {};
+                console.log("this.new_petition_reply length", this.new_petition_reply.length);
+               
                 setTimeout(() => {
                   this.v$.$reset();
+                   this.new_petition_reply.document_description.focus();
                 }, 0);
                 this.getPetitionReplyDetails();
               }
