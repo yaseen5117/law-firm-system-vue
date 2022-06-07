@@ -123,11 +123,18 @@
                     <div v-for="(additionalEmail,i) in setting.additionalemails" :key="additionalEmail.id">            
                      <div class="row"> 
                         <div class="col-sm-12">
-                          <div class="form-group">
-                            <label for="">                                               
-                              <input v-model="setting.additionalemails[i]" type="email" class="form-control">                              
-                            </label>
+                          <div class="input-group mb-3">
+                          <input  v-model="setting.additionalemails[i]" type="email" class="form-control" placeholder="Additional Email">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button"
+                            for="edit_client"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Remove"
+                            @click="deleteAdditionalEmail(setting.additionalemails[i],setting.id)"
+                            ><i class="fa fa-minus"></i></button>
                           </div>
+                        </div>                         
                         </div>
                       </div>
                       </div> 
@@ -319,6 +326,44 @@ export default {
                   text: "Saved Successfully!",
                 });
                 this.$router.push({ path: "/settings" });
+              }
+              console.log(response);
+              this.saving = false;
+            },
+            (error) => {
+              this.saving = false;
+              console.log(error.response.data.error);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.error,
+              });
+            }
+          );
+      }
+    },
+    deleteAdditionalEmail(email,id){
+     
+       if (email) {         
+        
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+
+        axios
+          .post(this.base_url + "/api/delete_additional_email/"+id, {
+            headers,
+            params: {'email': email}
+          })
+          .then(
+            (response) => {
+              if (response.status === 200) {        
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "Deleted Successfully!",
+                });
+                this.getGeneralSettings();                 
               }
               console.log(response);
               this.saving = false;

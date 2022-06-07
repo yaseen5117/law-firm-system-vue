@@ -11,7 +11,7 @@
             >
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-3 col-md-3 col-sm-12" style="display: none">
                     <label>Category</label>
                     <Dropdown
                       v-model="contract_and_agreement.contract_category_id"
