@@ -131,13 +131,13 @@
                             data-bs-toggle="tooltip"
                             data-bs-placement="top"
                             title="Remove"
-                            @click="deleteAdditionalEmail(setting.additionalemails[i],setting.id)"
+                            @click="deleteAdditionalEmail(i)"
                             ><i class="fa fa-minus"></i></button>
                           </div>
                         </div>                         
                         </div>
                       </div>
-                      </div> 
+                      </div>                       
                       <div class="row">
                       <div class="col-sm-12">                         
                         <button
@@ -342,43 +342,8 @@ export default {
           );
       }
     },
-    deleteAdditionalEmail(email,id){
-     
-       if (email) {         
-        
-        var headers = {
-          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-        };
-
-        axios
-          .post(this.base_url + "/api/delete_additional_email/"+id, {
-            headers,
-            params: {'email': email}
-          })
-          .then(
-            (response) => {
-              if (response.status === 200) {        
-                this.$notify({
-                  type: "success",
-                  title: "Success",
-                  text: "Deleted Successfully!",
-                });
-                this.getGeneralSettings();                 
-              }
-              console.log(response);
-              this.saving = false;
-            },
-            (error) => {
-              this.saving = false;
-              console.log(error.response.data.error);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error.response.data.error,
-              });
-            }
-          );
-      }
+    deleteAdditionalEmail(index){ 
+     this.setting.additionalemails.splice(index, 1);  
     },
   },
 };
