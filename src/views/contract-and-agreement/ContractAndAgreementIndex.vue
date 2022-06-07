@@ -72,7 +72,9 @@
                     >
                      
                       <td>
-                         {{contractAndAgreemnet.category.title}}
+                        <span v-if="contractAndAgreemnet.category">
+                          {{contractAndAgreemnet.category.title}}
+                        </span>                         
                       </td>
                       <td>{{contractAndAgreemnet.title}}</td>   
                       <td>

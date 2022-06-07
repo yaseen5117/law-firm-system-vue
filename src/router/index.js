@@ -16,7 +16,7 @@ import PetitionsCalendar from '../views/calendar/PetitionsCalendar'
 
 import PetitionOrderSheetCreateUpdate from '../views/petition-order-sheets/CreateUpdate'
 import OrderSheetIndex from '../views/petition-order-sheets/OrderSheetsIndex'
-import OrderSheetType from '../views/petition-order-sheets/OrderSheetType'
+import ModuleType from '../views/shared/ModuleType'
 
 import PetitionTalbanaCreateUpdate from '../views/petition-talbana/CreateUpdate'
 import TalbanaIndex from '../views/petition-talbana/TalbanaIndex'
@@ -181,9 +181,9 @@ const routes = [
     },
   },
   {
-    path: '/order-sheet-types',
-    name: 'order-sheet-types',    
-    component: OrderSheetType,
+    path: '/module-types',
+    name: 'module-types',    
+    component: ModuleType,
     meta: { 
       auth: true ,
     },

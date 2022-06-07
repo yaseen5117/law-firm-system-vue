@@ -120,20 +120,7 @@ export default {
       },
       petition: {},
       petition_types: [],
-      order_sheet_types: [
-        {
-          id: 1,
-          title: "Type 1",
-        },
-        {
-          id: 2,
-          title: "Type 2",
-        },
-        {
-          id: 3,
-          title: "Type 3",
-        },
-      ],
+      order_sheet_types: [],
       saving: false,
     };
   },
@@ -151,6 +138,7 @@ export default {
     this.getCourts();
     this.getPetitionTypes();
     this.getPetition();
+    this.getOrderSheetTypes();
   },
   activated() {},
   methods: {
@@ -178,6 +166,7 @@ export default {
                   response.data.record
                 );
                 this.order_sheet = response.data.record;
+                this.order_sheet_types = response.data.record.order_sheet_types;
               }
             },
             (error) => {
@@ -200,7 +189,7 @@ export default {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
-
+        
         axios
           .post(
             this.base_url + "/api/petition_order_sheets",
@@ -302,6 +291,25 @@ export default {
             console.log(error);
           });
       }
+    },
+    getOrderSheetTypes() {
+      let url = this.base_url + "/api/get_order_sheet_types";
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      let module = {
+        'module_id': 1
+      };
+      
+      axios
+        .get(url, { headers, params: module })
+        .then((response) => {
+          this.order_sheet_types = response.data.orderSheetTypes;
+          console.log(this.courts);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
