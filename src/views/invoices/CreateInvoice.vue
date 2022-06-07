@@ -74,7 +74,7 @@
                   <div class="form-group">
                     <div class="row">
                       <div class="col-md-3">
-                        <label for="">Select Client</label>
+                        <label for="">Select Client<span style="color: red">*</span></label>
 
                         <label
                           class=""

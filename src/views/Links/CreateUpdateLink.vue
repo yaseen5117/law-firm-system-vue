@@ -9,7 +9,7 @@
               <div class="form-group row">
                 <div class="col-sm-12">
                   <label for="">
-                    Title
+                    Title<span style="color: red">*</span>
                     <input
                       v-model="linkData.title"
                       type="text"
@@ -29,7 +29,7 @@
               <div class="form-group row">
                 <div class="col-sm-12">
                   <label for="">
-                    URL <span style="font-size: 12px; color: red">(Note: Sample URL: https://en.wikipedia.org/wiki/Main_Page)</span>
+                    URL<span style="color: red">*</span> <span style="font-size: 12px; color: red">(Note: Sample URL: https://en.wikipedia.org/wiki/Main_Page)</span>
                     <input
                       v-model="linkData.url"
                       type="text"

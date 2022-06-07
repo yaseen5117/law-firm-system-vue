@@ -89,10 +89,10 @@
                       placeholder="Select a Client" 
                       :filter="true" 
                       :showClear="true" 
-                      appendTo="body"  
+                      appendTo="self"  
                       filterPlaceholder="Find by Client Name"                        
                       />
-                      <span v-show="!opinion.editMode">{{
+                      <span v-if="opinion.user" v-show="!opinion.editMode">{{
                         opinion.user.name
                       }}</span> 
                     </td>
