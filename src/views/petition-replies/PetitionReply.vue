@@ -150,6 +150,7 @@
                         @blur="
                           v$.new_petition_reply.document_description.$touch
                         "
+                        ref="newreplydescription"
                       />
                       <span
                         v-if="v$.new_petition_reply.document_description.$error"
@@ -346,12 +347,14 @@ export default {
                   text: "Saved Successfully!",
                 });
                 this.saving = false;
-                this.new_petition_reply = {};
-                console.log("this.new_petition_reply length", this.new_petition_reply.length);
-               
+                
+                this.new_petition_reply = {
+                  
+                };
                 setTimeout(() => {
                   this.v$.$reset();
-                   this.new_petition_reply.document_description.focus();
+                  this.$refs.newreplydescription.focus()
+                   
                 }, 0);
                 this.getPetitionReplyDetails();
               }
