@@ -37,6 +37,7 @@
             </button>
 
             <router-link
+              v-if="this.user.is_admin"
               class="btn btn-primary btn-sm"
               :to="{
                 name: 'petition-order-sheets-save',
@@ -56,6 +57,7 @@
                   <strong>Order Sheet Date: </strong
                   >{{ orderSheetsActive.order_sheet_date }}
                   <router-link
+                    v-if="this.user.is_admin"
                     class="btn btn-success btn-sm action-btn"
                     :to="{
                       name: 'petition-order-sheets-edit',
@@ -71,6 +73,7 @@
                     Edit
                   </router-link>
                   <a
+                    v-if="this.user.is_admin"
                     class="btn btn-danger btn-sm action-btn"
                     style="margin-left: 2px"
                     @click="deletePetitionOrderSheet(orderSheetsActive.id)"
@@ -83,6 +86,7 @@
                 </p>
 
                 <file-upload
+                  v-if="this.user.is_admin"
                   @afterUpload="getOrderSheet"
                   type="App\Models\PetitonOrderSheet"
                   :attachmentable_id="orderSheetsActive.id"
@@ -176,8 +180,9 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import NavComponents from "../Cases/NavComponents.vue";
 import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
-
+import { mapState } from "vuex";
 export default {
+  computed: mapState(["user"]),
   components: {
     PageHeader,
     Carousel,
@@ -235,11 +240,15 @@ export default {
       this.activePage = id;
     },
     getOrderSheets() {
+      var headers = {
+          Authorization: `Bearer` + localStorage.getItem("lfms_user"),
+        };
       axios
         .get(
           this.base_url +
             "/api/petition_order_sheets?petition_id=" +
-            this.petition_id
+            this.petition_id,
+            {headers}
         )
         .then((response) => {
           this.orderSheets = response.data.records;

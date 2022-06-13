@@ -4,7 +4,7 @@
   <section id="breadcrumbs" class="breadcrumbs" v-if="!hide">
     <div class="container" >
       <div class="d-flex justify-content-between align-items-center">
-        <h4 v-if="title">{{ title }} <router-link v-if="header_button" class="btn btn-primary btn-sm" :to="route_object">{{header_button_text}}</router-link></h4>
+        <h4 v-if="title">{{ title }} <router-link v-if="header_button && this.user.is_admin" class="btn btn-primary btn-sm" :to="route_object">{{header_button_text}}</router-link></h4>
           
         <template v-if="!hideBreadCrumbs">
 
@@ -34,7 +34,9 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
+  computed: mapState(["user"]),
   props: ["title", "petition","hideBreadCrumbs",'hide','route_object','header_button_text','header_button','showInvoices','hideCaseFiles'],
 };
 </script>

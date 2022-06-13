@@ -40,6 +40,7 @@
             </button>
 
             <router-link
+              v-if="this.user.is_admin"
               class="btn btn-primary btn-sm"
               :to="{
                 name: 'petition-synopsis-save',
@@ -58,6 +59,7 @@
                   <strong>Synopsis Date: </strong
                   >{{ SynopsisActive.synopsis_date }}
                   <router-link
+                    v-if="this.user.is_admin"
                     class="btn btn-success btn-sm action-btn"
                     :to="{
                       name: 'petition-synopsis-edit',
@@ -70,6 +72,7 @@
                     Edit
                   </router-link>
                   <a
+                    v-if="this.user.is_admin"
                     class="btn btn-danger btn-sm action-btn"
                     style="margin-left: 2px"
                     @click="deletePetitionSynopsis(SynopsisActive.id)"
@@ -82,6 +85,7 @@
                 </p>
 
                 <file-upload
+                  v-if="this.user.is_admin"
                   @afterUpload="getSynops"
                   type="App\Models\PetitionSynopsis"
                   :attachmentable_id="SynopsisActive.id"
@@ -177,6 +181,7 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import NavComponents from "../Cases/NavComponents.vue";
 import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -188,6 +193,7 @@ export default {
     FileUpload,
     NavComponents,
   },
+  computed: mapState(["user"]),
   data() {
     return {
       showImgCard: false,

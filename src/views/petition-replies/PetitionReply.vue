@@ -14,7 +14,7 @@
                   <th>Date</th>
                   <th>Annexure</th>
                   <th>Page</th>
-                  <th width="10%">Actions</th>
+                  <th width="10%" v-if="this.user.is_admin">Actions</th>
                 </thead>
                 <tbody>
                   <tr
@@ -75,7 +75,7 @@
                         petition_reply.page_info
                       }}</span>
                     </td>
-                    <td width="15%">
+                    <td width="15%" v-if="this.user.is_admin">
                       <a
                         class="btn btn-sm btn-primary action-btn"
                         v-show="!petition_reply.editMode"
@@ -137,7 +137,7 @@
                       </a>
                     </td>
                   </tr>
-                  <tr>
+                  <tr v-if="this.user.is_admin">
                     <td>
                       <input
                         class="form-control"
@@ -211,9 +211,11 @@ import PageHeader from "../shared/PageHeader.vue";
 import NavComponents from "../Cases/NavComponents.vue";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import { mapState } from "vuex";
 
 export default {
   components: { PageHeader, NavComponents },
+  computed: mapState(["user"]),
   setup() {
     return {
       v$: useVuelidate(),
@@ -242,8 +244,11 @@ export default {
   },
   methods: {
     getPetitionReplyDetails() {
+      var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       axios
-        .get(this.base_url + "/api/petition_replies/" + this.id)
+        .get(this.base_url + "/api/petition_replies/" + this.id, {headers})
         .then((response) => {
           this.petition_replies = response.data.petition_replies;
           this.petition = response.data.petition;

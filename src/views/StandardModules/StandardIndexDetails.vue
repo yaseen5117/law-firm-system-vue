@@ -37,6 +37,7 @@
             </button>
 
             <button
+              v-if="this.user.is_admin"
               v-show="!showImgCard"
               @click="showImgCard = true"
               class="btn btn-success btn-sm mb-2"
@@ -54,6 +55,7 @@
             </button>
 
             <button
+              v-if="this.user.is_admin"
               v-show="!editView"
               @click="
                 editView = true;
@@ -137,8 +139,8 @@
               <div class="row">
                 <div class="table-responsive">
                   <div class="col-lg-12 col-md-12 col-sm-12">
-                    <button
-                      v-if="showDeleteBtn"
+                    <button                      
+                      v-if="showDeleteBtn && this.user.is_admin"
                       class="btn btn-sm btn-danger"
                       data-bs-toggle="tooltip"
                       data-bs-placement="top"
@@ -151,6 +153,7 @@
                       <thead>
                         <th>
                           <input
+                            v-if="this.user.is_admin"
                             class="margin-left-checkbox"
                             type="checkbox"
                             v-model="selectedAllToDelete"
@@ -161,7 +164,7 @@
                         <th>Image</th>
                         <th>Title</th>
                         <th>Display Order</th>
-                        <th>Actions</th>
+                        <th v-if="this.user.is_admin">Actions</th>
                       </thead>
                       <tbody>
                         <tr
@@ -205,17 +208,10 @@
                                 editPetitionAttachment(attachment)
                               "
                             />
-                            <router-link
-                              v-show="!attachment.editMode"
-                              :to="{
-                                name: 'standard-index-details',
-                                params: {
-                                  module_id: attachment.id,
-                                  module_type: module_type,
-                                },
-                              }"
+                            <span
+                              v-show="!attachment.editMode"                              
                               >{{ attachment.title }}
-                            </router-link>
+                            </span>
                           </td>
 
                           <td>
@@ -227,19 +223,12 @@
                                 editPetitionAttachment(attachment)
                               "
                             />
-                            <router-link
-                              v-show="!attachment.editMode"
-                              :to="{
-                                name: 'standard-index-details',
-                                params: {
-                                  module_id: attachment.id,
-                                  module_type: module_type,
-                                },
-                              }"
+                            <span
+                              v-show="!attachment.editMode"                              
                               >{{ attachment.display_order }}
-                            </router-link>
+                            </span>
                           </td>
-                          <td width="15%">
+                          <td width="15%" v-if="this.user.is_admin">
                             <a
                               class="btn btn-sm btn-primary action-btn"
                               v-show="!attachment.editMode"
@@ -323,6 +312,7 @@ import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
 import PageNumberSideBar from "../shared/PageNumberLeftSideBar.vue";
 import StandardAnnexureRightSideBar from "../shared/StandardAnnexureRightSideBar.vue";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -336,6 +326,7 @@ export default {
     PageNumberSideBar,
     StandardAnnexureRightSideBar,
   },
+  computed: mapState(["user"]),
   data() {
     return {
       showImgCard: false,

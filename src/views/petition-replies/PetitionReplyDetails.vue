@@ -37,6 +37,7 @@
             </button>
 
             <button
+              v-if="this.user.is_admin"
               v-show="!showImgCard"
               @click="showImgCard = true"
               class="btn btn-success btn-sm mb-2"
@@ -54,6 +55,7 @@
             </button>
 
             <button
+              v-if="this.user.is_admin"
               v-show="!editView"
               @click="
                 editView = true;
@@ -206,14 +208,10 @@
                                 editPetitionReplyAttachment(attachment)
                               "
                             />
-                            <router-link
-                              v-show="!attachment.editMode"
-                              :to="{
-                                name: 'petition-reply-details',
-                                params: { id: attachment.id },
-                              }"
+                            <span
+                              v-show="!attachment.editMode"                              
                               >{{ attachment.title }}
-                            </router-link>
+                            </span>
                           </td>
 
                           <td>
@@ -222,17 +220,12 @@
                               class="form-control"
                               v-model="attachment.display_order"
                               v-on:keyup.enter="
-                                editPetitionAttachment(attachment)
+                                editPetitionReplyAttachment(attachment)
                               "
                             />
-                            <router-link
-                              v-show="!attachment.editMode"
-                              :to="{
-                                name: 'petition-reply-details',
-                                params: { id: attachment.id },
-                              }"
-                              >{{ attachment.display_order }}
-                            </router-link>
+                            <span v-show="!attachment.editMode">
+                              {{ attachment.display_order }}
+                            </span>
                           </td>
                           <td width="15%">
                             <a
@@ -250,7 +243,7 @@
                             <a
                               v-show="attachment.editMode"
                               class="btn btn-sm btn-warning action-btn"
-                              @click="editPetitionAttachment(attachment)"
+                              @click="editPetitionReplyAttachment(attachment)"
                               href="javascript:void"
                               style="margin-left: 2px"
                               data-bs-toggle="tooltip"
@@ -321,6 +314,7 @@ import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
 import PageNumberSideBar from "../shared/PageNumberLeftSideBar.vue";
 import AnnexureRightSideBar from "../shared/AnnexureRightSideBar.vue";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -334,6 +328,7 @@ export default {
     PageNumberSideBar,
     AnnexureRightSideBar,
   },
+  computed: mapState(["user"]),
   data() {
     return {
       showImgCard: false,
@@ -368,9 +363,9 @@ export default {
       }
     },
     async getPetitionReplyDetails() {
-      var headers = {
-        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-      };
+     var headers = {
+          Authorization: `Bearer` + localStorage.getItem("lfms_user"),
+        };
       await axios
         .post(this.base_url + "/api/petition_reply_details/" + this.id, {
           headers,

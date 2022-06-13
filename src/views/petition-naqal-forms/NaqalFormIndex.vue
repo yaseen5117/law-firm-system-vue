@@ -37,6 +37,7 @@
             </button>
 
             <router-link
+              v-if="this.user.is_admin"
               class="btn btn-primary btn-sm"
               :to="{
                 name: 'petition-naqal-forms-save',
@@ -55,6 +56,7 @@
                   <strong>Naqal Form Date: </strong
                   >{{ NaqalFormActive.naqal_form_date }}
                   <router-link
+                    v-if="this.user.is_admin"
                     class="btn btn-success btn-sm action-btn"
                     :to="{
                       name: 'petition-naqal-forms-edit',
@@ -67,6 +69,7 @@
                     Edit
                   </router-link>
                   <a
+                    v-if="this.user.is_admin"
                     class="btn btn-danger btn-sm action-btn"
                     style="margin-left: 2px"
                     @click="deletePetitionNaqalForm(NaqalFormActive.id)"
@@ -78,6 +81,7 @@
                   </a>
                 </p>
                 <file-upload
+                  v-if="this.user.is_admin"
                   @afterUpload="getNaqalForm"
                   type="App\Models\PetitionNaqalForm"
                   :attachmentable_id="NaqalFormActive.id"
@@ -175,6 +179,7 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import NavComponents from "../Cases/NavComponents.vue";
 import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -186,6 +191,7 @@ export default {
     FileUpload,
     NavComponents,
   },
+  computed: mapState(["user"]),
   data() {
     return {
       showImgCard: false,

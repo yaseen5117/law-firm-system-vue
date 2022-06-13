@@ -14,8 +14,8 @@
                   <th>Date</th>
                   <th>Annexure</th>
                   <th>Page</th>
-                  <th width="10%">Actions</th>
-                  <th :class="ShowOnOralArgument ? '' : 'display'">
+                  <th width="10%" v-if="this.user.is_admin">Actions</th>
+                  <th v-if="this.user.is_admin" :class="ShowOnOralArgument ? '' : 'display'">
                     Image Upload
                   </th>
                 </thead>
@@ -81,7 +81,7 @@
                         index_data_single.page_info
                       }}</span>
                     </td>
-                    <td width="15%">
+                    <td width="15%" v-if="this.user.is_admin">
                       <a
                         class="btn btn-sm btn-primary action-btn"
                         v-show="!index_data_single.editMode"
@@ -139,7 +139,7 @@
                         <!-- <i class="fa fa-trash-o"></i> -->
                       </a>
                     </td>
-                    <td :class="ShowOnOralArgument ? '' : 'display'">
+                    <td v-if="this.user.is_admin" :class="ShowOnOralArgument ? '' : 'display'">
                       <file-upload
                         @afterUpload="getModuleIndexDetails"
                         :type="model_type"
@@ -149,7 +149,7 @@
                       />
                     </td>
                   </tr>
-                  <tr>
+                  <tr v-if="this.user.is_admin">
                     <td>
                       <input
                         class="form-control"
@@ -210,13 +210,15 @@ import axios from "axios";
 import NavComponents from "../Cases/NavComponents.vue";
 import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
+import { mapState } from "vuex";
 
-export default {
+export default { 
   components: {
     NavComponents,
     PageHeader,
     FileUpload,
   },
+   computed: mapState(["user"]),
   data() {
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,

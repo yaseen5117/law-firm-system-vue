@@ -28,7 +28,7 @@
                       />
                     </div>
 
-                    <div class="col-lg-3 col-md-3 col-sm-6">
+                    <!-- <div class="col-lg-3 col-md-3 col-sm-6">
                       <Dropdown
                       v-model="filters.contract_category_id"
                       :options="categories"
@@ -40,7 +40,7 @@
                       class="p-inputtext-sm"
                       filterPlaceholder="Find by Category Name"                      
                     />
-                    </div>
+                    </div> -->
                     <div class="col-lg-3 col-md-3 col-sm-12">
                       <button
                         type="button"
@@ -59,7 +59,7 @@
                   <table class="table table-striped" v-if="isLoaded">
                   <thead>
                     <tr>
-                      <th>Category</th>
+                      <!-- <th>Category</th> -->
                       <th>Title</th>
                       <th>Attachment</th>                       
                       <th  class="text-end">Actions</th>
@@ -71,11 +71,11 @@
                       :key="contract_and_agreemnet_index"
                     >
                      
-                      <td>
+                      <!-- <td>
                         <span v-if="contractAndAgreemnet.category">
                           {{contractAndAgreemnet.category.title}}
                         </span>                         
-                      </td>
+                      </td> -->
                       <td>{{contractAndAgreemnet.title}}</td>   
                       <td>
                         <InvoiceThumb v-show="contractAndAgreemnet.attachment" folder_name="contracts-and-agreements" :base_url="base_url" :invoice="contractAndAgreemnet" />

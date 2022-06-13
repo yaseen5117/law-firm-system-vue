@@ -411,9 +411,12 @@ export default {
       }
     },
     async getClients() {
+      var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       let url = this.base_url + "/api/clients";
       await axios
-        .get(url)
+        .get(url,{headers})
         .then((response) => {
           this.clients = response.data.clients;
           console.log(this.clients);
@@ -448,9 +451,12 @@ export default {
         });
     },
     async getCourts() {
+      var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       let url = this.base_url + "/api/courts";
       await axios
-        .get(url)
+        .get(url,{headers})
         .then((response) => {
           this.courts = response.data.courts;
           console.log(this.courts);
@@ -465,9 +471,12 @@ export default {
         });
     },
     async getPetitionTypes() {
+      var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
       let url = this.base_url + "/api/petition_types";
       await axios
-        .get(url)
+        .get(url,{headers})
         .then((response) => {
           this.petition_types = response.data.petition_types;
           console.log(this.petition_types);
