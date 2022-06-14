@@ -269,7 +269,7 @@ export default {
                   title: "Success",
                   text: "Update Successfully!",
                 });
-                petitionReplyToUpdate.editMode = false;
+                petitionReplyParentToUpdate.editMode = false;
               }
             },
             (error) => {

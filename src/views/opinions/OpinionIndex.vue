@@ -1,4 +1,10 @@
 <template>
+  <BlockUI
+    :blocked="blockPanel"
+    :fullScreen="true"
+    :autoZIndex="true"
+    :baseZIndex="99999"
+  >
   <main id="main">
     <page-header title="Opinions" :hideBreadCrumbs="true"/>
     <!-- ======= Services Section ======= -->
@@ -65,7 +71,7 @@
               
           
             </div>
-          <div class="table-responsive">
+          <div>
             <div class="col-lg-12 col-md-12 col-sm-12">
               <table class="table table-striped">
                 <thead>
@@ -248,6 +254,7 @@
     <!-- End Services Section -->
   </main>
   <!-- End #main -->
+  </BlockUI>
 </template>
 
 <script>
@@ -269,6 +276,7 @@ export default {
       clients: [],
       saving: false,
       showSearchForm: true,    
+      blockPanel: true,
       filters: {
         client_id: ""
       },
@@ -285,7 +293,7 @@ export default {
       handler() {
         if (!this.awaitingSearch) {
             setTimeout(() => {
-              this.getCaseFiles();
+              this.getOpinionsDetail();
               this.awaitingSearch = false;
             }, 1500); // 1 sec delay
           }
@@ -299,6 +307,7 @@ export default {
       this.getOpinionsDetail();
     },
     async getOpinionsDetail() {
+      this.blockPanel = true;
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
@@ -309,6 +318,7 @@ export default {
             params: this.filters, 
         })
         .then((response) => {
+          this.blockPanel = false;
           this.opinions = response.data.opinions;
           //this.petition = response.data.petition;
         })
