@@ -6,7 +6,7 @@
     <div class="container-fluid" data-aos="fade-up">
       <div class="row justify-content-center">
         <div class="col-xl-5 col-lg-6 pt-3 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
-          <h1>Welcome to <br>E LAW FIRM</h1>
+          <h1>Welcome to <br>{{this.globalGeneralSetting.site_name}}</h1>
           <!-- <h2>We are team of talented designers making websites with Bootstrap</h2> -->
           <div v-if="!this.user"><router-link :to="{
                           name: 'Login',                           
@@ -242,7 +242,7 @@
             <div class="info-box  mb-4">
               <i class="bx bx-envelope"></i>
               <h3>Email Us</h3>
-              <p>umer.gilani@gmail.com</p>
+              <p>{{this.globalGeneralSetting.site_email}}</p>
             </div>
           </div>
 
@@ -250,7 +250,7 @@
             <div class="info-box  mb-4">
               <i class="bx bx-phone-call"></i>
               <h3>Call Us</h3>
-              <p>+92 301 5011568</p>
+              <p>{{this.globalGeneralSetting.site_phone}}</p>
             </div>
           </div>
 
@@ -344,7 +344,7 @@ import { required, email } from "@vuelidate/validators";
 
 export default {
   name: 'Home',
-  computed: mapState(["user"]),  
+  computed: mapState(["user","globalGeneralSetting"]),  
   setup() {
     return {
       v$: useVuelidate(),
