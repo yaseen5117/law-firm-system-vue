@@ -12,7 +12,7 @@
                 <div class="text-end">
                   <router-link v-if="this.user.is_admin" class="btn btn-primary action-btn" style="    margin-right: 2px;" :to="{ name: 'edit-petition', params: {id: petition.id}}"  role="button" data-bs-toggle="tooltip" data-bs-placement="top" title="View"><i class="fa fa-edit"></i> Edit Petition</router-link> 
                   
-                  <a class="btn btn-warning action-btn" :href="'https://api.elawfirmpk.com/download_petition_pdf/'+petition.id" download=""><i class="fa fa-download"></i> Download PDF</a>
+                  <a class="btn btn-warning action-btn" :href="'https://api.ishaqnasar.elawfirmpk.com/download_petition_pdf/'+petition.id" download=""><i class="fa fa-download"></i> Download PDF</a>
                 </div>
                 <h6>
                   <u >BEFORE THE {{ petition.court ? petition.court.title : "Court NA" }} 

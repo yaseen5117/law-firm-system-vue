@@ -40,7 +40,7 @@
                     v-if="this.$route.params.invoice_id"
                     class="btn btn-sm btn-warning action-btn"
                     :href="
-                      'https://api.elawfirmpk.com/download_pdf/' + invoice.id
+                      'https://api.ishaqnasar.elawfirmpk.com/download_pdf/' + invoice.id
                     "
                     download=""
                     >Download PDF</a

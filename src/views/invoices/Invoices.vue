@@ -215,7 +215,7 @@
                             style="margin-left: 2px"
                             class="btn btn-warning action-btn"
                             :href="
-                              'https://api.elawfirmpk.com/download_pdf/' +
+                              'https://api.ishaqnasar.elawfirmpk.com/download_pdf/' +
                               invoice.id
                             "
                             download=""
@@ -508,7 +508,7 @@ export default {
     downloadPdf(invoiceId) {
       // https://api.elawfirmpk.com/
       // let url = this.base_url + "/api/download_pdf/" + invoiceId;
-      let url = "https://api.elawfirmpk.com/download_pdf/" + invoiceId;
+      let url = "https://api.ishaqnasar.elawfirmpk.com/download_pdf/" + invoiceId;
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
