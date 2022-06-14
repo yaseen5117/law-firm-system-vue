@@ -112,20 +112,7 @@ export default {
       },
       petition: {},
       petition_types: [],
-      talbana_types: [
-        {
-          id: 1,
-          title: "Type 1",
-        },
-        {
-          id: 2,
-          title: "Type 2",
-        },
-        {
-          id: 3,
-          title: "Type 3",
-        },
-      ],
+      talbana_types: [],
       saving: false,
     };
   },
@@ -141,6 +128,7 @@ export default {
     this.getPetitionTypes();
     this.getPetition();
     this.getEditableTalbana();
+    this.getTalbanaTypes();
   },
   activated() {},
   methods: {
@@ -223,7 +211,24 @@ export default {
           );
       }
     },
-
+    getTalbanaTypes() {
+      let url = this.base_url + "/api/get_talbana_types";
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      let module = {
+        'module_id': 3
+      };
+      
+      axios
+        .get(url, { headers, params: module })
+        .then((response) => {
+          this.talbana_types = response.data.talbanaTypes;  
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     async getPetitionTypes() {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),

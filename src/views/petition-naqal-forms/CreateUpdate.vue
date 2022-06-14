@@ -118,20 +118,7 @@ export default {
       },
       petition: {},
       petition_types: [],
-      naqal_form_types: [
-        {
-          id: 1,
-          title: "Type 1",
-        },
-        {
-          id: 2,
-          title: "Type 2",
-        },
-        {
-          id: 3,
-          title: "Type 3",
-        },
-      ],
+      naqal_form_types: [],
       saving: false,
     };
   },
@@ -147,6 +134,7 @@ export default {
     this.getPetitionTypes();
     this.getPetition();
     this.getEditableNaqalForm();
+    this.getNaqalFormTypes();
   },
   activated() {},
   methods: {
@@ -232,7 +220,24 @@ export default {
           );
       }
     },
-
+    getNaqalFormTypes() {
+      let url = this.base_url + "/api/get_naqal_form_types";
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      let module = {
+        'module_id': 2
+      };
+      
+      axios
+        .get(url, { headers, params: module })
+        .then((response) => {
+          this.naqal_form_types = response.data.naqalFormTypes;  
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     async getPetitionTypes() {
       let url = this.base_url + "/api/petition_types";
       var headers = {
