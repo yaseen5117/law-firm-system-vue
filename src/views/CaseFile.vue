@@ -323,8 +323,11 @@ export default {
     },
     getCourts() {
       let url = this.base_url + "/api/courts";
+       var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       axios
-        .get(url)
+        .get(url,{headers})
         .then((response) => {
           this.courts = response.data.courts;
           console.log(this.courts);

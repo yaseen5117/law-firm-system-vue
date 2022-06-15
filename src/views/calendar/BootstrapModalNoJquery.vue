@@ -33,7 +33,7 @@
                 <label for="">Case</label>
                 <Dropdown
                   v-model="petition_hearing_event.petition_id"
-                  :options="petitions.data"
+                  :options="petitions"
                   optionLabel="petition_standard_title_with_petitioner"
                   class="form-control"
                   optionValue="id"
@@ -152,7 +152,7 @@ export default {
     },
   },
   created() {
-    this.getPetitions();
+    this.getPetitions(); 
   },
   methods: {
     closeModal() {
@@ -238,8 +238,12 @@ export default {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
       var url = this.base_url + "/api/petitions";
+      var force_all_records  = {
+        'force_all_records': true
+      }
+      
       axios
-        .get(url, { headers })
+        .get(url, { headers, params: force_all_records })
         .then((response) => {
           this.petitions = response.data.petitions;
           this.petition_hearing_event.petition_id =
