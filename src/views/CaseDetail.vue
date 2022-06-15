@@ -21,9 +21,9 @@
                   </u>
                 </h6>
                 <p><strong>{{ petition.petition_standard_title }}</strong></p>
-                <p>{{ petition.petitioner_names }}</p>
+                <p class="line_height">{{ petition.petitioner_names }}</p>
                 <p>VERSUS</p>
-                <p>{{ petition.opponent_names }}</p>
+                <p class="line_height">{{ petition.opponent_names }}</p>
                 <p class="line-hight">
                   {{ petition.title }}
                 </p>
