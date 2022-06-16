@@ -213,9 +213,14 @@
                       </label>
                     </div>
                     <div class="col-sm-4">
-                      <button type="button" class="btn btn-primary mb-2 btn-sm" style="margin-right: 2px" @click="uploadImage()">
+                      <button
+                        type="button"
+                        class="btn btn-primary mb-2 btn-sm"
+                        style="margin-right: 2px"
+                        @click="uploadImage()"
+                      >
                         Upload Image
-                        </button>                        
+                      </button>
                       <div v-if="uploadDialog">
                         <file-upload
                           @afterUpload="previewMod"
@@ -226,15 +231,20 @@
                         />
                       </div>
                       <div v-if="imagePreview">
-                         <Image 
-                         v-if="setting.site_file_name"
-                         :src="this.base_url +
-                                '/storage/attachments/settings' +
-                                '/' +
-                                setting_id +
-                                '/' +
-                                setting.site_file_name"
-                                 alt="Site Image" width="250" preview />
+                        <Image
+                          v-if="setting.site_file_name"
+                          :src="
+                            this.base_url +
+                            '/storage/attachments/settings' +
+                            '/' +
+                            setting_id +
+                            '/' +
+                            setting.site_file_name
+                          "
+                          alt="Site Image"
+                          width="250"
+                          preview
+                        />
                       </div>
                     </div>
                   </div>
@@ -264,14 +274,14 @@ import useVuelidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
 import Editor from "primevue/editor";
 import FileUpload from "../petition-index/FileUpload.vue";
-import Image from 'primevue/image';
+import Image from "primevue/image";
 
 export default {
   components: {
     PageHeader,
     Editor,
     FileUpload,
-    Image
+    Image,
   },
   setup() {
     return {
@@ -302,14 +312,14 @@ export default {
   },
 
   methods: {
-    uploadImage(){
-      this.uploadDialog = true
-      this.imagePreview = false      
-    },    
-    previewMod(){
+    uploadImage() {
+      this.uploadDialog = true;
+      this.imagePreview = false;
+    },
+    previewMod() {
       this.getGeneralSettings();
-      this.uploadDialog = false
-      this.imagePreview = true       
+      this.uploadDialog = false;
+      this.imagePreview = true;
     },
     addMoreAdditionalEmail() {
       var single_new_email = {};
@@ -352,7 +362,7 @@ export default {
         axios
           .get(url, { headers })
           .then((response) => {
-            this.setting = response.data.setting;            
+            this.setting = response.data.setting;
           })
           .catch((error) => {
             this.$notify({
