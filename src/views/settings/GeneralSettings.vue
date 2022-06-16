@@ -226,7 +226,9 @@
                         />
                       </div>
                       <div v-if="imagePreview">
-                         <Image :src="this.base_url +
+                         <Image 
+                         v-if="setting.site_file_name"
+                         :src="this.base_url +
                                 '/storage/attachments/settings' +
                                 '/' +
                                 setting_id +

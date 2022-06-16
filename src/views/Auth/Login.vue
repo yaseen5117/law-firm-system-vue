@@ -66,7 +66,9 @@
             <span v-html="this.globalGeneralSetting.login_page_content"></span> 
           </div>
           <div class="col-lg-2 col-md-2 col-sm-12">
-            <Image :src="this.base_url +
+            <Image
+            v-if="globalGeneralSetting.site_file_name"
+            :src="this.base_url +
                                 '/storage/attachments/settings' +
                                 '/' +
                                 setting_id +
