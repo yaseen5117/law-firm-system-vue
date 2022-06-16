@@ -1572,6 +1572,7 @@ section {
 
 .card {
   background: #f7f7f7;
+  border: solid #e5e5e5d9 1px !important;
 }
 .form-group {
   margin-bottom: 5px;
@@ -1717,3 +1718,9 @@ label{
     background-color: rgb(143 58 48);
 }
 /* overridig tabs */
+
+@media (max-width: 792px){
+  .mt-on-mobile{
+    margin-top: 10px;
+  }
+}

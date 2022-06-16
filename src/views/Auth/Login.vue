@@ -7,9 +7,8 @@
     />
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
-        <div class="row">         
-          <div class="col-md-4"></div>
-          <div class="col-md-3">
+        <div class="row">            
+          <div class="col-lg-3 col-md-4 col-sm-12 card" style="background-color: rgb(203 203 203 / 12%); padding-top: 10px">
               <form @submit.prevent="submitForm($event)" class="row g-3" id="userlogin">
               
               <div class="col-md-12 col-sm-12">
@@ -63,6 +62,18 @@
               </div>
             </form>
           </div>
+          <div class="offset-md-1 offset-lg-1 col-lg-5 col-md-4 col-sm-12 mt-on-mobile">
+            <span v-html="this.globalGeneralSetting.login_page_content"></span> 
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-12">
+            <Image :src="this.base_url +
+                                '/storage/attachments/settings' +
+                                '/' +
+                                setting_id +
+                                '/' +
+                                globalGeneralSetting.site_file_name"
+                                 alt="Site Image" width="250" />
+          </div>
         </div>
       </div>
     </section>
@@ -76,10 +87,13 @@ import axios from "axios";
 import useVuelidate from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
 import PageHeader from "../shared/PageHeader.vue";
+import { mapState } from "vuex";
+import Image from 'primevue/image';
 
 export default {
   name: "Login",
-  components: { PageHeader },
+  components: { PageHeader,Image },
+  computed: mapState(["globalGeneralSetting"]),  
     setup() {
         return {
         v$: useVuelidate(),
@@ -91,6 +105,7 @@ export default {
         email: "",
         password: "",  
         saving: false,  
+        setting_id: 1,
     };
   },
   validations() {
@@ -147,5 +162,5 @@ export default {
 <style>
 .errorMessage {
   color: red;
-}
+} 
 </style>
