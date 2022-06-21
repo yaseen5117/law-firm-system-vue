@@ -59,7 +59,15 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    beforeEnter(to, from, next) {
+      var isloggedin = localStorage.getItem("lfms_user");
+      if (isloggedin) {
+        next('/dashboard');
+      } else {
+        next();
+      } 
+    }
   },
   {
     path: '/forgot-password',
