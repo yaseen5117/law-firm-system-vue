@@ -239,26 +239,26 @@
                   </table>
                   <div v-if="!isLoaded" class="col-md-12">
                     <p class="alert alert-warning">Loading....</p>
-                  </div> 
+                  </div>
                   <div v-if="!invoices.length && isLoaded" class="col-md-12">
-                    <p class="alert alert-warning">Record Not Found!</p>
-                  </div>                 
+                    <p class="alert alert-warning">No Records found.</p>
+                  </div>
                 </div>
-                 <Paginator
-                    v-show="pagination_info.total > 0"
-                    v-model:first="pagination_info.from"
-                    v-model:rows="pagination_info.per_page"
-                    :totalRecords="pagination_info.total"
-                    @page="onPage($event)"
-                  ></Paginator>
+                <Paginator
+                  v-show="pagination_info.total > 0"
+                  v-model:first="pagination_info.from"
+                  v-model:rows="pagination_info.per_page"
+                  :totalRecords="pagination_info.total"
+                  @page="onPage($event)"
+                ></Paginator>
 
-                  <p v-show="pagination_info.total > 0">
-                    <small
-                      >Showing from {{ pagination_info.from }} to
-                      {{ pagination_info.to }} of
-                      {{ pagination_info.total }}</small
-                    >
-                  </p>
+                <p v-show="pagination_info.total > 0">
+                  <small
+                    >Showing from {{ pagination_info.from }} to
+                    {{ pagination_info.to }} of
+                    {{ pagination_info.total }}</small
+                  >
+                </p>
               </div>
             </div>
           </div>
@@ -416,7 +416,7 @@ export default {
       this.showDateType = false;
       this.saving = false;
     },
-    getInvoices() {      
+    getInvoices() {
       this.isLoaded = false;
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
@@ -511,7 +511,8 @@ export default {
     downloadPdf(invoiceId) {
       // https://api.elawfirmpk.com/
       // let url = this.base_url + "/api/download_pdf/" + invoiceId;
-      let url = "https://api.ishaqnasar.elawfirmpk.com/download_pdf/" + invoiceId;
+      let url =
+        "https://api.ishaqnasar.elawfirmpk.com/download_pdf/" + invoiceId;
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
