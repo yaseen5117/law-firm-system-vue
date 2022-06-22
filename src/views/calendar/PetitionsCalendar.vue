@@ -15,7 +15,7 @@
     </section>
   </main>
 
-   <bootstrap-modal-no-jquery 
+   <bootstrap-modal-no-jquery   
    :title = "popupTitle" 
    :selected_date = "selected_date" 
    :eventToUpdateProp = "eventToUpdate" 
@@ -48,7 +48,7 @@ export default {
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
         initialView: "dayGridMonth",
         dateClick: this.handleDateClick,
-        eventClick: this.handleEventClick,
+        eventClick: this.handleEventClick,         
         //Dynamic Event Source
         events: [],
         editable:false,
@@ -135,4 +135,3 @@ export default {
   },
 };
 </script>
-

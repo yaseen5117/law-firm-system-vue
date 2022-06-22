@@ -18,18 +18,22 @@
             <div class="col-12">
               <div class="row">
                 <div class="col-md-12 text-center">
-                  <h1>{{this.globalGeneralSetting.invoice_heading}}</h1>
+                  <h1>{{ this.globalGeneralSetting.invoice_heading }}</h1>
                 </div>
               </div>
-            <div class="row">
+              <div class="row">
                 <div class="col-md-6 col-sm-6">
                   <div class="text-start">
-                    <span v-html="this.globalGeneralSetting.invoice_address"></span>                      
+                    <span
+                      v-html="this.globalGeneralSetting.invoice_address"
+                    ></span>
                   </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
                   <div class="text-end">
-                     <span v-html="this.globalGeneralSetting.invoice_phone"></span>                      
+                    <span
+                      v-html="this.globalGeneralSetting.invoice_phone"
+                    ></span>
                   </div>
                 </div>
               </div>
@@ -40,7 +44,8 @@
                     v-if="this.$route.params.invoice_id"
                     class="btn btn-sm btn-warning action-btn"
                     :href="
-                      'https://api.ishaqnasar.elawfirmpk.com/download_pdf/' + invoice.id
+                      'https://api.ishaqnasar.elawfirmpk.com/download_pdf/' +
+                      invoice.id
                     "
                     download=""
                     >Download PDF</a
@@ -74,7 +79,9 @@
                   <div class="form-group">
                     <div class="row">
                       <div class="col-md-3">
-                        <label for="">Select Client<span style="color: red">*</span></label>
+                        <label for=""
+                          >Select Client<span style="color: red">*</span></label
+                        >
 
                         <label
                           class=""
@@ -94,8 +101,38 @@
                             "
                           />
                           <small>Edit client</small></label
+                        >   
+                                                   
+                        <AutoComplete
+                          v-model="invoice.selectedClient.name"                          
+                          :suggestions="filteredClients"
+                          emptyMessage="No Record Found!"                         
+                          @complete="searchClient($event)"
+                          modelValue="id"
+                          field="name"  
+                          @item-select="onClientSelect($event)"
+                          placeholder="Find By Client Name"                        
+                          appendTo="self"
+                          minLength="3"
+                          autoHighlight="true"
+                          forceSelection="true"
+                          class="p-autocomplete"
+                          delay="1"
+                          :style="'width:100%'"
+                          :inputStyle="'width:100%'"
+                        @blur="v$.invoice.selectedClient.name.$touch"
+                          v-bind:class="{
+                            'error-boarder': v$.invoice.selectedClient.name.$error,
+                          }"
+                        />
+                        <span
+                          v-if="v$.invoice.selectedClient.name.$error"
+                          class="errorMessage"
+                          >Client field is required.</span
                         >
-                        <Dropdown
+
+                        <!-- <Dropdown
+                          id="client"
                           v-model="invoice.invoiceable_id"
                           :options="clients"
                           :disabled="invoice.invoice_status_id == 3"
@@ -115,7 +152,7 @@
                           v-if="v$.invoice.invoiceable_id.$error"
                           class="errorMessage"
                           >Client field is required.</span
-                        >
+                        > -->
                       </div>
                       <div class="col-md-3">
                         <label for="">Invoice No</label>
@@ -210,9 +247,8 @@
                           name=""
                           id=""
                           class="form-control"
-                          readonly
                           rows="2"
-                          v-model="contact_persons_name"
+                          v-model="invoice.contact_person_emails"
                         >
                         </textarea>
                       </div>
@@ -440,7 +476,7 @@ import InvoiceMarkPaidModal from "./InvoiceMarkPaidModal.vue";
 import { mapState } from "vuex";
 
 export default {
-    computed: mapState(["globalGeneralSetting"]),
+  computed: mapState(["globalGeneralSetting"]),
   components: {
     ConfirmPopup,
     InvoiceMarkPaidModal,
@@ -455,6 +491,7 @@ export default {
   },
   data() {
     return {
+      filteredClients: null,
       invoice_id: "",
       page_title: this.$route.params.invoice_id
         ? "Edit Invoice"
@@ -478,13 +515,13 @@ export default {
           services: "",
         },
         sendEmail: "",
+        contact_person_emails: [],
       },
-      clients: [],
+      // clients: [],
       invoice_statuses: [],
       invoice_templates: [],
       isDisabled: true,
       isShowEmailContent: false,
-      contact_persons_name: [],
       displayModal: false,
     };
   },
@@ -494,13 +531,21 @@ export default {
       handler() {
         var sum_invoice_expenses = 0.0;
         var tax_amount = 0.0;
-        this.invoice.amount = parseFloat(this.invoice.amount)>0?parseFloat(this.invoice.amount):0.00;
+        this.invoice.amount =
+          parseFloat(this.invoice.amount) > 0
+            ? parseFloat(this.invoice.amount)
+            : 0.0;
         this.invoice.invoice_expenses.forEach((invoice_expense, index) => {
-          sum_invoice_expenses = sum_invoice_expenses + parseFloat(invoice_expense.amount);
+          sum_invoice_expenses =
+            sum_invoice_expenses + parseFloat(invoice_expense.amount);
         });
-        if (this.invoice.apply_tax && parseFloat(this.invoice.tax_percentage) > 0) {
+        if (
+          this.invoice.apply_tax &&
+          parseFloat(this.invoice.tax_percentage) > 0
+        ) {
           tax_amount =
-            (this.invoice.tax_percentage * parseFloat(this.invoice.amount)) / 100;
+            (this.invoice.tax_percentage * parseFloat(this.invoice.amount)) /
+            100;
         }
         this.total_amount =
           parseFloat(this.invoice.amount) +
@@ -513,18 +558,46 @@ export default {
   validations() {
     return {
       invoice: {
-        invoiceable_id: { required },
+        selectedClient: {
+          name: { required },
+        }        
       },
     };
   },
 
   created() {
-    this.getClients();
+    // this.getClients();
     this.getInvoiceStatuses();
     this.getInvoiceTemplates();
     this.getInvoice();
   },
   methods: {
+    searchClient(event) {
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+
+      let url = this.base_url + "/api/clients";
+      var query = {
+        serach_param: event.query,
+      };
+
+      axios
+        .get(url, { headers, params: query })
+        .then((response) => {
+          this.filteredClients = response.data.clients;  
+          console.log("Filtered Clients")
+          console.log(response.data.clients);        
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error,
+          });
+        });
+    },
     openModal(invoice_id) {
       this.invoice_id = invoice_id;
       this.displayModal = true;
@@ -621,26 +694,27 @@ export default {
     editClientIfo() {
       this.isDisabled = false;
     },
-    getClients() {
-      var headers = {
-        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-      };
-      let url = this.base_url + "/api/clients";
-      axios
-        .get(url, { headers })
-        .then((response) => {
-          this.clients = response.data.clients;
-          console.log(this.clients);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$notify({
-            type: "error",
-            title: "Something went wrong!",
-            text: error,
-          });
-        });
-    },
+    // getClients() {
+    //   var headers = {
+    //     Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+    //   };
+
+    //   let url = this.base_url + "/api/clients";
+    //   axios
+    //     .get(url, { headers })
+    //     .then((response) => {
+    //       this.clients = response.data.clients;
+    //       console.log(this.clients);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //       this.$notify({
+    //         type: "error",
+    //         title: "Something went wrong!",
+    //         text: error,
+    //       });
+    //     });
+    // },
     getInvoiceStatuses() {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
@@ -681,11 +755,14 @@ export default {
           });
         });
     },
-    onChange(event) {
+    onClientSelect(event) { 
+       console.log('printing an event')
+           console.log(event)
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
-      let url = this.base_url + "/api/users/" + event.value;
+
+      let url = this.base_url + "/api/users/" + event.value.id;
       axios
         .get(url, { headers })
         .then((response) => {
@@ -693,9 +770,9 @@ export default {
           this.invoice.selectedClient = response.data.user;
           this.invoice.due_date = response.data.invoice_date;
           this.invoice.invoice_no = response.data.user.next_invoice_num;
-          this.contact_persons_name = [];
+          this.invoice.contact_person_emails = [];
           response.data.user.contact_persons.forEach((element) => {
-            this.contact_persons_name.push(element.name);
+            this.invoice.contact_person_emails.push(element.email);
           });
         })
         .catch((error) => {
@@ -764,11 +841,12 @@ export default {
             this.invoice.invoice_meta = response.data.invoice.invoice_meta;
             if (!this.invoice.paid_amount) {
               this.invoice.paid_amount = this.invoice.amount;
-            }
-
-            response.data.invoice.client.contact_persons.forEach((element) => {
-              this.contact_persons_name.push(element.name);
-            });
+            }            
+            this.invoice.contact_person_emails = [];
+            response.data.invoice.client.contact_persons.forEach((user) => {
+              this.invoice.contact_person_emails.push(user.email);
+            }); 
+            this.filteredClients = response.data.invoice.client;
             // if (response.data.invoice.invoice_status_id == 2) {
             //   this.isShowEmailContent = true;
             // }

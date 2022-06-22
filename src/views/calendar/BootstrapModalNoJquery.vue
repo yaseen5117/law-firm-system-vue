@@ -28,10 +28,35 @@
                   placeholder="dd/mm/yyyy "
                 />
               </div>
-
+        
               <div class="form-group form-group-dropdown">
                 <label for="">Case</label>
-                <Dropdown
+                <AutoComplete
+                          v-model="petition_hearing_event.petition"                          
+                          :suggestions="filteredPetitions"
+                          @complete="searchPetition($event)"
+                          field="petition_standard_title_with_petitioner"  
+                          placeholder="Find by Case No"                        
+                          appendTo="self"
+                          minLength="3"
+                          autoHighlight="true"
+                          forceSelection="true"
+                          :style="'width:100%'"
+                          :inputStyle="'width:100%'"
+                          delay="1"
+                        v-bind:class="{
+                    'error-boarder':
+                      v$.petition_hearing_event.petition.$error,
+                  }"
+                  @blur="v$.petition_hearing_event.petition.$touch"
+                />
+                <span
+                  v-if="v$.petition_hearing_event.petition.$error"
+                  class="errorMessage"
+                  >Case field is required.
+                </span>
+
+                <!-- <Dropdown
                   v-model="petition_hearing_event.petition_id"
                   :options="petitions"
                   optionLabel="petition_standard_title_with_petitioner"
@@ -53,7 +78,7 @@
                   v-if="v$.petition_hearing_event.petition_id.$error"
                   class="errorMessage"
                   >Case field is required.
-                </span>
+                </span> -->
               </div>
 
               <div class="form-group">
@@ -119,11 +144,14 @@ export default {
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,
       title: this.title,
-      petition_hearing_event: {
+      petition_hearing_event: {      
         hearing_date:
           this.eventToUpdateProp && this.eventToUpdateProp.extendedProps
             ? this.dateTime(this.eventToUpdateProp.extendedProps.hearing_date)
             : this.selected_date,
+        petition: this.eventToUpdateProp
+            ? this.eventToUpdateProp.title
+            :"",
         petition_id:
           this.eventToUpdateProp && this.eventToUpdateProp.extendedProps
             ? this.eventToUpdateProp.extendedProps.petition_id
@@ -135,13 +163,14 @@ export default {
         id: this.eventToUpdateProp ? this.eventToUpdateProp.id : null,
       },
       petitions: [],
+      filteredPetitions: null,
       saving_event: false,
     };
   },
   validations() {
     return {
       petition_hearing_event: {
-        petition_id: { required },
+        petition: { required },
       },
     };
   },
@@ -152,7 +181,7 @@ export default {
     },
   },
   created() {
-    this.getPetitions(); 
+    //this.getPetitions(); 
   },
   methods: {
     closeModal() {
@@ -233,32 +262,58 @@ export default {
         this.saving_event = false;
       }
     },
-    getPetitions() {
-      var headers = {
-        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-      };
-      var url = this.base_url + "/api/petitions";
-      var force_all_records  = {
-        'force_all_records': true
-      }
+    // getPetitions() {
+
+    //   var headers = {
+    //     Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+    //   };
+    //   var url = this.base_url + "/api/petitions";
+    //   var force_all_records  = {
+    //     'force_all_records': true
+    //   }
       
-      axios
-        .get(url, { headers, params: force_all_records })
-        .then((response) => {
-          this.petitions = response.data.petitions;
-          this.petition_hearing_event.petition_id =
-            this.eventToUpdateProp && this.eventToUpdateProp.extendedProps
-              ? this.eventToUpdateProp.extendedProps.petition_id
-              : "";
-        })
-        .catch((error) => {
-          this.saving_event = false;
-          console.log(error);
-        });
-    },
+    //   axios
+    //     .get(url, { headers, params: force_all_records })
+    //     .then((response) => {
+    //       this.filteredPetitions = response.data.petitions;
+    //       this.petition_hearing_event.petition = this.eventToUpdateProp.title;
+    //     })
+    //     .catch((error) => {
+    //       this.saving_event = false;
+    //       console.log(error);
+    //     });
+    // },
     gotoLink(path) {
       alert(path);
       this.$router.push({ path: path });
+    },
+    //get petitions
+    searchPetition(event) {
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+
+      let url = this.base_url + "/api/petitions";
+      var query = {         
+        'query_from_calendar_page': event.query,
+        'force_all_records': true
+      };
+
+      axios
+        .get(url, { headers, params: query })
+        .then((response) => {
+          this.filteredPetitions = response.data.petitions; 
+          console.log("Filtered Petitions")      
+          console.log(response.data.petitions);   
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error,
+          });
+        });
     },
   },
 };
