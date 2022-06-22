@@ -1,6 +1,6 @@
 <template>
   <BlockUI
-    :blocked="blockPanel"
+    :blocked="!isLoaded"
     :fullScreen="true"
     :autoZIndex="true"
     :baseZIndex="99999"
@@ -15,6 +15,7 @@
 
       <!-- ======= Services Section ======= -->
       <section id="services" class="services section-bg">
+        <BlockUI :blocked="users" :fullScreen="true">
         <div class="container" data-aos="fade-up">
           <div class="row">
             <div class="col-12 mb-2">
@@ -114,7 +115,7 @@
             </div>
             <div class="table-responsive">
               <div class="col-lg-12 col-md-12 col-sm-12">
-                <table class="table table-hover">
+                <table class="table table-hover" v-if="isLoaded">
                   <thead>
                     <th>Name</th>
                     <th>Role</th>
@@ -229,10 +230,16 @@
                       </td>
                     </tr>
                   </tbody>
-                </table>
-              </div>
-
-              <div class="col-md-12">
+                </table>  
+                 <div v-if="!isLoaded" class="col-md-12">
+                    <p class="alert alert-warning">Loading....</p>
+                  </div> 
+              <div v-if="!users.length && isLoaded" class="col-md-12">
+                    <p class="alert alert-warning">Record Not Found!</p>
+                  </div>                  
+              </div>             
+            </div>
+            <div class="col-md-12">
                 <div class="row">
                   <div class="col-md-3">
                     <p v-show="pagination_info.total > 0">
@@ -257,9 +264,9 @@
                   </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
+        </BlockUI>
       </section>
       <!-- End Services Section -->
     </main>
@@ -287,8 +294,7 @@ export default {
       pagination_info: [],
       roles: [],
       id: this.$route.params.id, //this is the id from the browser
-      new_petition_index: {},
-      blockPanel: true,
+      new_petition_index: {},  
       showSearchForm: true,
       filters: {
         role_id: "",
@@ -308,6 +314,7 @@ export default {
           name: "Pending Approval",
         },
       ],
+      isLoaded: false,
     };
   },
   created() {
@@ -324,7 +331,7 @@ export default {
       this.filters.page = new_page_no;
     },
     getUsers() {
-      this.blockPanel = true;
+      this.isLoaded = false;      
       let url = this.base_url + "/api/users";
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
@@ -335,7 +342,7 @@ export default {
           params: this.filters,
         })
         .then((response) => {
-          this.blockPanel = false;
+          this.isLoaded = true;           
           this.users = response.data.users.data;
           this.pagination_info = response.data.users;
           this.roles = response.data.roles;
@@ -417,10 +424,12 @@ export default {
       }
     },
     reset() {
+      this.isLoaded = false;
       this.filters = {
         role_id: "",
         is_approved: 2,
-      };      
+      };    
+      this.isLoaded = true;  
     },
   },
   mounted() {

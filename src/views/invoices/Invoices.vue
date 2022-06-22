@@ -239,8 +239,12 @@
                   </table>
                   <div v-if="!isLoaded" class="col-md-12">
                     <p class="alert alert-warning">Loading....</p>
-                  </div>
-                  <Paginator
+                  </div> 
+                  <div v-if="!invoices.length && isLoaded" class="col-md-12">
+                    <p class="alert alert-warning">Record Not Found!</p>
+                  </div>                 
+                </div>
+                 <Paginator
                     v-show="pagination_info.total > 0"
                     v-model:first="pagination_info.from"
                     v-model:rows="pagination_info.per_page"
@@ -255,7 +259,6 @@
                       {{ pagination_info.total }}</small
                     >
                   </p>
-                </div>
               </div>
             </div>
           </div>
@@ -413,7 +416,7 @@ export default {
       this.showDateType = false;
       this.saving = false;
     },
-    getInvoices() {
+    getInvoices() {      
       this.isLoaded = false;
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
