@@ -16,7 +16,7 @@
                 name: 'case-detail',
                 params: { id: petition.id },
               }"
-          >Petition</router-link
+          >Index</router-link
         >
 
         <router-link
