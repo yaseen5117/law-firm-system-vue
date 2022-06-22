@@ -3,9 +3,12 @@
      <main id="main">
       <!-- ======= Services Section ======= -->
       <section id="services" style="margin-top:100px" class="services section-bg">
-      <div class="container" data-aos="fade-up">         
+      <div class="container" v-if="!this.user">
+      <p class="text-danger text-center">Authenticating...</p>
+      </div>         
+      <div class="container" v-if="this.user">         
         <div class="row gy-4"  >
-          <div v-if="this.user.is_admin" @click="gotoLink('petitions-calendar')"  class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+          <div v-if="this.user.is_admin" @click="gotoLink('petitions-calendar')"  class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"  data-aos-delay="100">
             <div class="icon-box iconbox-blue border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -18,7 +21,7 @@
             </div>
           </div>
 
-          <div @click="gotoLink('petitions')" class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
+          <div @click="gotoLink('petitions')" v-if="this.user" class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"  data-aos-delay="200">
             <div class="icon-box iconbox-orange border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -31,7 +34,7 @@
             </div>
           </div>
 
-          <div @click="gotoLink('opinions')" v-if="this.user.is_admin" class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="300">
+          <div @click="gotoLink('opinions')" v-if="this.user.is_admin" class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"  >
             <div class="icon-box iconbox-pink border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -52,7 +55,7 @@
             </div>
           </div>
 
-          <div @click="gotoLink('contract-and-agreement')" v-if="this.user.is_admin" class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+          <div @click="gotoLink('contract-and-agreement')" v-if="this.user.is_admin" class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"  data-aos-delay="100">
             <div class="icon-box iconbox-yellow border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +76,7 @@
             </div>
           </div>
 
-          <div  @click="gotoLink('petition-general-case-law')"  v-if="this.user.is_admin" class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
+          <div  @click="gotoLink('petition-general-case-law')"  v-if="this.user.is_admin" class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"  data-aos-delay="200">
             <div class="icon-box iconbox-red border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -92,7 +95,7 @@
             </div>
           </div>
 
-          <div @click="gotoLink('invoices')"  v-if="this.user.is_admin" class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="300">
+          <div @click="gotoLink('invoices')"  v-if="this.user" class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"  >
             <div class="icon-box iconbox-teal border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -105,7 +108,7 @@
             </div>
           </div>
 			
-			 <div  v-if="this.user.is_admin" class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+			 <div  v-if="this.user.is_admin" class="col-lg-4 col-md-6 d-flex align-items-stretch"  data-aos-delay="100">
             <div class="icon-box iconbox-blue border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -118,7 +121,7 @@
             </div>
           </div>
 
-          <div @click="gotoLink('links')" v-if="this.user.is_admin" class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
+          <div @click="gotoLink('links')" v-if="this.user.is_admin" class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"  data-aos-delay="200">
             <div class="icon-box iconbox-orange border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -132,7 +135,7 @@
             </div>
           </div>
 
-          <div v-if="this.user.is_admin" class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="200">
+          <div v-if="this.user.is_admin" class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"  data-aos-delay="200">
             <div class="icon-box iconbox-orange border">
               <div class="icon">
                 <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
