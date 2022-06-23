@@ -153,7 +153,7 @@
                           <router-link
                             style="color: black"
                             :to="{
-                              name: 'edit-invoice',
+                              name: this.user.is_admin?'edit-invoice':'invoices',
                               params: { invoice_id: invoice.id },
                             }"
                             href="javascript:void"
@@ -173,6 +173,7 @@
                         <td>{{ invoice.due_date }}</td>
                         <td>
                           <button
+                            v-if="this.user.is_admin"
                             v-show="invoice.invoice_status_id != 3"
                             @click="setupMarkPaid(invoice)"
                             type="button"
@@ -181,6 +182,7 @@
                             Mark as Paid
                           </button>
                           <button
+                            v-if="this.user.is_admin"
                             v-show="invoice.invoice_status_id == 3"
                             type="button"
                             @click="openModal(invoice)"
@@ -208,6 +210,7 @@
                             data-bs-toggle="tooltip"
                             data-bs-placement="top"
                             title="Edit"
+                            v-if="this.user.is_admin"
                           >
                             Edit
                           </router-link>
@@ -230,6 +233,7 @@
                             data-bs-toggle="tooltip"
                             data-bs-placement="top"
                             title="Delete"
+                            v-if="this.user.is_admin"
                           >
                             Delete
                           </a>
@@ -286,8 +290,10 @@ import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import InvoiceMarkPaidModal from "./InvoiceMarkPaidModal.vue";
 import InvoiceThumb from "../invoices/InvoiceThumb.vue";
+import { mapState } from "vuex";
 
 export default {
+  computed: mapState(["user"]),
   components: {
     InvoiceThumb,
     PageHeader,
