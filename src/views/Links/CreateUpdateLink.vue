@@ -29,7 +29,11 @@
               <div class="form-group row">
                 <div class="col-sm-12">
                   <label for="">
-                    URL<span style="color: red">*</span> <span style="font-size: 12px; color: red">(Note: Sample URL: https://en.wikipedia.org/wiki/Main_Page)</span>
+                    URL<span style="color: red">*</span>
+                    <span style="font-size: 12px; color: red"
+                      >(Note: Sample URL:
+                      https://en.wikipedia.org/wiki/Main_Page)</span
+                    >
                     <input
                       v-model="linkData.url"
                       type="text"
@@ -130,7 +134,7 @@ export default {
             this.$notify({
               type: "error",
               title: "Something went wrong!",
-              text: error.response.data.error,
+              text: error.response.data.message,
             });
           });
       }
@@ -164,11 +168,11 @@ export default {
             },
             (error) => {
               this.saving = false;
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );

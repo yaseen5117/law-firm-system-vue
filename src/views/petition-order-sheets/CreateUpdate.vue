@@ -171,11 +171,11 @@ export default {
             },
             (error) => {
               this.saving = false;
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -189,7 +189,7 @@ export default {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
-        
+
         axios
           .post(
             this.base_url + "/api/petition_order_sheets",
@@ -219,11 +219,11 @@ export default {
             },
             (error) => {
               this.saving = false;
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -242,6 +242,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
     async getCourts() {
@@ -257,6 +262,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
     async getPetitionTypes() {
@@ -272,6 +282,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
     getPetition() {
@@ -289,6 +304,11 @@ export default {
           })
           .catch((error) => {
             console.log(error);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
           });
       }
     },
@@ -298,9 +318,9 @@ export default {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
       let module = {
-        'module_id': 1
+        module_id: 1,
       };
-      
+
       axios
         .get(url, { headers, params: module })
         .then((response) => {
@@ -309,6 +329,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
   },

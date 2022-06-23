@@ -7,21 +7,23 @@
           <div class="col-12 col-md-8 offset-md-2">
             <FullCalendar :options="calendarOptions" />
 
-            <p><small>(Server Time: {{server_time}})</small></p>
-            
+            <p>
+              <small>(Server Time: {{ server_time }})</small>
+            </p>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-   <bootstrap-modal-no-jquery   
-   :title = "popupTitle" 
-   :selected_date = "selected_date" 
-   :eventToUpdateProp = "eventToUpdate" 
-   v-if="displayModal" 
-   @close-modal-event="hideModal" 
-   @triggerGetEvents="getEvents" />
+  <bootstrap-modal-no-jquery
+    :title="popupTitle"
+    :selected_date="selected_date"
+    :eventToUpdateProp="eventToUpdate"
+    v-if="displayModal"
+    @close-modal-event="hideModal"
+    @triggerGetEvents="getEvents"
+  />
 
   <!-- End #main -->
 </template>
@@ -36,7 +38,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction";
 import BootstrapModalNoJquery from "./BootstrapModalNoJquery.vue";
-import moment from 'moment';
+import moment from "moment";
 
 export default {
   components: { PageHeader, FullCalendar, BootstrapModalNoJquery },
@@ -48,11 +50,11 @@ export default {
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
         initialView: "dayGridMonth",
         dateClick: this.handleDateClick,
-        eventClick: this.handleEventClick,         
+        eventClick: this.handleEventClick,
         //Dynamic Event Source
         events: [],
-        editable:false,
-        eventDrop: function(info) {
+        editable: false,
+        eventDrop: function (info) {
           //alert(info.event.title + " was dropped on " + info.event.start.toISOString());
 
           if (!confirm("Are you sure about this change?")) {
@@ -60,14 +62,11 @@ export default {
           }
 
           this.eventToUpdate = info.event;
-
-
-        }
-        
+        },
       },
       eventToUpdate: {},
-      server_time:null,
-      popupTitle:null,
+      server_time: null,
+      popupTitle: null,
     };
   },
   created() {
@@ -86,7 +85,7 @@ export default {
     },
 
     dateTime(value) {
-      return moment(value).format('DD-MM-YYYY');
+      return moment(value).format("DD-MM-YYYY");
     },
 
     async getEvents() {
@@ -105,6 +104,12 @@ export default {
           console.log(this.calendarOptions.events);
         })
         .catch((error) => {
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
+
           console.log(error);
         });
     },
@@ -114,12 +119,10 @@ export default {
       this.popupTitle = "Add";
       //this.$emit('name', "Raja Tamil");
       this.eventToUpdate = null;
-      
+
       this.selected_date = this.dateTime(arg.dateStr);
-      
     },
     handleEventClick(info) {
-      
       this.showModal();
       /* console.log('Event: ' + info.event.title);
       console.log('Event: ' + info.event.id);
@@ -128,9 +131,9 @@ export default {
       this.popupTitle = "Edit";
       this.eventToUpdate = info.event;
       //this.eventToUpdate.extendedProps.hearing_date = this.dateTime(info.eventToUpdate.extendedProps.hearing_date);
-      
+
       // change the border color just for fun
-      info.el.style.borderColor = 'red';
+      info.el.style.borderColor = "red";
     },
   },
 };

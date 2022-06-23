@@ -6,45 +6,43 @@
     :modal="true"
     :showHeader="false"
     :closeOnEscape="true"
-    :dismissableMask="true"   
+    :dismissableMask="true"
   >
     <div class="container mt-5">
       <form @submit.prevent="submitForm($event)" enctype="multipart/form-data">
         <div class="row">
-          
-            <div class="col-lg-6 col-md-6 col-sm-6">              
-              <label>
-                Paid Date
-                <InputMask
-                  mask="99/99/9999"
-                  placeholder="dd/mm/yyyy"
-                  v-model="invoice.paid_date"
-                  type="text"
-                  class="p-inputtext-sm form-control"
-                   
-                />
-              </label>
-            </div>
-             <div class="col-lg-6 col-md-6 col-sm-6">
-              <label>
-                Paid Amount
-                <InputNumber                 
-                v-model="invoice.paid_amount" 
-                mode="decimal" 
-                :minFractionDigits="2" 
-                :maxFractionDigits="5" 
-                :useGrouping="false"          
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <label>
+              Paid Date
+              <InputMask
+                mask="99/99/9999"
+                placeholder="dd/mm/yyyy"
+                v-model="invoice.paid_date"
+                type="text"
+                class="p-inputtext-sm form-control"
+              />
+            </label>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <label>
+              Paid Amount
+              <InputNumber
+                v-model="invoice.paid_amount"
+                mode="decimal"
+                :minFractionDigits="2"
+                :maxFractionDigits="5"
+                :useGrouping="false"
                 class="p-inputtext-sm"
                 style="width: 100%"
-                />
-                <!-- <input
+              />
+              <!-- <input
                   type="number"
                   v-model="invoice.amount"
                   class="form-control"
                 /> -->
-              </label>
-            </div>
-                 
+            </label>
+          </div>
+
           <div class="form-group">
             <div class="col-lg-12 col-md-12 col-sm-12">
               <label>
@@ -59,24 +57,33 @@
           </div>
           <div class="form-group">
             <div class="col-lg-12 col-md-12 col-sm-12">
-
-                <file-upload
-                  type="App\Models\Invoice"
-                  :attachmentable_id="invoice.id"
-                  receipt="true"
-                />
-             
+              <file-upload
+                type="App\Models\Invoice"
+                :attachmentable_id="invoice.id"
+                receipt="true"
+              />
             </div>
 
-            <div class="form-group mt-3 text-end" >
+            <div class="form-group mt-3 text-end">
               <div class="col-lg-3 col-md-3 col-sm-12 mb-2">
-                <InvoiceThumb :base_url="base_url" folder_name="invoices" :invoice="invoice" />
+                <InvoiceThumb
+                  :base_url="base_url"
+                  folder_name="invoices"
+                  :invoice="invoice"
+                />
               </div>
-              <div class="col-lg-9 col-md-9 col-sm-12" style="float:right">
+              <div class="col-lg-9 col-md-9 col-sm-12" style="float: right">
                 <button class="btn btn-success btn-sm" :disabled="saving">
                   Mark as Paid
                 </button>
-                <button type="button" class="btn btn-primary btn-sm " style="margin-left: 5px" @click="closeModal()">Close</button>
+                <button
+                  type="button"
+                  class="btn btn-primary btn-sm"
+                  style="margin-left: 5px"
+                  @click="closeModal()"
+                >
+                  Close
+                </button>
               </div>
             </div>
           </div>
@@ -98,20 +105,20 @@ import InvoiceThumb from "../invoices/InvoiceThumb.vue";
 import moment from "moment";
 
 export default {
-  emits: ["afterSubmit","closeModal"],
-  props: ["title","invoice","excute"],
+  emits: ["afterSubmit", "closeModal"],
+  props: ["title", "invoice", "excute"],
   components: {
     FileUpload,
     InvoiceThumb,
   },
   data() {
-    return {      
+    return {
       title: this.title,
-      base_url: process.env.VUE_APP_SERVICE_URL,       
-      saving: false,       
+      base_url: process.env.VUE_APP_SERVICE_URL,
+      saving: false,
     };
-  },    
-    
+  },
+
   methods: {
     closeModal() {
       this.$emit("closeModal", "Hide Dialog/Modal");
@@ -141,22 +148,22 @@ export default {
                 });
                 this.saving = false;
                 console.log(response.data);
-                this.$emit("close-modal-event");    
-                this.$emit("afterSubmit", "Reloading the Data of Invoice");                
+                this.$emit("close-modal-event");
+                this.$emit("afterSubmit", "Reloading the Data of Invoice");
               }
             },
             (error) => {
               this.saving = false;
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
       }
-    }, 
+    },
   },
 };
 </script>

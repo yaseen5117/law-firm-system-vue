@@ -245,16 +245,21 @@ export default {
   methods: {
     getPetitionReplyDetails() {
       var headers = {
-          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       axios
-        .get(this.base_url + "/api/petition_replies/" + this.id, {headers})
+        .get(this.base_url + "/api/petition_replies/" + this.id, { headers })
         .then((response) => {
           this.petition_replies = response.data.petition_replies;
           this.petition = response.data.petition;
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
     deletePetitionReply(petitionId, petitionReplyIndex) {
@@ -281,11 +286,11 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -317,11 +322,11 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -352,25 +357,22 @@ export default {
                   text: "Saved Successfully!",
                 });
                 this.saving = false;
-                
-                this.new_petition_reply = {
-                  
-                };
+
+                this.new_petition_reply = {};
                 setTimeout(() => {
                   this.v$.$reset();
-                  this.$refs.newreplydescription.focus()
-                   
+                  this.$refs.newreplydescription.focus();
                 }, 0);
                 this.getPetitionReplyDetails();
               }
             },
             (error) => {
               this.saving = false;
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );

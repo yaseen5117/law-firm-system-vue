@@ -1,22 +1,19 @@
 <template>
-  <main id="main" class="margintop85">  
-      <page-header :title="page_title" :hideBreadCrumbs="true" />       
+  <main id="main" class="margintop85">
+    <page-header :title="page_title" :hideBreadCrumbs="true" />
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg mt-3">
       <div class="container" data-aos="fade-up">
-        <div class="row">                
+        <div class="row">
           <div class="table-responsive">
             <div class="col-lg-12 col-md-12 col-sm-12">
               <table class="table table-hover">
                 <thead>
-                  <th>Title</th>                                  
-                  <th width="10%">Actions</th>                   
+                  <th>Title</th>
+                  <th width="10%">Actions</th>
                 </thead>
                 <tbody>
-                  <tr                    
-                    v-for="(court, row_index) in courts"
-                    :key="court.id"
-                  >                      
+                  <tr v-for="(court, row_index) in courts" :key="court.id">
                     <td>
                       <input
                         v-show="court.editMode"
@@ -24,11 +21,9 @@
                         v-model="court.title"
                         v-on:keyup.enter="editGeneralLawIndex(court)"
                       />
-                      <span v-show="!court.editMode">{{
-                        court.title
-                      }}</span>
+                      <span v-show="!court.editMode">{{ court.title }}</span>
                     </td>
-                     
+
                     <td width="15%">
                       <a
                         class="btn btn-sm btn-primary action-btn"
@@ -74,9 +69,7 @@
                       <a
                         class="btn btn-sm btn-danger action-btn"
                         v-show="!court.editMode"
-                        @click="
-                          deleteGeneralLawIndex(court.id, row_index)
-                        "
+                        @click="deleteGeneralLawIndex(court.id, row_index)"
                         href="javascript:void"
                         style="margin-left: 2px"
                         data-bs-toggle="tooltip"
@@ -85,9 +78,8 @@
                       >
                         Delete
                         <!-- <i class="fa fa-trash-o"></i> -->
-                      </a>                       
-                    </td>                                                    
-                    
+                      </a>
+                    </td>
                   </tr>
                   <tr>
                     <td>
@@ -100,13 +92,13 @@
                         }"
                         @blur="v$.new_court.title.$touch"
                       />
-                     <span
-                      v-if="v$.new_court.title.$error"
-                      class="errorMessage"
-                      >Title field is required.</span
-                    >
-                    </td> 
-                   
+                      <span
+                        v-if="v$.new_court.title.$error"
+                        class="errorMessage"
+                        >Title field is required.</span
+                      >
+                    </td>
+
                     <td>
                       <button
                         :disabled="saving"
@@ -131,77 +123,73 @@
 </template>
 
 <script>
-import axios from "axios"; 
+import axios from "axios";
 import PageHeader from "../shared/PageHeader";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 
 export default {
   components: {
-     PageHeader
+    PageHeader,
   },
   setup() {
-      return {
-        v$: useVuelidate(),
-      };
-    },
+    return {
+      v$: useVuelidate(),
+    };
+  },
   data() {
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,
       page_title: "...",
-      petition: {},       
+      petition: {},
       new_court: {},
-      courts: [],       
-      saving: false,    
+      courts: [],
+      saving: false,
     };
   },
   validations() {
-    return {      
-        new_court: {
-          title: { required },  
-        }       
+    return {
+      new_court: {
+        title: { required },
+      },
     };
   },
-  created() {   
+  created() {
     this.getModuleIndex();
   },
-  methods: {    
+  methods: {
     getModuleIndex() {
-       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       axios
-        .get(
-          this.base_url + "/api/courts",
-          {headers}
-        )
+        .get(this.base_url + "/api/courts", { headers })
         .then((response) => {
           this.courts = response.data.courts;
           this.page_title = response.data.page_title;
-          console.log(response.data.page_title);           
+          console.log(response.data.page_title);
         })
         .catch((error) => {
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
           console.log(error);
         });
     },
 
     submitGeneralCaseLaw() {
       this.v$.$validate();
-      if (!this.v$.$error) { 
+      if (!this.v$.$error) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
-        this.saving = true;        
+        this.saving = true;
         axios
-          .post(
-            this.base_url + "/api/courts",
-            this.new_court,
-            {
-              headers,
-            }
-          )
+          .post(this.base_url + "/api/courts", this.new_court, {
+            headers,
+          })
           .then(
             (response) => {
               if (response.status === 200) {
@@ -212,7 +200,9 @@ export default {
                 });
                 this.saving = false;
                 this.new_court = {};
-                setTimeout(() => { this.v$.$reset() }, 0)
+                setTimeout(() => {
+                  this.v$.$reset();
+                }, 0);
                 this.getModuleIndex();
               }
             },
@@ -222,7 +212,7 @@ export default {
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -231,18 +221,13 @@ export default {
     editGeneralLawIndex(standardIndexToUpdate) {
       if (true) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
-          .post(
-            this.base_url + "/api/courts",
-            standardIndexToUpdate,
-            {
-              headers,
-            }
-          )
+          .post(this.base_url + "/api/courts", standardIndexToUpdate, {
+            headers,
+          })
           .then(
             (response) => {
               if (response.status === 200) {
@@ -259,7 +244,7 @@ export default {
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -268,8 +253,7 @@ export default {
     deleteGeneralLawIndex(caseId, row_index) {
       if (confirm("Do you really want to delete?")) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
@@ -283,7 +267,7 @@ export default {
                   type: "success",
                   title: "Success",
                   text: "Deleted Successfully!",
-                });                
+                });
                 this.courts.splice(row_index, 1); //removing record from list/index after deleting record from DB
               }
             },
@@ -292,7 +276,7 @@ export default {
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );

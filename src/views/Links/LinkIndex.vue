@@ -13,35 +13,32 @@
       <section id="services" class="services section-bg">
         <BlockUI :blocked="links" :fullScreen="true">
           <div class="container" data-aos="fade-up">
-            <div class="row">             
+            <div class="row">
               <div class="col-md-12">
                 <div class="table-responsive">
                   <table class="table table-striped" v-if="isLoaded">
                     <thead>
                       <tr>
                         <th>Title</th>
-                        <th>Url</th>   
-                        <th>Description</th>   
-                        <th>Display Order</th>                  
+                        <th>Url</th>
+                        <th>Description</th>
+                        <th>Display Order</th>
                         <th class="text-end">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr
-                        v-for="(link, link_index) in links"
-                        :key="link_index"
-                      >
+                      <tr v-for="(link, link_index) in links" :key="link_index">
                         <td>
-                           {{link.title}}
+                          {{ link.title }}
                         </td>
 
                         <td>
                           <a :href="link.url" target="_blank">
                             {{ link.url }}
                           </a>
-                          </td>
-                        <td>{{link.description}}</td>
-                        <td>{{link.display_order}}</td>
+                        </td>
+                        <td>{{ link.description }}</td>
+                        <td>{{ link.display_order }}</td>
                         <td class="text-end">
                           <router-link
                             class="btn btn-sm btn-success action-btn"
@@ -56,7 +53,7 @@
                             title="Edit"
                           >
                             Edit
-                          </router-link>                
+                          </router-link>
 
                           <a
                             class="btn btn-sm btn-danger action-btn"
@@ -85,7 +82,7 @@
           </div>
         </BlockUI>
       </section>
-    </main>   
+    </main>
     <!-- End #main -->
   </BlockUI>
 </template>
@@ -96,12 +93,11 @@ import PageHeader from "../shared/PageHeader.vue";
 import Editor from "primevue/editor";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
- 
 
 export default {
-  components: {    
+  components: {
     PageHeader,
-    Editor,     
+    Editor,
   },
   setup() {
     return {
@@ -110,23 +106,23 @@ export default {
   },
   data() {
     return {
-        links: [],
+      links: [],
       showDateType: false,
-      excute: false,      
+      excute: false,
       saving: false,
       route_obj: {
         name: "create-link",
       },
       header_button: true,
       header_button_text: "Create link",
-      base_url: process.env.VUE_APP_SERVICE_URL, 
+      base_url: process.env.VUE_APP_SERVICE_URL,
       isLoaded: false,
     };
-  }, 
+  },
   created() {
     this.getLinks();
   },
-  methods: {   
+  methods: {
     getLinks() {
       this.isLoaded = false;
       var headers = {
@@ -136,14 +132,14 @@ export default {
       axios
         .get(url, { headers, params: this.filters })
         .then((response) => {
-          this.links = response.data.links;         
+          this.links = response.data.links;
           this.isLoaded = true;
         })
         .catch((error) => {
           this.$notify({
             type: "error",
             title: "Something went wrong!",
-            text: error.response.data.error,
+            text: error.response.data.message,
           });
         });
     },
@@ -169,17 +165,17 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
       }
-    },           
-  }, 
+    },
+  },
 };
 </script>
 

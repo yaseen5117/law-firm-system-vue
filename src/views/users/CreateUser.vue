@@ -321,14 +321,13 @@ export default {
   },
 
   methods: {
-    removeContactPerson: function (obj, index, userId) {      
+    removeContactPerson: function (obj, index, userId) {
       if (userId) {
         this.saving = true;
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
-        let url =
-          this.base_url + "/api/users/" + userId;
+        let url = this.base_url + "/api/users/" + userId;
         axios
           .delete(url, { headers })
           .then((response) => {
@@ -350,11 +349,9 @@ export default {
               text: error,
             });
           });
-      }else{
+      } else {
         obj.splice(index, 1);
-      }    
-
-
+      }
     },
     addContactPerson() {
       var contact_person_single = {
@@ -425,11 +422,11 @@ export default {
                 this.contact_person_email_error =
                   error.response.data.contact_person_validation_error.email[0];
               }
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -453,7 +450,7 @@ export default {
             this.$notify({
               type: "error",
               title: "Something went wrong!",
-              text: error,
+              text: error.response.data.message,
             });
           });
       }
@@ -473,7 +470,7 @@ export default {
           this.$notify({
             type: "error",
             title: "Something went wrong!",
-            text: error,
+            text: error.response.data.message,
           });
         });
     },

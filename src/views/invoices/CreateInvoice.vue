@@ -101,17 +101,17 @@
                             "
                           />
                           <small>Edit client</small></label
-                        >   
-                                                   
+                        >
+
                         <AutoComplete
-                          v-model="invoice.selectedClient.name"                          
+                          v-model="invoice.selectedClient.name"
                           :suggestions="filteredClients"
-                          emptyMessage="No Record Found!"                         
+                          emptyMessage="No Record Found!"
                           @complete="searchClient($event)"
                           modelValue="id"
-                          field="name"  
+                          field="name"
                           @item-select="onClientSelect($event)"
-                          placeholder="Find By Client Name"                        
+                          placeholder="Find By Client Name"
                           appendTo="self"
                           minLength="3"
                           autoHighlight="true"
@@ -120,9 +120,10 @@
                           delay="1"
                           :style="'width:100%'"
                           :inputStyle="'width:100%'"
-                        @blur="v$.invoice.selectedClient.name.$touch"
+                          @blur="v$.invoice.selectedClient.name.$touch"
                           v-bind:class="{
-                            'error-boarder': v$.invoice.selectedClient.name.$error,
+                            'error-boarder':
+                              v$.invoice.selectedClient.name.$error,
                           }"
                         />
                         <span
@@ -560,7 +561,7 @@ export default {
       invoice: {
         selectedClient: {
           name: { required },
-        }        
+        },
       },
     };
   },
@@ -585,9 +586,9 @@ export default {
       axios
         .get(url, { headers, params: query })
         .then((response) => {
-          this.filteredClients = response.data.clients;  
-          console.log("Filtered Clients")
-          console.log(response.data.clients);        
+          this.filteredClients = response.data.clients;
+          console.log("Filtered Clients");
+          console.log(response.data.clients);
         })
         .catch((error) => {
           console.log(error);
@@ -635,7 +636,7 @@ export default {
             this.$notify({
               type: "error",
               title: "Something went wrong!",
-              text: error,
+              text: error.response.data.message,
             });
           }
         );
@@ -677,7 +678,7 @@ export default {
             this.$notify({
               type: "error",
               title: "Something went wrong!",
-              text: error,
+              text: error.response.data.message,
             });
           });
       } else {
@@ -731,7 +732,7 @@ export default {
           this.$notify({
             type: "error",
             title: "Something went wrong!",
-            text: error,
+            text: error.response.data.message,
           });
         });
     },
@@ -751,13 +752,13 @@ export default {
           this.$notify({
             type: "error",
             title: "Something went wrong!",
-            text: error,
+            text: error.response.data.message,
           });
         });
     },
-    onClientSelect(event) { 
-       console.log('printing an event')
-           console.log(event)
+    onClientSelect(event) {
+      console.log("printing an event");
+      console.log(event);
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
@@ -780,7 +781,7 @@ export default {
           this.$notify({
             type: "error",
             title: "Something went wrong!",
-            text: error,
+            text: error.response.data.message,
           });
         });
     },
@@ -817,7 +818,7 @@ export default {
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error,
+                text: error.response.data.message,
               });
             }
           );
@@ -841,11 +842,11 @@ export default {
             this.invoice.invoice_meta = response.data.invoice.invoice_meta;
             if (!this.invoice.paid_amount) {
               this.invoice.paid_amount = this.invoice.amount;
-            }            
+            }
             this.invoice.contact_person_emails = [];
             response.data.invoice.client.contact_persons.forEach((user) => {
               this.invoice.contact_person_emails.push(user.email);
-            }); 
+            });
             this.filteredClients = response.data.invoice.client;
             // if (response.data.invoice.invoice_status_id == 2) {
             //   this.isShowEmailContent = true;
@@ -856,7 +857,7 @@ export default {
             this.$notify({
               type: "error",
               title: "Something went wrong!",
-              text: error,
+              text: error.response.data.message,
             });
           });
       }

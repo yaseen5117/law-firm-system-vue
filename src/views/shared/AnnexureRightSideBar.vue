@@ -8,14 +8,13 @@
   >
     <div @show="!editView">
       <ul class="list-group">
-
         <router-link
           v-if="petition"
           class="list-group-item"
           :to="{
-                name: 'case-detail',
-                params: { id: petition.id },
-              }"
+            name: 'case-detail',
+            params: { id: petition.id },
+          }"
           >Index</router-link
         >
 
@@ -46,7 +45,7 @@
 
 <script>
 export default {
-  props: ["petition_index", "url","petition"],
+  props: ["petition_index", "url", "petition"],
   data() {
     return {
       visibleRight: true,

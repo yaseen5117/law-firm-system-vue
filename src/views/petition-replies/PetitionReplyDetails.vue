@@ -208,8 +208,7 @@
                                 editPetitionReplyAttachment(attachment)
                               "
                             />
-                            <span
-                              v-show="!attachment.editMode"                              
+                            <span v-show="!attachment.editMode"
                               >{{ attachment.title }}
                             </span>
                           </td>
@@ -363,9 +362,9 @@ export default {
       }
     },
     async getPetitionReplyDetails() {
-     var headers = {
-          Authorization: `Bearer` + localStorage.getItem("lfms_user"),
-        };
+      var headers = {
+        Authorization: `Bearer` + localStorage.getItem("lfms_user"),
+      };
       await axios
         .post(this.base_url + "/api/petition_reply_details/" + this.id, {
           headers,
@@ -380,6 +379,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
 
@@ -406,6 +410,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
     editPetitionReplyAttachment(attachmentToUpdate) {
@@ -434,11 +443,11 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -470,11 +479,11 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -527,11 +536,11 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );

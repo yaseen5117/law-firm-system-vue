@@ -1,195 +1,217 @@
 <template>
-<BlockUI :blocked="!isLoaded" :fullScreen="true">
-  <main id="main" class="margintop85">  
-      <page-header :title="page_title" :hideBreadCrumbs="true" />       
-    <!-- ======= Services Section ======= -->
-    <section id="services" class="services section-bg mt-3">
-      <BlockUI :blocked="general_case_laws" :fullScreen="true">
-      <div class="container" data-aos="fade-up">
-        <div class="row">   
-          <!-- search filters -->
-            <div class="col-md-12 col-12">
-               
-              <Transition name="fade">
-              <form v-if="showSearchForm"  class="row mb-2">                               
-                 <div class="col-lg-3 col-md-3 col-sm-12">
-                  <label for="">Case Title</label>
-                  <input
-                    type="text"
-                    id="year"
-                    v-model="filters.case_title"
-                    class="form-control form-control-sm" 
-                  />
-                </div>                   
-                <div class="col-lg-3 col-md-3 col-sm-12">
-                  <label for="">Keywords</label>
-                  <input                    
-                    v-model="filters.keywords"
-                    type="text"
-                    id="ClientName"
-                    class="form-control form-control-sm"
-                  />
-                </div>              
+  <BlockUI :blocked="!isLoaded" :fullScreen="true">
+    <main id="main" class="margintop85">
+      <page-header :title="page_title" :hideBreadCrumbs="true" />
+      <!-- ======= Services Section ======= -->
+      <section id="services" class="services section-bg mt-3">
+        <BlockUI :blocked="general_case_laws" :fullScreen="true">
+          <div class="container" data-aos="fade-up">
+            <div class="row">
+              <!-- search filters -->
+              <div class="col-md-12 col-12">
+                <Transition name="fade">
+                  <form v-if="showSearchForm" class="row mb-2">
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                      <label for="">Case Title</label>
+                      <input
+                        type="text"
+                        id="year"
+                        v-model="filters.case_title"
+                        class="form-control form-control-sm"
+                      />
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                      <label for="">Keywords</label>
+                      <input
+                        v-model="filters.keywords"
+                        type="text"
+                        id="ClientName"
+                        class="form-control form-control-sm"
+                      />
+                    </div>
 
-                <div class="col-lg-1 col-md-1 col-sm-12">
-                  
-                  <button
-
-                    type="button"
-                    class="btn btn-danger btn-sm mt-lg-4 mt-md-4 mt-2"
-                    @click="reset()"
-                  >
-                    Reset
-                  </button>
-                </div>
-              </form>
-              </Transition>
-            </div>
-            <!-- search filters -->
-            <div style="display: none" class="col-lg-12 col-md-12 col-sm-12 mb-3">
-              
-                <button class="btn btn-secondary btn-sm " v-if="showSearchForm" @click="showSearchForm=!showSearchForm" >Hide Filters</button>
-                <button class="btn btn-warning btn-sm" v-else-if="!showSearchForm" @click="showSearchForm=!showSearchForm;">Show Filters</button>
-              
-          
-            </div>             
-          <div class="table-responsive">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-              <table class="table table-striped" v-if="isLoaded">
-                <thead>
-                  <th>Case Title</th>
-                  <th>Citation</th>
-                  <th>Keywords</th>                   
-                   <th>Legal Provisions</th>     
-                  <th width="10%">Actions</th>                   
-                </thead>
-                <tbody>
-                  <tr                    
-                    v-for="(general_case_law, row_index) in general_case_laws"
-                    :key="general_case_law.id"
-                  >
-                    <td>
-                      <input
-                        v-show="general_case_law.editMode"
-                        class="form-control"
-                        v-model="general_case_law.case_title"
-                        v-on:keyup.enter="editGeneralLawIndex(general_case_law)"
-                      />
-                      <span v-show="!general_case_law.editMode">
-                        {{ general_case_law.case_title }}
-                      </span>                      
-                    </td>
-                   
-                    <td>
-                      <input
-                        v-show="general_case_law.editMode"
-                        class="form-control"
-                        v-model="general_case_law.citation"
-                        v-on:keyup.enter="editGeneralLawIndex(general_case_law)"
-                      />
-                      <span v-show="!general_case_law.editMode">{{
-                        general_case_law.citation
-                      }}</span>
-                    </td>
-                    <td>
-                      <input
-                        v-show="general_case_law.editMode"
-                        class="form-control"
-                        v-model="general_case_law.keywords"
-                        v-on:keyup.enter="editGeneralLawIndex(general_case_law)"
-                      />
-                      <span v-show="!general_case_law.editMode">{{
-                        general_case_law.keywords
-                      }}</span>
-                    </td>
-                    <td>
-                      <input
-                        v-show="general_case_law.editMode"
-                        class="form-control"
-                        v-model="general_case_law.legal_provisions"
-                        v-on:keyup.enter="editGeneralLawIndex(general_case_law)"
-                      />
-                      <span v-show="!general_case_law.editMode">{{
-                        general_case_law.legal_provisions
-                      }}</span>
-                    </td>
-
-                    <td width="15%">
+                    <div class="col-lg-1 col-md-1 col-sm-12">
                       <button
-                        class="btn btn-sm btn-primary action-btn"
-                        v-show="!general_case_law.editMode"
-                        @click="general_case_law.editMode = true"
-                        href="javascript:void"
-                        style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Edit"
+                        type="button"
+                        class="btn btn-danger btn-sm mt-lg-4 mt-md-4 mt-2"
+                        @click="reset()"
                       >
-                        Edit
-                        <!-- <i class="fa fa-edit"></i> -->
+                        Reset
                       </button>
-                      <button
-                        v-show="general_case_law.editMode"
-                        class="btn btn-sm btn-warning action-btn"
-                        @click="editGeneralLawIndex(general_case_law)"
-                        :disabled="saving"
-                        style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Update"
+                    </div>
+                  </form>
+                </Transition>
+              </div>
+              <!-- search filters -->
+              <div
+                style="display: none"
+                class="col-lg-12 col-md-12 col-sm-12 mb-3"
+              >
+                <button
+                  class="btn btn-secondary btn-sm"
+                  v-if="showSearchForm"
+                  @click="showSearchForm = !showSearchForm"
+                >
+                  Hide Filters
+                </button>
+                <button
+                  class="btn btn-warning btn-sm"
+                  v-else-if="!showSearchForm"
+                  @click="showSearchForm = !showSearchForm"
+                >
+                  Show Filters
+                </button>
+              </div>
+              <div class="table-responsive">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <table class="table table-striped" v-if="isLoaded">
+                    <thead>
+                      <th>Case Title</th>
+                      <th>Citation</th>
+                      <th>Keywords</th>
+                      <th>Legal Provisions</th>
+                      <th width="10%">Actions</th>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="(
+                          general_case_law, row_index
+                        ) in general_case_laws"
+                        :key="general_case_law.id"
                       >
-                        Update
-                        <!-- <i class="fa fa-save"></i> -->
-                      </button>
+                        <td>
+                          <input
+                            v-show="general_case_law.editMode"
+                            class="form-control"
+                            v-model="general_case_law.case_title"
+                            v-on:keyup.enter="
+                              editGeneralLawIndex(general_case_law)
+                            "
+                          />
+                          <span v-show="!general_case_law.editMode">
+                            {{ general_case_law.case_title }}
+                          </span>
+                        </td>
 
-                      <button
-                        v-show="general_case_law.editMode"
-                        @click="general_case_law.editMode = false"
-                        class="btn btn-sm btn-info action-btn"
-                        href="javascript:void"
-                        style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Cancel"
-                      >
-                        Cancel
-                        <!-- <i class="fa fa-remove"></i> -->
-                      </button>
+                        <td>
+                          <input
+                            v-show="general_case_law.editMode"
+                            class="form-control"
+                            v-model="general_case_law.citation"
+                            v-on:keyup.enter="
+                              editGeneralLawIndex(general_case_law)
+                            "
+                          />
+                          <span v-show="!general_case_law.editMode">{{
+                            general_case_law.citation
+                          }}</span>
+                        </td>
+                        <td>
+                          <input
+                            v-show="general_case_law.editMode"
+                            class="form-control"
+                            v-model="general_case_law.keywords"
+                            v-on:keyup.enter="
+                              editGeneralLawIndex(general_case_law)
+                            "
+                          />
+                          <span v-show="!general_case_law.editMode">{{
+                            general_case_law.keywords
+                          }}</span>
+                        </td>
+                        <td>
+                          <input
+                            v-show="general_case_law.editMode"
+                            class="form-control"
+                            v-model="general_case_law.legal_provisions"
+                            v-on:keyup.enter="
+                              editGeneralLawIndex(general_case_law)
+                            "
+                          />
+                          <span v-show="!general_case_law.editMode">{{
+                            general_case_law.legal_provisions
+                          }}</span>
+                        </td>
 
-                      <button
-                        class="btn btn-sm btn-danger action-btn"
-                        v-show="!general_case_law.editMode"
-                        @click="
-                          deleteGeneralLawIndex(general_case_law.id, row_index)
-                        "
-                        :disabled="saving"
-                        style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Delete"
-                      >
-                        Delete
-                        <!-- <i class="fa fa-trash-o"></i> -->
-                      </button>                       
-                    </td>                                                    
-                    
-                  </tr>
-                  <tr>
-                    <td>
-                      <AutoComplete
-                      :delay="1"
-                      v-model="new_general_case_law.case_title"
-                      :suggestions="filteredCaseTitle"
-                      @complete="searchForAutocomplete($event)"
-                       v-bind:class="{
-                          'error-boarder': v$.new_general_case_law.case_title.$error,
-                        }"
-                        @blur="v$.new_general_case_law.case_title.$touch"
-                      :style="'width:100%'"
-                      :inputStyle="'width:100%'"
-                      ref="caseTitle"
-                    />
-                      <!-- <input
+                        <td width="15%">
+                          <button
+                            class="btn btn-sm btn-primary action-btn"
+                            v-show="!general_case_law.editMode"
+                            @click="general_case_law.editMode = true"
+                            href="javascript:void"
+                            style="margin-left: 2px"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Edit"
+                          >
+                            Edit
+                            <!-- <i class="fa fa-edit"></i> -->
+                          </button>
+                          <button
+                            v-show="general_case_law.editMode"
+                            class="btn btn-sm btn-warning action-btn"
+                            @click="editGeneralLawIndex(general_case_law)"
+                            :disabled="saving"
+                            style="margin-left: 2px"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Update"
+                          >
+                            Update
+                            <!-- <i class="fa fa-save"></i> -->
+                          </button>
+
+                          <button
+                            v-show="general_case_law.editMode"
+                            @click="general_case_law.editMode = false"
+                            class="btn btn-sm btn-info action-btn"
+                            href="javascript:void"
+                            style="margin-left: 2px"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Cancel"
+                          >
+                            Cancel
+                            <!-- <i class="fa fa-remove"></i> -->
+                          </button>
+
+                          <button
+                            class="btn btn-sm btn-danger action-btn"
+                            v-show="!general_case_law.editMode"
+                            @click="
+                              deleteGeneralLawIndex(
+                                general_case_law.id,
+                                row_index
+                              )
+                            "
+                            :disabled="saving"
+                            style="margin-left: 2px"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Delete"
+                          >
+                            Delete
+                            <!-- <i class="fa fa-trash-o"></i> -->
+                          </button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <AutoComplete
+                            :delay="1"
+                            v-model="new_general_case_law.case_title"
+                            :suggestions="filteredCaseTitle"
+                            @complete="searchForAutocomplete($event)"
+                            v-bind:class="{
+                              'error-boarder':
+                                v$.new_general_case_law.case_title.$error,
+                            }"
+                            @blur="v$.new_general_case_law.case_title.$touch"
+                            :style="'width:100%'"
+                            :inputStyle="'width:100%'"
+                            ref="caseTitle"
+                          />
+                          <!-- <input
                         class="form-control"
                         v-model="new_general_case_law.case_title"
                         v-on:keyup.enter="submitGeneralCaseLaw()"
@@ -198,80 +220,81 @@
                         }"
                         @blur="v$.new_general_case_law.case_title.$touch"
                       /> -->
-                      <span
-                        v-if="v$.new_general_case_law.case_title.$error"
-                        class="errorMessage"
-                        >Case Title field is required.</span
-                      >
-                    </td>
-                    
-                    <td>
-                      <input
-                        class="form-control"
-                        v-model="new_general_case_law.citation"
-                        v-on:keyup.enter="submitGeneralCaseLaw()"
-                        v-bind:class="{
-                          'error-boarder': v$.new_general_case_law.citation.$error,
-                        }"
-                        @blur="v$.new_general_case_law.citation.$touch"
-                      />
-                      <span
-                        v-if="v$.new_general_case_law.citation.$error"
-                        class="errorMessage"
-                        >Citation field is required.</span
-                      >
-                    </td>
-                    <td>
-                      <input
-                        class="form-control"
-                        v-model="new_general_case_law.keywords"
-                        v-on:keyup.enter="submitGeneralCaseLaw()"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        class="form-control"
-                        v-model="new_general_case_law.legal_provisions"
-                        v-on:keyup.enter="submitGeneralCaseLaw()"                        
-                      />                      
-                    </td>
-                    <td>
-                      <button
-                        :disabled="saving"
-                        @click="submitGeneralCaseLaw()"
-                        class="btn btn-sm btn-success action-btn"
-                      >
-                        Save
-                        <!-- <i class="fa fa-save"></i> -->
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-             <div v-if="!isLoaded" class="col-md-12">
+                          <span
+                            v-if="v$.new_general_case_law.case_title.$error"
+                            class="errorMessage"
+                            >Case Title field is required.</span
+                          >
+                        </td>
+
+                        <td>
+                          <input
+                            class="form-control"
+                            v-model="new_general_case_law.citation"
+                            v-on:keyup.enter="submitGeneralCaseLaw()"
+                            v-bind:class="{
+                              'error-boarder':
+                                v$.new_general_case_law.citation.$error,
+                            }"
+                            @blur="v$.new_general_case_law.citation.$touch"
+                          />
+                          <span
+                            v-if="v$.new_general_case_law.citation.$error"
+                            class="errorMessage"
+                            >Citation field is required.</span
+                          >
+                        </td>
+                        <td>
+                          <input
+                            class="form-control"
+                            v-model="new_general_case_law.keywords"
+                            v-on:keyup.enter="submitGeneralCaseLaw()"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            class="form-control"
+                            v-model="new_general_case_law.legal_provisions"
+                            v-on:keyup.enter="submitGeneralCaseLaw()"
+                          />
+                        </td>
+                        <td>
+                          <button
+                            :disabled="saving"
+                            @click="submitGeneralCaseLaw()"
+                            class="btn btn-sm btn-success action-btn"
+                          >
+                            Save
+                            <!-- <i class="fa fa-save"></i> -->
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div v-if="!isLoaded" class="col-md-12">
                   <p class="alert alert-warning">Loading....</p>
                 </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      </BlockUI>
-    </section>
-    <!-- End Services Section -->
-  </main>
-  <!-- End #main -->
-</BlockUI>
+        </BlockUI>
+      </section>
+      <!-- End Services Section -->
+    </main>
+    <!-- End #main -->
+  </BlockUI>
 </template>
 
 <script>
-import axios from "axios"; 
+import axios from "axios";
 import PageHeader from "../shared/PageHeader";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 
 export default {
   components: {
-     PageHeader
+    PageHeader,
   },
   setup() {
     return {
@@ -282,23 +305,28 @@ export default {
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,
       page_title: "Case Law Library",
-      petition: {},       
+      petition: {},
       new_general_case_law: {},
-      general_case_laws: [],       
-      saving: false,   
-      showSearchForm: true,    
-      filters: {}, 
-      defaultDocumentDiscriptions:["Power of Attorney","Writ Petition along with Affidavit","Application for stay cm","Application for Exemption"],
+      general_case_laws: [],
+      saving: false,
+      showSearchForm: true,
+      filters: {},
+      defaultDocumentDiscriptions: [
+        "Power of Attorney",
+        "Writ Petition along with Affidavit",
+        "Application for stay cm",
+        "Application for Exemption",
+      ],
       filteredCaseTitle: null,
       isLoaded: false,
     };
   },
   validations() {
-    return {     
+    return {
       new_general_case_law: {
         case_title: { required },
         citation: { required },
-      }     
+      },
     };
   },
   watch: {
@@ -306,49 +334,47 @@ export default {
       deep: true,
       handler() {
         if (!this.awaitingSearch) {
-            setTimeout(() => {
-              this.getGeneralCaseLaws();
-              this.awaitingSearch = false;
-            }, 1500); // 1 sec delay
-          }
-          this.awaitingSearch = true;
+          setTimeout(() => {
+            this.getGeneralCaseLaws();
+            this.awaitingSearch = false;
+          }, 1500); // 1 sec delay
+        }
+        this.awaitingSearch = true;
       },
     },
   },
-  created() { 
+  created() {
     this.getGeneralCaseLaws();
   },
-  methods: {   
+  methods: {
     searchForAutocomplete(event) {
       setTimeout(() => {
         if (!event.query.trim().length) {
           this.filteredCaseTitle = this.defaultDocumentDiscriptions;
         } else {
-          this.filteredCaseTitle = this.defaultDocumentDiscriptions.filter((country) => {
-            return country
-              .toLowerCase()
-              .startsWith(event.query.toLowerCase());
-          });
+          this.filteredCaseTitle = this.defaultDocumentDiscriptions.filter(
+            (country) => {
+              return country
+                .toLowerCase()
+                .startsWith(event.query.toLowerCase());
+            }
+          );
         }
       }, 250);
-    }, 
+    },
     reset() {
-      this.filters = {};       
+      this.filters = {};
     },
     getGeneralCaseLaws() {
       this.isLoaded = false;
-       var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       axios
-        .get(
-          this.base_url + "/api/general_case_laws",
-          {
-            headers,
-            params: this.filters,
-          }
-        )
+        .get(this.base_url + "/api/general_case_laws", {
+          headers,
+          params: this.filters,
+        })
         .then((response) => {
           this.general_case_laws = response.data.general_case_Laws;
           console.log(response.data.page_title);
@@ -364,10 +390,9 @@ export default {
       this.v$.$validate();
       if (!this.v$.$error) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
-        this.saving = true;        
+        this.saving = true;
         axios
           .post(
             this.base_url + "/api/general_case_laws",
@@ -386,20 +411,20 @@ export default {
                 });
                 this.saving = false;
                 this.new_general_case_law = {};
-                setTimeout(() => { 
+                setTimeout(() => {
                   this.v$.$reset();
-                  this.$refs.caseTitle.focus(); 
-                  }, 0)
+                  this.$refs.caseTitle.focus();
+                }, 0);
                 this.getGeneralCaseLaws();
               }
             },
             (error) => {
               this.saving = false;
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -408,10 +433,9 @@ export default {
     editGeneralLawIndex(standardIndexToUpdate) {
       if (true) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
-        this.saving = true;  
+        this.saving = true;
         axios
           .post(
             this.base_url + "/api/general_case_laws",
@@ -423,7 +447,7 @@ export default {
           .then(
             (response) => {
               if (response.status === 200) {
-                this.saving = false;  
+                this.saving = false;
                 this.$notify({
                   type: "success",
                   title: "Success",
@@ -433,12 +457,12 @@ export default {
               }
             },
             (error) => {
-              this.saving = false;  
-              console.log(error.response.data.error);
+              this.saving = false;
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -447,8 +471,7 @@ export default {
     deleteGeneralLawIndex(caseId, row_index) {
       if (confirm("Do you really want to delete?")) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
         this.saving = true;
         axios
@@ -462,18 +485,18 @@ export default {
                   type: "success",
                   title: "Success",
                   text: "Deleted Successfully!",
-                });   
-                this.saving = false;              
+                });
+                this.saving = false;
                 this.general_case_laws.splice(row_index, 1); //removing record from list/index after deleting record from DB
               }
             },
             (error) => {
               this.saving = false;
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );

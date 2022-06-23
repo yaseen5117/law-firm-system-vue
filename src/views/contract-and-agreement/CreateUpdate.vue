@@ -11,7 +11,10 @@
             >
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-12" style="display: none">
+                  <div
+                    class="col-lg-3 col-md-3 col-sm-12"
+                    style="display: none"
+                  >
                     <label>Category</label>
                     <Dropdown
                       v-model="contract_and_agreement.contract_category_id"
@@ -58,7 +61,7 @@
                 <div class="row">
                   <div class="col-lg-2 col-md-2 col-sm-3">
                     <button :disabled="saving" class="btn btn-success btn-sm">
-                      {{button_title}}
+                      {{ button_title }}
                     </button>
                   </div>
                 </div>
@@ -168,7 +171,7 @@ export default {
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -194,20 +197,19 @@ export default {
             this.$notify({
               type: "error",
               title: "Something went wrong!",
-              text: error,
+              text: error.response.data.message,
             });
           });
       }
     },
-    getContractCategories(){
+    getContractCategories() {
       if (true) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
-        var url =
-          this.base_url + "/api/contract_categories"
-          
+        var url = this.base_url + "/api/contract_categories";
+
         axios
           .get(url, { headers })
           .then((response) => {
@@ -218,11 +220,11 @@ export default {
             this.$notify({
               type: "error",
               title: "Something went wrong!",
-              text: error,
+              text: error.response.data.message,
             });
           });
       }
-    }
+    },
   },
 };
 </script>

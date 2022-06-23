@@ -21,7 +21,7 @@ import BlockUI from 'primevue/blockui';
 import Sidebar from 'primevue/sidebar';
 import ConfirmationService from 'primevue/confirmationservice';
 import Dialog from 'primevue/dialog';
-import InputNumber from 'primevue/inputnumber'; 
+import InputNumber from 'primevue/inputnumber';
 import Paginator from 'primevue/paginator';
 
 
@@ -30,23 +30,23 @@ import Paginator from 'primevue/paginator';
 
 
 createApp(App)
-.use(store)
-.use(router)
-.use(PrimeVue)
-.use(Notifications)
-.use(ConfirmationService)
-.use('file-upload', VueUploadComponent)
-.directive('tooltip', Tooltip)
-.component('AutoComplete',AutoComplete)
-.component('Paginator',Paginator)
-.component('Image',Image)
-.component('Dropdown',Dropdown)
-.component('datepicker',Datepicker)
-.component('BlockUI',BlockUI)
-.component('InputMask',InputMask)
-.component('Calendar',Calendar)
-.component('Sidebar',Sidebar)
-.component('Dialog',Dialog)
-.component('InputNumber',InputNumber)
-.mount('#app')
+    .use(store)
+    .use(router)
+    .use(PrimeVue)
+    .use(Notifications)
+    .use(ConfirmationService)
+    .use('file-upload', VueUploadComponent)
+    .directive('tooltip', Tooltip)
+    .component('AutoComplete', AutoComplete)
+    .component('Paginator', Paginator)
+    .component('Image', Image)
+    .component('Dropdown', Dropdown)
+    .component('datepicker', Datepicker)
+    .component('BlockUI', BlockUI)
+    .component('InputMask', InputMask)
+    .component('Calendar', Calendar)
+    .component('Sidebar', Sidebar)
+    .component('Dialog', Dialog)
+    .component('InputNumber', InputNumber)
+    .mount('#app')
 

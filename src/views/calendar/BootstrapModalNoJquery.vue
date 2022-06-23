@@ -28,25 +28,24 @@
                   placeholder="dd/mm/yyyy "
                 />
               </div>
-        
+
               <div class="form-group form-group-dropdown">
                 <label for="">Case</label>
                 <AutoComplete
-                          v-model="petition_hearing_event.petition"                          
-                          :suggestions="filteredPetitions"
-                          @complete="searchPetition($event)"
-                          field="petition_standard_title_with_petitioner"  
-                          placeholder="Find by Case No"                        
-                          appendTo="self"
-                          minLength="3"
-                          autoHighlight="true"
-                          forceSelection="true"
-                          :style="'width:100%'"
-                          :inputStyle="'width:100%'"
-                          delay="1"
-                        v-bind:class="{
-                    'error-boarder':
-                      v$.petition_hearing_event.petition.$error,
+                  v-model="petition_hearing_event.petition"
+                  :suggestions="filteredPetitions"
+                  @complete="searchPetition($event)"
+                  field="petition_standard_title_with_petitioner"
+                  placeholder="Find by Case No"
+                  appendTo="self"
+                  minLength="3"
+                  autoHighlight="true"
+                  forceSelection="true"
+                  :style="'width:100%'"
+                  :inputStyle="'width:100%'"
+                  delay="1"
+                  v-bind:class="{
+                    'error-boarder': v$.petition_hearing_event.petition.$error,
                   }"
                   @blur="v$.petition_hearing_event.petition.$touch"
                 />
@@ -144,14 +143,12 @@ export default {
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,
       title: this.title,
-      petition_hearing_event: {      
+      petition_hearing_event: {
         hearing_date:
           this.eventToUpdateProp && this.eventToUpdateProp.extendedProps
             ? this.dateTime(this.eventToUpdateProp.extendedProps.hearing_date)
             : this.selected_date,
-        petition: this.eventToUpdateProp
-            ? this.eventToUpdateProp.title
-            :"",
+        petition: this.eventToUpdateProp ? this.eventToUpdateProp.title : "",
         petition_id:
           this.eventToUpdateProp && this.eventToUpdateProp.extendedProps
             ? this.eventToUpdateProp.extendedProps.petition_id
@@ -181,7 +178,7 @@ export default {
     },
   },
   created() {
-    //this.getPetitions(); 
+    //this.getPetitions();
   },
   methods: {
     closeModal() {
@@ -218,11 +215,11 @@ export default {
             },
             (error) => {
               this.saving_event = false;
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -256,6 +253,11 @@ export default {
           })
           .catch((error) => {
             console.log(error);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
             this.saving_event = false;
           });
       } else {
@@ -271,7 +273,7 @@ export default {
     //   var force_all_records  = {
     //     'force_all_records': true
     //   }
-      
+
     //   axios
     //     .get(url, { headers, params: force_all_records })
     //     .then((response) => {
@@ -294,24 +296,24 @@ export default {
       };
 
       let url = this.base_url + "/api/petitions";
-      var query = {         
-        'query_from_calendar_page': event.query,
-        'force_all_records': true
+      var query = {
+        query_from_calendar_page: event.query,
+        force_all_records: true,
       };
 
       axios
         .get(url, { headers, params: query })
         .then((response) => {
-          this.filteredPetitions = response.data.petitions; 
-          console.log("Filtered Petitions")      
-          console.log(response.data.petitions);   
+          this.filteredPetitions = response.data.petitions;
+          console.log("Filtered Petitions");
+          console.log(response.data.petitions);
         })
         .catch((error) => {
           console.log(error);
           this.$notify({
             type: "error",
             title: "Something went wrong!",
-            text: error,
+            text: error.response.data.message,
           });
         });
     },

@@ -431,11 +431,14 @@ export default {
           this.isLoaded = true;
         })
         .catch((error) => {
-          this.$notify({
-            type: "error",
-            title: "Something went wrong!",
-            text: error.response.data.error,
-          });
+          if (error.response.status === 403) {
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
+          }
+          console.log(error);
         });
     },
     getInvoicesStats() {
@@ -451,7 +454,22 @@ export default {
         .then((response) => {
           this.invoices_stats = response.data.invoices_stats;
         })
-        .catch((error) => {});
+        .catch((error) => {
+          if (error.response.status === 403) {
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
+          } else {
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
+          }
+          console.log(error);
+        });
     },
     onChange(event) {
       var headers = {
@@ -468,6 +486,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
     submitForm: function (event) {
@@ -498,11 +521,11 @@ export default {
             },
             (error) => {
               this.saving = false;
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -531,11 +554,19 @@ export default {
         .catch((error) => {
           this.saving = false;
           console.log(error);
-          this.$notify({
-            type: "error",
-            title: "Something went wrong!",
-            text: error,
-          });
+          if (error.response.status === 403) {
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
+          } else {
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
+          }
         });
     },
     deleteInvoice(invoiceId, invoice_index) {
@@ -560,11 +591,11 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );

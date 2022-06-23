@@ -157,11 +157,11 @@ export default {
             },
             (error) => {
               this.saving = false;
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -201,11 +201,11 @@ export default {
             },
             (error) => {
               this.saving = false;
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -217,16 +217,21 @@ export default {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
       let module = {
-        'module_id': 3
+        module_id: 3,
       };
-      
+
       axios
         .get(url, { headers, params: module })
         .then((response) => {
-          this.talbana_types = response.data.talbanaTypes;  
+          this.talbana_types = response.data.talbanaTypes;
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
     async getPetitionTypes() {
@@ -242,6 +247,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
     getPetition() {
@@ -259,6 +269,11 @@ export default {
           })
           .catch((error) => {
             console.log(error);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
           });
       }
     },

@@ -161,7 +161,7 @@ export default {
           },
           (error) => {
             this.saving = false;
-            console.log(error.response.data.error);
+            console.log(error.response.data);
             this.$notify({
               type: "error",
               title: "Can't login",

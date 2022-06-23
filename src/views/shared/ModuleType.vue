@@ -272,6 +272,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
     submitModuleType() {
@@ -282,13 +287,9 @@ export default {
         };
         this.saving = true;
         axios
-          .post(
-            this.base_url + "/api/module_types",
-            this.new_module_type,
-            {
-              headers,
-            }
-          )
+          .post(this.base_url + "/api/module_types", this.new_module_type, {
+            headers,
+          })
           .then(
             (response) => {
               if (response.status === 200) {
@@ -307,11 +308,11 @@ export default {
             },
             (error) => {
               this.saving = false;
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -324,13 +325,9 @@ export default {
         };
 
         axios
-          .post(
-            this.base_url + "/api/module_types",
-            moduleTypeToUpdate,
-            {
-              headers,
-            }
-          )
+          .post(this.base_url + "/api/module_types", moduleTypeToUpdate, {
+            headers,
+          })
           .then(
             (response) => {
               if (response.status === 200) {
@@ -343,11 +340,11 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -360,12 +357,9 @@ export default {
         };
 
         axios
-          .delete(
-            this.base_url + "/api/module_types/" + moduleTypeId,
-            {
-              headers,
-            }
-          )
+          .delete(this.base_url + "/api/module_types/" + moduleTypeId, {
+            headers,
+          })
           .then(
             (response) => {
               if (response.status === 200) {
@@ -378,11 +372,11 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -395,7 +389,7 @@ export default {
       handler() {
         if (!this.awaitingSearch) {
           setTimeout(() => {
-            this.getModuleTypes();             
+            this.getModuleTypes();
             this.new_module_type.module_id = this.filters.module_id;
             this.awaitingSearch = false;
           }, 1000); // 1 sec delay
@@ -403,7 +397,7 @@ export default {
         this.awaitingSearch = true;
       },
     },
-  },   
+  },
 };
 </script>
 

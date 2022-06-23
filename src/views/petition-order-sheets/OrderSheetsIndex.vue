@@ -241,14 +241,14 @@ export default {
     },
     getOrderSheets() {
       var headers = {
-          Authorization: `Bearer` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer` + localStorage.getItem("lfms_user"),
+      };
       axios
         .get(
           this.base_url +
             "/api/petition_order_sheets?petition_id=" +
             this.petition_id,
-            {headers}
+          { headers }
         )
         .then((response) => {
           this.orderSheets = response.data.records;
@@ -258,12 +258,12 @@ export default {
           this.getOrderSheet();
         })
         .catch((error) => {
-          console.log(error.response.data.error);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error.response.data.error,
-              });
+          console.log(error.response.data);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
 
@@ -289,12 +289,12 @@ export default {
           this.getCaseDetails();
         })
         .catch((error) => {
-          console.log(error.response.data.error);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error.response.data.error,
-              });
+          console.log(error.response.data);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
 
@@ -308,12 +308,12 @@ export default {
           this.petition = response.data.petition;
         })
         .catch((error) => {
-          console.log(error.response.data.error);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error.response.data.error,
-              });
+          console.log(error.response.data);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
 
@@ -343,11 +343,11 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -382,11 +382,11 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );

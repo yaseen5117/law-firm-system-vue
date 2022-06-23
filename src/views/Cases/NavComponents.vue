@@ -69,7 +69,7 @@
               aria-expanded="false"
               >Others</a
             >
-            <ul class="dropdown-menu" style="position: relative !important;">
+            <ul class="dropdown-menu" style="position: relative !important">
               <li>
                 <router-link
                   class="dropdown-item"
@@ -79,41 +79,38 @@
                     name: 'petition-naqal-forms-index',
                     params: { petition_id: petition_id },
                   }"
-                  >
-                  Naqal Forms
-                  </router-link
                 >
+                  Naqal Forms
+                </router-link>
               </li>
               <li>
                 <router-link
                   class="dropdown-item"
                   :class="activeNavPill == 'talbana' ? 'active' : ''"
-                  id="talbana"                  
+                  id="talbana"
                   :to="{
                     name: 'petition-talbana-index',
                     params: { petition_id: petition_id },
                   }"
-                  >
-                  Talbana
-                  </router-link
                 >
+                  Talbana
+                </router-link>
               </li>
               <li>
                 <router-link
                   class="dropdown-item"
                   :class="activeNavPill == 'case_laws' ? 'active' : ''"
-                  id="case-law"                                    
+                  id="case-law"
                   :to="{
                     name: 'standard-index',
                     params: {
                       petition_id: petition_id,
                       module_type: 'case_laws',
                     },
-                  }"                  
-                  >
-                  Case Laws
-                  </router-link
+                  }"
                 >
+                  Case Laws
+                </router-link>
               </li>
               <!-- <li><hr class="dropdown-divider"></li> -->
               <li>
@@ -127,25 +124,23 @@
                       petition_id: petition_id,
                       module_type: 'extra_documents',
                     },
-                  }"    
-                  >
-                  Extra Doc
-                  </router-link
+                  }"
                 >
+                  Extra Doc
+                </router-link>
               </li>
               <li>
                 <router-link
                   class="dropdown-item"
                   :class="activeNavPill == 'petition_synopsis' ? 'active' : ''"
-                  id="petition_synopsis"                  
+                  id="petition_synopsis"
                   :to="{
                     name: 'petition-synopsis-index',
                     params: { petition_id: petition_id },
                   }"
-                  >
-                  Synopsis
-                  </router-link
                 >
+                  Synopsis
+                </router-link>
               </li>
               <li>
                 <router-link

@@ -33,7 +33,6 @@
                     />
                   </div>
 
-                  
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Title <span style="color: red">*</span></label>
                     <input
@@ -48,7 +47,6 @@
                       >Title field is required.</span
                     >
                   </div>
-
                 </div>
               </div>
 
@@ -81,7 +79,7 @@
 
                   <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Court <span style="color: red">*</span></label>
-                     <Dropdown
+                    <Dropdown
                       v-model="petition.court_id"
                       :options="courts"
                       optionLabel="title"
@@ -94,7 +92,7 @@
                       v-bind:class="{
                         'error-boarder': v$.petition.court_id.$error,
                       }"
-                    /> 
+                    />
                     <span
                       v-if="v$.petition.court_id.$error"
                       class="errorMessage"
@@ -114,7 +112,7 @@
                       :value="petition.lawyer_ids"
                     />
                   </div>
-                   <div class="col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Date of Institution</label>
                     <br />
                     <InputMask
@@ -163,7 +161,6 @@
                             field="label"
                             placeholder="Name"
                             v-model="petitioner.user.name"
-                            
                           />
                           <div class="input-group-prepend">
                             <span
@@ -391,20 +388,19 @@ export default {
                   type: "success",
                   title: "Success",
                   text: "Saved Successfully!",
-                  
                 });
-                this.$router.push({ path: "/petitions/"+petition_id });
+                this.$router.push({ path: "/petitions/" + petition_id });
               }
               console.log(response);
               this.saving = false;
             },
             (error) => {
               this.saving = false;
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -412,22 +408,22 @@ export default {
     },
     async getClients() {
       var headers = {
-          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       let url = this.base_url + "/api/clients";
       await axios
-        .get(url,{headers})
+        .get(url, { headers })
         .then((response) => {
           this.clients = response.data.clients;
           console.log(this.clients);
         })
         .catch((error) => {
           console.log(error);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error,
-              });
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
     getLawyers() {
@@ -443,51 +439,51 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error,
-              });
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
     async getCourts() {
       var headers = {
-          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       let url = this.base_url + "/api/courts";
       await axios
-        .get(url,{headers})
+        .get(url, { headers })
         .then((response) => {
           this.courts = response.data.courts;
           console.log(this.courts);
         })
         .catch((error) => {
           console.log(error);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error,
-              });
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
     async getPetitionTypes() {
       var headers = {
-          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
       let url = this.base_url + "/api/petition_types";
       await axios
-        .get(url,{headers})
+        .get(url, { headers })
         .then((response) => {
           this.petition_types = response.data.petition_types;
           console.log(this.petition_types);
         })
         .catch((error) => {
           console.log(error);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error,
-              });
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
     getPetition() {
@@ -507,11 +503,11 @@ export default {
           })
           .catch((error) => {
             console.log(error);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error,
-              });
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
           });
       }
     },

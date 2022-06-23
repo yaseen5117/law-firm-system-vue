@@ -37,7 +37,7 @@
             </button>
 
             <button
-              v-if="this.user.is_admin" 
+              v-if="this.user.is_admin"
               v-show="!showImgCard"
               @click="showImgCard = true"
               class="btn btn-success btn-sm mb-2"
@@ -46,7 +46,7 @@
               Upload New Image
             </button>
             <button
-              v-if="this.user.is_admin" 
+              v-if="this.user.is_admin"
               v-show="showImgCard"
               @click="showImgCard = false"
               class="btn btn-primary btn-sm mb-2"
@@ -56,7 +56,7 @@
             </button>
 
             <button
-              v-if="this.user.is_admin" 
+              v-if="this.user.is_admin"
               v-show="!editView"
               @click="
                 editView = true;
@@ -68,7 +68,7 @@
               Edit
             </button>
             <button
-              v-if="this.user.is_admin" 
+              v-if="this.user.is_admin"
               v-show="editView"
               @click="
                 editView = false;
@@ -441,6 +441,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
 
@@ -464,6 +469,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
     editPetitionAttachment(attachmentToUpdate) {
@@ -492,11 +502,11 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -528,11 +538,11 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -592,11 +602,11 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );

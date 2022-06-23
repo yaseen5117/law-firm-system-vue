@@ -195,6 +195,7 @@
                               >View
                             </router-link>
                             <router-link
+                              v-if="this.user.is_admin"
                               style="margin-right: 2px"
                               :to="{
                                 name: 'edit-petition',
@@ -209,6 +210,7 @@
                               >Edit
                             </router-link>
                             <router-link
+                              v-if="this.user.is_admin"
                               style="margin-right: 2px"
                               to="#"
                               class="btn btn-info btn-sm action-btn"
@@ -323,17 +325,22 @@ export default {
     },
     getCourts() {
       let url = this.base_url + "/api/courts";
-       var headers = {
+      var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
       axios
-        .get(url,{headers})
+        .get(url, { headers })
         .then((response) => {
           this.courts = response.data.courts;
           console.log(this.courts);
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
     goToDetails(petition_id) {
@@ -357,6 +364,11 @@ export default {
           this.isLoaded = true;
         })
         .catch((error) => {
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
           console.log(error);
         });
     },
@@ -383,6 +395,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
 

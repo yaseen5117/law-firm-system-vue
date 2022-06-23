@@ -139,7 +139,7 @@
               <div class="row">
                 <div class="table-responsive">
                   <div class="col-lg-12 col-md-12 col-sm-12">
-                    <button                      
+                    <button
                       v-if="showDeleteBtn && this.user.is_admin"
                       class="btn btn-sm btn-danger"
                       data-bs-toggle="tooltip"
@@ -208,8 +208,7 @@
                                 editPetitionAttachment(attachment)
                               "
                             />
-                            <span
-                              v-show="!attachment.editMode"                              
+                            <span v-show="!attachment.editMode"
                               >{{ attachment.title }}
                             </span>
                           </td>
@@ -223,8 +222,7 @@
                                 editPetitionAttachment(attachment)
                               "
                             />
-                            <span
-                              v-show="!attachment.editMode"                              
+                            <span v-show="!attachment.editMode"
                               >{{ attachment.display_order }}
                             </span>
                           </td>
@@ -398,6 +396,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
 
@@ -422,6 +425,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
     editPetitionAttachment(attachmentToUpdate) {
@@ -450,11 +458,11 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -484,11 +492,11 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -548,11 +556,11 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );

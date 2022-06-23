@@ -15,7 +15,10 @@
                   <th>Annexure</th>
                   <th>Page</th>
                   <th width="10%" v-if="this.user.is_admin">Actions</th>
-                  <th v-if="this.user.is_admin" :class="ShowOnOralArgument ? '' : 'display'">
+                  <th
+                    v-if="this.user.is_admin"
+                    :class="ShowOnOralArgument ? '' : 'display'"
+                  >
                     Image Upload
                   </th>
                 </thead>
@@ -139,7 +142,10 @@
                         <!-- <i class="fa fa-trash-o"></i> -->
                       </a>
                     </td>
-                    <td v-if="this.user.is_admin" :class="ShowOnOralArgument ? '' : 'display'">
+                    <td
+                      v-if="this.user.is_admin"
+                      :class="ShowOnOralArgument ? '' : 'display'"
+                    >
                       <file-upload
                         @afterUpload="getModuleIndexDetails"
                         :type="model_type"
@@ -212,13 +218,13 @@ import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
 import { mapState } from "vuex";
 
-export default { 
+export default {
   components: {
     NavComponents,
     PageHeader,
     FileUpload,
   },
-   computed: mapState(["user"]),
+  computed: mapState(["user"]),
   data() {
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,
@@ -252,6 +258,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
     getModuleIndex() {
@@ -273,6 +284,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
         });
     },
 
@@ -301,19 +317,19 @@ export default {
                 });
                 this.saving = false;
                 this.new_standard_index = {};
-                setTimeout(() => {                 
+                setTimeout(() => {
                   this.$refs.documentDescription.focus();
-                }, 0); 
+                }, 0);
                 this.getModuleIndex();
               }
             },
             (error) => {
               this.saving = false;
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -345,11 +361,11 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
@@ -378,11 +394,11 @@ export default {
               }
             },
             (error) => {
-              console.log(error.response.data.error);
+              console.log(error.response.data);
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );

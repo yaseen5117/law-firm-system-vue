@@ -1,21 +1,43 @@
-<template> 
+<template>
   <div class="" :class="compactInlineView ? '' : 'card'">
-    <div :class="compactInlineView ? 'display' : 'card-header'" class="" v-if="receipt">Upload Receipt</div>
-    <div :class="compactInlineView ? 'display' : 'card-header'" class="" v-if="upload_site_image">Upload Image</div>
-    <div :class="compactInlineView ? 'display' : 'card-header'" class="" v-if="!receipt && !upload_site_image">Upload New Files</div>
+    <div
+      :class="compactInlineView ? 'display' : 'card-header'"
+      class=""
+      v-if="receipt"
+    >
+      Upload Receipt
+    </div>
+    <div
+      :class="compactInlineView ? 'display' : 'card-header'"
+      class=""
+      v-if="upload_site_image"
+    >
+      Upload Image
+    </div>
+    <div
+      :class="compactInlineView ? 'display' : 'card-header'"
+      class=""
+      v-if="!receipt && !upload_site_image"
+    >
+      Upload New Files
+    </div>
 
     <div class="" :class="compactInlineView ? '' : 'card-body'">
       <!-- <div v-if="success != ''" class="alert alert-success">
         {{ success }}
-      </div> -->       
+      </div> -->
       <form @submit="onUploadFile" enctype="multipart/form-data">
         <input
-          :accept="image_type ? image_type : 'image/png, image/jpeg, image/jpg, application/pdf'"
+          :accept="
+            image_type
+              ? image_type
+              : 'image/png, image/jpeg, image/jpg, application/pdf'
+          "
           type="file"
-          id="file" 
+          id="file"
           class="form-control"
           @change="onChange"
-          multiple     
+          multiple
           :class="compactInlineView ? 'width-p' : ''"
           ref="fileupload"
         />
@@ -25,7 +47,13 @@
         <span v-if="v$.files.$error" class="errorMessage"
           >Select a File Before Uploading.</span
         ><br />
-        <button :disabled="saving" :class="compactInlineView ? 'display' : ''" class="btn btn-primary btn-sm">Upload</button>
+        <button
+          :disabled="saving"
+          :class="compactInlineView ? 'display' : ''"
+          class="btn btn-primary btn-sm"
+        >
+          Upload
+        </button>
         <input type="hidden" />
       </form>
     </div>
@@ -38,8 +66,16 @@ import { required, email, helpers } from "@vuelidate/validators";
 
 export default {
   emits: ["afterUpload"],
-  props: ['type','attachmentable_id','compactInlineView','isOral','receipt','upload_site_image','image_type'],
-  setup() {    
+  props: [
+    "type",
+    "attachmentable_id",
+    "compactInlineView",
+    "isOral",
+    "receipt",
+    "upload_site_image",
+    "image_type",
+  ],
+  setup() {
     return {
       v$: useVuelidate(),
     };
@@ -50,8 +86,8 @@ export default {
       name: "",
       files: "",
       //attachmentable_id: this.$route.params.id, //this is the id from the browser
-      success: "",   
-      beforUploading: "",    
+      success: "",
+      beforUploading: "",
       saving: true,
     };
   },
@@ -61,39 +97,37 @@ export default {
     };
   },
   methods: {
-
     onChange(e) {
       this.files = e.target.files;
       this.saving = false;
-      if(this.compactInlineView){                
+      if (this.compactInlineView) {
         this.onUploadFile();
       }
     },
-    onUploadFile(e) {   
-       if(!this.compactInlineView){                
-         e.preventDefault();  
-      }           
-       
+    onUploadFile(e) {
+      if (!this.compactInlineView) {
+        e.preventDefault();
+      }
+
       this.beforUploading = "Please Wait..!";
       this.saving = true;
       //let existingObj = this;
-      
+
       const config = {
         headers: {
           "content-type": "multipart/form-data",
-          Authorization:
-            `Bearer ` + localStorage.getItem("lfms_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         },
-      };   
+      };
       let formData = new FormData();
 
       for (var i = 0; i < this.files.length; i++) {
         let file = this.files[i];
         formData.append("files[" + i + "]", file);
       }
-      
+
       this.v$.$validate();
-      if (!this.v$.$error) {        
+      if (!this.v$.$error) {
         formData.append("attachmentable_type", this.type);
         formData.append("attachmentable_id", this.attachmentable_id);
         axios.post(this.base_url + "/api/attachments", formData, config).then(
@@ -103,22 +137,22 @@ export default {
                 type: "success",
                 title: "Success",
                 text: "Files Uploaded Successfully!",
-              });  
+              });
               this.saving = true;
               this.beforUploading = "";
-              this.$refs.fileupload.value=null;            
+              this.$refs.fileupload.value = null;
               console.log(response.data);
-              this.$emit("afterUpload", "Reloading the Data of attachments");                         
+              this.$emit("afterUpload", "Reloading the Data of attachments");
             }
           },
           (error) => {
             this.saving = false;
             this.beforUploading = "";
-            console.log(error.response.data.error);
+            console.log(error.response.data);
             this.$notify({
               type: "error",
               title: "Something went wrong!",
-              text: error.response.data.error,
+              text: error.response.data.message,
             });
           }
         );
@@ -131,10 +165,10 @@ export default {
 .errorMessage {
   color: red;
 }
-.width-p{
+.width-p {
   width: 115px !important;
 }
-.display{
+.display {
   display: none;
 }
 </style>

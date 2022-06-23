@@ -2,13 +2,13 @@
   <BlockUI :blocked="!isLoaded" :fullScreen="true">
     <main id="main">
       <page-header
-        :title="'Contracts/My Agreements'"    
+        :title="'Contracts/My Agreements'"
         :petition="null"
         :hideCaseFiles="true"
-        :showInvoices="false"    
-         :route_object="route_obj"    
+        :showInvoices="false"
+        :route_object="route_obj"
         :header_button="header_button"
-        :header_button_text="header_button_text"  
+        :header_button_text="header_button_text"
       />
       <section id="services" class="services section-bg">
         <BlockUI :blocked="invoices" :fullScreen="true">
@@ -20,8 +20,8 @@
                     <div class="col-lg-3 col-md-3 col-sm-6">
                       <input
                         type="text"
-                        id="title"      
-                        v-model="filters.title"                
+                        id="title"
+                        v-model="filters.title"
                         class="form-control"
                         placeholder="Title"
                         aria-describedby="title"
@@ -49,7 +49,7 @@
                         :disabled="saving"
                       >
                         Reset
-                      </button>                      
+                      </button>
                     </div>
                   </form>
                 </Transition>
@@ -57,63 +57,73 @@
               <div class="col-md-12">
                 <div class="table-responsive">
                   <table class="table table-striped" v-if="isLoaded">
-                  <thead>
-                    <tr>
-                      <!-- <th>Category</th> -->
-                      <th>Title</th>
-                      <th>Attachment</th>                       
-                      <th  class="text-end">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      v-for="(contractAndAgreemnet, contract_and_agreemnet_index) in contractsAndAgreemnets"
-                      :key="contract_and_agreemnet_index"
-                    >
-                     
-                      <!-- <td>
+                    <thead>
+                      <tr>
+                        <!-- <th>Category</th> -->
+                        <th>Title</th>
+                        <th>Attachment</th>
+                        <th class="text-end">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="(
+                          contractAndAgreemnet, contract_and_agreemnet_index
+                        ) in contractsAndAgreemnets"
+                        :key="contract_and_agreemnet_index"
+                      >
+                        <!-- <td>
                         <span v-if="contractAndAgreemnet.category">
                           {{contractAndAgreemnet.category.title}}
                         </span>                         
                       </td> -->
-                      <td>{{contractAndAgreemnet.title}}</td>   
-                      <td>
-                        <InvoiceThumb v-show="contractAndAgreemnet.attachment" folder_name="contracts-and-agreements" :base_url="base_url" :invoice="contractAndAgreemnet" />
-                        </td>                   
-                      <td class="text-end">
+                        <td>{{ contractAndAgreemnet.title }}</td>
+                        <td>
+                          <InvoiceThumb
+                            v-show="contractAndAgreemnet.attachment"
+                            folder_name="contracts-and-agreements"
+                            :base_url="base_url"
+                            :invoice="contractAndAgreemnet"
+                          />
+                        </td>
+                        <td class="text-end">
+                          <router-link
+                            class="btn btn-sm btn-success action-btn"
+                            :to="{
+                              name: 'edit-contract-and_agreement',
+                              params: {
+                                contract_agreement_id: contractAndAgreemnet.id,
+                              },
+                            }"
+                            href="javascript:void"
+                            style="margin-left: 2px"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Edit"
+                          >
+                            Edit
+                          </router-link>
 
-                        <router-link
-                          class="btn btn-sm btn-success action-btn"
-                          :to="{
-                            name: 'edit-contract-and_agreement',
-                            params: { contract_agreement_id: contractAndAgreemnet.id },
-                          }"
-                          href="javascript:void"
-                          style="margin-left: 2px"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="top"
-                          title="Edit"
-                        >
-                          Edit
-                        </router-link>
-                        
-                        
-                        <a
-                          class="btn btn-sm btn-danger action-btn"
-                          @click="deleteContactAndAgreement(contractAndAgreemnet.id, contract_and_agreemnet_index)"
-                          href="javascript:void"
-                          style="margin-left: 2px"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="top"
-                          title="Delete"
-                        >
-                          Delete
-                        </a>
-                      </td>
-                       
-                    </tr>
-                  </tbody>
-                </table>
+                          <a
+                            class="btn btn-sm btn-danger action-btn"
+                            @click="
+                              deleteContactAndAgreement(
+                                contractAndAgreemnet.id,
+                                contract_and_agreemnet_index
+                              )
+                            "
+                            href="javascript:void"
+                            style="margin-left: 2px"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Delete"
+                          >
+                            Delete
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
                 <div v-if="!isLoaded" class="col-md-12">
                   <p class="alert alert-warning">Loading....</p>
@@ -123,7 +133,7 @@
           </div>
         </BlockUI>
       </section>
-    </main>  
+    </main>
     <!-- End #main -->
   </BlockUI>
 </template>
@@ -137,8 +147,8 @@ import InvoiceThumb from "../invoices/InvoiceThumb.vue";
 
 export default {
   components: {
-    PageHeader, 
-    InvoiceThumb
+    PageHeader,
+    InvoiceThumb,
   },
   setup() {
     return {
@@ -146,7 +156,7 @@ export default {
     };
   },
   data() {
-    return {    
+    return {
       categories: [],
       saving: false,
       route_obj: {
@@ -154,7 +164,7 @@ export default {
       },
       header_button: true,
       header_button_text: "Create Contract and Agreement",
-      base_url: process.env.VUE_APP_SERVICE_URL,      
+      base_url: process.env.VUE_APP_SERVICE_URL,
       filters: {},
       isLoaded: false,
       contractsAndAgreemnets: [],
@@ -168,11 +178,11 @@ export default {
     };
   },
   created() {
-   this.getContractAndAgreement();
-   this.getContractCategories();
+    this.getContractAndAgreement();
+    this.getContractCategories();
   },
-  methods: {    
-     getContractAndAgreement() {
+  methods: {
+    getContractAndAgreement() {
       this.isLoaded = false;
       let url = this.base_url + "/api/contracts_and_agreements";
       var headers = {
@@ -183,25 +193,38 @@ export default {
           headers,
           params: this.filters,
         })
-        .then((response) => {    
-            this.contractsAndAgreemnets = response.data.contracts_and_agreemnets;    
+        .then((response) => {
+          this.contractsAndAgreemnets = response.data.contracts_and_agreemnets;
           console.log(response);
           this.isLoaded = true;
         })
         .catch((error) => {
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
           console.log(error);
         });
     },
-    deleteContactAndAgreement(contract_agreeent_id,contract_and_agreemnet_index) {
+    deleteContactAndAgreement(
+      contract_agreeent_id,
+      contract_and_agreemnet_index
+    ) {
       if (confirm("Do you really want to delmete?")) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
-          .delete(this.base_url + "/api/contracts_and_agreements/" + contract_agreeent_id, {
-            headers,
-          })
+          .delete(
+            this.base_url +
+              "/api/contracts_and_agreements/" +
+              contract_agreeent_id,
+            {
+              headers,
+            }
+          )
           .then(
             (response) => {
               if (response.status === 200) {
@@ -209,7 +232,7 @@ export default {
                   type: "success",
                   title: "Success",
                   text: "Deleted Successfully!",
-                });                
+                });
                 this.contractsAndAgreemnets.splice(
                   contract_and_agreemnet_index,
                   1
@@ -221,21 +244,20 @@ export default {
               this.$notify({
                 type: "error",
                 title: "Something went wrong!",
-                text: error.response.data.error,
+                text: error.response.data.message,
               });
             }
           );
       }
     },
-    getContractCategories(){
+    getContractCategories() {
       if (true) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
-        var url =
-          this.base_url + "/api/contract_categories"
-          
+        var url = this.base_url + "/api/contract_categories";
+
         axios
           .get(url, { headers })
           .then((response) => {
@@ -246,16 +268,16 @@ export default {
             this.$notify({
               type: "error",
               title: "Something went wrong!",
-              text: error,
+              text: error.response.data.message,
             });
           });
       }
     },
     reset() {
       this.saving = true;
-      this.filters = {};      
+      this.filters = {};
       this.saving = false;
-    },    
+    },
   },
   watch: {
     filters: {
