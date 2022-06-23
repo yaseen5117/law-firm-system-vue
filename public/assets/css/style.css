@@ -1607,12 +1607,7 @@ h2 span {
 .red {
   color: red;
 }
-@media screen and (max-width: 768px) {
-  .case_heading .line_height {
-    font-size: 12px !important;
-    line-height: 1rem !important;
-  }  
-}
+
 .display{
   display: none;
 }
@@ -1723,4 +1718,8 @@ label{
   .mt-on-mobile{
     margin-top: 10px;
   }
+}
+.case_heading p {
+  font-size: 12px;  
+  margin-bottom: 1px;
 }
