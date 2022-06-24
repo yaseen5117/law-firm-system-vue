@@ -595,7 +595,7 @@ export default {
           this.$notify({
             type: "error",
             title: "Something went wrong!",
-            text: error,
+            text: error.response.data.message,
           });
         });
     },

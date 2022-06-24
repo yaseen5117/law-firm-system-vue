@@ -156,10 +156,13 @@
                         >
                           <AutoComplete
                             delay="1"
-                            :suggestions="filteredClient"
+                            :suggestions="filteredClients"
                             @complete="searchClient($event)"
-                            field="label"
+                            field="name"
+                            minLength="3"
+                            appendTo="self"
                             placeholder="Name"
+                            class="p-autocomplete"
                             v-model="petitioner.user.name"
                           />
                           <div class="input-group-prepend">
@@ -220,10 +223,13 @@
                         >
                           <AutoComplete
                             delay="1"
-                            :suggestions="filteredClient"
+                            :suggestions="filteredClients"
                             @complete="searchClient($event)"
-                            field="label"
+                            field="name"
+                            minLength="3"
+                            appendTo="self"
                             placeholder="Name"
+                            class="p-autocomplete"
                             v-model="opponent.user.name"
                           />
                           <div class="input-group-prepend">
@@ -310,13 +316,11 @@ export default {
         title: "",
         case_no: "",
         lawyer_ids: [],
-      },
-      clients: [],
+      },      
       lawyers: [],
       courts: [],
       petition_types: [],
-      filteredClient: null,
-      clients: [],
+      filteredClients: [],      
     };
   },
   validations() {
@@ -329,8 +333,7 @@ export default {
       },
     };
   },
-  created() {
-    this.getClients();
+  created() {     
     this.getCourts();
     this.getPetitionTypes();
     this.getPetition();
@@ -339,17 +342,28 @@ export default {
   activated() {},
   methods: {
     searchClient(event) {
-      setTimeout(() => {
-        if (!event.query.trim().length) {
-          this.filteredClient = [this.clients];
-        } else {
-          this.filteredClient = this.clients.filter((country) => {
-            return country.label
-              .toLowerCase()
-              .startsWith(event.query.toLowerCase());
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+
+      let url = this.base_url + "/api/clients";
+      var query = {
+        serach_param: event.query,
+      };
+      axios
+        .get(url, { headers, params: query })
+        .then((response) => {
+          this.filteredClients = response.data.clients;
+          console.log(response.data.clients);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
           });
-        }
-      }, 250);
+        });
     },
     addMorePetitioner: function () {
       var new_petitioner = {
@@ -405,27 +419,7 @@ export default {
             }
           );
       }
-    },
-    async getClients() {
-      var headers = {
-        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-      };
-      let url = this.base_url + "/api/clients";
-      await axios
-        .get(url, { headers })
-        .then((response) => {
-          this.clients = response.data.clients;
-          console.log(this.clients);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$notify({
-            type: "error",
-            title: "Something went wrong!",
-            text: error.response.data.message,
-          });
-        });
-    },
+    },     
     getLawyers() {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
