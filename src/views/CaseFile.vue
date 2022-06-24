@@ -164,7 +164,7 @@
 
                           <div class="col-md-7 col-7 col-sm-7">
                             <p class="card-text pull-right">
-                              {{ petition.petitioner_names }}
+                              {{ petition.petitioner_names.length>20?petition.petitioner_names.substring(0,19)+"...":petition.petitioner_names }}
                             </p>
                           </div>
                           <div class="col-md-12">

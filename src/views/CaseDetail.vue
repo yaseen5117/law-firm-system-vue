@@ -43,7 +43,7 @@
               <p class="line_height">{{ petition.petitioner_names }}</p>
               <p>VERSUS</p>
               <p class="line_height">{{ petition.opponent_names }}</p>
-              <p class="line-hight">
+              <p class="line_height">
                 {{ petition.title }}
               </p>
               <p>
