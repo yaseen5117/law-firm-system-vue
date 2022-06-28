@@ -134,6 +134,39 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                <router-link
+                  v-tooltip.top="'Previous'"
+                  style="margin-right: 3px"
+                  v-if="previous_index_id"
+                  class="btn btn-success ml-3 mr-2"
+                  :to="{
+                    name: 'petition-order-sheets-index',
+                    params: {
+                      order_sheet_id: previous_index_id,
+                      petition_id: petition_id,
+                    },
+                  }"
+                  ><i class="fa fa-angle-up fa-2x btn-round"></i
+                ></router-link>
+
+                <router-link
+                  v-tooltip.top="'Next'"
+                  style="margin-right: 3px"
+                  v-if="next_index_id"
+                  class="btn btn-success ml-3"
+                  :to="{
+                    name: 'petition-order-sheets-index',
+                    params: {
+                      order_sheet_id: next_index_id,
+                      petition_id: petition_id,
+                    },
+                  }"
+                  ><i class="fa fa-angle-down fa-2x btn-round"></i
+                ></router-link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -194,6 +227,8 @@ export default {
   },
   data() {
     return {
+      next_index_id: null,
+      previous_index_id: null,
       visibleLeft: true,
       showImgCard: false,
       editView: false,
@@ -252,7 +287,7 @@ export default {
         )
         .then((response) => {
           this.orderSheets = response.data.records;
-          this.petition = response.data.records.petition;
+          this.petition = response.data.records.petition;          
 
           this.getCaseDetails();
           this.getOrderSheet();
@@ -285,7 +320,9 @@ export default {
         )
         .then((response) => {
           this.orderSheetsActive = response.data.record;
-
+          this.previous_index_id = response.data.previous_index_id
+          this.next_index_id = response.data.next_index_id
+          
           this.getCaseDetails();
         })
         .catch((error) => {
