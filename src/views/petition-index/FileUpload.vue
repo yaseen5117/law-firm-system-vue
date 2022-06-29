@@ -31,7 +31,7 @@
           :accept="
             image_type
               ? image_type
-              : 'image/png, image/jpeg, image/jpg, application/pdf, application/msword'
+              : 'image/png, image/jpeg, image/jpg, application/pdf, .docx'
           "
           type="file"
           id="file"
