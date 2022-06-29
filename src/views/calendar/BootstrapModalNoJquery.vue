@@ -96,6 +96,16 @@
             <button
               type="button"
               :disabled="saving_event"
+              class=" btn btn-success btn-sm"
+              v-show="petition_hearing_event.id"
+              @click="gotoLink('petitions/'+petition_hearing_event.petition_id)"
+            >
+              <i class="fa fa-external-link"></i> Go To Case File
+            </button>
+
+            <button
+              type="button"
+              :disabled="saving_event"
               class="float-lg-left btn btn-danger btn-sm"
               v-show="petition_hearing_event.id"
               @click="deleteEvent(petition_hearing_event.id)"
@@ -286,8 +296,7 @@ export default {
     //     });
     // },
     gotoLink(path) {
-      alert(path);
-      this.$router.push({ path: path });
+      window.open(path);
     },
     //get petitions
     searchPetition(event) {
