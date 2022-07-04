@@ -4,11 +4,11 @@
     <section id="services" class="services section-bg">
       <div class="container">
         <div class="row">
-          <div class="col-12">
+          <div class="col-9">
             <form @submit.prevent="submitForm($event)">
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Title<span style="color: red">*</span></label>
                     <input
                       class="form-control"
@@ -25,7 +25,7 @@
                     >
                   </div>
 
-                  <div class="col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-4 col-md-4 col-sm-12">
                     <label
                       >Order Sheet Date<span style="color: red">*</span></label
                     >
@@ -47,7 +47,7 @@
                       >Date field is required.</span
                     >
                   </div>
-                  <div class="col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Type</label>
                     <select
                       class="form-control"
@@ -68,7 +68,7 @@
 
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="col-lg-12 col-md-12 col-sm-9">
                     <label>Description </label>
                     <input
                       class="form-control"
@@ -85,6 +85,17 @@
               </div>
             </form>
           </div>
+
+          <div class="col-3">
+            <delete-attachment
+              v-if="order_sheet.attachments"
+              :order_sheet="order_sheet"
+              @afterDelete="
+                getEditableOrderSheet();
+                getOrderSheetTypes();
+              "
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -97,9 +108,10 @@ import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
 import useVuelidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
+import deleteAttachment from "../petition-order-sheets/deleteAttachment.vue";
 
 export default {
-  components: { PageHeader },
+  components: { PageHeader, deleteAttachment },
   setup() {
     return {
       v$: useVuelidate(),
