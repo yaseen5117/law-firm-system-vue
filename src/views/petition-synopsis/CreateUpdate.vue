@@ -77,9 +77,26 @@
               </div>
 
               <div class="form-group">
-                <button :disabled="saving" class="btn btn-success btn-sm mt-2">
+                <button
+                  :disabled="saving"
+                  class="btn btn-success btn-sm mt-2"
+                  style="margin-right: 3px"
+                >
                   Save
                 </button>
+                <router-link
+                  :disabled="saving"
+                  class="btn btn-secondary btn-sm mt-2"
+                  :to="{
+                    name: 'petition-synopsis-index',
+                    params: {
+                      petition_id: this.$route.params.petition_id,
+                      synopsis_id: this.$route.params.editable_synopsis_id,
+                    },
+                  }"
+                >
+                  Back
+                </router-link>
               </div>
             </form>
           </div>
@@ -287,5 +304,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
