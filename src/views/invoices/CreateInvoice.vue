@@ -43,10 +43,7 @@
                     style="margin-right: 3px"
                     v-if="this.$route.params.invoice_id"
                     class="btn btn-sm btn-warning action-btn"
-                    :href="
-                      'https://api.ishaqnasar.elawfirmpk.com/download_pdf/' +
-                      invoice.id
-                    "
+                    :href="invoice.pdf_download_url"
                     download=""
                     >Download PDF</a
                   >
@@ -463,7 +460,7 @@
   />
   <!-- End #main -->
 </template>
-    
+
 <script>
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
@@ -866,5 +863,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

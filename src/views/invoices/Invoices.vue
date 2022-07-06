@@ -153,7 +153,9 @@
                           <router-link
                             style="color: black"
                             :to="{
-                              name: this.user.is_admin?'edit-invoice':'invoices',
+                              name: this.user.is_admin
+                                ? 'edit-invoice'
+                                : 'invoices',
                               params: { invoice_id: invoice.id },
                             }"
                             href="javascript:void"
@@ -217,10 +219,7 @@
                           <a
                             style="margin-left: 2px"
                             class="btn btn-warning action-btn"
-                            :href="
-                              'https://api.ishaqnasar.elawfirmpk.com/download_pdf/' +
-                              invoice.id
-                            "
+                            :href="invoice.pdf_download_url"
                             download=""
                             >Download</a
                           >
@@ -281,7 +280,7 @@
     <!-- End #main -->
   </BlockUI>
 </template>
-    
+
 <script>
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
@@ -625,5 +624,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

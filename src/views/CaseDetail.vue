@@ -20,13 +20,9 @@
                   title="View"
                   ><i class="fa fa-edit"></i> Edit Petition</router-link
                 >
-
                 <a
                   class="btn btn-warning action-btn"
-                  :href="
-                    'https://api.ishaqnasar.elawfirmpk.com/download_petition_pdf/' +
-                    petition.id
-                  "
+                  :href="petition.pdf_download_url"
                   download=""
                   ><i class="fa fa-download"></i> Download PDF</a
                 >
@@ -454,5 +450,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

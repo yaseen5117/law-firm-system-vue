@@ -471,8 +471,7 @@ export default {
     deletePetitionAttachment(attachmentId, attachmentIndex) {
       if (confirm("Do you really want to delete?")) {
         var headers = {
-          Authorization:
-            `Bearer ` + localStorage.getItem("rezo_customers_user"),
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
@@ -573,5 +572,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
