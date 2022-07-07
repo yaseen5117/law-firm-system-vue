@@ -85,7 +85,7 @@ export default {
     },
 
     dateTime(value) {
-      return moment(value).format("DD-MM-YYYY");
+      return moment(value).format("DD/MM/YYYY");
     },
 
     async getEvents() {

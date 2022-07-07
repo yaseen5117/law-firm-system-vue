@@ -96,9 +96,11 @@
             <button
               type="button"
               :disabled="saving_event"
-              class=" btn btn-success btn-sm"
+              class="btn btn-success btn-sm"
               v-show="petition_hearing_event.id"
-              @click="gotoLink('petitions/'+petition_hearing_event.petition_id)"
+              @click="
+                gotoLink('petitions/' + petition_hearing_event.petition_id)
+              "
             >
               <i class="fa fa-external-link"></i> Go To Case File
             </button>
@@ -237,7 +239,7 @@ export default {
     },
 
     dateTime(value) {
-      return moment(value).format("DD-MM-YYYY");
+      return moment(value).format("DD/MM/YYYY");
     },
 
     savePetitionHearing() {
