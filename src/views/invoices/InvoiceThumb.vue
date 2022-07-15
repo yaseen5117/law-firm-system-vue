@@ -30,7 +30,7 @@
       v-if="
         invoice.attachment &&
         (invoice.attachment.mime_type == 'image/jpeg' ||
-          invoice.attachment.mime_type == 'image/jpeg' ||
+          invoice.attachment.mime_type == 'image/jpg' ||
           invoice.attachment.mime_type == 'image/png')
       "
       :src="
