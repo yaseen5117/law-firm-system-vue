@@ -17,7 +17,7 @@
       v-if="
         !(
           invoice.attachment.mime_type == 'image/jpeg' ||
-          invoice.attachment.mime_type == 'image/jpeg' ||
+          invoice.attachment.mime_type == 'image/jpg' ||
           invoice.attachment.mime_type == 'image/png'
         )
       "
