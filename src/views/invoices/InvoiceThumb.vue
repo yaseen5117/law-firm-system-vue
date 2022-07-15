@@ -13,10 +13,26 @@
     "
     target="_blank"
   >
+    <span
+      v-if="
+        !(
+          invoice.attachment.mime_type == 'image/jpeg' ||
+          invoice.attachment.mime_type == 'image/jpeg' ||
+          invoice.attachment.mime_type == 'image/png'
+        )
+      "
+    >
+      Click to open In New Tab
+    </span>
     <img
       class="img img-thumbnail"
       width="90"
-      v-if="invoice.attachment"
+      v-if="
+        invoice.attachment &&
+        (invoice.attachment.mime_type == 'image/jpeg' ||
+          invoice.attachment.mime_type == 'image/jpeg' ||
+          invoice.attachment.mime_type == 'image/png')
+      "
       :src="
         this.base_url +
         '/storage/attachments/' +
@@ -26,7 +42,7 @@
         '/' +
         invoice.attachment.file_name
       "
-      alt="Image not found"
+      alt="Click to Open In New Tab"
     />
   </a>
 </template>
@@ -40,5 +56,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

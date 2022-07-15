@@ -655,6 +655,15 @@ section {
 .services .iconbox-orange:hover .icon path {
   fill: #ffa76e;
 }
+.services .iconbox-redish i {
+  color: #9e2500;
+}
+.services .iconbox-redish:hover .icon i {
+  color: #fff;
+}
+.services .iconbox-redish:hover .icon path {
+  fill: #9e2500;
+}
 .services .iconbox-pink i {
   color: #e80368;
 }
