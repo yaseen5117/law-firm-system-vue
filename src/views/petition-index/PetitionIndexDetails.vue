@@ -584,7 +584,7 @@ export default {
         axios
           .post(
             this.base_url + "/api/delete_selected",
-            this.selected_attachment_ids,
+            { id: this.selected_attachment_ids },
             {
               headers,
             }

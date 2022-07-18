@@ -274,7 +274,7 @@
               </div>
               <h4><router-link to="links">Links</router-link></h4>
               <p>
-                Contains all Details of Links sections. Click to Open all
+                Contains all Details of Links section. Click to Open all
                 Details.
               </p>
             </div>
@@ -305,10 +305,10 @@
                 <i class="fa fa-tasks"></i>
               </div>
               <h4>
-                <router-link to="sample-pleading">Sample Pleading</router-link>
+                <router-link to="sample-pleading">Sample Pleadings</router-link>
               </h4>
               <p>
-                Contains all Details of Pleading sections. Click to Open all
+                Contains all Details of Pleadings section. Click to Open all
                 Details.
               </p>
             </div>

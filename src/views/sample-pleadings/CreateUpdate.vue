@@ -11,7 +11,7 @@
             >
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="col-lg-7 col-md-7 col-sm-12">
                     <label>Title<span style="color: red">*</span></label>
                     <input
                       class="form-control"
@@ -28,7 +28,9 @@
                     >
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label>File</label>
+                    <label
+                      >File <small>(Pdf, Word Document, Image)</small></label
+                    >
                     <input
                       accept="image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                       type="file"
@@ -36,6 +38,25 @@
                       class="form-control"
                       @change="onChange"
                       ref="fileupload"
+                    />
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-12">
+                    <InvoiceThumb
+                      v-show="SamplePleading.attachment"
+                      folder_name="sample-pleadings"
+                      :base_url="base_url"
+                      :invoice="SamplePleading"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-2 col-md-2 col-sm-12">
+                    <label>Display Order</label>
+                    <input
+                      class="form-control"
+                      v-model="SamplePleading.display_order"
                     />
                   </div>
                 </div>
@@ -63,10 +84,12 @@ import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import InvoiceThumb from "../invoices/InvoiceThumb.vue";
 
 export default {
   components: {
     PageHeader,
+    InvoiceThumb,
   },
   setup() {
     return {
@@ -116,6 +139,7 @@ export default {
         }
 
         formData.append("title", this.SamplePleading.title);
+        formData.append("display_order", this.SamplePleading.display_order);
         if (this.SamplePleading.id) {
           formData.append("id", this.SamplePleading.id);
         }

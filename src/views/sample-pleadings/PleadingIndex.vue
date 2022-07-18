@@ -48,6 +48,7 @@
                       <tr>
                         <!-- <th>Category</th> -->
                         <th>Title</th>
+                        <th>Display Order</th>
                         <th>Attachment</th>
                         <th class="text-end">Actions</th>
                       </tr>
@@ -65,6 +66,7 @@
                         </span>                         
                       </td> -->
                         <td>{{ samplePleading.title }}</td>
+                        <td>{{ samplePleading.display_order }}</td>
                         <td>
                           <InvoiceThumb
                             v-show="samplePleading.attachment"
@@ -94,7 +96,7 @@
                           <a
                             class="btn btn-sm btn-danger action-btn"
                             @click="
-                              deleteContactAndAgreement(
+                              deleteSamplePleading(
                                 samplePleading.id,
                                 sample_pleading_index
                               )
@@ -193,7 +195,7 @@ export default {
           console.log(error);
         });
     },
-    deleteContactAndAgreement(sample_pleading_id, sample_pleading_index) {
+    deleteSamplePleading(sample_pleading_id, sample_pleading_index) {
       if (confirm("Do you really want to delmete?")) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),

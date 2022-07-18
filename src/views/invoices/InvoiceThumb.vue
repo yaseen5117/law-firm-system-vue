@@ -22,7 +22,7 @@
         )
       "
     >
-      Click to open In New Tab
+      Click to open
     </span>
     <img
       class="img img-thumbnail"
