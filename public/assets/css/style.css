@@ -1732,3 +1732,7 @@ label{
   font-size: 12px;  
   margin-bottom: 1px;
 }
+
+.fc.fc-theme-standard .fc-view-harness .fc-event.fc-daygrid-block-event{
+  cursor: pointer;
+}
