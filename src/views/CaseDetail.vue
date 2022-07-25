@@ -1,252 +1,267 @@
 <template>
-  <main id="main">
-    <page-header title="Petition" />
-    <nav-components activeNavPill="petition" :petition_id="petition.id" />
-    <!-- ======= Services Section ======= -->
-    <section id="services" class="services section-bg">
-      <div class="container" data-aos="fade-up">
-        <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="card-body align-center case_heading">
-              <div class="text-end">
-                <router-link
-                  v-if="this.user.is_admin"
-                  class="btn btn-primary action-btn"
-                  style="margin-right: 2px"
-                  :to="{ name: 'edit-petition', params: { id: petition.id } }"
-                  role="button"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="View"
-                  ><i class="fa fa-edit"></i> Edit Petition</router-link
-                >
-                <a
-                  class="btn btn-warning action-btn"
-                  :href="petition.pdf_download_url"
-                  download=""
-                  ><i class="fa fa-download"></i> Download PDF</a
-                >
-              </div>
-              <h6>
-                <u
-                  >BEFORE THE
-                  {{ petition.court ? petition.court.title : "Court NA" }}
-                </u>
-              </h6>
-              <p>
-                <strong>{{ petition.petition_standard_title }}</strong>
-              </p>
-              <p class="line_height">{{ petition.petitioner_names }}</p>
-              <p>VERSUS</p>
-              <p class="line_height">{{ petition.opponent_names }}</p>
-              <p class="line_height">
-                {{ petition.title }}
-              </p>
-              <p>
-                <u><strong>INDEX</strong></u>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="table-responsive">
+  <BlockUI :blocked="!isLoaded" :fullScreen="true">
+    <main id="main">
+      <page-header title="Petition" />
+      <nav-components activeNavPill="petition" :petition_id="petition.id" />
+      <!-- ======= Services Section ======= -->
+      <section id="services" class="services section-bg">
+        <div class="container" data-aos="fade-up">
+          <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
-              <table class="table table-striped">
-                <thead>
-                  <th>Description of Documents</th>
-                  <th>Date</th>
-                  <th>Annexure</th>
-                  <th>Page</th>
-                  <th v-if="this.user.is_admin" width="10%">Actions</th>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="(petition_detail, petitionIndex) in petition_details"
-                    :key="petition_detail.id"
+              <div class="card-body align-center case_heading">
+                <div class="text-end">
+                  <router-link
+                    v-if="this.user.is_admin"
+                    class="btn btn-primary action-btn"
+                    style="margin-right: 2px"
+                    :to="{
+                      name: 'edit-petition',
+                      params: { id: petition.id },
+                    }"
+                    role="button"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="View"
+                    ><i class="fa fa-edit"></i> Edit Petition</router-link
                   >
-                    <td>
-                      <AutoComplete
-                        v-show="petition_detail.editMode"
-                        :delay="1"
-                        v-model="petition_detail.document_description"
-                        :suggestions="filteredDocumentDiscriptions"
-                        @complete="searchForAutocomplete($event)"
-                        :style="'width:100%'"
-                        :inputStyle="'width:100%'"
-                        v-on:keyup.enter="editPetitionIndex(petition_detail)"
-                      />
-                      <router-link
-                        v-show="!petition_detail.editMode"
-                        :to="{
-                          name: 'petition-index-details',
-                          params: { id: petition_detail.id },
-                        }"
-                        >{{ petition_detail.document_description }}
-                      </router-link>
-                    </td>
-                    <td>
-                      <InputMask
-                        v-show="petition_detail.editMode"
-                        v-model="petition_detail.date"
-                        v-on:keyup.enter="editPetitionIndex(petition_detail)"
-                        mask="99/99/9999"
-                        aria-placeholder=""
-                        placeholder="dd/mm/yyyy "
-                      />
+                  <a
+                    class="btn btn-warning action-btn"
+                    :href="petition.pdf_download_url"
+                    download=""
+                    ><i class="fa fa-download"></i> Download PDF</a
+                  >
+                </div>
+                <h6>
+                  <u
+                    >BEFORE THE
+                    {{ petition.court ? petition.court.title : "Court NA" }}
+                  </u>
+                </h6>
+                <p>
+                  <strong>{{ petition.petition_standard_title }}</strong>
+                </p>
+                <p class="line_height">{{ petition.petitioner_names }}</p>
+                <p>VERSUS</p>
+                <p class="line_height">{{ petition.opponent_names }}</p>
+                <p class="line_height">
+                  {{ petition.title }}
+                </p>
+                <p>
+                  <u><strong>INDEX</strong></u>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="table-responsive">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <table class="table table-striped" v-if="isLoaded">
+                  <thead>
+                    <th>Description of Documents</th>
+                    <th>Date</th>
+                    <th>Annexure</th>
+                    <th>Page</th>
+                    <th v-if="this.user.is_admin" width="10%">Actions</th>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="(
+                        petition_detail, petitionIndex
+                      ) in petition_details"
+                      :key="petition_detail.id"
+                    >
+                      <td>
+                        <AutoComplete
+                          v-show="petition_detail.editMode"
+                          :delay="1"
+                          v-model="petition_detail.document_description"
+                          :suggestions="filteredDocumentDiscriptions"
+                          @complete="searchForAutocomplete($event)"
+                          :style="'width:100%'"
+                          :inputStyle="'width:100%'"
+                          v-on:keyup.enter="editPetitionIndex(petition_detail)"
+                        />
+                        <router-link
+                          v-show="!petition_detail.editMode"
+                          :to="{
+                            name: 'petition-index-details',
+                            params: { id: petition_detail.id },
+                          }"
+                          >{{ petition_detail.document_description }}
+                        </router-link>
+                      </td>
+                      <td>
+                        <InputMask
+                          v-show="petition_detail.editMode"
+                          v-model="petition_detail.date"
+                          v-on:keyup.enter="editPetitionIndex(petition_detail)"
+                          mask="99/99/9999"
+                          aria-placeholder=""
+                          placeholder="dd/mm/yyyy "
+                        />
 
-                      <span v-show="!petition_detail.editMode">{{
-                        petition_detail.date
-                      }}</span>
-                    </td>
-                    <td>
-                      <input
-                        v-show="petition_detail.editMode"
-                        class="form-control"
-                        v-model="petition_detail.annexure"
-                        v-on:keyup.enter="editPetitionIndex(petition_detail)"
-                      />
-                      <span v-show="!petition_detail.editMode">{{
-                        petition_detail.annexure
-                      }}</span>
-                    </td>
-                    <td>
-                      <input
-                        v-show="petition_detail.editMode"
-                        class="form-control"
-                        v-model="petition_detail.page_info"
-                        v-on:keyup.enter="editPetitionIndex(petition_detail)"
-                      />
-                      <span v-show="!petition_detail.editMode">{{
-                        petition_detail.page_info
-                      }}</span>
-                    </td>
-                    <td width="15%" v-if="this.user.is_admin">
-                      <a
-                        class="btn btn-sm btn-primary action-btn"
-                        v-show="!petition_detail.editMode"
-                        @click="petition_detail.editMode = true"
-                        href="javascript:void"
-                        style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Edit"
-                      >
-                        Edit
-                        <!-- <i class="fa fa-edit"></i> -->
-                      </a>
-                      <a
-                        v-show="petition_detail.editMode"
-                        class="btn btn-sm btn-warning action-btn"
-                        @click="editPetitionIndex(petition_detail)"
-                        href="javascript:void"
-                        style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Update"
-                      >
-                        Update
-                        <!-- <i class="fa fa-save"></i> -->
-                      </a>
+                        <span v-show="!petition_detail.editMode">{{
+                          petition_detail.date
+                        }}</span>
+                      </td>
+                      <td>
+                        <input
+                          v-show="petition_detail.editMode"
+                          class="form-control"
+                          v-model="petition_detail.annexure"
+                          v-on:keyup.enter="editPetitionIndex(petition_detail)"
+                        />
+                        <span v-show="!petition_detail.editMode">{{
+                          petition_detail.annexure
+                        }}</span>
+                      </td>
+                      <td>
+                        <input
+                          v-show="petition_detail.editMode"
+                          class="form-control"
+                          v-model="petition_detail.page_info"
+                          v-on:keyup.enter="editPetitionIndex(petition_detail)"
+                        />
+                        <span v-show="!petition_detail.editMode">{{
+                          petition_detail.page_info
+                        }}</span>
+                      </td>
+                      <td width="15%" v-if="this.user.is_admin">
+                        <a
+                          class="btn btn-sm btn-primary action-btn"
+                          v-show="!petition_detail.editMode"
+                          @click="petition_detail.editMode = true"
+                          href="javascript:void"
+                          style="margin-left: 2px"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Edit"
+                        >
+                          Edit
+                          <!-- <i class="fa fa-edit"></i> -->
+                        </a>
+                        <a
+                          v-show="petition_detail.editMode"
+                          class="btn btn-sm btn-warning action-btn"
+                          @click="editPetitionIndex(petition_detail)"
+                          href="javascript:void"
+                          style="margin-left: 2px"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Update"
+                        >
+                          Update
+                          <!-- <i class="fa fa-save"></i> -->
+                        </a>
 
-                      <a
-                        v-show="petition_detail.editMode"
-                        @click="petition_detail.editMode = false"
-                        class="btn btn-sm btn-info action-btn"
-                        href="javascript:void"
-                        style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Cancel"
-                      >
-                        Cancel
-                        <!-- <i class="fa fa-remove"></i> -->
-                      </a>
+                        <a
+                          v-show="petition_detail.editMode"
+                          @click="petition_detail.editMode = false"
+                          class="btn btn-sm btn-info action-btn"
+                          href="javascript:void"
+                          style="margin-left: 2px"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Cancel"
+                        >
+                          Cancel
+                          <!-- <i class="fa fa-remove"></i> -->
+                        </a>
 
-                      <a
-                        class="btn btn-sm btn-danger action-btn"
-                        v-show="!petition_detail.editMode"
-                        @click="
-                          deletePetitionIndex(petition_detail.id, petitionIndex)
-                        "
-                        href="javascript:void"
-                        style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Delete"
-                      >
-                        Delete
-                        <!-- <i class="fa fa-trash-o"></i> -->
-                      </a>
-                    </td>
-                  </tr>
-                  <tr v-if="this.user.is_admin">
-                    <td>
-                      <AutoComplete
-                        :delay="1"
-                        v-model="new_petition_index.document_description"
-                        :suggestions="filteredDocumentDiscriptions"
-                        @complete="searchForAutocomplete($event)"
-                        v-bind:class="{
-                          'error-boarder':
-                            v$.new_petition_index.document_description.$error,
-                        }"
-                        :style="'width:100%'"
-                        :inputStyle="'width:100%'"
-                        @blur="
-                          v$.new_petition_index.document_description.$touch
-                        "
-                        ref="documentDescription"
-                      />
-                      <span
-                        v-if="v$.new_petition_index.document_description.$error"
-                        class="errorMessage"
-                        >Description field is required.</span
-                      >
-                    </td>
-                    <td>
-                      <InputMask
-                        v-model="new_petition_index.date"
-                        v-on:keyup.enter="submitPetitionIndex()"
-                        mask="99/99/9999"
-                        aria-placeholder=""
-                        placeholder="dd/mm/yyyy "
-                      />
-                    </td>
-                    <td>
-                      <input
-                        class="form-control"
-                        v-model="new_petition_index.annexure"
-                        v-on:keyup.enter="submitPetitionIndex()"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        class="form-control"
-                        v-model="new_petition_index.page_info"
-                        v-on:keyup.enter="submitPetitionIndex()"
-                      />
-                    </td>
-                    <td>
-                      <button
-                        :disabled="saving"
-                        @click="submitPetitionIndex()"
-                        class="btn btn-sm btn-success action-btn"
-                      >
-                        Save
-                        <!-- <i class="fa fa-save"></i> -->
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                        <a
+                          class="btn btn-sm btn-danger action-btn"
+                          v-show="!petition_detail.editMode"
+                          @click="
+                            deletePetitionIndex(
+                              petition_detail.id,
+                              petitionIndex
+                            )
+                          "
+                          href="javascript:void"
+                          style="margin-left: 2px"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Delete"
+                        >
+                          Delete
+                          <!-- <i class="fa fa-trash-o"></i> -->
+                        </a>
+                      </td>
+                    </tr>
+                    <tr v-if="this.user.is_admin">
+                      <td>
+                        <AutoComplete
+                          :delay="1"
+                          v-model="new_petition_index.document_description"
+                          :suggestions="filteredDocumentDiscriptions"
+                          @complete="searchForAutocomplete($event)"
+                          v-bind:class="{
+                            'error-boarder':
+                              v$.new_petition_index.document_description.$error,
+                          }"
+                          :style="'width:100%'"
+                          :inputStyle="'width:100%'"
+                          @blur="
+                            v$.new_petition_index.document_description.$touch
+                          "
+                          ref="documentDescription"
+                        />
+                        <span
+                          v-if="
+                            v$.new_petition_index.document_description.$error
+                          "
+                          class="errorMessage"
+                          >Description field is required.</span
+                        >
+                      </td>
+                      <td>
+                        <InputMask
+                          v-model="new_petition_index.date"
+                          v-on:keyup.enter="submitPetitionIndex()"
+                          mask="99/99/9999"
+                          aria-placeholder=""
+                          placeholder="dd/mm/yyyy "
+                        />
+                      </td>
+                      <td>
+                        <input
+                          class="form-control"
+                          v-model="new_petition_index.annexure"
+                          v-on:keyup.enter="submitPetitionIndex()"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          class="form-control"
+                          v-model="new_petition_index.page_info"
+                          v-on:keyup.enter="submitPetitionIndex()"
+                        />
+                      </td>
+                      <td>
+                        <button
+                          :disabled="saving"
+                          @click="submitPetitionIndex()"
+                          class="btn btn-sm btn-success action-btn"
+                        >
+                          Save
+                          <!-- <i class="fa fa-save"></i> -->
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div v-if="!isLoaded" class="col-md-12">
+                  <p class="alert alert-warning">Loading....</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-    <!-- End Services Section -->
-  </main>
-  <!-- End #main -->
+      </section>
+      <!-- End Services Section -->
+    </main>
+    <!-- End #main -->
+  </BlockUI>
 </template>
 
 <script>
@@ -254,7 +269,7 @@ import axios from "axios";
 import NavComponents from "./Cases/NavComponents.vue";
 import PageHeader from "../views/shared/PageHeader";
 import useVuelidate from "@vuelidate/core";
-import { required, email, helpers } from "@vuelidate/validators";
+import { required } from "@vuelidate/validators";
 import { mapState } from "vuex";
 
 export default {
@@ -285,6 +300,7 @@ export default {
         "Application for Exemption",
       ],
       filteredDocumentDiscriptions: null,
+      isLoaded: false,
     };
   },
   validations() {
@@ -313,6 +329,7 @@ export default {
       }, 250);
     },
     getCaseDetails() {
+      this.isLoaded = false;
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
@@ -321,7 +338,7 @@ export default {
         .then((response) => {
           this.petition = response.data.petition;
           this.petition_details = response.data.petition_details;
-          console.log(this.petition);
+          this.isLoaded = true;
         })
         .catch((error) => {
           console.log(error);

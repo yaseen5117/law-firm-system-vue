@@ -1,130 +1,131 @@
 <template>
-  <main id="main" class="margintop85">
-    <page-header :title="page_title" :hideBreadCrumbs="true" />
-    <!-- ======= Services Section ======= -->
-    <section id="services" class="services section-bg mt-3">
-      <div class="container" data-aos="fade-up">
-        <div class="row">
-          <div class="table-responsive">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-              <table class="table table-hover">
-                <thead>
-                  <th>Title</th>
-                  <th width="10%">Actions</th>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="(petition_type, row_index) in petition_types"
-                    :key="petition_type.id"
-                  >
-                    <td>
-                      <input
-                        v-show="petition_type.editMode"
-                        class="form-control"
-                        v-model="petition_type.title"
-                        v-on:keyup.enter="editPetitionType(petition_type)"
-                      />
-                      <span v-show="!petition_type.editMode">{{
-                        petition_type.title
-                      }}</span>
-                    </td>
+  <BlockUI :blocked="!isLoaded" :fullScreen="true">
+    <main id="main" class="margintop85">
+      <page-header
+        :title="page_title"
+        :hideBreadCrumbs="true"
+        :showInvoices="false"
+        :route_object="route_obj"
+        :header_button="header_button"
+        :header_button_text="header_button_text"
+      />
+      <!-- ======= Services Section ======= -->
+      <section id="services" class="services section-bg mt-3">
+        <div class="container" data-aos="fade-up">
+          <div class="row">
+            <div class="table-responsive">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <table class="table table-hover" v-if="isLoaded">
+                  <thead>
+                    <th>Title</th>
+                    <th>Court</th>
+                    <th width="10%">Actions</th>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="(petition_type, row_index) in petition_types"
+                      :key="petition_type.id"
+                    >
+                      <td>
+                        <input
+                          v-show="petition_type.editMode"
+                          class="form-control"
+                          v-model="petition_type.title"
+                          v-on:keyup.enter="editPetitionType(petition_type)"
+                        />
+                        <span v-show="!petition_type.editMode">{{
+                          petition_type.title
+                        }}</span>
+                      </td>
 
-                    <td width="15%">
-                      <a
-                        class="btn btn-sm btn-primary action-btn"
-                        v-show="!petition_type.editMode"
-                        @click="petition_type.editMode = true"
-                        href="javascript:void"
-                        style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Edit"
-                      >
-                        Edit
-                        <!-- <i class="fa fa-edit"></i> -->
-                      </a>
-                      <a
-                        v-show="petition_type.editMode"
-                        class="btn btn-sm btn-warning action-btn"
-                        @click="editPetitionType(petition_type)"
-                        href="javascript:void"
-                        style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Update"
-                      >
-                        Update
-                        <!-- <i class="fa fa-save"></i> -->
-                      </a>
+                      <td>
+                        <span
+                          class="text-capitalize"
+                          v-for="(
+                            petition_type_court, court_index
+                          ) in petition_type.petition_type_courts"
+                          :key="petition_type_court.id"
+                        >
+                          <span v-if="court_index != 0">,</span>
+                          {{ petition_type_court.court.title }}
+                        </span>
+                      </td>
 
-                      <a
-                        v-show="petition_type.editMode"
-                        @click="petition_type.editMode = false"
-                        class="btn btn-sm btn-info action-btn"
-                        href="javascript:void"
-                        style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Cancel"
-                      >
-                        Cancel
-                        <!-- <i class="fa fa-remove"></i> -->
-                      </a>
+                      <td width="15%">
+                        <router-link
+                          class="btn btn-sm btn-success action-btn"
+                          :to="{
+                            name: 'petition-types-edit',
+                            params: { petition_type_id: petition_type.id },
+                          }"
+                          href="javascript:void"
+                          style="margin-left: 2px"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Edit"
+                        >
+                          Edit
+                        </router-link>
 
-                      <a
-                        class="btn btn-sm btn-danger action-btn"
-                        v-show="!petition_type.editMode"
-                        @click="deletePetitionType(petition_type.id, row_index)"
-                        href="javascript:void"
-                        style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Delete"
-                      >
-                        Delete
-                        <!-- <i class="fa fa-trash-o"></i> -->
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input
-                        class="form-control"
-                        v-model="new_petition_type.title"
-                        v-on:keyup.enter="submitPetitionType()"
-                        v-bind:class="{
-                          'error-boarder': v$.new_petition_type.title.$error,
-                        }"
-                        @blur="v$.new_petition_type.title.$touch"
-                      />
-                      <span
-                        v-if="v$.new_petition_type.title.$error"
-                        class="errorMessage"
-                        >Title field is required.</span
-                      >
-                    </td>
+                        <a
+                          v-show="petition_type.editMode"
+                          class="btn btn-sm btn-warning action-btn"
+                          @click="editPetitionType(petition_type)"
+                          href="javascript:void"
+                          style="margin-left: 2px"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Update"
+                        >
+                          Update
+                          <!-- <i class="fa fa-save"></i> -->
+                        </a>
 
-                    <td>
-                      <button
-                        :disabled="saving"
-                        @click="submitPetitionType()"
-                        class="btn btn-sm btn-success action-btn"
-                      >
-                        Save
-                        <!-- <i class="fa fa-save"></i> -->
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                        <a
+                          v-show="petition_type.editMode"
+                          @click="petition_type.editMode = false"
+                          class="btn btn-sm btn-info action-btn"
+                          href="javascript:void"
+                          style="margin-left: 2px"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Cancel"
+                        >
+                          Cancel
+                          <!-- <i class="fa fa-remove"></i> -->
+                        </a>
+
+                        <a
+                          class="btn btn-sm btn-danger action-btn"
+                          v-show="!petition_type.editMode"
+                          @click="
+                            deletePetitionType(petition_type.id, row_index)
+                          "
+                          href="javascript:void"
+                          style="margin-left: 2px"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Delete"
+                        >
+                          Delete
+                          <!-- <i class="fa fa-trash-o"></i> -->
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div v-if="!isLoaded" class="col-md-12">
+                  <p class="alert alert-warning">Loading....</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-    <!-- End Services Section -->
-  </main>
-  <!-- End #main -->
+      </section>
+      <!-- End Services Section -->
+    </main>
+    <!-- End #main -->
+  </BlockUI>
 </template>
 
 <script>
@@ -150,6 +151,12 @@ export default {
       new_petition_type: {},
       petition_types: [],
       saving: false,
+      route_obj: {
+        name: "petition-types-create",
+      },
+      header_button: true,
+      header_button_text: "Create Petition Type",
+      isLoaded: false,
     };
   },
   validations() {
@@ -164,6 +171,7 @@ export default {
   },
   methods: {
     getPetitionTypes() {
+      this.isLoaded = false;
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
@@ -173,6 +181,7 @@ export default {
           this.petition_types = response.data.petition_types;
           this.page_title = response.data.page_title;
           console.log(response.data.page_title);
+          this.isLoaded = true;
         })
         .catch((error) => {
           console.log(error);
@@ -294,5 +303,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

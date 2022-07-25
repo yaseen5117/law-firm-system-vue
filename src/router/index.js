@@ -40,6 +40,7 @@ import CourtList from "../views/courts/CourtList";
 import ContactRequestList from "../views/contact-requests/ContactRequestList";
 
 import PetitionTypes from "../views/petition-types/PetitionTypesList";
+import CreateUpdate from "../views/petition-types/CreateUpdate";
 
 import ForgotPassword from "../views/Auth/ForgotPassword";
 
@@ -339,6 +340,22 @@ const routes = [
     path: "/petition-types",
     name: "petition-types",
     component: PetitionTypes,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/petition-type/create",
+    name: "petition-types-create",
+    component: CreateUpdate,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/petition-type/edit/:petition_type_id",
+    name: "petition-types-edit",
+    component: CreateUpdate,
     meta: {
       auth: true,
     },
