@@ -13,7 +13,10 @@
                   v-if="this.user.is_admin"
                   class="btn btn-primary action-btn"
                   style="margin-right: 2px"
-                  :to="{ name: 'edit-petition', params: { id: petition.id } }"
+                  :to="{
+                    name: 'edit-petition',
+                    params: { id: petition.id },
+                  }"
                   role="button"
                   data-bs-toggle="tooltip"
                   data-bs-placement="top"
@@ -254,7 +257,7 @@ import axios from "axios";
 import NavComponents from "./Cases/NavComponents.vue";
 import PageHeader from "../views/shared/PageHeader";
 import useVuelidate from "@vuelidate/core";
-import { required, email, helpers } from "@vuelidate/validators";
+import { required } from "@vuelidate/validators";
 import { mapState } from "vuex";
 
 export default {
@@ -321,7 +324,6 @@ export default {
         .then((response) => {
           this.petition = response.data.petition;
           this.petition_details = response.data.petition_details;
-          console.log(this.petition);
         })
         .catch((error) => {
           console.log(error);

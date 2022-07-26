@@ -316,11 +316,11 @@ export default {
         title: "",
         case_no: "",
         lawyer_ids: [],
-      },      
+      },
       lawyers: [],
       courts: [],
       petition_types: [],
-      filteredClients: [],      
+      filteredClients: [],
     };
   },
   validations() {
@@ -333,7 +333,7 @@ export default {
       },
     };
   },
-  created() {     
+  created() {
     this.getCourts();
     this.getPetitionTypes();
     this.getPetition();
@@ -419,7 +419,7 @@ export default {
             }
           );
       }
-    },     
+    },
     getLawyers() {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
@@ -490,7 +490,7 @@ export default {
           .get(url, { headers })
           .then((response) => {
             this.petition = response.data.petition;
-            this.lawyers = response.data.petition.lawyers;
+            //this.lawyers = response.data.petition.lawyers;
             this.opponents = [{}];
 
             this.petition.lawyer_ids = response.data.petition.lawyer_ids_array;
@@ -509,5 +509,4 @@ export default {
 };
 </script>
 
-<style src="@vueform/multiselect/themes/default.css">
-</style>
+<style src="@vueform/multiselect/themes/default.css"></style>
