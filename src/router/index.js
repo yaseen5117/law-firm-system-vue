@@ -58,6 +58,8 @@ import GeneralSettings from "../views/settings/GeneralSettings";
 import PleadingIndex from "../views/sample-pleadings/PleadingIndex";
 import createUpdatePleadingIndex from "../views/sample-pleadings/CreateUpdate";
 
+import AllIndexesDetail from "../views/petition-index/AllIndexesDetail";
+
 const routes = [
   {
     path: "/login",
@@ -152,6 +154,14 @@ const routes = [
     path: "/petition-replies/:id",
     name: "petition-replies",
     component: PetitionReply,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/all-indexes-details/:petition_id",
+    name: "all-indexes",
+    component: AllIndexesDetail,
     meta: {
       auth: true,
     },
