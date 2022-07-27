@@ -80,14 +80,14 @@
                 </span> -->
               </div>
 
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="">Notes</label>
                 <textarea
                   class="form-control"
                   type="text"
                   v-model="petition_hearing_event.hearing_summary"
                 ></textarea>
-              </div>
+              </div> -->
             </form>
           </div>
           <!-- Modal footer -->
