@@ -16,7 +16,7 @@
               <div class="col-md-12 col-12">
                 <Transition name="fade">
                   <form v-if="showSearchForm" class="row mb-2">
-                    <div hidden class="col-lg-2 col-md-2 col-sm-12">
+                    <!-- <div hidden class="col-lg-2 col-md-2 col-sm-12">
                       <label for="">Date</label>
                       <datepicker
                         :enableTimePicker="false"
@@ -28,7 +28,7 @@
                         class=""
                       >
                       </datepicker>
-                    </div>
+                    </div> -->
                     <div class="col-lg-2 col-md-2 col-sm-6 col-6">
                       <label for="">Case #</label>
                       <input
@@ -127,11 +127,7 @@
               <div class="col-lg-12 col-md-12 col-sm-12 mt-2">
                 <div v-if="isLoaded" class="row">
                   <div
-                    class="
-                      col-sm-12 col-md-3 col-lg-3 col-12
-                      d-flex
-                      align-self-stretch
-                    "
+                    class="col-sm-12 col-md-3 col-lg-3 col-12 d-flex align-self-stretch"
                     v-for="petition in petitions"
                     :key="petition.id"
                   >
@@ -164,7 +160,12 @@
 
                           <div class="col-md-7 col-7 col-sm-7">
                             <p class="card-text pull-right">
-                              {{ petition.petitioner_names.length>20?petition.petitioner_names.substring(0,19)+"...":petition.petitioner_names }}
+                              {{
+                                petition.petitioner_names.length > 20
+                                  ? petition.petitioner_names.substring(0, 19) +
+                                    "..."
+                                  : petition.petitioner_names
+                              }}
                             </p>
                           </div>
                           <div class="col-md-12">
@@ -430,5 +431,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
