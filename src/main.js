@@ -4,7 +4,6 @@ import router from "./router";
 import Notifications from "@kyvg/vue3-notification";
 import VueUploadComponent from "vue-upload-component";
 import store from "./store";
-import "vue3-date-time-picker/dist/main.css";
 import PrimeVue from "primevue/config";
 
 import "primevue/resources/themes/saga-blue/theme.css";
