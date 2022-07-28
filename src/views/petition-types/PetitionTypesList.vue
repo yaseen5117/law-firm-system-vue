@@ -207,7 +207,7 @@ export default {
         name: "petition-types-create",
       },
       header_button: true,
-      header_button_text: "New Case Type",
+      header_button_text: "New Case Category",
       isLoaded: false,
       filters: {
         court_id: "",

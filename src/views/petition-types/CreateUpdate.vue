@@ -81,8 +81,8 @@ export default {
     return {
       saving: false,
       page_title: this.$route.params.petition_type_id
-        ? "Edit Case Type"
-        : "Add New Case Type",
+        ? "Edit Case Category"
+        : "Add New Case Category",
       button_title: this.$route.params.petition_type_id ? "Update" : "Save",
       base_url: process.env.VUE_APP_SERVICE_URL,
       petitionTypeData: {
