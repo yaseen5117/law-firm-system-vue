@@ -24,14 +24,26 @@
                       type="text"
                       id="title"
                       v-model="filters.title"
-                      class="form-control form-control-sm"
+                      class="form-control"
                       placeholder="Title"
                       aria-describedby="Title"
                     />
                   </div>
 
                   <div class="col-lg-3 col-md-3 col-sm-12">
-                    <select
+                    <Dropdown
+                      class="p-inputtext-sm"
+                      v-model="filters.court_id"
+                      :options="courts"
+                      optionLabel="title"
+                      optionValue="id"
+                      placeholder="Select a Court"
+                      :filter="true"
+                      appendTo="self"
+                      filterPlaceholder="Find by Title"
+                    />
+
+                    <!-- <select
                       class="form-select form-select-sm"
                       aria-describedby="Court"
                       v-model="filters.court_id"
@@ -45,7 +57,7 @@
                       >
                         {{ court.title }}
                       </option>
-                    </select>
+                    </select> -->
                   </div>
                   <div class="col-lg-1 col-md-1 col-sm-12">
                     <button

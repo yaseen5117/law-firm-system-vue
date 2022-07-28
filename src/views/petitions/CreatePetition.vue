@@ -165,6 +165,7 @@
                                   name: 'edit-user',
                                   params: { id: petitioner.user.id },
                                 }"
+                                target="_blank"
                               >
                                 View
                               </router-link>
@@ -314,7 +315,9 @@ export default {
   },
   created() {
     this.getCourts();
-    //this.getPetitionTypes();
+    if (this.$route.params.id) {
+      this.getCaseCategories(this.petition.court_id);
+    }
     this.getPetition();
     this.getLawyers();
   },
