@@ -9,43 +9,19 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-4 col-md-4 col-sm-12">
-                    <label>Title<span style="color: red">*</span></label>
-                    <input
-                      class="form-control"
-                      v-model="order_sheet.title"
-                      v-bind:class="{
-                        'error-boarder': v$.order_sheet.title.$error,
-                      }"
-                      @blur="v$.order_sheet.title.$touch"
-                    />
-                    <span
-                      v-if="v$.order_sheet.title.$error"
-                      class="errorMessage"
-                      >Title field is required.</span
-                    >
+                    <label>Title</label>
+                    <input class="form-control" v-model="order_sheet.title" />
                   </div>
 
                   <div class="col-lg-4 col-md-4 col-sm-12">
-                    <label
-                      >Order Sheet Date<span style="color: red">*</span></label
-                    >
-
+                    <label>Order Sheet Date</label>
                     <InputMask
                       mask="99/99/9999"
                       class="form-control"
                       type="text"
                       placeholder="dd/mm/yyyy"
                       v-model="order_sheet.order_sheet_date"
-                      v-bind:class="{
-                        'error-boarder': v$.order_sheet.order_sheet_date.$error,
-                      }"
-                      @blur="v$.order_sheet.order_sheet_date.$touch"
                     />
-                    <span
-                      v-if="v$.order_sheet.order_sheet_date.$error"
-                      class="errorMessage"
-                      >Date field is required.</span
-                    >
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Type</label>
@@ -130,11 +106,7 @@ import deleteAttachment from "../petition-order-sheets/deleteAttachment.vue";
 
 export default {
   components: { PageHeader, deleteAttachment },
-  setup() {
-    return {
-      v$: useVuelidate(),
-    };
-  },
+
   data() {
     return {
       page_title: this.$route.params.editable_order_sheet_id
@@ -154,14 +126,7 @@ export default {
       saving: false,
     };
   },
-  validations() {
-    return {
-      order_sheet: {
-        order_sheet_date: { required },
-        title: { required },
-      },
-    };
-  },
+
   created() {
     this.getUsers();
     this.getEditableOrderSheet();
@@ -212,8 +177,7 @@ export default {
       }
     },
     submitForm: function (event) {
-      this.v$.$validate();
-      if (!this.v$.$error) {
+      if (true) {
         event.preventDefault();
         this.saving = true;
         var headers = {
