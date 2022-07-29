@@ -38,6 +38,7 @@
 
             <router-link
               v-if="this.user.is_admin"
+              style="margin-right: 2px"
               class="btn btn-primary btn-sm"
               :to="{
                 name: 'petition-order-sheets-save',
@@ -46,43 +47,44 @@
             >
               Add New Order Sheet
             </router-link>
+            <router-link
+              style="margin-right: 2px"
+              v-if="this.user.is_admin && orderSheetsActive"
+              class="btn btn-success btn-sm"
+              :to="{
+                name: 'petition-order-sheets-edit',
+                params: {
+                  petition_id: petition.id,
+                  editable_order_sheet_id: orderSheetsActive.id,
+                },
+              }"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Edit"
+            >
+              Edit
+            </router-link>
+            <a
+              v-if="this.user.is_admin && orderSheetsActive"
+              class="btn btn-danger btn-sm"
+              @click="deletePetitionOrderSheet(orderSheetsActive.id)"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              title="Delete"
+            >
+              Delete
+            </a>
           </div>
           <div>
             <div class="mt-4" v-if="orderSheetsActive">
-              <div class="mb-4">
+              <!-- <div class="mb-4">
                 <p>
                   <strong>Title: </strong>{{ orderSheetsActive.title }}
                   <strong>Description: </strong
                   >{{ orderSheetsActive.description }}
                   <strong>Order Sheet Date: </strong
                   >{{ orderSheetsActive.order_sheet_date }}
-                  <router-link
-                    v-if="this.user.is_admin"
-                    class="btn btn-success btn-sm action-btn"
-                    :to="{
-                      name: 'petition-order-sheets-edit',
-                      params: {
-                        petition_id: petition.id,
-                        editable_order_sheet_id: orderSheetsActive.id,
-                      },
-                    }"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="Edit"
-                  >
-                    Edit
-                  </router-link>
-                  <a
-                    v-if="this.user.is_admin"
-                    class="btn btn-danger btn-sm action-btn"
-                    style="margin-left: 2px"
-                    @click="deletePetitionOrderSheet(orderSheetsActive.id)"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="Delete"
-                  >
-                    Delete
-                  </a>
+                  
                 </p>
 
                 <file-upload
@@ -91,7 +93,7 @@
                   type="App\Models\PetitonOrderSheet"
                   :attachmentable_id="orderSheetsActive.id"
                 />
-              </div>
+              </div> -->
 
               <div>
                 <div
@@ -174,7 +176,7 @@
 
     <Sidebar
       v-model:visible="visibleLeft"
-      class="p-sidebar-sm p-side-bar-ordersheet"
+      class="p-sidebar-md p-side-bar-ordersheet"
       position="right"
       :fullscreen="false"
       :dismissable="false"
@@ -193,7 +195,7 @@
               petition_id: orderSheet.petition_id,
             },
           }"
-          >{{ orderSheet.order_sheet_date }}</router-link
+          >{{ orderSheet.order_sheet_types.title }}</router-link
         >
       </ul>
     </Sidebar>
@@ -287,7 +289,7 @@ export default {
         )
         .then((response) => {
           this.orderSheets = response.data.records;
-          this.petition = response.data.records.petition;          
+          this.petition = response.data.records.petition;
 
           this.getCaseDetails();
           this.getOrderSheet();
@@ -320,9 +322,9 @@ export default {
         )
         .then((response) => {
           this.orderSheetsActive = response.data.record;
-          this.previous_index_id = response.data.previous_index_id
-          this.next_index_id = response.data.next_index_id
-          
+          this.previous_index_id = response.data.previous_index_id;
+          this.next_index_id = response.data.next_index_id;
+
           this.getCaseDetails();
         })
         .catch((error) => {

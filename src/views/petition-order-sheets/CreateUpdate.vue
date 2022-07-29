@@ -8,11 +8,22 @@
             <form @submit.prevent="submitForm($event)">
               <div class="form-group">
                 <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <file-upload
+                      v-if="this.user.is_admin && order_sheet.id"
+                      @afterUpload="getOrderSheet"
+                      type="App\Models\PetitonOrderSheet"
+                      :attachmentable_id="order_sheet.id"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
                   <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Title</label>
                     <input class="form-control" v-model="order_sheet.title" />
                   </div>
-
                   <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Order Sheet Date</label>
                     <InputMask
@@ -60,7 +71,7 @@
                   class="btn btn-success btn-sm mt-2"
                   style="margin-right: 3px"
                 >
-                  Save
+                  {{ btnTitle }}
                 </button>
                 <router-link
                   :disabled="saving"
@@ -100,18 +111,19 @@
 <script>
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
-import useVuelidate from "@vuelidate/core";
-import { required, email, helpers } from "@vuelidate/validators";
 import deleteAttachment from "../petition-order-sheets/deleteAttachment.vue";
+import { mapState } from "vuex";
+import FileUpload from "../petition-index/FileUpload.vue";
 
 export default {
-  components: { PageHeader, deleteAttachment },
-
+  components: { PageHeader, deleteAttachment, FileUpload },
+  computed: mapState(["user"]),
   data() {
     return {
       page_title: this.$route.params.editable_order_sheet_id
         ? "Edit Order Sheet"
         : "Add New Order Sheet",
+      btnTitle: this.$route.params.editable_order_sheet_id ? "Update" : "Save",
       base_url: process.env.VUE_APP_SERVICE_URL,
       order_sheet: {
         petition_id: this.$route.params.petition_id,

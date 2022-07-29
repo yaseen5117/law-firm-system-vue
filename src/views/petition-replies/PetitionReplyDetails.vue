@@ -520,9 +520,13 @@ export default {
         };
 
         axios
-          .post(this.base_url + "/api/delete_selected", this.selected, {
-            headers,
-          })
+          .post(
+            this.base_url + "/api/delete_selected",
+            { id: this.selected },
+            {
+              headers,
+            }
+          )
           .then(
             (response) => {
               if (response.status === 200) {
@@ -550,5 +554,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
