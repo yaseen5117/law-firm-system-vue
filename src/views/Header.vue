@@ -72,7 +72,9 @@
                     >
                   </li>
                   <li>
-                    <router-link to="/petition-types">Case Types</router-link>
+                    <router-link to="/petition-types"
+                      >Case Categories</router-link
+                    >
                   </li>
                   <li>
                     <router-link to="/module-types">Module Types</router-link>
@@ -136,5 +138,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

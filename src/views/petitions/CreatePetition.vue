@@ -53,32 +53,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label
-                      >Case Category <span style="color: red">*</span></label
-                    >
-                    <Dropdown
-                      v-model="petition.petition_type_id"
-                      :options="petition_types"
-                      optionLabel="title"
-                      optionValue="id"
-                      placeholder="Select a Case"
-                      :filter="true"
-                      appendTo="self"
-                      filterPlaceholder="Find by Case Title"
-                      @blur="v$.petition.petition_type_id.$touch"
-                      v-bind:class="{
-                        'error-boarder': v$.petition.petition_type_id.$error,
-                      }"
-                    />
-                    <span
-                      v-if="v$.petition.petition_type_id.$error"
-                      class="errorMessage"
-                      >Case Category field is required.</span
-                    >
-                  </div>
-
-                  <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label>Court <span style="color: red">*</span></label>
+                    <label>Court</label>
                     <Dropdown
                       v-model="petition.court_id"
                       :options="courts"
@@ -87,18 +62,24 @@
                       placeholder="Select a Court"
                       :filter="true"
                       appendTo="self"
-                      filterPlaceholder="Select"
-                      @blur="v$.petition.court_id.$touch"
-                      v-bind:class="{
-                        'error-boarder': v$.petition.court_id.$error,
-                      }"
+                      filterPlaceholder="Find by Title"
+                      @change="getCaseCategories(petition.court_id)"
                     />
-                    <span
-                      v-if="v$.petition.court_id.$error"
-                      class="errorMessage"
-                      >Court field is required.</span
-                    >
                   </div>
+                  <div class="col-lg-3 col-md-3 col-sm-12">
+                    <label>Case Category</label>
+                    <Dropdown
+                      v-model="petition.petition_type_id"
+                      :options="petition_types"
+                      optionLabel="title"
+                      optionValue="id"
+                      placeholder="Select a Case Category"
+                      :filter="true"
+                      appendTo="self"
+                      filterPlaceholder="Find by Title"
+                    />
+                  </div>
+
                   <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Lawyer</label>
                     <Multiselect
@@ -184,6 +165,7 @@
                                   name: 'edit-user',
                                   params: { id: petitioner.user.id },
                                 }"
+                                target="_blank"
                               >
                                 View
                               </router-link>
@@ -326,16 +308,16 @@ export default {
   validations() {
     return {
       petition: {
-        petition_type_id: { required },
         title: { required },
         case_no: { required },
-        court_id: { required },
       },
     };
   },
   created() {
     this.getCourts();
-    this.getPetitionTypes();
+    if (this.$route.params.id) {
+      this.getCaseCategories(this.petition.court_id);
+    }
     this.getPetition();
     this.getLawyers();
   },
@@ -460,13 +442,13 @@ export default {
           });
         });
     },
-    async getPetitionTypes() {
+    async getCaseCategories(court_id) {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
       let url = this.base_url + "/api/petition_types";
       await axios
-        .get(url, { headers })
+        .get(url, { headers, params: { court_id: court_id } })
         .then((response) => {
           this.petition_types = response.data.petition_types;
           console.log(this.petition_types);

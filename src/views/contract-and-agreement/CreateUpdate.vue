@@ -59,6 +59,17 @@
               </div>
               <div class="form-group">
                 <div class="row">
+                  <label for="">
+                    Content
+                    <Editor
+                      v-model="contract_and_agreement.content"
+                      editorStyle="height: 220px"
+                    />
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
                   <div class="col-lg-2 col-md-2 col-sm-3">
                     <button :disabled="saving" class="btn btn-success btn-sm">
                       {{ button_title }}
@@ -82,11 +93,13 @@ import useVuelidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
 import Multiselect from "@vueform/multiselect";
 import { formatDate } from "@fullcalendar/common";
+import Editor from "primevue/editor";
 
 export default {
   components: {
     PageHeader,
     Multiselect,
+    Editor,
   },
   setup() {
     return {
@@ -98,8 +111,8 @@ export default {
       categories: [],
       saving: false,
       page_title: this.$route.params.contract_agreement_id
-        ? "Edit Contract / Agreement"
-        : "Add New Contract / Agreement",
+        ? "Edit Sample Contract"
+        : "Add New Sample Contract",
       button_title: this.$route.params.contract_agreement_id
         ? "Update"
         : "Save",
@@ -145,6 +158,7 @@ export default {
           this.contract_and_agreement.contract_category_id
         );
         formData.append("title", this.contract_and_agreement.title);
+        formData.append("content", this.contract_and_agreement.content);
         if (this.contract_and_agreement.id) {
           formData.append("id", this.contract_and_agreement.id);
         }

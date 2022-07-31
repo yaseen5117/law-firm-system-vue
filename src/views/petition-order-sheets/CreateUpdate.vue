@@ -8,44 +8,31 @@
             <form @submit.prevent="submitForm($event)">
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-4 col-md-4 col-sm-12">
-                    <label>Title<span style="color: red">*</span></label>
-                    <input
-                      class="form-control"
-                      v-model="order_sheet.title"
-                      v-bind:class="{
-                        'error-boarder': v$.order_sheet.title.$error,
-                      }"
-                      @blur="v$.order_sheet.title.$touch"
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <file-upload
+                      v-if="this.user.is_admin && order_sheet.id"
+                      @afterUpload="getOrderSheet"
+                      type="App\Models\PetitonOrderSheet"
+                      :attachmentable_id="order_sheet.id"
                     />
-                    <span
-                      v-if="v$.order_sheet.title.$error"
-                      class="errorMessage"
-                      >Title field is required.</span
-                    >
                   </div>
-
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
                   <div class="col-lg-4 col-md-4 col-sm-12">
-                    <label
-                      >Order Sheet Date<span style="color: red">*</span></label
-                    >
-
+                    <label>Title</label>
+                    <input class="form-control" v-model="order_sheet.title" />
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <label>Order Sheet Date</label>
                     <InputMask
                       mask="99/99/9999"
                       class="form-control"
                       type="text"
                       placeholder="dd/mm/yyyy"
                       v-model="order_sheet.order_sheet_date"
-                      v-bind:class="{
-                        'error-boarder': v$.order_sheet.order_sheet_date.$error,
-                      }"
-                      @blur="v$.order_sheet.order_sheet_date.$touch"
                     />
-                    <span
-                      v-if="v$.order_sheet.order_sheet_date.$error"
-                      class="errorMessage"
-                      >Date field is required.</span
-                    >
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Type</label>
@@ -84,7 +71,7 @@
                   class="btn btn-success btn-sm mt-2"
                   style="margin-right: 3px"
                 >
-                  Save
+                  {{ btnTitle }}
                 </button>
                 <router-link
                   :disabled="saving"
@@ -124,22 +111,19 @@
 <script>
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
-import useVuelidate from "@vuelidate/core";
-import { required, email, helpers } from "@vuelidate/validators";
 import deleteAttachment from "../petition-order-sheets/deleteAttachment.vue";
+import { mapState } from "vuex";
+import FileUpload from "../petition-index/FileUpload.vue";
 
 export default {
-  components: { PageHeader, deleteAttachment },
-  setup() {
-    return {
-      v$: useVuelidate(),
-    };
-  },
+  components: { PageHeader, deleteAttachment, FileUpload },
+  computed: mapState(["user"]),
   data() {
     return {
       page_title: this.$route.params.editable_order_sheet_id
         ? "Edit Order Sheet"
         : "Add New Order Sheet",
+      btnTitle: this.$route.params.editable_order_sheet_id ? "Update" : "Save",
       base_url: process.env.VUE_APP_SERVICE_URL,
       order_sheet: {
         petition_id: this.$route.params.petition_id,
@@ -154,14 +138,7 @@ export default {
       saving: false,
     };
   },
-  validations() {
-    return {
-      order_sheet: {
-        order_sheet_date: { required },
-        title: { required },
-      },
-    };
-  },
+
   created() {
     this.getUsers();
     this.getEditableOrderSheet();
@@ -212,8 +189,7 @@ export default {
       }
     },
     submitForm: function (event) {
-      this.v$.$validate();
-      if (!this.v$.$error) {
+      if (true) {
         event.preventDefault();
         this.saving = true;
         var headers = {

@@ -2,7 +2,7 @@
   <BlockUI :blocked="!isLoaded" :fullScreen="true">
     <main id="main">
       <page-header
-        :title="'Contracts/My Agreements'"
+        :title="'Sample Contracts'"
         :petition="null"
         :hideCaseFiles="true"
         :showInvoices="false"
@@ -137,7 +137,7 @@
     <!-- End #main -->
   </BlockUI>
 </template>
-    
+
 <script>
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
@@ -163,7 +163,7 @@ export default {
         name: "create-contract-and_agreement",
       },
       header_button: true,
-      header_button_text: "Create Contract and Agreement",
+      header_button_text: "Create Sample Contract",
       base_url: process.env.VUE_APP_SERVICE_URL,
       filters: {},
       isLoaded: false,
@@ -296,5 +296,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

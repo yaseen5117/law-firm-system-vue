@@ -27,8 +27,9 @@
                     >
                   </label>
                 </div>
-
-                <div class="col-sm-4">
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-12">
                   <label>Court</label>
                   <Multiselect
                     placeholder="--Select--"
@@ -39,16 +40,7 @@
                     v-model="petitionTypeData.court_ids"
                     :options="courts"
                     :value="petitionTypeData.court_ids"
-                    @blur="v$.petitionTypeData.court_ids.$touch"
-                    v-bind:class="{
-                      'error-boarder': v$.petitionTypeData.court_ids.$error,
-                    }"
                   />
-                  <span
-                    v-if="v$.petitionTypeData.court_ids.$error"
-                    class="errorMessage"
-                    >Court field is required.</span
-                  >
                 </div>
               </div>
 
@@ -89,8 +81,8 @@ export default {
     return {
       saving: false,
       page_title: this.$route.params.petition_type_id
-        ? "Edit Petition Type"
-        : "Add New Petition Type",
+        ? "Edit Case Category"
+        : "Add New Case Category",
       button_title: this.$route.params.petition_type_id ? "Update" : "Save",
       base_url: process.env.VUE_APP_SERVICE_URL,
       petitionTypeData: {
@@ -103,7 +95,6 @@ export default {
     return {
       petitionTypeData: {
         title: { required },
-        court_ids: { required },
       },
     };
   },

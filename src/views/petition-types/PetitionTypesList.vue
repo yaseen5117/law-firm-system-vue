@@ -13,6 +13,64 @@
       <section id="services" class="services section-bg mt-3">
         <div class="container" data-aos="fade-up">
           <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <Transition name="fade">
+                <form
+                  v-if="showSearchForm"
+                  class="row gy-2 gx-3 align-items-center mb-2"
+                >
+                  <div class="col-lg-3 col-md-3 col-sm-6">
+                    <input
+                      type="text"
+                      id="title"
+                      v-model="filters.title"
+                      class="form-control"
+                      placeholder="Title"
+                      aria-describedby="Title"
+                    />
+                  </div>
+
+                  <div class="col-lg-3 col-md-3 col-sm-12">
+                    <Dropdown
+                      class="p-inputtext-sm"
+                      v-model="filters.court_id"
+                      :options="courts"
+                      optionLabel="title"
+                      optionValue="id"
+                      placeholder="Select a Court"
+                      :filter="true"
+                      appendTo="self"
+                      filterPlaceholder="Find by Title"
+                    />
+
+                    <!-- <select
+                      class="form-select form-select-sm"
+                      aria-describedby="Court"
+                      v-model="filters.court_id"
+                    >
+                      <option value="">--Court--</option>
+                      <option
+                        class="text-capitalize"
+                        v-for="court in courts"
+                        :key="court.id"
+                        :value="court.id"
+                      >
+                        {{ court.title }}
+                      </option>
+                    </select> -->
+                  </div>
+                  <div class="col-lg-1 col-md-1 col-sm-12">
+                    <button
+                      type="button"
+                      class="btn btn-danger btn-sm"
+                      @click="reset()"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </form>
+              </Transition>
+            </div>
             <div class="table-responsive">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <table class="table table-hover" v-if="isLoaded">
@@ -114,6 +172,12 @@
                     </tr>
                   </tbody>
                 </table>
+                <div
+                  v-if="petition_types.length == 0 && isLoaded"
+                  class="col-md-12"
+                >
+                  <p class="alert alert-warning">No Records found.</p>
+                </div>
                 <div v-if="!isLoaded" class="col-md-12">
                   <p class="alert alert-warning">Loading....</p>
                 </div>
@@ -155,8 +219,13 @@ export default {
         name: "petition-types-create",
       },
       header_button: true,
-      header_button_text: "Create Petition Type",
+      header_button_text: "New Case Category",
       isLoaded: false,
+      filters: {
+        court_id: "",
+      },
+      showSearchForm: true,
+      courts: [],
     };
   },
   validations() {
@@ -168,6 +237,7 @@ export default {
   },
   created() {
     this.getPetitionTypes();
+    this.getCourts();
   },
   methods: {
     getPetitionTypes() {
@@ -176,11 +246,37 @@ export default {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
       axios
-        .get(this.base_url + "/api/petition_types", { headers })
+        .get(this.base_url + "/api/petition_types", {
+          headers,
+          params: this.filters,
+        })
         .then((response) => {
           this.petition_types = response.data.petition_types;
           this.page_title = response.data.page_title;
           console.log(response.data.page_title);
+          this.isLoaded = true;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
+        });
+    },
+    getCourts() {
+      this.isLoaded = false;
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      axios
+        .get(this.base_url + "/api/courts", {
+          headers,
+        })
+        .then((response) => {
+          this.courts = response.data.courts;
+          console.log(response.data.courts);
           this.isLoaded = true;
         })
         .catch((error) => {
@@ -296,9 +392,30 @@ export default {
           );
       }
     },
+    reset() {
+      this.isLoaded = false;
+      this.filters = {
+        court_id: "",
+      };
+      this.isLoaded = true;
+    },
   },
   mounted() {
-    console.log("Petition Types List Component Mounted");
+    console.log("Case Types List Component Mounted");
+  },
+  watch: {
+    filters: {
+      deep: true,
+      handler() {
+        if (!this.awaitingSearch) {
+          setTimeout(() => {
+            this.getPetitionTypes();
+            this.awaitingSearch = false;
+          }, 1500); // 1 sec delay
+        }
+        this.awaitingSearch = true;
+      },
+    },
   },
 };
 </script>
