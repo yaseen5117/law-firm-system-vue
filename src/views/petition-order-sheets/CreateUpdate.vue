@@ -14,6 +14,7 @@
                       @afterUpload="getOrderSheet"
                       type="App\Models\PetitonOrderSheet"
                       :attachmentable_id="order_sheet.id"
+                      :petition_id="petition.id"
                     />
                   </div>
                 </div>

@@ -152,6 +152,7 @@
                         :attachmentable_id="index_data_single.id"
                         :compactInlineView="compactInlineView"
                         class="mt-1"
+                        :petition_id="petition.id"
                       />
                     </td>
                   </tr>
@@ -411,5 +412,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

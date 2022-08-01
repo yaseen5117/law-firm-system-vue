@@ -110,8 +110,10 @@
                       style="width: 90%"
                       :src="
                         this.base_url +
-                        '/storage/attachments/' +
-                        attachment.attachmentable_id +
+                        '/storage/attachments/petitions/' +
+                        petition.id +
+                        '/PetitonOrderSheet/' +
+                        this.$route.params.order_sheet_id +
                         '/' +
                         attachment.file_name
                       "
@@ -121,8 +123,10 @@
                       v-if="attachment.mime_type == 'application/pdf'"
                       :href="
                         this.base_url +
-                        '/storage/attachments/' +
-                        attachment.attachmentable_id +
+                        '/storage/attachments/petitions/' +
+                        petition.id +
+                        '/PetitonOrderSheet/' +
+                        this.$route.params.order_sheet_id +
                         '/' +
                         attachment.file_name
                       "

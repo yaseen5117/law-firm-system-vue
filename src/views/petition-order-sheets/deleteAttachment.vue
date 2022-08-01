@@ -40,7 +40,9 @@
             style="width: 80px"
             :src="
               this.base_url +
-              '/storage/attachments/' +
+              '/storage/attachments/petitions/' +
+              order_sheet.petition_id +
+              '/PetitonOrderSheet/' +
               this.$route.params.editable_order_sheet_id +
               '/' +
               attachment.file_name
