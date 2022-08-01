@@ -85,6 +85,7 @@
                   @afterUpload="getNaqalForm"
                   type="App\Models\PetitionNaqalForm"
                   :attachmentable_id="NaqalFormActive.id"
+                  :petition_id="petition.id"
                 />
               </div>
 
@@ -103,7 +104,9 @@
                       style="width: 90%"
                       :src="
                         this.base_url +
-                        '/storage/attachments/' +
+                        '/storage/attachments/petitions/' +
+                        petition.id +
+                        '/PetitionNaqalForm/' +
                         attachment.attachmentable_id +
                         '/' +
                         attachment.file_name
@@ -114,7 +117,9 @@
                       v-if="attachment.mime_type == 'application/pdf'"
                       :href="
                         this.base_url +
-                        '/storage/attachments/' +
+                        '/storage/attachments/petitions/' +
+                        petition.id +
+                        '/PetitionNaqalForm/' +
                         attachment.attachmentable_id +
                         '/' +
                         attachment.file_name
@@ -393,5 +398,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

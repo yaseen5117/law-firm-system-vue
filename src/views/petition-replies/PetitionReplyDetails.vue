@@ -83,6 +83,7 @@
               @afterUpload="getPetitionReplyDetails"
               type="App\Models\PetitionReply"
               :attachmentable_id="attachmentable_id"
+              :petition_id="petition.id"
             />
           </div>
         </div>
@@ -108,7 +109,9 @@
                     style="width: 90%"
                     :src="
                       this.base_url +
-                      '/storage/attachments/' +
+                      '/storage/attachments/petitions/' +
+                      petition.id +
+                      '/PetitionReply/' +
                       this.$route.params.id +
                       '/' +
                       attachment.file_name
@@ -121,7 +124,9 @@
                     v-if="attachment.mime_type == 'application/pdf'"
                     :href="
                       this.base_url +
-                      '/storage/attachments/' +
+                      '/storage/attachments/petitions/' +
+                      petition.id +
+                      '/PetitionReply/' +
                       this.$route.params.id +
                       '/' +
                       attachment.file_name
@@ -191,8 +196,9 @@
                               style="width: 80px"
                               :src="
                                 this.base_url +
-                                '/storage/attachments/' +
-                                '/' +
+                                '/storage/attachments/petitions/' +
+                                petition.id +
+                                '/PetitionReply/' +
                                 this.$route.params.id +
                                 '/' +
                                 attachment.file_name

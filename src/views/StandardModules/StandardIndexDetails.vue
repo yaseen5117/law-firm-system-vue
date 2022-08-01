@@ -83,6 +83,7 @@
               @afterUpload="getModuleIndexDetails"
               :type="model_type"
               :attachmentable_id="module_id"
+              :petition_id="petition.id"
             />
           </div>
         </div>
@@ -107,7 +108,11 @@
                     style="width: 90%"
                     :src="
                       this.base_url +
-                      '/storage/attachments/' +
+                      '/storage/attachments/petitions/' +
+                      petition.id +
+                      '/' +
+                      modal_name +
+                      '/' +
                       this.$route.params.module_id +
                       '/' +
                       attachment.file_name
@@ -120,7 +125,11 @@
                     v-if="attachment.mime_type == 'application/pdf'"
                     :href="
                       this.base_url +
-                      '/storage/attachments/' +
+                      '/storage/attachments/petitions/' +
+                      petition.id +
+                      '/' +
+                      modal_name +
+                      '/' +
                       this.$route.params.module_id +
                       '/' +
                       attachment.file_name
@@ -191,7 +200,10 @@
                               style="width: 80px"
                               :src="
                                 this.base_url +
-                                '/storage/attachments/' +
+                                '/storage/attachments/petitions/' +
+                                petition.id +
+                                '/' +
+                                modal_name +
                                 '/' +
                                 this.$route.params.module_id +
                                 '/' +
@@ -344,6 +356,7 @@ export default {
       selectedAllToDelete: false,
       showDeleteBtn: false,
       isShowPageNumOnMobile: true,
+      modal_name: "",
     };
   },
   created() {
@@ -391,7 +404,7 @@ export default {
           this.index_detail_data = response.data.index_detail_data;
           this.petition = response.data.petition;
           this.model_type = response.data.model_type;
-
+          this.modal_name = response.data.model_type.substr(11);
           this.getModuleAnnexure(response.data.petition.id);
         })
         .catch((error) => {

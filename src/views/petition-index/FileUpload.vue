@@ -74,6 +74,7 @@ export default {
     "receipt",
     "upload_site_image",
     "image_type",
+    "petition_id",
   ],
   setup() {
     return {
@@ -130,6 +131,7 @@ export default {
       if (!this.v$.$error) {
         formData.append("attachmentable_type", this.type);
         formData.append("attachmentable_id", this.attachmentable_id);
+        formData.append("petition_id", this.petition_id);
         axios.post(this.base_url + "/api/attachments", formData, config).then(
           (response) => {
             if (response.status === 200) {
