@@ -79,6 +79,8 @@
             >
               Cancel
             </button>
+            <span class="ml-2 text-primary"><small>({{this.petition?this.petition.petition_standard_title+" | "+this.petition_index_details.document_description:""}})</small></span>
+            
           </div>
           <div class="col-lg-12 col-md-12 col-sm-12" v-show="showImgCard">
             <file-upload
@@ -92,7 +94,12 @@
         <div class="row">
           <div class="col-12">
             <div v-show="!horizontalView && !editView">
+            <div class="text-center text-danger mt-3 mb-3" v-if="petition_index_details.attachments.length==0">
+            <p><strong>No attachments in this category.</strong></p>
+            </div>
+            <div v-if="petition_index_details.attachments.length>0">
               <div
+                
                 class="row mb-2 text-center"
                 v-for="(
                   attachment, index_attachment
@@ -138,6 +145,7 @@
                   >
                   <hr class="mt-4 mb-4" style="border: solid 3px" />
                 </div>
+              </div>
               </div>
             </div>
             <div class="row">
@@ -389,6 +397,7 @@ export default {
   },
   created() {
     this.getCaseDetails();
+     
   },
   mounted() {
     const myDiv = document.getElementById("services");
@@ -408,6 +417,7 @@ export default {
           
         }   
     })  */
+    document.title = this.petition?this.petition.petition_standard_title+" | "+this.petition_index_details.document_description:"";
   },
   methods: {
     pageHeader() {
