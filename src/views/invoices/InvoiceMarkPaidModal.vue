@@ -68,7 +68,7 @@
               <div class="col-lg-3 col-md-3 col-sm-12 mb-2">
                 <InvoiceThumb
                   :base_url="base_url"
-                  folder_name="invoices"
+                  folder_name="Invoice"
                   :invoice="invoice"
                 />
               </div>

@@ -195,7 +195,7 @@
 
                           <InvoiceThumb
                             v-show="invoice.attachment"
-                            folder_name="invoices"
+                            folder_name="Invoice"
                             :base_url="base_url"
                             :invoice="invoice"
                           />
