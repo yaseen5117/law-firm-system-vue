@@ -504,10 +504,12 @@ export default {
     },
   },
   mounted() {
+    document.getElementById("header");
+    document.title = "Case Law Library";
+
     console.log("Case Details Component Mounted");
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

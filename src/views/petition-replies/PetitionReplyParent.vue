@@ -182,6 +182,10 @@ export default {
     this.getCaseDetails();
     this.getPetitionReplyParents();
   },
+  mounted() {
+    document.getElementById("header");
+    document.title = "Petition Reply Parents";
+  },
   methods: {
     getCaseDetails() {
       var headers = {
@@ -341,5 +345,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

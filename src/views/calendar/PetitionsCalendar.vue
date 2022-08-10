@@ -72,6 +72,10 @@ export default {
   created() {
     this.getEvents();
   },
+  mounted() {
+    document.getElementById("header");
+    document.title = "Calendar";
+  },
   methods: {
     showModal() {
       this.displayModal = true;

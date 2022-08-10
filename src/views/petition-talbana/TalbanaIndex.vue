@@ -216,6 +216,7 @@ export default {
   },
   mounted() {
     document.getElementById("header").style.display = "none";
+    document.title = this.TalbanaActive.title;
   },
   methods: {
     pageHeader() {

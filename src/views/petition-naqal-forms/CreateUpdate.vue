@@ -82,7 +82,7 @@
                   class="btn btn-success btn-sm mt-2"
                   style="margin-right: 3px"
                 >
-                  Save
+                  {{ btnTitle }}
                 </button>
                 <router-link
                   :disabled="saving"
@@ -125,6 +125,7 @@ export default {
       page_title: this.$route.params.editable_naqal_form_id
         ? "Edit Naqal Form"
         : "Add New Naqal Form",
+      btnTitle: this.$route.params.editable_naqal_form_id ? "Update" : "Save",
       base_url: process.env.VUE_APP_SERVICE_URL,
       naqal_form: {
         petition_id: this.$route.params.petition_id,
@@ -154,6 +155,10 @@ export default {
     this.getNaqalFormTypes();
   },
   activated() {},
+  mounted() {
+    document.getElementById("header");
+    document.title = this.page_title;
+  },
   methods: {
     getEditableNaqalForm: function () {
       if (this.$route.params.editable_naqal_form_id) {

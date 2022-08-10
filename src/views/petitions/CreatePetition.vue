@@ -245,7 +245,7 @@
 
               <div class="form-group">
                 <button :disabled="saving" class="btn btn-success btn-sm">
-                  Save
+                  {{ btnTitle }}
                 </button>
               </div>
             </form>
@@ -278,6 +278,7 @@ export default {
     return {
       saving: false,
       page_title: this.$route.params.id ? "Edit Petition" : "Add New Petition",
+      btnTitle: this.$route.params.id ? "Update" : "Save",
       base_url: process.env.VUE_APP_SERVICE_URL,
       petition: {
         year: 2022,
@@ -320,6 +321,10 @@ export default {
     }
     this.getPetition();
     this.getLawyers();
+  },
+  mounted() {
+    document.getElementById("header");
+    document.title = this.page_title;
   },
   activated() {},
   methods: {

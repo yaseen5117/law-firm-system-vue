@@ -295,6 +295,10 @@ export default {
     this.getOpinionsDetail();
     this.getClients();
   },
+  mounted() {
+    document.getElementById("header");
+    document.title = "Opinions";
+  },
   watch: {
     filters: {
       deep: true,
@@ -466,5 +470,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

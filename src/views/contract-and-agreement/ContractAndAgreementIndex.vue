@@ -181,6 +181,10 @@ export default {
     this.getContractAndAgreement();
     this.getContractCategories();
   },
+  mounted() {
+    document.getElementById("header");
+    document.title = "Sample Contracts";
+  },
   methods: {
     getContractAndAgreement() {
       this.isLoaded = false;

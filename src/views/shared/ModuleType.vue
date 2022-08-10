@@ -254,6 +254,10 @@ export default {
   created() {
     this.getModuleTypes();
   },
+  mounted() {
+    document.getElementById("header");
+    document.title = "Module Types";
+  },
   methods: {
     getModuleTypes() {
       this.isLoaded = false;
@@ -401,5 +405,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

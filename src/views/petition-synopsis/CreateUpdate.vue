@@ -82,7 +82,7 @@
                   class="btn btn-success btn-sm mt-2"
                   style="margin-right: 3px"
                 >
-                  Save
+                  {{ btnTitle }}
                 </button>
                 <router-link
                   :disabled="saving"
@@ -125,6 +125,7 @@ export default {
       page_title: this.$route.params.editable_synopsis_id
         ? "Edit Synopsis"
         : "Add New Synopsis",
+      btnTitle: this.$route.params.editable_synopsis_id ? "Update" : "Save",
       base_url: process.env.VUE_APP_SERVICE_URL,
       synopsis: {
         petition_id: this.$route.params.petition_id,
@@ -152,6 +153,10 @@ export default {
     this.getPetition();
     this.getEditableSynopsis();
     this.getSynopsisTypes();
+  },
+  mounted() {
+    document.getElementById("header");
+    document.title = this.page_title;
   },
   activated() {},
   methods: {

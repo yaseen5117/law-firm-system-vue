@@ -77,6 +77,11 @@
             >
               Cancel
             </button>
+            <span class="ml-2 text-primary"
+              ><small
+                >({{ petition_reply_details.document_description }})</small
+              ></span
+            >
           </div>
           <div class="col-lg-12 col-md-12 col-sm-12" v-show="showImgCard">
             <file-upload
@@ -357,6 +362,7 @@ export default {
   },
   mounted() {
     document.getElementById("header").style.display = "none";
+    document.title = this.petition_reply_details.document_description;
   },
   methods: {
     pageHeader() {

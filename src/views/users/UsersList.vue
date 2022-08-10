@@ -435,6 +435,8 @@ export default {
   },
   mounted() {
     console.log("User List Component Mounted");
+    document.getElementById("header");
+    document.title = "Users";
   },
   watch: {
     filters: {

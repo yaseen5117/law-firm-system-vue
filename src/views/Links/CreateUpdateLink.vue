@@ -117,6 +117,10 @@ export default {
   created() {
     this.getLink();
   },
+  mounted() {
+    document.getElementById("header");
+    document.title = this.page_title;
+  },
   activated() {},
   methods: {
     getLink() {
@@ -182,5 +186,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

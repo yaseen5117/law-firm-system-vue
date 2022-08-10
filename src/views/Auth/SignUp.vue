@@ -213,7 +213,10 @@ export default {
     };
   },
   created() {},
-
+  mounted() {
+    document.getElementById("header");
+    document.title = "SignUp";
+  },
   methods: {
     onChange(e) {
       this.file = e.target.file;
@@ -259,5 +262,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

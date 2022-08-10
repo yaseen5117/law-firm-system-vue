@@ -220,6 +220,7 @@ export default {
   },
   mounted() {
     document.getElementById("header").style.display = "none";
+    document.title = this.NaqalFormActive.description;
   },
   methods: {
     pageHeader() {

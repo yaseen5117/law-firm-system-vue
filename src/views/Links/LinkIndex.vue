@@ -86,7 +86,7 @@
     <!-- End #main -->
   </BlockUI>
 </template>
-    
+
 <script>
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
@@ -121,6 +121,10 @@ export default {
   },
   created() {
     this.getLinks();
+  },
+  mounted() {
+    document.getElementById("header");
+    document.title = "Links";
   },
   methods: {
     getLinks() {
@@ -179,5 +183,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

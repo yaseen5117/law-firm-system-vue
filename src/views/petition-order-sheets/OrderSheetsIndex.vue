@@ -74,6 +74,9 @@
             >
               Delete
             </a>
+            <span class="ml-2 text-primary"
+              ><small>({{ orderSheetsActive.title }})</small></span
+            >
           </div>
           <div>
             <div class="mt-4" v-if="orderSheetsActive">
@@ -199,8 +202,9 @@
               petition_id: orderSheet.petition_id,
             },
           }"
-          >{{ orderSheet.order_sheet_types.title }}</router-link
-        >
+          >{{ orderSheet.order_sheet_types.title }}<br />
+          {{ orderSheet.order_sheet_date }}
+        </router-link>
       </ul>
     </Sidebar>
 
@@ -257,6 +261,7 @@ export default {
   },
   mounted() {
     document.getElementById("header").style.display = "none";
+    document.title = this.orderSheetsActive.title;
   },
   methods: {
     pageHeader() {

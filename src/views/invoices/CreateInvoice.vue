@@ -523,6 +523,10 @@ export default {
       displayModal: false,
     };
   },
+  mounted() {
+    document.getElementById("header");
+    document.title = this.page_title;
+  },
   watch: {
     invoice: {
       deep: true,

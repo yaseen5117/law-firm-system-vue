@@ -401,6 +401,8 @@ export default {
     },
   },
   mounted() {
+    document.getElementById("header");
+    document.title = "Case Categories";
     console.log("Case Types List Component Mounted");
   },
   watch: {

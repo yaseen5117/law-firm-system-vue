@@ -259,7 +259,7 @@
 
               <div class="form-group">
                 <button :disabled="saving" class="btn btn-success btn-sm">
-                  Save
+                  {{ btnTitle }}
                 </button>
               </div>
             </form>
@@ -287,6 +287,7 @@ export default {
   data() {
     return {
       page_title: this.$route.params.id ? "Edit User" : "Add New User",
+      btnTitle: this.$route.params.id ? "Update" : "Save",
       base_url: process.env.VUE_APP_SERVICE_URL,
       user: {
         password: "",
@@ -319,7 +320,10 @@ export default {
     this.getUser();
     this.getRoles();
   },
-
+  mounted() {
+    document.getElementById("header");
+    document.title = this.page_title;
+  },
   methods: {
     removeContactPerson: function (obj, index, userId) {
       if (userId) {

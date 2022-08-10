@@ -230,6 +230,7 @@ export default {
       new_petition_reply: {},
       petition: {},
       saving: false,
+      petition_parent: {},
     };
   },
   validations() {
@@ -242,6 +243,10 @@ export default {
   created() {
     this.getPetitionReplyDetails();
   },
+  mounted() {
+    document.getElementById("header");
+    document.title = this.petition_parent.title;
+  },
   methods: {
     getPetitionReplyDetails() {
       var headers = {
@@ -252,6 +257,7 @@ export default {
         .then((response) => {
           this.petition_replies = response.data.petition_replies;
           this.petition = response.data.petition;
+          this.petition_parent = response.data.petition_parent;
         })
         .catch((error) => {
           console.log(error);
@@ -382,5 +388,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

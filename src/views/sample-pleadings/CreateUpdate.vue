@@ -118,6 +118,10 @@ export default {
   created() {
     this.getSamplePleading();
   },
+  mounted() {
+    document.getElementById("header");
+    document.title = this.page_title;
+  },
   methods: {
     onChange(e) {
       this.files = e.target.files;

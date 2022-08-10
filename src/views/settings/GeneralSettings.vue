@@ -310,6 +310,10 @@ export default {
   created() {
     this.getGeneralSettings();
   },
+  mounted() {
+    document.getElementById("header");
+    document.title = this.page_title;
+  },
 
   methods: {
     uploadImage() {
@@ -331,6 +335,8 @@ export default {
       this.site_setting = false;
       this.other_setting = false;
       this.general_setting = true;
+      document.getElementById("header");
+      document.title = this.page_title;
     },
     invoiceSetting() {
       this.page_title = "Invoice Settings";
@@ -338,6 +344,8 @@ export default {
       this.site_setting = false;
       this.other_setting = false;
       this.invoice_setting = true;
+      document.getElementById("header");
+      document.title = this.page_title;
     },
     siteSetting() {
       this.page_title = "Site Settings";
@@ -345,6 +353,8 @@ export default {
       this.site_setting = true;
       this.other_setting = false;
       this.general_setting = false;
+      document.getElementById("header");
+      document.title = this.page_title;
     },
     otherSetting() {
       this.page_title = "Other Settings";

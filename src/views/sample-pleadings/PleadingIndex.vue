@@ -169,6 +169,10 @@ export default {
   created() {
     this.getSamplePleadings();
   },
+  mounted() {
+    document.getElementById("header");
+    document.title = "Sample Pleadings";
+  },
   methods: {
     getSamplePleadings() {
       this.isLoaded = false;

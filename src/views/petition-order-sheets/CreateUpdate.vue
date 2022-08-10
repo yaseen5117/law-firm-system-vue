@@ -149,6 +149,10 @@ export default {
     this.getOrderSheetTypes();
   },
   activated() {},
+  mounted() {
+    document.getElementById("header");
+    document.title = this.page_title;
+  },
   methods: {
     getEditableOrderSheet: function () {
       if (this.$route.params.editable_order_sheet_id) {

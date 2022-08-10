@@ -132,6 +132,10 @@ export default {
     this.getContractAndAgreement();
     this.getContractCategories();
   },
+  mounted() {
+    document.getElementById("header");
+    document.title = this.page_title;
+  },
   activated() {},
   methods: {
     onChange(e) {

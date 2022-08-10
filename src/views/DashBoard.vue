@@ -366,6 +366,10 @@ export default {
       this.$router.push({ path: path });
     },
   },
+  mounted() {
+    document.getElementById("header");
+    document.title = "DashBoard";
+  },
 };
 </script>
 

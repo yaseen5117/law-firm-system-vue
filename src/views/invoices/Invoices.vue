@@ -621,6 +621,10 @@ export default {
       },
     },
   },
+  mounted() {
+    document.getElementById("header");
+    document.title = "Invoices";
+  },
 };
 </script>
 

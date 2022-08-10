@@ -4,14 +4,7 @@
     <div class="container-fluid" data-aos="fade-up">
       <div class="row justify-content-center">
         <div
-          class="
-            col-xl-5 col-lg-6
-            pt-3 pt-lg-0
-            order-2 order-lg-1
-            d-flex
-            flex-column
-            justify-content-center
-          "
+          class="col-xl-5 col-lg-6 pt-3 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center"
         >
           <h1>Welcome to <br />{{ this.globalGeneralSetting.site_name }}</h1>
           <!-- <h2>We are team of talented designers making websites with Bootstrap</h2> -->
@@ -153,13 +146,7 @@
 
         <div class="row">
           <div
-            class="
-              col-lg-6
-              order-2 order-lg-1
-              d-flex
-              flex-column
-              align-items-lg-center
-            "
+            class="col-lg-6 order-2 order-lg-1 d-flex flex-column align-items-lg-center"
           >
             <div
               class="icon-box mt-5 mt-lg-0"
@@ -513,6 +500,10 @@ export default {
       },
     };
   },
+  mounted() {
+    document.getElementById("header");
+    document.title = "Home";
+  },
   methods: {
     scrollIntoView(id) {
       const yOffset = -200;
@@ -561,5 +552,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

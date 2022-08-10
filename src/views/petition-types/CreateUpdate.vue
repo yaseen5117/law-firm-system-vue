@@ -102,6 +102,10 @@ export default {
     this.getPetitionTypesData();
     this.getCourts();
   },
+  mounted() {
+    document.getElementById("header");
+    document.title = this.page_title;
+  },
   methods: {
     getCourts() {
       var headers = {

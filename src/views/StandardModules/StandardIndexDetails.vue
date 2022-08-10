@@ -77,6 +77,11 @@
             >
               Cancel
             </button>
+            <span class="ml-2 text-primary"
+              ><small
+                >({{ index_detail_data.document_description }})</small
+              ></span
+            >
           </div>
           <div class="col-lg-12 col-md-12 col-sm-12" v-show="showImgCard">
             <file-upload
@@ -364,6 +369,7 @@ export default {
   },
   mounted() {
     document.getElementById("header").style.display = "none";
+    document.title = this.index_detail_data.document_description;
   },
   methods: {
     pageHeader() {
@@ -406,6 +412,8 @@ export default {
           this.model_type = response.data.model_type;
           this.modal_name = response.data.model_type.substr(11);
           this.getModuleAnnexure(response.data.petition.id);
+          // document.getElementById("header").style.display = "none";
+          // document.title = this.index_detail_data.document_description;
         })
         .catch((error) => {
           console.log(error);

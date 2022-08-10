@@ -222,6 +222,7 @@ export default {
   },
   mounted() {
     document.getElementById("header").style.display = "none";
+    document.title = this.SynopsisActive.title;
   },
   methods: {
     pageHeader() {

@@ -61,7 +61,7 @@
                 </button>
               </div>
               <div class="col-md-12 col-sm-12">
-                <a href="https://elawfirmpk.com/password/reset">
+                <a href="https://api.elawfirmpk.com/password/reset">
                   Forgot Password?
                 </a>
 
@@ -72,11 +72,7 @@
             </form>
           </div>
           <div
-            class="
-              offset-md-1 offset-lg-1
-              col-lg-5 col-md-4 col-sm-12
-              mt-on-mobile
-            "
+            class="offset-md-1 offset-lg-1 col-lg-5 col-md-4 col-sm-12 mt-on-mobile"
           >
             <span v-html="this.globalGeneralSetting.login_page_content"></span>
           </div>
@@ -101,7 +97,6 @@
   </main>
   <!-- End #main -->
 </template>
-
 
 <script>
 import axios from "axios";
@@ -134,6 +129,10 @@ export default {
       email: { required, email },
       password: { required },
     };
+  },
+  mounted() {
+    document.getElementById("header");
+    document.title = "Login";
   },
   methods: {
     submitForm: function (event) {

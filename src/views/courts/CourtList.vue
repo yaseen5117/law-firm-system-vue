@@ -284,10 +284,12 @@ export default {
     },
   },
   mounted() {
+    document.getElementById("header");
+    document.title = "Courts";
+
     console.log("Court List Component Mounted");
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

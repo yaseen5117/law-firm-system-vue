@@ -154,10 +154,11 @@ export default {
     },
   },
   mounted() {
+    document.getElementById("header");
+    document.title = "Contact Requests";
     console.log("Contact Request List Component Mounted");
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>
