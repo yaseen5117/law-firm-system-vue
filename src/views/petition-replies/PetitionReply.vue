@@ -244,8 +244,8 @@ export default {
     this.getPetitionReplyDetails();
   },
   mounted() {
-    document.getElementById("header");
     document.title = this.petition_parent.title;
+    console.log(document.title);
   },
   methods: {
     getPetitionReplyDetails() {

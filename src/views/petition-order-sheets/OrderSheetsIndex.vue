@@ -262,6 +262,7 @@ export default {
   mounted() {
     document.getElementById("header").style.display = "none";
     document.title = this.orderSheetsActive.title;
+    console.log(document.title);
   },
   methods: {
     pageHeader() {

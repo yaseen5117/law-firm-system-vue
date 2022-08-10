@@ -448,7 +448,6 @@ export default {
   },
   mounted() {
     console.log("Case Details Component Mounted");
-    document.getElementById("header");
     document.title = "Petitions";
   },
 };

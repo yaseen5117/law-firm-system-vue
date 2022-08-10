@@ -432,6 +432,7 @@ export default {
         " | " +
         this.petition_index_details.document_description
       : "";
+    console.log(document.title);
   },
   methods: {
     pageHeader() {
