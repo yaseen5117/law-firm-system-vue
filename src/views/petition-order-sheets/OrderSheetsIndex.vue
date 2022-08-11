@@ -263,8 +263,10 @@ export default {
   },
   mounted() {
     document.getElementById("header").style.display = "none";
-    document.title = this.orderSheetsActive.title;
-    console.log(document.title);
+    if (this.orderSheetsActive) {
+      document.title = this.orderSheetsActive.title;
+      console.log(document.title);
+    }
   },
   methods: {
     pageHeader() {
@@ -336,7 +338,10 @@ export default {
           this.orderSheetsActive = response.data.record;
           this.previous_index_id = response.data.previous_index_id;
           this.next_index_id = response.data.next_index_id;
-          document.title = this.orderSheetsActive.title;
+          if (this.orderSheetsActive) {
+            document.title = this.orderSheetsActive.title;
+          }
+
           this.getCaseDetails();
         })
         .catch((error) => {
