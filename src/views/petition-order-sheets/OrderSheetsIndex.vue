@@ -75,7 +75,9 @@
               Delete
             </a>
             <span class="ml-2 text-primary"
-              ><small>({{ orderSheetsActive.title }})</small></span
+              ><small v-if="orderSheetsActive.description"
+                >({{ orderSheetsActive.description }})</small
+              ></span
             >
           </div>
           <div>
@@ -261,7 +263,7 @@ export default {
   },
   mounted() {
     document.getElementById("header").style.display = "none";
-    document.title = this.orderSheetsActive.title;
+    window.document.title = this.orderSheetsActive.title;
     console.log(document.title);
   },
   methods: {

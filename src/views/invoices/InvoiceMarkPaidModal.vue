@@ -73,7 +73,11 @@
                 />
               </div>
               <div class="col-lg-9 col-md-9 col-sm-12" style="float: right">
-                <button class="btn btn-success btn-sm" :disabled="saving">
+                <button
+                  style="margin-left: 5px"
+                  class="btn btn-success btn-sm"
+                  :disabled="saving"
+                >
                   Mark as Paid
                 </button>
                 <button
@@ -116,6 +120,7 @@ export default {
       title: this.title,
       base_url: process.env.VUE_APP_SERVICE_URL,
       saving: false,
+      showAnotherAmountForm: true,
     };
   },
 
