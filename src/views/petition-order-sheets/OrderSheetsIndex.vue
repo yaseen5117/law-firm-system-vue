@@ -75,7 +75,7 @@
               Delete
             </a>
             <span class="ml-2 text-primary"
-              ><small v-if="orderSheetsActive.description"
+              ><small v-if="orderSheetsActive"
                 >({{ orderSheetsActive.description }})</small
               ></span
             >
