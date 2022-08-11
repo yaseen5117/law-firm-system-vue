@@ -263,7 +263,7 @@ export default {
   },
   mounted() {
     document.getElementById("header").style.display = "none";
-    window.document.title = this.orderSheetsActive.title;
+    document.title = this.orderSheetsActive.title;
     console.log(document.title);
   },
   methods: {
@@ -336,7 +336,7 @@ export default {
           this.orderSheetsActive = response.data.record;
           this.previous_index_id = response.data.previous_index_id;
           this.next_index_id = response.data.next_index_id;
-
+          document.title = this.orderSheetsActive.title;
           this.getCaseDetails();
         })
         .catch((error) => {
