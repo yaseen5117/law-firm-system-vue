@@ -249,6 +249,8 @@ export default {
   updated() {
     if (this.orderSheetsActive) {
       document.title = this.orderSheetsActive.title + " | Order Sheet";
+    } else {
+      document.title = "Order Sheet";
     }
   },
   methods: {

@@ -387,6 +387,7 @@ export default {
         var yyyy = today.getFullYear();
         today = dd + "/" + mm + "/" + yyyy;
         invoice.invoice_payments.push({
+          id: null,
           paid_date: today,
           paid_amount: invoice.amount,
           notes: null,
@@ -397,6 +398,7 @@ export default {
     openModal(invoice) {
       if (invoice.invoice_payments.length === 0) {
         invoice.invoice_payments.push({
+          id: null,
           paid_date: null,
           paid_amount: invoice.amount,
           notes: null,
