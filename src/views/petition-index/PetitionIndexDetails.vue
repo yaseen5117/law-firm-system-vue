@@ -456,7 +456,7 @@ export default {
           this.petition = response.data.petition;
           this.next_index_id = response.data.next_index_id;
           this.previous_index_id = response.data.previous_index_id;
-
+          this.mounted();
           window.scrollTo({ top: 200, behavior: "smooth" });
           this.getPetitionAnnexure(response.data.petition.id);
         })

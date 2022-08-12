@@ -192,13 +192,6 @@
                           >
                             Show Payment Details
                           </button>
-
-                          <InvoiceThumb
-                            v-show="invoice.attachment"
-                            folder_name="Invoice"
-                            :base_url="base_url"
-                            :invoice="invoice"
-                          />
                         </td>
                         <td class="text-end">
                           <router-link
@@ -273,6 +266,7 @@
       @close-modal-event="closeModal"
       @afterSubmit="getInvoices()"
       @closeModal="closeModal()"
+      :invoice_id="invoice.id"
       :invoice="invoice"
       :excute="excute"
       title="Paid Invoice Dialog"
@@ -288,13 +282,11 @@ import Editor from "primevue/editor";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import InvoiceMarkPaidModal from "./InvoiceMarkPaidModal.vue";
-import InvoiceThumb from "../invoices/InvoiceThumb.vue";
 import { mapState } from "vuex";
 
 export default {
   computed: mapState(["user"]),
   components: {
-    InvoiceThumb,
     PageHeader,
     Editor,
     InvoiceMarkPaidModal,
@@ -387,20 +379,29 @@ export default {
       }
     },
     setupMarkPaid(invoice) {
-      if (!invoice.paid_amount) {
-        invoice.paid_amount = invoice.amount;
-      }
-      if (!invoice.paid_date) {
+      console.log(invoice);
+      if (invoice.invoice_payments.length === 0) {
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, "0");
         var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
         var yyyy = today.getFullYear();
         today = dd + "/" + mm + "/" + yyyy;
-        invoice.paid_date = today;
+        invoice.invoice_payments.push({
+          paid_date: today,
+          paid_amount: invoice.amount,
+          notes: null,
+        });
       }
       this.openModal(invoice);
     },
     openModal(invoice) {
+      if (invoice.invoice_payments.length === 0) {
+        invoice.invoice_payments.push({
+          paid_date: null,
+          paid_amount: invoice.amount,
+          notes: null,
+        });
+      }
       this.invoice = invoice;
       this.excute = true;
       this.displayModal = true;

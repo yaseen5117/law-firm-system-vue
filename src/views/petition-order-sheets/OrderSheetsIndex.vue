@@ -341,7 +341,7 @@ export default {
           if (this.orderSheetsActive) {
             document.title = this.orderSheetsActive.title;
           }
-
+          this.mounted();
           this.getCaseDetails();
         })
         .catch((error) => {
