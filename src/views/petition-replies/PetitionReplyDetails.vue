@@ -77,7 +77,7 @@
             >
               Cancel
             </button>
-            <span class="ml-2 text-primary"
+            <span style="margin-left: 10px" class="text-primary"
               ><small
                 >({{ petition_reply_details.document_description }})</small
               ></span
@@ -362,7 +362,15 @@ export default {
   },
   mounted() {
     document.getElementById("header").style.display = "none";
-    document.title = this.petition_reply_details.document_description;
+  },
+  updated() {
+    if (this.petition_reply_details) {
+      document.title =
+        this.petition_reply_details.document_description +
+        " | Petition Reply Details";
+    } else {
+      document.title = "Petition Reply Details";
+    }
   },
   methods: {
     pageHeader() {

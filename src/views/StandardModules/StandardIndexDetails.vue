@@ -77,7 +77,7 @@
             >
               Cancel
             </button>
-            <span class="ml-2 text-primary"
+            <span style="margin-left: 10px" class="text-primary"
               ><small
                 >({{ index_detail_data.document_description }})</small
               ></span
@@ -362,6 +362,7 @@ export default {
       showDeleteBtn: false,
       isShowPageNumOnMobile: true,
       modal_name: "",
+      page_title: "",
     };
   },
   created() {
@@ -369,7 +370,10 @@ export default {
   },
   mounted() {
     document.getElementById("header").style.display = "none";
-    document.title = this.index_detail_data.document_description;
+  },
+  updated() {
+    document.title =
+      this.index_detail_data.document_description + " | " + this.page_title;
   },
   methods: {
     pageHeader() {
@@ -409,6 +413,7 @@ export default {
         .then((response) => {
           this.index_detail_data = response.data.index_detail_data;
           this.petition = response.data.petition;
+          this.page_title = response.data.page_title;
           this.model_type = response.data.model_type;
           this.modal_name = response.data.model_type.substr(11);
           this.getModuleAnnexure(response.data.petition.id);

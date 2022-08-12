@@ -143,7 +143,6 @@ export default {
     };
   },
   created() {
-    this.getPetitionTypes();
     this.getPetition();
     this.getEditableTalbana();
     this.getTalbanaTypes();
@@ -256,26 +255,7 @@ export default {
           });
         });
     },
-    async getPetitionTypes() {
-      var headers = {
-        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-      };
-      let url = this.base_url + "/api/petition_types";
-      await axios
-        .get(url, { headers })
-        .then((response) => {
-          this.petition_types = response.data.petition_types;
-          console.log(this.petition_types);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$notify({
-            type: "error",
-            title: "Something went wrong!",
-            text: error.response.data.message,
-          });
-        });
-    },
+
     getPetition() {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),

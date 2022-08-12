@@ -216,7 +216,13 @@ export default {
   },
   mounted() {
     document.getElementById("header").style.display = "none";
-    document.title = this.TalbanaActive.title;
+  },
+  updated() {
+    if (this.TalbanaActive) {
+      document.title = this.TalbanaActive.title + " | Talbana";
+    } else {
+      document.title = "Talbana";
+    }
   },
   methods: {
     pageHeader() {

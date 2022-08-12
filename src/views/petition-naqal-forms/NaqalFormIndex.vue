@@ -220,7 +220,13 @@ export default {
   },
   mounted() {
     document.getElementById("header").style.display = "none";
-    document.title = this.NaqalFormActive.description;
+  },
+  updated() {
+    if (this.NaqalFormActive) {
+      document.title = this.NaqalFormActive.title + " | Naqal Form";
+    } else {
+      document.title = "Naqal Form";
+    }
   },
   methods: {
     pageHeader() {

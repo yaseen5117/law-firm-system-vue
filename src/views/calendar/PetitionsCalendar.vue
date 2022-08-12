@@ -72,8 +72,7 @@ export default {
   created() {
     this.getEvents();
   },
-  mounted() {
-    document.getElementById("header");
+  updated() {
     document.title = "Calendar";
   },
   methods: {

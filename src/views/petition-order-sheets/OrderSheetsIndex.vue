@@ -74,32 +74,14 @@
             >
               Delete
             </a>
-            <span class="ml-2 text-primary"
+            <span style="margin-left: 10px" class="ml-2 text-primary"
               ><small v-if="orderSheetsActive"
-                >({{ orderSheetsActive.description }})</small
+                >({{ orderSheetsActive.title }})</small
               ></span
             >
           </div>
           <div>
             <div class="mt-4" v-if="orderSheetsActive">
-              <!-- <div class="mb-4">
-                <p>
-                  <strong>Title: </strong>{{ orderSheetsActive.title }}
-                  <strong>Description: </strong
-                  >{{ orderSheetsActive.description }}
-                  <strong>Order Sheet Date: </strong
-                  >{{ orderSheetsActive.order_sheet_date }}
-                  
-                </p>
-
-                <file-upload
-                  v-if="this.user.is_admin"
-                  @afterUpload="getOrderSheet"
-                  type="App\Models\PetitonOrderSheet"
-                  :attachmentable_id="orderSheetsActive.id"
-                />
-              </div> -->
-
               <div>
                 <div
                   class="row mb-2 text-center"
@@ -261,8 +243,10 @@ export default {
   created() {
     this.getOrderSheets();
   },
-  updated() {
+  mounted() {
     document.getElementById("header").style.display = "none";
+  },
+  updated() {
     if (this.orderSheetsActive) {
       document.title = this.orderSheetsActive.title + " | Order Sheet";
     }
@@ -337,11 +321,6 @@ export default {
           this.orderSheetsActive = response.data.record;
           this.previous_index_id = response.data.previous_index_id;
           this.next_index_id = response.data.next_index_id;
-          if (this.orderSheetsActive) {
-            document.title = this.orderSheetsActive.title;
-          }
-
-          this.getCaseDetails();
         })
         .catch((error) => {
           console.log(error.response.data);

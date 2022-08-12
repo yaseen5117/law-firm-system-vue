@@ -222,7 +222,13 @@ export default {
   },
   mounted() {
     document.getElementById("header").style.display = "none";
-    document.title = this.SynopsisActive.title;
+  },
+  updated() {
+    if (this.SynopsisActive) {
+      document.title = this.SynopsisActive.title + " | Synopsis";
+    } else {
+      document.title = "Synopsis";
+    }
   },
   methods: {
     pageHeader() {

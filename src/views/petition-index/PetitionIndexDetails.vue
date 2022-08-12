@@ -79,7 +79,7 @@
             >
               Cancel
             </button>
-            <span class="ml-2 text-primary"
+            <span style="margin-left: 10px" class="text-primary"
               ><small
                 >({{
                   this.petition
@@ -409,6 +409,13 @@ export default {
   created() {
     this.getCaseDetails();
   },
+  updated() {
+    document.title = this.petition
+      ? this.petition.petition_standard_title +
+        " | " +
+        this.petition_index_details.document_description
+      : "";
+  },
   mounted() {
     const myDiv = document.getElementById("services");
     document.getElementById("header").style.display = "none";
@@ -427,12 +434,6 @@ export default {
           
         }   
     })  */
-    document.title = this.petition
-      ? this.petition.petition_standard_title +
-        " | " +
-        this.petition_index_details.document_description
-      : "";
-    console.log(document.title);
   },
   methods: {
     pageHeader() {
