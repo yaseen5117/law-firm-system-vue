@@ -261,11 +261,10 @@ export default {
   created() {
     this.getOrderSheets();
   },
-  mounted() {
+  updated() {
     document.getElementById("header").style.display = "none";
     if (this.orderSheetsActive) {
-      document.title = this.orderSheetsActive.title;
-      console.log(document.title);
+      document.title = this.orderSheetsActive.title + " | Order Sheet" ;
     }
   },
   methods: {
@@ -338,10 +337,6 @@ export default {
           this.orderSheetsActive = response.data.record;
           this.previous_index_id = response.data.previous_index_id;
           this.next_index_id = response.data.next_index_id;
-          if (this.orderSheetsActive) {
-            document.title = this.orderSheetsActive.title;
-          }
-
           this.getCaseDetails();
         })
         .catch((error) => {
