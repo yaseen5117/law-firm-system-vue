@@ -174,5 +174,4 @@ export default {
   mounted() {},
 };
 </script>
-<style>
-</style>
+<style></style>

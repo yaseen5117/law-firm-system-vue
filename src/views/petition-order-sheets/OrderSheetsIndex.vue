@@ -12,7 +12,7 @@
       class="services section-bg"
       :class="removePageHeader ? '' : ''"
     >
-      <nav-components activeNavPill="order_sheet" :petition_id="petition.id" />
+      <nav-components activeNavPill="order_sheet" :petition_id="petition_id" />
       <div class="container mt-2" data-aos="fade-up">
         <div class="row mb-4">
           <div class="col-12">
@@ -42,7 +42,7 @@
               class="btn btn-primary btn-sm"
               :to="{
                 name: 'petition-order-sheets-save',
-                params: { petition_id: petition.id },
+                params: { petition_id: petition_id },
               }"
             >
               Add New Order Sheet
@@ -100,7 +100,7 @@
                         '/storage/attachments/petitions/' +
                         petition.id +
                         '/PetitonOrderSheet/' +
-                        this.$route.params.order_sheet_id +
+                        attachment.attachmentable_id +
                         '/' +
                         attachment.file_name
                       "
@@ -113,7 +113,7 @@
                         '/storage/attachments/petitions/' +
                         petition.id +
                         '/PetitonOrderSheet/' +
-                        this.$route.params.order_sheet_id +
+                        attachment.attachmentable_id +
                         '/' +
                         attachment.file_name
                       "
@@ -166,11 +166,12 @@
     </section>
 
     <Sidebar
+      v-if="orderSheets && orderSheetsActive"
       v-model:visible="visibleLeft"
       class="p-sidebar-md p-side-bar-ordersheet"
       position="right"
       :fullscreen="false"
-      :dismissable="false"
+      :dismissable="true"
       :modal="false"
     >
       <ul class="list-group">
@@ -191,11 +192,6 @@
         </router-link>
       </ul>
     </Sidebar>
-
-    <div class="fixed-annexsures">
-      <!-- Prayers -->
-      <!-- Stay Order -->
-    </div>
   </main>
   <!-- End #main -->
 </template>
@@ -232,8 +228,8 @@ export default {
       petition: {},
       petition_index: [],
       petition_index_details: {},
-      order_sheet_id: this.$route.params.order_sheet_id, //this is the id from the browser
-      petition_id: this.$route.params.petition_id, //this is the id from the browser
+      order_sheet_id: this.$route.params.order_sheet_id,
+      petition_id: this.$route.params.petition_id,
       horizontalView: false, //it will show vertical images by default
       activePage: null,
       removePageHeader: true,
@@ -288,9 +284,7 @@ export default {
         )
         .then((response) => {
           this.orderSheets = response.data.records;
-          this.petition = response.data.records.petition;
 
-          this.getCaseDetails();
           this.getOrderSheet();
         })
         .catch((error) => {
@@ -323,6 +317,7 @@ export default {
           this.orderSheetsActive = response.data.record;
           this.previous_index_id = response.data.previous_index_id;
           this.next_index_id = response.data.next_index_id;
+          this.petition = response.data.record.petition;
         })
         .catch((error) => {
           console.log(error.response.data);

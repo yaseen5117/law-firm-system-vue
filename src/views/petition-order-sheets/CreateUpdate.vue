@@ -56,7 +56,7 @@
 
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-12 col-md-12 col-sm-9">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
                     <label>Description </label>
                     <input
                       class="form-control"

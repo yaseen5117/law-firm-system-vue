@@ -207,8 +207,8 @@ export default {
       petition: {},
       petition_index: [],
       petition_index_details: {},
-      naqal_form_id: this.$route.params.naqal_form_id, //this is the id from the browser
-      petition_id: this.$route.params.petition_id, //this is the id from the browser
+      naqal_form_id: this.$route.params.naqal_form_id,
+      petition_id: this.$route.params.petition_id,
       horizontalView: false, //it will show vertical images by default
       activePage: null,
       removePageHeader: true,
@@ -298,7 +298,6 @@ export default {
           this.NaqalFormActive = response.data.record;
           consol.log("success");
           consol.log(this.NaqalFormActive);
-          this.getCaseDetails();
         })
         .catch((error) => {
           console.log(error);

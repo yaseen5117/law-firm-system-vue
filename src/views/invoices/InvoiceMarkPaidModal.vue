@@ -162,7 +162,7 @@ export default {
       });
     },
     remove(index, payment_id) {
-      if (payment_id) {
+      if (confirm("Do you really want to delete?") && payment_id) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
@@ -197,7 +197,9 @@ export default {
             );
         }
       } else {
-        this.invoice.invoice_payments.splice(index, 1);
+        if (!payment_id) {
+          this.invoice.invoice_payments.splice(index, 1);
+        }
       }
     },
     closeModal() {

@@ -534,14 +534,14 @@ export default {
           );
       }
     },
-    deletePetitionAttachment(petitionId, attachmentIndex) {
+    deletePetitionAttachment(attachment_id, attachmentIndex) {
       if (confirm("Do you really want to delete?")) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
-          .delete(this.base_url + "/api/attachments/" + petitionId, {
+          .delete(this.base_url + "/api/attachments/" + attachment_id, {
             headers,
           })
           .then(
