@@ -189,7 +189,7 @@
                         v-on:keyup.enter="submitPetitionIndex()"
                       />
                     </td>
-                    <td>
+                    <td colspan="2">
                       <button
                         :disabled="saving"
                         @click="submitPetitionIndex()"
