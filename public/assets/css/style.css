@@ -1736,3 +1736,12 @@ label{
 .fc.fc-theme-standard .fc-view-harness .fc-event.fc-daygrid-block-event{
   cursor: pointer;
 }
+
+.pending_case_tag{
+  font-size: 35px;
+  font-weight: 700;
+  position: absolute;
+  right: 1%;
+  font-family: 'Poppins';
+  color: #8f3a302b;
+}
