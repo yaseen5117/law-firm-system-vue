@@ -415,7 +415,6 @@ export default {
   },
   mounted() {
     console.log("Case File Component Mounted");
-    document.getElementById("header");
     document.title = "Case Files";
   },
   watch: {

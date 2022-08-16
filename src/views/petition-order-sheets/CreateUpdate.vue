@@ -56,7 +56,7 @@
 
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-12 col-md-12 col-sm-9">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
                     <label>Description </label>
                     <input
                       class="form-control"
@@ -134,23 +134,17 @@ export default {
         description: "",
       },
       petition: {},
-      petition_types: [],
       order_sheet_types: [],
       saving: false,
     };
   },
 
   created() {
-    this.getUsers();
     this.getEditableOrderSheet();
-    this.getCourts();
-    this.getPetitionTypes();
     this.getPetition();
     this.getOrderSheetTypes();
   },
-  activated() {},
   mounted() {
-    document.getElementById("header");
     document.title = this.page_title;
   },
   methods: {
@@ -240,66 +234,7 @@ export default {
           );
       }
     },
-    async getUsers() {
-      let url = this.base_url + "/api/clients";
-      var headers = {
-        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-      };
-      await axios
-        .get(url, { headers })
-        .then((response) => {
-          this.clients = response.data.users;
-          console.log(this.users);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$notify({
-            type: "error",
-            title: "Something went wrong!",
-            text: error.response.data.message,
-          });
-        });
-    },
-    async getCourts() {
-      let url = this.base_url + "/api/courts";
-      var headers = {
-        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-      };
-      await axios
-        .get(url, { headers })
-        .then((response) => {
-          this.courts = response.data.courts;
-          console.log(this.courts);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$notify({
-            type: "error",
-            title: "Something went wrong!",
-            text: error.response.data.message,
-          });
-        });
-    },
-    async getPetitionTypes() {
-      let url = this.base_url + "/api/petition_types";
-      var headers = {
-        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-      };
-      await axios
-        .get(url, { headers })
-        .then((response) => {
-          this.petition_types = response.data.petition_types;
-          console.log(this.petition_types);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$notify({
-            type: "error",
-            title: "Something went wrong!",
-            text: error.response.data.message,
-          });
-        });
-    },
+
     getPetition() {
       if (this.$route.params.petition_id) {
         var url =

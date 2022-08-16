@@ -189,7 +189,7 @@
                         v-on:keyup.enter="submitPetitionIndex()"
                       />
                     </td>
-                    <td>
+                    <td colspan="2">
                       <button
                         :disabled="saving"
                         @click="submitPetitionIndex()"
@@ -281,8 +281,6 @@ export default {
           this.compactInlineView = response.data.compactInlineView;
           this.ShowOnOralArgument = response.data.ShowOnOralArgument;
           this.model_type = response.data.model_type;
-          document.getElementById("header");
-          document.title = this.page_title;
           console.log(this.index_data);
         })
         .catch((error) => {
@@ -410,6 +408,9 @@ export default {
   },
   mounted() {
     console.log("Case Details Component Mounted");
+  },
+  updated() {
+    document.title = this.page_title;
   },
 };
 </script>

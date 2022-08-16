@@ -79,7 +79,7 @@
             >
               Cancel
             </button>
-            <span class="ml-2 text-primary"
+            <span style="margin-left: 10px" class="text-primary"
               ><small
                 >({{
                   this.petition
@@ -103,12 +103,7 @@
         <div class="row">
           <div class="col-12">
             <div v-show="!horizontalView && !editView">
-              <div
-                class="text-center text-danger mt-3 mb-3"
-                v-if="petition_index_details.attachments.length == 0"
-              >
-                <p><strong>No attachments in this category.</strong></p>
-              </div>
+              <not-found-message :index_details="petition_index_details" />
               <div v-if="petition_index_details.attachments.length > 0">
                 <div
                   class="row mb-2 text-center"
@@ -371,6 +366,7 @@ import FileUpload from "../petition-index/FileUpload.vue";
 import PageNumberSideBar from "../shared/PageNumberLeftSideBar.vue";
 import AnnexureRightSideBar from "../shared/AnnexureRightSideBar.vue";
 import { mapState } from "vuex";
+import NotFoundMessage from "../shared/NotFoundMessage.vue";
 
 export default {
   components: {
@@ -383,6 +379,7 @@ export default {
     NavComponents,
     PageNumberSideBar,
     AnnexureRightSideBar,
+    NotFoundMessage,
   },
   computed: mapState(["user"]),
   data() {
@@ -409,6 +406,13 @@ export default {
   created() {
     this.getCaseDetails();
   },
+  updated() {
+    document.title = this.petition
+      ? this.petition.petition_standard_title +
+        " | " +
+        this.petition_index_details.document_description
+      : "";
+  },
   mounted() {
     const myDiv = document.getElementById("services");
     document.getElementById("header").style.display = "none";
@@ -427,12 +431,6 @@ export default {
           
         }   
     })  */
-    document.title = this.petition
-      ? this.petition.petition_standard_title +
-        " | " +
-        this.petition_index_details.document_description
-      : "";
-    console.log(document.title);
   },
   methods: {
     pageHeader() {
@@ -533,14 +531,14 @@ export default {
           );
       }
     },
-    deletePetitionAttachment(petitionId, attachmentIndex) {
+    deletePetitionAttachment(attachment_id, attachmentIndex) {
       if (confirm("Do you really want to delete?")) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
-          .delete(this.base_url + "/api/attachments/" + petitionId, {
+          .delete(this.base_url + "/api/attachments/" + attachment_id, {
             headers,
           })
           .then(

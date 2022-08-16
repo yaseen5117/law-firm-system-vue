@@ -243,9 +243,12 @@ export default {
   created() {
     this.getPetitionReplyDetails();
   },
-  mounted() {
-    document.title = this.petition_parent.title;
-    console.log(document.title);
+  updated() {
+    if (this.petition_parent) {
+      document.title = this.petition_parent.title + " | Petition Reply Parent";
+    } else {
+      document.title = "Petition Replies";
+    }
   },
   methods: {
     getPetitionReplyDetails() {

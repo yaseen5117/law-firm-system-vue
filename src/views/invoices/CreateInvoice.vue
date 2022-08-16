@@ -456,6 +456,7 @@
     @afterSubmit="getInvoice()"
     @closeModal="closeModal()"
     :invoice="invoice"
+    :invoice_id="invoice.id"
     title="Paid Invoice Dialog"
   />
   <!-- End #main -->
@@ -600,8 +601,21 @@ export default {
           });
         });
     },
-    openModal(invoice_id) {
-      this.invoice_id = invoice_id;
+    openModal(invoice) {
+      if (invoice.invoice_payments.length === 0) {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, "0");
+        var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+        var yyyy = today.getFullYear();
+        today = dd + "/" + mm + "/" + yyyy;
+        invoice.invoice_payments.push({
+          id: null,
+          paid_date: today,
+          paid_amount: invoice.amount,
+          notes: null,
+        });
+      }
+      this.invoice_id = invoice.id;
       this.displayModal = true;
     },
     closeModal() {

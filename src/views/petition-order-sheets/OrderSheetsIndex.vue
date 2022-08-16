@@ -12,7 +12,7 @@
       class="services section-bg"
       :class="removePageHeader ? '' : ''"
     >
-      <nav-components activeNavPill="order_sheet" :petition_id="petition.id" />
+      <nav-components activeNavPill="order_sheet" :petition_id="petition_id" />
       <div class="container mt-2" data-aos="fade-up">
         <div class="row mb-4">
           <div class="col-12">
@@ -42,7 +42,7 @@
               class="btn btn-primary btn-sm"
               :to="{
                 name: 'petition-order-sheets-save',
-                params: { petition_id: petition.id },
+                params: { petition_id: petition_id },
               }"
             >
               Add New Order Sheet
@@ -74,33 +74,16 @@
             >
               Delete
             </a>
-            <span class="ml-2 text-primary"
+            <span style="margin-left: 10px" class="ml-2 text-primary"
               ><small v-if="orderSheetsActive"
-                >({{ orderSheetsActive.description }})</small
+                >({{ orderSheetsActive.title }})</small
               ></span
             >
           </div>
           <div>
             <div class="mt-4" v-if="orderSheetsActive">
-              <!-- <div class="mb-4">
-                <p>
-                  <strong>Title: </strong>{{ orderSheetsActive.title }}
-                  <strong>Description: </strong
-                  >{{ orderSheetsActive.description }}
-                  <strong>Order Sheet Date: </strong
-                  >{{ orderSheetsActive.order_sheet_date }}
-                  
-                </p>
-
-                <file-upload
-                  v-if="this.user.is_admin"
-                  @afterUpload="getOrderSheet"
-                  type="App\Models\PetitonOrderSheet"
-                  :attachmentable_id="orderSheetsActive.id"
-                />
-              </div> -->
-
-              <div>
+              <not-found-message :index_details="orderSheetsActive" />
+              <div v-if="orderSheetsActive.attachments.length > 0">
                 <div
                   class="row mb-2 text-center"
                   :id="'image-container-' + attachment.id"
@@ -118,7 +101,7 @@
                         '/storage/attachments/petitions/' +
                         petition.id +
                         '/PetitonOrderSheet/' +
-                        this.$route.params.order_sheet_id +
+                        attachment.attachmentable_id +
                         '/' +
                         attachment.file_name
                       "
@@ -131,7 +114,7 @@
                         '/storage/attachments/petitions/' +
                         petition.id +
                         '/PetitonOrderSheet/' +
-                        this.$route.params.order_sheet_id +
+                        attachment.attachmentable_id +
                         '/' +
                         attachment.file_name
                       "
@@ -184,11 +167,12 @@
     </section>
 
     <Sidebar
+      v-if="orderSheets && orderSheetsActive"
       v-model:visible="visibleLeft"
       class="p-sidebar-md p-side-bar-ordersheet"
       position="right"
       :fullscreen="false"
-      :dismissable="false"
+      :dismissable="true"
       :modal="false"
     >
       <ul class="list-group">
@@ -209,11 +193,6 @@
         </router-link>
       </ul>
     </Sidebar>
-
-    <div class="fixed-annexsures">
-      <!-- Prayers -->
-      <!-- Stay Order -->
-    </div>
   </main>
   <!-- End #main -->
 </template>
@@ -226,6 +205,8 @@ import NavComponents from "../Cases/NavComponents.vue";
 import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
 import { mapState } from "vuex";
+import NotFoundMessage from "../shared/NotFoundMessage.vue";
+
 export default {
   computed: mapState(["user"]),
   components: {
@@ -236,6 +217,7 @@ export default {
     Navigation,
     FileUpload,
     NavComponents,
+    NotFoundMessage,
   },
   data() {
     return {
@@ -250,8 +232,8 @@ export default {
       petition: {},
       petition_index: [],
       petition_index_details: {},
-      order_sheet_id: this.$route.params.order_sheet_id, //this is the id from the browser
-      petition_id: this.$route.params.petition_id, //this is the id from the browser
+      order_sheet_id: this.$route.params.order_sheet_id,
+      petition_id: this.$route.params.petition_id,
       horizontalView: false, //it will show vertical images by default
       activePage: null,
       removePageHeader: true,
@@ -261,10 +243,14 @@ export default {
   created() {
     this.getOrderSheets();
   },
-  updated() {
+  mounted() {
     document.getElementById("header").style.display = "none";
+  },
+  updated() {
     if (this.orderSheetsActive) {
-      document.title = this.orderSheetsActive.title + " | Order Sheet" ;
+      document.title = this.orderSheetsActive.title + " | Order Sheet";
+    } else {
+      document.title = "Order Sheet";
     }
   },
   methods: {
@@ -302,9 +288,7 @@ export default {
         )
         .then((response) => {
           this.orderSheets = response.data.records;
-          this.petition = response.data.records.petition;
 
-          this.getCaseDetails();
           this.getOrderSheet();
         })
         .catch((error) => {
@@ -337,7 +321,7 @@ export default {
           this.orderSheetsActive = response.data.record;
           this.previous_index_id = response.data.previous_index_id;
           this.next_index_id = response.data.next_index_id;
-          this.getCaseDetails();
+          this.petition = response.data.record.petition;
         })
         .catch((error) => {
           console.log(error.response.data);

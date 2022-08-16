@@ -183,7 +183,6 @@ export default {
     this.getPetitionReplyParents();
   },
   mounted() {
-    document.getElementById("header");
     document.title = "Petition Reply Parents";
   },
   methods: {
