@@ -82,7 +82,8 @@
           </div>
           <div>
             <div class="mt-4" v-if="orderSheetsActive">
-              <div>
+              <not-found-message :index_details="orderSheetsActive" />
+              <div v-if="orderSheetsActive.attachments.length > 0">
                 <div
                   class="row mb-2 text-center"
                   :id="'image-container-' + attachment.id"
@@ -204,6 +205,8 @@ import NavComponents from "../Cases/NavComponents.vue";
 import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
 import { mapState } from "vuex";
+import NotFoundMessage from "../shared/NotFoundMessage.vue";
+
 export default {
   computed: mapState(["user"]),
   components: {
@@ -214,6 +217,7 @@ export default {
     Navigation,
     FileUpload,
     NavComponents,
+    NotFoundMessage,
   },
   data() {
     return {

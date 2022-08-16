@@ -95,56 +95,59 @@
         <div class="row">
           <div class="col-12">
             <div v-show="!horizontalView && !editView">
-              <div
-                class="row mb-2 text-center"
-                :id="'image-container-' + (index_attachment + 1)"
-                v-for="(
-                  attachment, index_attachment
-                ) in index_detail_data.attachments"
-                :key="attachment"
-              >
-                <div class="col-12">
-                  <img
-                    v-if="attachment.mime_type != 'application/pdf'"
-                    :class="
-                      activePage == index_attachment + 1 ? 'active-img' : ''
-                    "
-                    class="img-fluid"
-                    style="width: 90%"
-                    :src="
-                      this.base_url +
-                      '/storage/attachments/petitions/' +
-                      petition.id +
-                      '/' +
-                      modal_name +
-                      '/' +
-                      this.$route.params.module_id +
-                      '/' +
-                      attachment.file_name
-                    "
-                  />
-                  <a
-                    :class="
-                      activePage == index_attachment + 1 ? 'active-img' : ''
-                    "
-                    v-if="attachment.mime_type == 'application/pdf'"
-                    :href="
-                      this.base_url +
-                      '/storage/attachments/petitions/' +
-                      petition.id +
-                      '/' +
-                      modal_name +
-                      '/' +
-                      this.$route.params.module_id +
-                      '/' +
-                      attachment.file_name
-                    "
-                    target="_blank"
-                    ><u
-                      ><span>Click to Open: </span>{{ attachment.title }}</u
-                    ></a
-                  >
-                  <hr class="mt-4 mb-4" style="border: solid 3px" />
+              <not-found-message :index_details="index_detail_data" />
+              <div v-if="index_detail_data.attachments.length > 0">
+                <div
+                  class="row mb-2 text-center"
+                  :id="'image-container-' + (index_attachment + 1)"
+                  v-for="(
+                    attachment, index_attachment
+                  ) in index_detail_data.attachments"
+                  :key="attachment"
+                >
+                  <div class="col-12">
+                    <img
+                      v-if="attachment.mime_type != 'application/pdf'"
+                      :class="
+                        activePage == index_attachment + 1 ? 'active-img' : ''
+                      "
+                      class="img-fluid"
+                      style="width: 90%"
+                      :src="
+                        this.base_url +
+                        '/storage/attachments/petitions/' +
+                        petition.id +
+                        '/' +
+                        modal_name +
+                        '/' +
+                        this.$route.params.module_id +
+                        '/' +
+                        attachment.file_name
+                      "
+                    />
+                    <a
+                      :class="
+                        activePage == index_attachment + 1 ? 'active-img' : ''
+                      "
+                      v-if="attachment.mime_type == 'application/pdf'"
+                      :href="
+                        this.base_url +
+                        '/storage/attachments/petitions/' +
+                        petition.id +
+                        '/' +
+                        modal_name +
+                        '/' +
+                        this.$route.params.module_id +
+                        '/' +
+                        attachment.file_name
+                      "
+                      target="_blank"
+                      ><u
+                        ><span>Click to Open: </span>{{ attachment.title }}</u
+                      ></a
+                    >
+                    <hr class="mt-4 mb-4" style="border: solid 3px" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -328,6 +331,7 @@ import FileUpload from "../petition-index/FileUpload.vue";
 import PageNumberSideBar from "../shared/PageNumberLeftSideBar.vue";
 import StandardAnnexureRightSideBar from "../shared/StandardAnnexureRightSideBar.vue";
 import { mapState } from "vuex";
+import NotFoundMessage from "../shared/NotFoundMessage.vue";
 
 export default {
   components: {
@@ -340,6 +344,7 @@ export default {
     NavComponents,
     PageNumberSideBar,
     StandardAnnexureRightSideBar,
+    NotFoundMessage,
   },
   computed: mapState(["user"]),
   data() {

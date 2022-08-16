@@ -92,8 +92,8 @@
                   :petition_id="petition.id"
                 />
               </div>
-
-              <div>
+              <not-found-message :index_details="SynopsisActive" />
+              <div v-if="SynopsisActive.attachments.length > 0">
                 <div
                   class="row mb-2 text-center"
                   :id="'image-container-' + attachment.id"
@@ -187,6 +187,7 @@ import NavComponents from "../Cases/NavComponents.vue";
 import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
 import { mapState } from "vuex";
+import NotFoundMessage from "../shared/NotFoundMessage.vue";
 
 export default {
   components: {
@@ -197,6 +198,7 @@ export default {
     Navigation,
     FileUpload,
     NavComponents,
+    NotFoundMessage,
   },
   computed: mapState(["user"]),
   data() {
