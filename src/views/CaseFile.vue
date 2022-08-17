@@ -66,7 +66,7 @@
                         </option>
                       </select>
                     </div>
-                    <div class="col-lg-2 col-md-2 col-sm-12">
+                    <div class="col-lg-2 col-md-2 col-sm-6 col-6">
                       <label for="">Client Name</label>
                       <input
                         v-model="filters.petitioner_name"
@@ -75,6 +75,16 @@
                         class="form-control form-control-sm"
                         aria-describedby="ClientName"
                       />
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-6 col-6 mt-4">
+                      <div class="field-checkbox">
+                        <Checkbox
+                          inputClass="p-checkbox p-checkbox-box"
+                          v-model="filters.pending_tag"
+                          :binary="true"
+                        />
+                        <label style="margin-left: 5px">Pending Cases</label>
+                      </div>
                     </div>
 
                     <div class="col-lg-3 col-md-3 col-sm-12 mt-lg-4 mt-md-4 mt">
@@ -282,10 +292,12 @@
 import axios from "axios";
 import PageHeader from "../views/shared/PageHeader";
 import { mapState } from "vuex";
+import Checkbox from "primevue/checkbox";
 
 export default {
   components: {
     PageHeader,
+    Checkbox,
   },
   name: "CaseFile",
   data() {

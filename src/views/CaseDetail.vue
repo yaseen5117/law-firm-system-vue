@@ -1,4 +1,5 @@
 <template>
+  <ConfirmPopup></ConfirmPopup>
   <main id="main">
     <page-header title="Petition" />
     <nav-components activeNavPill="petition" :petition_id="petition.id" />
@@ -9,6 +10,44 @@
           <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="card-body align-center case_heading">
               <div class="text-end">
+                <button
+                  style="margin-right: 2px"
+                  @click="confirmToDelete($event)"
+                  class="btn btn-sm btn-success action-btn"
+                  v-if="petition && petition.pending_tag"
+                  v-tooltip.top="'Click To Remove'"
+                >
+                  Pending Tag: {{ petition.pending_tag }}
+                </button>
+
+                <button
+                  style="margin-right: 2px"
+                  v-if="!insertPendingTag && !petition.pending_tag"
+                  @click="openInsertField"
+                  class="btn btn-sm btn-success action-btn"
+                >
+                  Insert "Pending" Tag
+                </button>
+                <button class="btn" v-if="insertPendingTag">
+                  <div class="p-inputgroup">
+                    <Button
+                      @click="colseInsertField"
+                      icon="pi pi-times"
+                      class="p-button-danger p-button-sm"
+                    />
+                    <InputText
+                      class="p-inputtext-sm"
+                      v-model="pending_tag"
+                      placeholder="Insert 'Pending' Tag"
+                    />
+                    <Button
+                      @click="addPendingTag()"
+                      icon="pi pi-check"
+                      class="p-button-primary p-button-sm"
+                      label="Insert"
+                    />
+                  </div>
+                </button>
                 <router-link
                   v-if="this.user.is_admin"
                   class="btn btn-primary action-btn"
@@ -259,11 +298,19 @@ import PageHeader from "../views/shared/PageHeader";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { mapState } from "vuex";
+import InputText from "primevue/inputtext";
+import Button from "primevue/button";
+import Tooltip from "primevue/tooltip";
+import ConfirmPopup from "primevue/confirmpopup";
 
 export default {
   components: {
     NavComponents,
     PageHeader,
+    InputText,
+    Button,
+    Tooltip,
+    ConfirmPopup,
   },
   computed: mapState(["user"]),
   setup() {
@@ -288,6 +335,8 @@ export default {
         "Application for Exemption",
       ],
       filteredDocumentDiscriptions: null,
+      insertPendingTag: false,
+      pending_tag: "",
     };
   },
   validations() {
@@ -301,6 +350,95 @@ export default {
     this.getCaseDetails();
   },
   methods: {
+    confirmToDelete(event) {
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: "Do you want to Remove Pending Tag?",
+        icon: "pi pi-exclamation-triangle",
+        accept: () => {
+          this.removePendingTag();
+        },
+        reject: () => {
+          this.$confirm.close();
+        },
+      });
+    },
+
+    openInsertField() {
+      this.insertPendingTag = true;
+    },
+    colseInsertField() {
+      this.insertPendingTag = false;
+    },
+    removePendingTag() {
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      axios
+        .post(
+          this.base_url + "/api/remove_pending_tag",
+          {
+            pending_tag: this.pending_tag,
+            petition_id: this.id,
+          },
+          { headers }
+        )
+        .then((response) => {
+          this.$notify({
+            type: "success",
+            title: "Success",
+            text: "Pending Tag Remove Successfully!",
+          });
+          this.getCaseDetails();
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
+        });
+    },
+    addPendingTag() {
+      if (this.pending_tag) {
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+        axios
+          .post(
+            this.base_url + "/api/insert_pending_tag",
+            {
+              pending_tag: this.pending_tag,
+              petition_id: this.id,
+            },
+            { headers }
+          )
+          .then((response) => {
+            this.$notify({
+              type: "success",
+              title: "Success",
+              text: "Pending Tag Inserted Successfully!",
+            });
+            this.pending_tag = null;
+            this.insertPendingTag = false;
+            this.getCaseDetails();
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
+          });
+      } else {
+        this.$notify({
+          type: "error",
+          title: "Add Something Before Click On Insert",
+        });
+      }
+    },
     searchForAutocomplete(event) {
       setTimeout(() => {
         if (!event.query.trim().length) {
