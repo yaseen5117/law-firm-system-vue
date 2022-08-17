@@ -388,6 +388,7 @@ export default {
       this.insertPendingTag = false;
       this.showEditTagBtn = true;
       this.pendingTag = true;
+      this.pending_tag = null;
     },
     removePendingTag() {
       var headers = {
