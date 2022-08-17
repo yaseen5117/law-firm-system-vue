@@ -10,11 +10,19 @@
           <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="card-body align-center case_heading">
               <div class="text-end">
+                <!-- <button
+                  style="margin-right: 2px"
+                  v-if="showEditTagBtn && petition.pending_tag"
+                  @click="editPendingTag(petition.pending_tag)"
+                  class="btn btn-sm btn-success action-btn"
+                >
+                  Edit "Pending" Tag
+                </button> -->
                 <button
                   style="margin-right: 2px"
                   @click="confirmToDelete($event)"
                   class="btn btn-sm btn-success action-btn"
-                  v-if="petition && petition.pending_tag"
+                  v-if="petition && petition.pending_tag && pendingTag"
                   v-tooltip.top="'Click To Remove'"
                 >
                   Pending Tag: {{ petition.pending_tag }}
@@ -337,6 +345,8 @@ export default {
       filteredDocumentDiscriptions: null,
       insertPendingTag: false,
       pending_tag: "",
+      showEditTagBtn: true,
+      pendingTag: true,
     };
   },
   validations() {
@@ -355,20 +365,29 @@ export default {
         target: event.currentTarget,
         message: "Do you want to Remove Pending Tag?",
         icon: "pi pi-exclamation-triangle",
+        acceptLabel: "Delete",
+        rejectLabel: "Edit",
         accept: () => {
           this.removePendingTag();
         },
         reject: () => {
+          this.editPendingTag(this.petition.pending_tag);
           this.$confirm.close();
         },
       });
     },
-
+    editPendingTag(pending_tag) {
+      this.insertPendingTag = true;
+      this.pendingTag = false;
+      this.pending_tag = pending_tag;
+    },
     openInsertField() {
       this.insertPendingTag = true;
     },
     colseInsertField() {
       this.insertPendingTag = false;
+      this.showEditTagBtn = true;
+      this.pendingTag = true;
     },
     removePendingTag() {
       var headers = {
@@ -422,6 +441,7 @@ export default {
             });
             this.pending_tag = null;
             this.insertPendingTag = false;
+            this.pendingTag = true;
             this.getCaseDetails();
           })
           .catch((error) => {

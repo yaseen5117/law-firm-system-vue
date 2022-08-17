@@ -29,7 +29,7 @@
                       >
                       </datepicker>
                     </div> -->
-                    
+
                     <div class="col-lg-2 col-md-2 col-sm-6 col-6">
                       <label for="">Case #</label>
                       <input
@@ -146,7 +146,9 @@
                       class="card listing-cards shadow-sm mb-4"
                       style="width: 100%"
                     >
-                      <div class="pending_case_tag"><span style="font-size:15px">Pending</span> 45</div>
+                      <div v-if="petition.pending_tag" class="pending_case_tag">
+                        {{ petition.pending_tag }}
+                      </div>
                       <div class="card-body" @click="goToDetails(petition.id)">
                         <div class="row">
                           <p class="card-title" style="margin-bottom: 0px">
