@@ -8,75 +8,69 @@
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="card-body align-center case_heading">
-              <div class="text-end">
-                <!-- <button
-                  style="margin-right: 2px"
-                  v-if="showEditTagBtn && petition.pending_tag"
-                  @click="editPendingTag(petition.pending_tag)"
-                  class="btn btn-sm btn-success action-btn"
-                >
-                  Edit "Pending" Tag
-                </button> -->
-                <button
-                  style="margin-right: 2px"
-                  @click="confirmToDelete($event)"
-                  class="btn btn-sm btn-success action-btn"
-                  v-if="petition && petition.pending_tag && pendingTag"
-                  v-tooltip.top="'Click To Remove'"
-                >
-                  Pending Tag: {{ petition.pending_tag }}
-                </button>
+            <div class="text-end">
+              <button
+                style="margin-right: 2px"
+                @click="confirmToDelete($event)"
+                class="btn btn-sm btn-grey action-btn"
+                v-if="petition && petition.pending_tag && pendingTag"
+                v-tooltip.top="'Click To Change/Remove'"
+              >
+                Pending Tag: {{ petition.pending_tag }}
+              </button>
 
-                <button
-                  style="margin-right: 2px"
-                  v-if="!insertPendingTag && !petition.pending_tag"
-                  @click="openInsertField"
-                  class="btn btn-sm btn-success action-btn"
-                >
-                  Insert "Pending" Tag
-                </button>
-                <button class="btn" v-if="insertPendingTag">
-                  <div class="p-inputgroup">
-                    <Button
-                      @click="colseInsertField"
-                      icon="pi pi-times"
-                      class="p-button-danger p-button-sm"
-                    />
-                    <InputText
-                      class="p-inputtext-sm"
-                      v-model="pending_tag"
-                      placeholder="Insert 'Pending' Tag"
-                    />
-                    <Button
-                      @click="addPendingTag()"
-                      icon="pi pi-check"
-                      class="p-button-primary p-button-sm"
-                      label="Insert"
-                    />
-                  </div>
-                </button>
-                <router-link
-                  v-if="this.user.is_admin"
-                  class="btn btn-primary action-btn"
-                  style="margin-right: 2px"
-                  :to="{
-                    name: 'edit-petition',
-                    params: { id: petition.id },
-                  }"
-                  role="button"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="View"
-                  ><i class="fa fa-edit"></i> Edit Petition</router-link
-                >
-                <a
-                  class="btn btn-warning action-btn"
-                  :href="petition.pdf_download_url"
-                  download=""
-                  ><i class="fa fa-download"></i> Download PDF</a
-                >
-              </div>
+              <button
+                style="margin-right: 2px"
+                v-if="!insertPendingTag && !petition.pending_tag"
+                @click="openInsertField"
+                class="btn btn-sm btn-success action-btn"
+              >
+                Insert "Pending" Tag
+              </button>
+              <button class="btn" v-if="insertPendingTag">
+                <div class="p-inputgroup">
+                  <input
+                    class="form-control form-control-sm"
+                    v-on:keyup.enter="addPendingTag(petition_detail)"
+                    v-model="pending_tag"
+                    placeholder="Insert 'Pending' Tag"
+                  />
+                  <button
+                    @click="addPendingTag()"
+                    class="btn btn-success btn-sm action-btn"
+                  >
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                  </button>
+                  <button
+                    @click="colseInsertField()"
+                    class="btn btn-danger btn-sm action-btn"
+                  >
+                    <i class="fa fa-close" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </button>
+              <router-link
+                v-if="this.user.is_admin"
+                class="btn btn-primary action-btn"
+                style="margin-right: 2px"
+                :to="{
+                  name: 'edit-petition',
+                  params: { id: petition.id },
+                }"
+                role="button"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="View"
+                ><i class="fa fa-edit"></i> Edit Petition</router-link
+              >
+              <a
+                class="btn btn-warning action-btn"
+                :href="petition.pdf_download_url"
+                download=""
+                ><i class="fa fa-download"></i> Download PDF</a
+              >
+            </div>
+            <div class="card-body align-center case_heading">
               <h6>
                 <u
                   >BEFORE THE
@@ -360,12 +354,15 @@ export default {
     this.getCaseDetails();
   },
   methods: {
+    //Start Methods About All Pending Tag
     confirmToDelete(event) {
       this.$confirm.require({
         target: event.currentTarget,
         message: "Do you want to Remove Pending Tag?",
         icon: "pi pi-exclamation-triangle",
         acceptLabel: "Delete",
+        acceptClass: "p-button-danger",
+        rejectClass: "p-button-primary",
         rejectLabel: "Edit",
         accept: () => {
           this.removePendingTag();
@@ -388,12 +385,15 @@ export default {
       this.insertPendingTag = false;
       this.showEditTagBtn = true;
       this.pendingTag = true;
-      this.pending_tag = null;
+      this.pending_tag = "";
     },
     removePendingTag() {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
+      this.insertPendingTag = false;
+      this.pendingTag = false;
+      this.petition.pending_tag = "";
       axios
         .post(
           this.base_url + "/api/remove_pending_tag",
@@ -409,7 +409,7 @@ export default {
             title: "Success",
             text: "Pending Tag Remove Successfully!",
           });
-          this.getCaseDetails();
+          this.pending_tag = "";
         })
         .catch((error) => {
           console.log(error);
@@ -421,10 +421,13 @@ export default {
         });
     },
     addPendingTag() {
-      if (this.pending_tag) {
+      if (true) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
+        this.insertPendingTag = false;
+        this.pendingTag = true;
+        this.petition.pending_tag = this.pending_tag;
         axios
           .post(
             this.base_url + "/api/insert_pending_tag",
@@ -441,9 +444,6 @@ export default {
               text: "Pending Tag Inserted Successfully!",
             });
             this.pending_tag = null;
-            this.insertPendingTag = false;
-            this.pendingTag = true;
-            this.getCaseDetails();
           })
           .catch((error) => {
             console.log(error);
@@ -453,13 +453,9 @@ export default {
               text: error.response.data.message,
             });
           });
-      } else {
-        this.$notify({
-          type: "error",
-          title: "Add Something Before Click On Insert",
-        });
       }
     },
+    //END Methods About All Pending Tag
     searchForAutocomplete(event) {
       setTimeout(() => {
         if (!event.query.trim().length) {
@@ -612,4 +608,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+/* .btn-grey {
+  color: #fff;
+  background-color: #7e7e7e;
+  border-color: #7e7e7e;
+} */
+</style>

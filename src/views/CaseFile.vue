@@ -13,23 +13,9 @@
           <div class="container" data-aos="fade-up">
             <div class="row">
               <!-- search filters -->
-              <div class="col-md-12 col-12">
+              <div class="col-lg-12 col-md-12 col-sm-12">
                 <Transition name="fade">
                   <form v-if="showSearchForm" class="row mb-2">
-                    <!-- <div hidden class="col-lg-2 col-md-2 col-sm-12">
-                      <label for="">Date</label>
-                      <datepicker
-                        :enableTimePicker="false"
-                        autoApply
-                        format="dd/MM/yyyy"
-                        id="date"
-                        type="date"
-                        v-model="filters.institution_date"
-                        class=""
-                      >
-                      </datepicker>
-                    </div> -->
-
                     <div class="col-lg-2 col-md-2 col-sm-6 col-6">
                       <label for="">Case #</label>
                       <input
@@ -84,7 +70,9 @@
                           v-model="filters.pending_tag"
                           :binary="true"
                         />
-                        <label style="margin-left: 5px">Pending Cases</label>
+                        <label style="margin-left: 5px"
+                          >Pending Cases Only</label
+                        >
                       </div>
                     </div>
 
@@ -139,16 +127,66 @@
                 <div v-if="isLoaded" class="row">
                   <div
                     class="col-sm-12 col-md-3 col-lg-3 col-12 d-flex align-self-stretch"
-                    v-for="petition in petitions"
+                    v-for="(petition, petitionIndex) in petitions"
                     :key="petition.id"
                   >
                     <div
                       class="card listing-cards shadow-sm mb-4"
                       style="width: 100%"
                     >
-                      <div v-if="petition.pending_tag" class="pending_case_tag">
-                        {{ petition.pending_tag }}
+                      <div v-if="petition.pending_tag">
+                        <button
+                          v-show="!petition.editMode"
+                          @click="
+                            petition.editMode = true;
+                            this.pending_tag = petition.pending_tag;
+                          "
+                          href="javascript:void"
+                          v-if="petition.pending_tag"
+                          class="btn pending_case_tag"
+                          v-tooltip.top="'Click To Change/Remove'"
+                        >
+                          {{ petition.pending_tag }}
+                        </button>
                       </div>
+                      <button
+                        v-if="!petition.pending_tag"
+                        v-show="!petition.editMode"
+                        @click="
+                          petition.editMode = true;
+                          this.pending_tag = null;
+                        "
+                        class="btn pending_case_tag"
+                        v-tooltip.top="'Click To Add Pending Tag'"
+                      >
+                        <i class="fa fa-bookmark" aria-hidden="true"></i>
+                      </button>
+
+                      <div v-show="petition.editMode" class="p-inputgroup">
+                        <input
+                          autofocus
+                          type="text"
+                          class="form-control form-control-sm"
+                          v-on:keyup.enter="addPendingTag(petition)"
+                          v-model="pending_tag"
+                          placeholder="Insert 'Pending' Tag"
+                        />
+                        <button
+                          @click="addPendingTag(petition)"
+                          class="btn btn-success btn-sm action-btn"
+                          v-tooltip.top="'Save'"
+                        >
+                          <i class="fa fa-check" aria-hidden="true"></i>
+                        </button>
+                        <button
+                          @click="petition.editMode = false"
+                          class="btn btn-danger btn-sm action-btn"
+                          v-tooltip.top="'Cancel'"
+                        >
+                          <i class="fa fa-close" aria-hidden="true"></i>
+                        </button>
+                      </div>
+
                       <div class="card-body" @click="goToDetails(petition.id)">
                         <div class="row">
                           <p class="card-title" style="margin-bottom: 0px">
@@ -236,7 +274,9 @@
                               >Alert</router-link
                             >
                             <button
-                              @click="toggleArchiveStatus(petition)"
+                              @click="
+                                toggleArchiveStatus(petition, petitionIndex)
+                              "
                               style="margin-right: 2px"
                               class="btn btn-warning btn-sm action-btn"
                               title="Archive Case"
@@ -321,6 +361,7 @@ export default {
 
       showSearchForm: true,
       isLoaded: false,
+      pending_tag: "",
     };
   },
   created() {
@@ -329,6 +370,47 @@ export default {
   },
   computed: mapState(["user"]),
   methods: {
+    //START EDIT PENDING TAG
+    addPendingTag(petition) {
+      if (true) {
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+
+        petition.editMode = false;
+        petition.pending_tag = this.pending_tag;
+        axios
+          .post(
+            this.base_url + "/api/insert_pending_tag",
+            {
+              pending_tag: this.pending_tag,
+              petition_id: petition.id,
+            },
+            { headers }
+          )
+          .then((response) => {
+            // this.$notify({
+            //   type: "success",
+            //   title: "Success",
+            //   text: "Pending Tag Inserted Successfully!",
+            // });
+            this.pending_tag = null;
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
+          });
+      } else {
+        this.$notify({
+          type: "error",
+          title: "Add Something Before Click On Insert",
+        });
+      }
+    },
     onPage(event) {
       this.isLoaded = false;
       var new_page_no = event.page + 1; //adding 1 because event.page returns index of page # clicked.
@@ -390,12 +472,12 @@ export default {
         });
     },
 
-    toggleArchiveStatus(petition) {
+    toggleArchiveStatus(petition, petitionIndex) {
       let url = this.base_url + "/api/petitions/toggle_archived";
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
-
+      this.petitions.splice(petitionIndex, 1);
       axios
         .post(
           url,
@@ -408,7 +490,7 @@ export default {
           }
         )
         .then((response) => {
-          this.getCaseFiles();
+          console.log("success");
         })
         .catch((error) => {
           console.log(error);
@@ -448,4 +530,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+label {
+  font-size: 14px;
+}
+</style>
