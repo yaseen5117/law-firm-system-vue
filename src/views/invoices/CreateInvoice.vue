@@ -235,6 +235,7 @@
                         <label for="">Attention</label>
                         <input
                           :disabled="invoice.invoice_status_id == 3"
+                          v-model="invoice.attention"
                           type="text"
                           class="form-control"
                         />
