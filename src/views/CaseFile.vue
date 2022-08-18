@@ -85,31 +85,6 @@
                         Reset
                       </button>
 
-                      <!-- <router-link
-                      v-if="this.user.is_admin"
-                      style="margin-left: 2px"
-                      class="btn btn-success btn-sm mr-md-2"
-                      :to="'/petitions/create'"
-                      >New Case</router-link
-                    > -->
-
-                      <!-- <button
-                      class="btn btn-secondary btn-sm mr-md-2"
-                      style="margin-right: 2px"
-                      v-if="showSearchForm"
-                      @click="showSearchForm = !showSearchForm"
-                    >
-                      Hide Filters
-                    </button> -->
-                      <!-- <button
-                      class="btn btn-warning btn-sm mr-md-2"
-                      style="margin-right: 2px"
-                      v-else-if="!showSearchForm"
-                      @click="showSearchForm = !showSearchForm"
-                    >
-                      Show Filters
-                    </button> -->
-
                       <button
                         type="button"
                         class="btn btn-warning btn-sm mr-md-2"
@@ -134,35 +109,36 @@
                       class="card listing-cards shadow-sm mb-4"
                       style="width: 100%"
                     >
-                      <div v-if="petition.pending_tag">
-                        <button
+                      <div class="pending_case_tag">
+                        <span
                           v-show="!petition.editMode"
                           @click="
                             petition.editMode = true;
                             this.pending_tag = petition.pending_tag;
                           "
-                          href="javascript:void"
                           v-if="petition.pending_tag"
-                          class="btn pending_case_tag"
                           v-tooltip.top="'Click To Change/Remove'"
+                          >{{ petition.pending_tag }}</span
                         >
-                          {{ petition.pending_tag }}
-                        </button>
-                      </div>
-                      <button
-                        v-if="!petition.pending_tag"
-                        v-show="!petition.editMode"
-                        @click="
-                          petition.editMode = true;
-                          this.pending_tag = null;
-                        "
-                        class="btn pending_case_tag"
-                        v-tooltip.top="'Click To Add Pending Tag'"
-                      >
-                        <i class="fa fa-bookmark" aria-hidden="true"></i>
-                      </button>
 
-                      <div v-show="petition.editMode" class="p-inputgroup">
+                        <i
+                          v-if="!petition.pending_tag"
+                          v-show="!petition.editMode"
+                          @click="
+                            petition.editMode = true;
+                            this.pending_tag = null;
+                          "
+                          v-tooltip.top="'Click To Add Pending Tag'"
+                          class="fa fa-bookmark fa-1x"
+                          aria-hidden="true"
+                        ></i>
+                      </div>
+
+                      <div
+                        v-show="petition.editMode"
+                        class="input-group input-group-sm"
+                        style="width: 73%"
+                      >
                         <input
                           autofocus
                           type="text"
@@ -186,7 +162,6 @@
                           <i class="fa fa-close" aria-hidden="true"></i>
                         </button>
                       </div>
-
                       <div class="card-body" @click="goToDetails(petition.id)">
                         <div class="row">
                           <p class="card-title" style="margin-bottom: 0px">
@@ -533,5 +508,11 @@ export default {
 <style>
 label {
   font-size: 14px;
+}
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  label {
+    font-size: 10px;
+  }
 }
 </style>
