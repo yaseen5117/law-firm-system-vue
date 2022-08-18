@@ -1745,3 +1745,13 @@ label{
   font-family: 'Poppins';
   color: #8f3a302b;
 }
+.btn-grey{
+  color: #fff;
+  background-color: #7e7e7e;
+  border-color: #7e7e7e;
+}
+.btn-grey:hover {
+  color: #fff;
+  background-color: #414141;
+  border-color: #414141;
+}
