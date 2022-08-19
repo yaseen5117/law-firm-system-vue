@@ -66,10 +66,10 @@
                 <div class="col-lg-12 col-md-12 col-sm-12">
                   <table class="table table-striped" v-if="isLoaded">
                     <thead>
-                      <th>Proposition</th>
+                      <th>Propositions</th>
                       <!-- <th>Citation</th> -->
                       <th>Keywords</th>
-                      <th>Legal Provisions</th>
+                      <th>Legal Provisions &#38; Citations</th>
                       <th width="10%">Actions</th>
                       <th>Upload File</th>
                     </thead>
@@ -286,7 +286,7 @@ export default {
   data() {
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,
-      page_title: "Frequently Asked Legal Questions",
+      page_title: "Frequently Asked Legal Propositions",
       petition: {},
       new_general_case_law: {},
       general_case_laws: [],

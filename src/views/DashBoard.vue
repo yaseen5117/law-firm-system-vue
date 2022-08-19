@@ -214,12 +214,12 @@
                   :to="{
                     name: 'petition-general-case-law',
                   }"
-                  >Case Law Library</router-link
+                  >Frequently Asked Legal Propositions</router-link
                 >
               </h4>
               <p>
-                Contains all Details of Case Law Library. Click to Open all
-                Details.
+                Contains all Details of Frequently Asked Legal Propositions.
+                Click to Open all Details.
               </p>
             </div>
           </div>

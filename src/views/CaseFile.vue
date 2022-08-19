@@ -16,7 +16,7 @@
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <Transition name="fade">
                   <form v-if="showSearchForm" class="row mb-2">
-                    <div class="col-lg-2 col-md-2 col-sm-6 col-6">
+                    <div class="col-lg-1 col-md-1 col-sm-6 col-6">
                       <label for="">Case #</label>
                       <input
                         type="text"
@@ -76,7 +76,7 @@
                       </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-3 col-sm-12 mt-lg-4 mt-md-4 mt">
+                    <div class="col-lg-4 col-md-4 col-sm-12 mt-lg-4 mt-md-4 mt">
                       <button
                         type="button"
                         class="btn btn-danger btn-sm mr-md-2"
@@ -95,6 +95,7 @@
                       </button>
                       <button
                         type="button"
+                        style="margin-left: 2px"
                         class="btn btn-primary btn-sm mr-md-2"
                         @click="openPrintPendingCasesModal()"
                       >
