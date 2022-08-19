@@ -207,11 +207,6 @@
                             v-model="new_general_case_law.case_title"
                             :suggestions="filteredCaseTitle"
                             @complete="searchForAutocomplete($event)"
-                            v-bind:class="{
-                              'error-boarder':
-                                v$.new_general_case_law.case_title.$error,
-                            }"
-                            @blur="v$.new_general_case_law.case_title.$touch"
                             :style="'width:100%'"
                             :inputStyle="'width:100%'"
                             ref="caseTitle"
@@ -225,11 +220,6 @@
                         }"
                         @blur="v$.new_general_case_law.case_title.$touch"
                       /> -->
-                          <span
-                            v-if="v$.new_general_case_law.case_title.$error"
-                            class="errorMessage"
-                            >Case Title field is required.</span
-                          >
                         </td>
 
                         <td>
@@ -315,11 +305,11 @@ export default {
     };
   },
   validations() {
-    return {
-      new_general_case_law: {
-        case_title: { required },
-      },
-    };
+    // return {
+    //   new_general_case_law: {
+    //     case_title: { required },
+    //   },
+    // };
   },
   watch: {
     filters: {
@@ -380,8 +370,8 @@ export default {
     },
 
     submitGeneralCaseLaw() {
-      this.v$.$validate();
-      if (!this.v$.$error) {
+      // this.v$.$validate();
+      if (true) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
@@ -405,7 +395,6 @@ export default {
                 this.saving = false;
                 this.new_general_case_law = {};
                 setTimeout(() => {
-                  this.v$.$reset();
                   this.$refs.caseTitle.focus();
                 }, 0);
                 this.getGeneralCaseLaws();
