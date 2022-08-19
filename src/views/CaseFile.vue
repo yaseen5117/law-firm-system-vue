@@ -93,6 +93,13 @@
                       >
                         {{ filters.archived ? "Active Cases" : "Archived" }}
                       </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary btn-sm mr-md-2"
+                        @click="openPrintPendingCasesModal()"
+                      >
+                        Print Pending Cases
+                      </button>
                     </div>
                   </form>
                 </Transition>
@@ -305,6 +312,12 @@
       <!-- End #main -->
     </div>
   </BlockUI>
+  <pending-cases-modal
+    pendingCaseModal="true"
+    @close-modal-event="closePrintPendingCasesModal"
+    v-if="showPendingCasePrintModal"
+    :petitions="petitions"
+  />
 </template>
 
 <script>
@@ -312,11 +325,13 @@ import axios from "axios";
 import PageHeader from "../views/shared/PageHeader";
 import { mapState } from "vuex";
 import Checkbox from "primevue/checkbox";
+import PendingCasesModal from "../views/petitions/PendingCasesModal.vue";
 
 export default {
   components: {
     PageHeader,
     Checkbox,
+    PendingCasesModal,
   },
   name: "CaseFile",
   data() {
@@ -337,6 +352,7 @@ export default {
       showSearchForm: true,
       isLoaded: false,
       pending_tag: "",
+      showPendingCasePrintModal: false,
     };
   },
   created() {
@@ -483,6 +499,12 @@ export default {
       };
       this.getCaseFiles();
     },
+    openPrintPendingCasesModal() {
+      this.showPendingCasePrintModal = true;
+    },
+    closePrintPendingCasesModal() {
+      this.showPendingCasePrintModal = false;
+    },
   },
   mounted() {
     console.log("Case File Component Mounted");
@@ -514,5 +536,8 @@ label {
   label {
     font-size: 10px;
   }
+}
+.margin_left {
+  margin-left: 1px;
 }
 </style>

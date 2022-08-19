@@ -12,7 +12,7 @@
                 <Transition name="fade">
                   <form v-if="showSearchForm" class="row mb-2">
                     <div class="col-lg-3 col-md-3 col-sm-12">
-                      <label for="">Case Title</label>
+                      <label for="">Proposition</label>
                       <input
                         type="text"
                         id="year"
@@ -66,11 +66,12 @@
                 <div class="col-lg-12 col-md-12 col-sm-12">
                   <table class="table table-striped" v-if="isLoaded">
                     <thead>
-                      <th>Case Title</th>
-                      <th>Citation</th>
+                      <th>Proposition</th>
+                      <!-- <th>Citation</th> -->
                       <th>Keywords</th>
                       <th>Legal Provisions</th>
                       <th width="10%">Actions</th>
+                      <th>Upload File</th>
                     </thead>
                     <tbody>
                       <tr
@@ -93,19 +94,6 @@
                           </span>
                         </td>
 
-                        <td>
-                          <input
-                            v-show="general_case_law.editMode"
-                            class="form-control"
-                            v-model="general_case_law.citation"
-                            v-on:keyup.enter="
-                              editGeneralLawIndex(general_case_law)
-                            "
-                          />
-                          <span v-show="!general_case_law.editMode">{{
-                            general_case_law.citation
-                          }}</span>
-                        </td>
                         <td>
                           <input
                             v-show="general_case_law.editMode"
@@ -194,6 +182,23 @@
                             <!-- <i class="fa fa-trash-o"></i> -->
                           </button>
                         </td>
+                        <td>
+                          <file-upload
+                            @afterUpload="getGeneralCaseLaws"
+                            type="App\Models\GeneralCaseLaw"
+                            :attachmentable_id="general_case_law.id"
+                            :compactInlineView="compactInlineView"
+                            class="mt-1"
+                            :petition_id="petition.id"
+                          />
+                        </td>
+                        <td>
+                          <InvoiceThumb
+                            :base_url="base_url"
+                            folder_name="GeneralCaseLaws"
+                            :invoice="general_case_law"
+                          />
+                        </td>
                       </tr>
                       <tr>
                         <td>
@@ -230,23 +235,6 @@
                         <td>
                           <input
                             class="form-control"
-                            v-model="new_general_case_law.citation"
-                            v-on:keyup.enter="submitGeneralCaseLaw()"
-                            v-bind:class="{
-                              'error-boarder':
-                                v$.new_general_case_law.citation.$error,
-                            }"
-                            @blur="v$.new_general_case_law.citation.$touch"
-                          />
-                          <span
-                            v-if="v$.new_general_case_law.citation.$error"
-                            class="errorMessage"
-                            >Citation field is required.</span
-                          >
-                        </td>
-                        <td>
-                          <input
-                            class="form-control"
                             v-model="new_general_case_law.keywords"
                             v-on:keyup.enter="submitGeneralCaseLaw()"
                           />
@@ -258,7 +246,7 @@
                             v-on:keyup.enter="submitGeneralCaseLaw()"
                           />
                         </td>
-                        <td>
+                        <td colspan="3">
                           <button
                             :disabled="saving"
                             @click="submitGeneralCaseLaw()"
@@ -291,10 +279,14 @@ import axios from "axios";
 import PageHeader from "../shared/PageHeader";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import FileUpload from "../petition-index/FileUpload.vue";
+import InvoiceThumb from "../invoices/InvoiceThumb.vue";
 
 export default {
   components: {
     PageHeader,
+    FileUpload,
+    InvoiceThumb,
   },
   setup() {
     return {
@@ -304,7 +296,7 @@ export default {
   data() {
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,
-      page_title: "Case Law Library",
+      page_title: "Frequently Asked Legal Questions",
       petition: {},
       new_general_case_law: {},
       general_case_laws: [],
@@ -319,13 +311,13 @@ export default {
       ],
       filteredCaseTitle: null,
       isLoaded: false,
+      compactInlineView: "",
     };
   },
   validations() {
     return {
       new_general_case_law: {
         case_title: { required },
-        citation: { required },
       },
     };
   },
@@ -377,6 +369,7 @@ export default {
         })
         .then((response) => {
           this.general_case_laws = response.data.general_case_Laws;
+          this.compactInlineView = true;
           console.log(response.data.page_title);
           console.log(response.data.general_case_Laws);
           this.isLoaded = true;
