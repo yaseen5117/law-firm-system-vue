@@ -195,7 +195,7 @@
                         <td>
                           <InvoiceThumb
                             :base_url="base_url"
-                            folder_name="GeneralCaseLaws"
+                            folder_name="Frequently-Asked-Legal-Propositions"
                             :invoice="general_case_law"
                           />
                         </td>
