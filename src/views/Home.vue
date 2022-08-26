@@ -519,7 +519,7 @@ export default {
             id:0,
             feature_name:"",
             free_plan:"",
-            student_plan:"Rs. 5,000/quater per student",
+            student_plan:"Rs. 5,000/quarter per student",
             individual_plan:"Rs. 5,000/month",
             lawfirm_plan:"Rs. 10,000/month ",
           },
