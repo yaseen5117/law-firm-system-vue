@@ -124,9 +124,9 @@
                     >
                       <div class="pending_case_tag">
                         <span
-                          v-show="!petition.editMode"
+                          v-show="!petition.pendingTagEditMode"
                           @click="
-                            petition.editMode = true;
+                            petition.pendingTagEditMode = true;
                             this.pending_tag = petition.pending_tag;
                           "
                           v-if="petition.pending_tag"
@@ -136,9 +136,9 @@
 
                         <i
                           v-if="!petition.pending_tag"
-                          v-show="!petition.editMode"
+                          v-show="!petition.pendingTagEditMode"
                           @click="
-                            petition.editMode = true;
+                            petition.pendingTagEditMode = true;
                             this.pending_tag = null;
                           "
                           v-tooltip.top="'Click To Add Pending Tag'"
@@ -148,7 +148,7 @@
                       </div>
 
                       <div
-                        v-show="petition.editMode"
+                        v-show="petition.pendingTagEditMode"
                         class="input-group input-group-sm"
                         style="width: 73%"
                       >
@@ -168,7 +168,7 @@
                           <i class="fa fa-check" aria-hidden="true"></i>
                         </button>
                         <button
-                          @click="petition.editMode = false"
+                          @click="petition.pendingTagEditMode = false"
                           class="btn btn-danger btn-sm action-btn"
                           v-tooltip.top="'Cancel'"
                         >
@@ -372,7 +372,7 @@ export default {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
-        petition.editMode = false;
+        petition.pendingTagEditMode = false;
         petition.pending_tag = this.pending_tag;
         axios
           .post(

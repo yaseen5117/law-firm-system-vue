@@ -138,7 +138,7 @@
     <!-- End Counts Section -->
 
     <!-- ======= Features Section ======= -->
-    <section id="features" class="features section-bg">
+    <section id="features" class="features section-bg-grey">
       <div class="container" data-aos="fade-up">
         <div class="section-title" id="main_features">
           <h2>Features</h2>
@@ -297,9 +297,9 @@
     <!-- End Pricing Section -->
 
     <!-- ======= Testimonials Section ======= -->
-    <section class="testimonials section-bg">
+    <section id="testimonials" class="testimonials section-bg-grey">
       <div class="container" data-aos="fade-up">
-        <div class="section-title" id="testimonials">
+        <div class="section-title">
           <h2>Testimonials</h2>
           <p>
             Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex
@@ -410,7 +410,7 @@
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">
       <div class="container" data-aos="fade-up">
-        <div class="section-title" id="contact_us">
+        <div class="section-title">
           <h2>Contact</h2>
           <p>Umer Ijaz Gilani <small>(Advocate High Courts)</small></p>
           <p>Muhammed Alee Qureshi <small>(Advocate High Courts)</small></p>

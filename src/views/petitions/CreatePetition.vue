@@ -322,9 +322,13 @@ export default {
     this.getPetition();
     this.getLawyers();
   },
+  updated() {
+    document.title = this.petition
+      ? this.petition.case_no + " | " + this.page_title
+      : this.page_title;
+  },
   mounted() {
     document.getElementById("header");
-    document.title = this.page_title;
   },
   activated() {},
   methods: {

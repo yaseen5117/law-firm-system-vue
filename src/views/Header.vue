@@ -18,44 +18,19 @@
             >
           </li>
           <li v-show="!this.user">
-            <a
-              class="nav-link"
-              href="javascript:void(0)"
-              @click="scrollIntoView('about_us')"
-              >About Us</a
-            >
+            <a class="nav-link" href="#about">About Us</a>
           </li>
           <li v-show="!this.user">
-            <a
-              class="nav-link"
-              href="javascript:void(0)"
-              @click="scrollIntoView('main_features')"
-              >Features</a
-            >
+            <a class="nav-link" href="#features">Features</a>
           </li>
           <li v-show="!this.user">
-            <a
-              class="nav-link"
-              href="javascript:void(0)"
-              @click="scrollIntoView('pricing_plans')"
-              >Pricing</a
-            >
+            <a class="nav-link" href="#pricing">Pricing</a>
           </li>
           <li v-show="!this.user">
-            <a
-              class="nav-link"
-              href="javascript:void(0)"
-              @click="scrollIntoView('testimonials')"
-              >Testimonials</a
-            >
+            <a class="nav-link" href="#testimonials">Testimonials</a>
           </li>
           <li v-show="!this.user">
-            <a
-              class="nav-link"
-              href="javascript:void(0)"
-              @click="scrollIntoView('contact_us')"
-              >Contact Us</a
-            >
+            <a class="nav-link" href="#contact">Contact Us</a>
           </li>
           <li v-if="this.user && this.user.id">
             <router-link class="nav-link" to="/dashboard"
@@ -171,6 +146,17 @@ export default {
   },
 
   mounted() {
+    //Start nav bar buttons active
+    const links = document.querySelectorAll(".nav-link");
+    links.forEach((link) => {
+      link.addEventListener("click", function () {
+        links.forEach((e) => {
+          e.classList.remove("active");
+        });
+        this.classList.add("active");
+      });
+    }); //End nav bar buttons active
+
     document.querySelector(".mobile-nav-toggle").onclick = function () {
       document.querySelector("#navbar").classList.toggle("navbar-mobile");
     };
