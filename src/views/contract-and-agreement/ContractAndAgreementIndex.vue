@@ -56,77 +56,90 @@
                 </Transition>
               </div>
               <div class="col-md-12">
-                <div class="table-responsive">
-                  <table class="table table-striped" v-if="isLoaded">
-                    <thead>
-                      <tr>
-                        <!-- <th>Category</th> -->
-                        <th>Title</th>
-                        <th>Attachment</th>
-                        <th class="text-end">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr
-                        v-for="(
+
+                <div  class="row">
+                  <div
+                    class="col-sm-12 col-md-6 col-lg-6 col-12 d-flex align-self-stretch"
+                    v-for="(
                           contractAndAgreemnet, contract_and_agreemnet_index
                         ) in contractsAndAgreemnets"
                         :key="contract_and_agreemnet_index"
-                      >
-                        <!-- <td>
-                        <span v-if="contractAndAgreemnet.category">
-                          {{contractAndAgreemnet.category.title}}
-                        </span>                         
-                      </td> -->
-                        <td>{{ contractAndAgreemnet.title }}</td>
-                        <td>
-                          <InvoiceThumb
-                            v-show="contractAndAgreemnet.attachment"
-                            folder_name="contracts-and-agreements"
-                            :base_url="base_url"
-                            :invoice="contractAndAgreemnet"
-                          />
-                        </td>
-                        <td class="text-end">
-                          <router-link
-                            class="btn btn-sm btn-success action-btn"
-                            :to="{
-                              name: 'edit-contract-and_agreement',
-                              params: {
-                                contract_agreement_id: contractAndAgreemnet.id,
-                              },
-                            }"
-                            href="javascript:void"
-                            style="margin-left: 2px"
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="Edit"
-                          >
-                            Edit
-                          </router-link>
+                  >
+                    <div
+                      class="card listing-cards shadow-sm mb-4"
+                      style="width: 100%"
+                    >
+                      <div class="card-body" @click="goToDetails(contractAndAgreemnet.id)">
+                        <div class="row">
+                          <p class="card-title" style="margin-bottom: 0px">
+                            <strong
+                              >{{ contractAndAgreemnet.title }}</strong
+                            >
+                          </p>  
+                          
+                          <div class="col-md-12">
+                            <p class="card-text" v-html="contractAndAgreemnet.content > 20
+                                  ? contractAndAgreemnet.content.substring(0, 19) +
+                                    '...'
+                                  : contractAndAgreemnet.content">
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-footer">
+                        <div class="mt-auto">
+                          <div class="pull-right">
+                            <router-link
+                              style="margin-right: 2px"
+                              :to="{
+                                name: 'case-detail',
+                                params: { id: contractAndAgreemnet.id },
+                              }"
+                              class="btn btn-success btn-sm action-btn"
+                              role="button"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              title="View"
+                              >Read More
+                            </router-link>
+                            <router-link
+                              v-if="this.user.is_admin"
+                              style="margin-right: 2px"
+                              :to="{
+                                name: 'edit-petition',
+                                params: { id: contractAndAgreemnet.id },
+                              }"
+                              class="btn btn-primary btn-sm action-btn"
+                              role="button"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              title="Edit"
+                              v-on:click.stop
+                              >Edit
+                            </router-link>
+                            <router-link
+                              v-if="this.user.is_admin"
+                              style="margin-right: 2px"
+                              to="#"
+                              class="btn btn-danger btn-sm action-btn"
+                              role="button"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              title="Delete"
+                              >Delete</router-link
+                            >
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div v-if="contractsAndAgreemnets.length == 0" class="col-md-12">
+                    <p class="alert alert-warning">No Records found.</p>
+                  </div>
 
-                          <a
-                            class="btn btn-sm btn-danger action-btn"
-                            @click="
-                              deleteContactAndAgreement(
-                                $event,
-                                contractAndAgreemnet.id,
-                                contract_and_agreemnet_index
-                              )
-                            "
-                            href="javascript:void"
-                            style="margin-left: 2px"
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="Delete"
-                          >
-                            Delete
-                          </a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
                 </div>
+                
                 <div v-if="!isLoaded" class="col-md-12">
                   <p class="alert alert-warning">Loading....</p>
                 </div>
@@ -146,8 +159,10 @@ import PageHeader from "../shared/PageHeader.vue";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import InvoiceThumb from "../invoices/InvoiceThumb.vue";
+import { mapState } from "vuex";
 
 export default {
+  computed: mapState(["user"]),
   components: {
     PageHeader,
     InvoiceThumb,

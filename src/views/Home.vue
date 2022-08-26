@@ -199,98 +199,43 @@
         <div class="section-title" id="pricing_plans">
           <h2>Pricing</h2>
           <p>
-            Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex
-            aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos
-            quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
-            fugiat sit in iste officiis commodi quidem hic quas.
+            Choose Plan according to your needs.
           </p>
         </div>
 
         <div class="row">
           <div
-            class="col-lg-3 col-md-6"
+            class="col-lg-12 col-md-12"
             data-aos="fade-up"
             data-aos-delay="100"
           >
             <div class="box">
-              <h3>Free</h3>
-              <h4><sup>$</sup>0<span> / month</span></h4>
-              <ul>
-                <li>Aida dere</li>
-                <li>Nec feugiat nisl</li>
-                <li>Nulla at volutpat dola</li>
-                <li class="na">Pharetra massa</li>
-                <li class="na">Massa ultricies mi</li>
-              </ul>
-              <div class="btn-wrap">
-                <a href="#" class="btn-buy">Buy Now</a>
-              </div>
+
+              <table class="table  pricing_table">
+
+                <tr>
+                  <td></td>
+                  <td class="pricing_table_header_col">Free</td>
+                  <td class="pricing_table_header_col">Student</td>
+                  <td class="pricing_table_header_col">Individual Lawyer</td>
+                  <td class="pricing_table_header_col">Law Firm</td>
+                </tr>
+                
+                
+                <tr v-for="plan in this.plans_n_features" :key="plan.id">
+                  <td class="text-start" style="padding-left:20px">{{plan.feature_name}}</td>
+                  <td v-html="plan.free_plan"></td>
+                  <td v-html="plan.student_plan"></td>
+                  <td v-html="plan.individual_plan"></td>
+                  <td v-html="plan.lawfirm_plan"></td>
+                  
+                </tr>
+              </table>
             </div>
           </div>
 
-          <div
-            class="col-lg-3 col-md-6 mt-4 mt-md-0"
-            data-aos="fade-up"
-            data-aos-delay="200"
-          >
-            <div class="box featured">
-              <h3>Business</h3>
-              <h4><sup>$</sup>19<span> / month</span></h4>
-              <ul>
-                <li>Aida dere</li>
-                <li>Nec feugiat nisl</li>
-                <li>Nulla at volutpat dola</li>
-                <li>Pharetra massa</li>
-                <li class="na">Massa ultricies mi</li>
-              </ul>
-              <div class="btn-wrap">
-                <a href="#" class="btn-buy">Buy Now</a>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="col-lg-3 col-md-6 mt-4 mt-lg-0"
-            data-aos="fade-up"
-            data-aos-delay="300"
-          >
-            <div class="box">
-              <h3>Developer</h3>
-              <h4><sup>$</sup>29<span> / month</span></h4>
-              <ul>
-                <li>Aida dere</li>
-                <li>Nec feugiat nisl</li>
-                <li>Nulla at volutpat dola</li>
-                <li>Pharetra massa</li>
-                <li>Massa ultricies mi</li>
-              </ul>
-              <div class="btn-wrap">
-                <a href="#" class="btn-buy">Buy Now</a>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="col-lg-3 col-md-6 mt-4 mt-lg-0"
-            data-aos="fade-up"
-            data-aos-delay="400"
-          >
-            <div class="box">
-              <span class="advanced">Advanced</span>
-              <h3>Ultimate</h3>
-              <h4><sup>$</sup>49<span> / month</span></h4>
-              <ul>
-                <li>Aida dere</li>
-                <li>Nec feugiat nisl</li>
-                <li>Nulla at volutpat dola</li>
-                <li>Pharetra massa</li>
-                <li>Massa ultricies mi</li>
-              </ul>
-              <div class="btn-wrap">
-                <a href="#" class="btn-buy">Buy Now</a>
-              </div>
-            </div>
-          </div>
+          
+          
         </div>
       </div>
     </section>
@@ -567,7 +512,100 @@ export default {
         email: "",
         subject: "",
         message: "",
+        
       },
+      plans_n_features:[
+        {
+            id:0,
+            feature_name:"",
+            free_plan:"",
+            student_plan:"Rs. 5,000/quater per student",
+            individual_plan:"Rs. 5,000/month",
+            lawfirm_plan:"Rs. 10,000/month ",
+          },
+          {
+            id:1,
+            feature_name:"Calendar",
+            free_plan:"&#10004",
+            student_plan:"",
+            individual_plan:"&#10004",
+            lawfirm_plan:"&#10004",
+          },
+          {
+            id:2,
+            feature_name:"Case Files",
+            free_plan:"Up to 5 case files",
+            student_plan:"Access to 10 pre-uploaded case files",
+            individual_plan:"Up to 50 case files",
+            lawfirm_plan:"Unlimited case files",
+          },
+          {
+            id:3,
+            feature_name:"Frequently Asked Legal Propositions",
+            free_plan:"",
+            student_plan:"&#10004",
+            individual_plan:"",
+            lawfirm_plan:"&#10004",
+          },
+          {
+            id:4,
+            feature_name:"Sample Pleadings",
+            free_plan:"",
+            student_plan:"&#10004",
+            individual_plan:"&#10004",
+            lawfirm_plan:"&#10004",
+          },
+          {
+            id:5,
+            feature_name:"Sample Contracts",
+            free_plan:"",
+            student_plan:"&#10004",
+            individual_plan:"&#10004",
+            lawfirm_plan:"&#10004",
+          },
+          {
+            id:6,
+            feature_name:"Case Law Library",
+            free_plan:"",
+            student_plan:"",
+            individual_plan:"&#10004",
+            lawfirm_plan:"&#10004",
+          },
+          {
+            id:7,
+            feature_name:"Legal Opinions Module",
+            free_plan:"",
+            student_plan:"",
+            individual_plan:"",
+            lawfirm_plan:"&#10004",
+          },
+          {
+            id:8,
+            feature_name:"Accounts Module",
+            free_plan:"",
+            student_plan:"",
+            individual_plan:"",
+            lawfirm_plan:"&#10004",
+          },
+          {
+            id:9,
+            feature_name:"Client Consultation Module",
+            free_plan:"",
+            student_plan:"",
+            individual_plan:"",
+            lawfirm_plan:"&#10004",
+          },
+          {
+            id:10,
+            feature_name:"Separate Sub-Domain",
+            free_plan:"",
+            student_plan:"",
+            individual_plan:"",
+            lawfirm_plan:"&#10004",
+          }
+
+
+        ]
     };
   },
   validations() {
