@@ -27,7 +27,7 @@
             <a class="nav-link" href="#pricing">Pricing</a>
           </li>
           <li v-show="!this.user">
-            <a class="nav-link" href="#testimonials">Testimonials</a>
+            <a class="nav-link" href="#reviews">Reviews</a>
           </li>
           <li v-show="!this.user">
             <a class="nav-link" href="#contact">Contact Us</a>

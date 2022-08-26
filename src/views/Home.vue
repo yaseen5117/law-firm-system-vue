@@ -297,7 +297,7 @@
     <!-- End Pricing Section -->
 
     <!-- ======= Testimonials Section ======= -->
-    <section id="testimonials" class="testimonials section-bg-grey">
+    <section id="reviews" class="testimonials section-bg-grey">
       <div class="container" data-aos="fade-up">
         <div class="section-title">
           <h2>Reviews</h2>
