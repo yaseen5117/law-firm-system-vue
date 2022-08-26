@@ -481,6 +481,10 @@ section {
 }
 
 .section-bg {
+  /* background-color: #f9f8ff; */
+  background-color: white;
+}
+.section-bg-grey {
   background-color: #f9f8ff;
   /* background-color: white; */
 }

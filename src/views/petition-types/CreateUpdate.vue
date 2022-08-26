@@ -102,9 +102,13 @@ export default {
     this.getPetitionTypesData();
     this.getCourts();
   },
+  updated() {
+    document.title = this.petitionTypeData
+      ? this.petitionTypeData.title + " | " + this.page_title
+      : this.page_title;
+  },
   mounted() {
     document.getElementById("header");
-    document.title = this.page_title;
   },
   methods: {
     getCourts() {
