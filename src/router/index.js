@@ -472,16 +472,16 @@ const routes = [
     },
   },
   {
-    path: "/create-contract-and_agreement",
-    name: "create-contract-and_agreement",
+    path: "/create-contract-and-agreement",
+    name: "create-contract-and-agreement",
     component: ContractAndAgreementCreateUpdate,
     meta: {
       auth: true,
     },
   },
   {
-    path: "/contract-and_agreement/edit/:contract_agreement_id",
-    name: "edit-contract-and_agreement",
+    path: "/contract-and-agreement/edit/:contract_agreement_id",
+    name: "edit-contract-and-agreement",
     component: ContractAndAgreementCreateUpdate,
     meta: {
       auth: true,

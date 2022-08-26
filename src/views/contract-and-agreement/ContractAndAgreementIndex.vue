@@ -56,33 +56,39 @@
                 </Transition>
               </div>
               <div class="col-md-12">
-
-                <div  class="row">
+                <div class="row">
                   <div
                     class="col-sm-12 col-md-6 col-lg-6 col-12 d-flex align-self-stretch"
                     v-for="(
-                          contractAndAgreemnet, contract_and_agreemnet_index
-                        ) in contractsAndAgreemnets"
-                        :key="contract_and_agreemnet_index"
+                      contractAndAgreemnet, contract_and_agreemnet_index
+                    ) in contractsAndAgreemnets"
+                    :key="contract_and_agreemnet_index"
                   >
                     <div
                       class="card listing-cards shadow-sm mb-4"
                       style="width: 100%"
                     >
-                      <div class="card-body" @click="goToDetails(contractAndAgreemnet.id)">
+                      <div
+                        class="card-body"
+                        @click="goToDetails(contractAndAgreemnet.id)"
+                      >
                         <div class="row">
                           <p class="card-title" style="margin-bottom: 0px">
-                            <strong
-                              >{{ contractAndAgreemnet.title }}</strong
-                            >
-                          </p>  
-                          
+                            <strong>{{ contractAndAgreemnet.title }}</strong>
+                          </p>
+
                           <div class="col-md-12">
-                            <p class="card-text" v-html="contractAndAgreemnet.content > 20
-                                  ? contractAndAgreemnet.content.substring(0, 19) +
-                                    '...'
-                                  : contractAndAgreemnet.content">
-                            </p>
+                            <p
+                              class="card-text"
+                              v-html="
+                                contractAndAgreemnet.content > 20
+                                  ? contractAndAgreemnet.content.substring(
+                                      0,
+                                      19
+                                    ) + '...'
+                                  : contractAndAgreemnet.content
+                              "
+                            ></p>
                           </div>
                         </div>
                       </div>
@@ -92,8 +98,11 @@
                             <router-link
                               style="margin-right: 2px"
                               :to="{
-                                name: 'case-detail',
-                                params: { id: contractAndAgreemnet.id },
+                                name: 'edit-contract-and-agreement',
+                                params: {
+                                  contract_agreement_id:
+                                    contractAndAgreemnet.id,
+                                },
                               }"
                               class="btn btn-success btn-sm action-btn"
                               role="button"
@@ -106,8 +115,11 @@
                               v-if="this.user.is_admin"
                               style="margin-right: 2px"
                               :to="{
-                                name: 'edit-petition',
-                                params: { id: contractAndAgreemnet.id },
+                                name: 'edit-contract-and-agreement',
+                                params: {
+                                  contract_agreement_id:
+                                    contractAndAgreemnet.id,
+                                },
                               }"
                               class="btn btn-primary btn-sm action-btn"
                               role="button"
@@ -117,29 +129,34 @@
                               v-on:click.stop
                               >Edit
                             </router-link>
-                            <router-link
+                            <a
                               v-if="this.user.is_admin"
                               style="margin-right: 2px"
-                              to="#"
+                              @click="
+                                deleteContactAndAgreement(
+                                  $event,
+                                  contractAndAgreemnet.id,
+                                  contract_and_agreemnet_index
+                                )
+                              "
                               class="btn btn-danger btn-sm action-btn"
-                              role="button"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              title="Delete"
-                              >Delete</router-link
+                              href="javascript:void(0);"
+                              v-tooltip.top="Delete"
+                              >Delete</a
                             >
-                            
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div v-if="contractsAndAgreemnets.length == 0" class="col-md-12">
+                  <div
+                    v-if="contractsAndAgreemnets.length == 0 && isLoaded"
+                    class="col-md-12"
+                  >
                     <p class="alert alert-warning">No Records found.</p>
                   </div>
-
                 </div>
-                
+
                 <div v-if="!isLoaded" class="col-md-12">
                   <p class="alert alert-warning">Loading....</p>
                 </div>
@@ -177,7 +194,7 @@ export default {
       categories: [],
       saving: false,
       route_obj: {
-        name: "create-contract-and_agreement",
+        name: "create-contract-and-agreement",
       },
       header_button: true,
       header_button_text: "Create Sample Contract",
