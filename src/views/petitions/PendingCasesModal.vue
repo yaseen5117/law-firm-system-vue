@@ -149,7 +149,7 @@ export default {
 
       var printContents = document.getElementById("modal").innerHTML;
       var originalContents = document.body.innerHTML;
-      document.body.innerHTML = "sssss" + printContents;
+      document.body.innerHTML = printContents;
 
       window.document.close(); // necessary for IE >= 10
       window.focus(); // necessary for IE >= 10*/
