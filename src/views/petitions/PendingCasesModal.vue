@@ -1,10 +1,10 @@
 <template>
   <Dialog
-    modal="true"
-    dismissableMask="true"
+    modal:true
+    dismissableMask:true
     header="Pending Cases"
-    closable="false"
-    closeOnEscape="true"
+    closable:false
+    closeOnEscape: true
     @hide="closePrintPendingCasesModal()"
     v-model:visible="pendingCaseModal"
     :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
@@ -119,6 +119,9 @@ export default {
           console.log(error);
         });
     },
+    afterCancle() {
+      alert("ssss");
+    },
     printPendingCases() {
       // var mywindow = window.open("", "PRINT", "height=780,width=1920");
       // mywindow.document.write(
@@ -128,7 +131,7 @@ export default {
 
       // mywindow.document.write("<h1>" + document.title + "</h1>");
       // mywindow.document.write(
-      //   "<div class='row' id='modal'><div class='table-responsive'><div class='col-lg-12 col-md-12 col-sm-12'><table class='table table-bordered'>" +
+      //   "<div class='row' id='modal'><div class='table-responsive'><div class='col-lg-12 col-md-12 col-sm-12'><table class='table table-bordered' style='border-style: solid;'>" +
       //     document.getElementById("modal").innerHTML +
       //     "</table></div></div></div>"
       // );
@@ -150,23 +153,14 @@ export default {
       var printContents = document.getElementById("modal").innerHTML;
       var originalContents = document.body.innerHTML;
       document.body.innerHTML = printContents;
-
-      window.document.close(); // necessary for IE >= 10
-      window.focus(); // necessary for IE >= 10*/
       window.print();
-
       document.body.innerHTML = originalContents;
-      window.document.close();
+      setTimeout(1000);
     },
   },
 };
 </script>
 
 <style>
-.abc {
-  table-layout: fixed;
-  width: 100%;
-  border-collapse: collapse;
-  border: 3px solid purple;
-}
+ 
 </style>
