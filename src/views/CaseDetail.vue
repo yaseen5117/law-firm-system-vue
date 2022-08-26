@@ -58,9 +58,6 @@
                   params: { id: petition.id },
                 }"
                 role="button"
-                data-bs-toggle="tooltip"
-                data-bs-placement="top"
-                title="View"
                 ><i class="fa fa-edit"></i> Edit Petition</router-link
               >
               <a
@@ -171,9 +168,7 @@
                         @click="petition_detail.editMode = true"
                         href="javascript:void"
                         style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Edit"
+                        v-tooltip.top="'Edit'"
                       >
                         Edit
                         <!-- <i class="fa fa-edit"></i> -->
@@ -184,9 +179,7 @@
                         @click="editPetitionIndex(petition_detail)"
                         href="javascript:void"
                         style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Update"
+                        v-tooltip.top="'Update'"
                       >
                         Update
                         <!-- <i class="fa fa-save"></i> -->
@@ -198,9 +191,7 @@
                         class="btn btn-sm btn-info action-btn"
                         href="javascript:void"
                         style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Cancel"
+                        v-tooltip.top="'Cancel'"
                       >
                         Cancel
                         <!-- <i class="fa fa-remove"></i> -->
@@ -210,13 +201,15 @@
                         class="btn btn-sm btn-danger action-btn"
                         v-show="!petition_detail.editMode"
                         @click="
-                          deletePetitionIndex(petition_detail.id, petitionIndex)
+                          deletePetitionIndex(
+                            $event,
+                            petition_detail.id,
+                            petitionIndex
+                          )
                         "
                         href="javascript:void"
                         style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Delete"
+                        v-tooltip.top="'Click To Change/Remove'"
                       >
                         Delete
                         <!-- <i class="fa fa-trash-o"></i> -->
@@ -358,7 +351,7 @@ export default {
     confirmToDelete(event) {
       this.$confirm.require({
         target: event.currentTarget,
-        message: "Do you want to Remove Pending Tag?",
+        message: "Do you want to Remove/Change Pending Tag?",
         icon: "pi pi-exclamation-triangle",
         acceptLabel: "Delete",
         acceptClass: "p-button-danger",
@@ -567,43 +560,57 @@ export default {
           );
       }
     },
-    deletePetitionIndex(petitionId, petitionIndex) {
-      if (confirm("Do you really want to delete?")) {
-        var headers = {
-          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+    deletePetitionIndex(event, petitionId, petitionIndex) {
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: "Do you want to Delete?",
+        icon: "pi pi-exclamation-triangle",
+        acceptLabel: "Delete",
+        acceptClass: "p-button-danger",
+        rejectClass: "p-button-primary",
+        rejectLabel: "Cancel",
+        accept: () => {
+          var headers = {
+            Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+          };
 
-        axios
-          .delete(this.base_url + "/api/petitions_index/" + petitionId, {
-            headers,
-          })
-          .then(
-            (response) => {
-              if (response.status === 200) {
+          axios
+            .delete(this.base_url + "/api/petitions_index/" + petitionId, {
+              headers,
+            })
+            .then(
+              (response) => {
+                if (response.status === 200) {
+                  this.$notify({
+                    type: "success",
+                    title: "Success",
+                    text: "Deleted Successfully!",
+                  });
+                  //this.getCaseDetails()
+                  this.petition_details.splice(petitionIndex, 1); //removing record from list/index after deleting record from DB
+                }
+              },
+              (error) => {
+                console.log(error.response.data);
                 this.$notify({
-                  type: "success",
-                  title: "Success",
-                  text: "Deleted Successfully!",
+                  type: "error",
+                  title: "Something went wrong!",
+                  text: error.response.data.message,
                 });
-                //this.getCaseDetails()
-                this.petition_details.splice(petitionIndex, 1); //removing record from list/index after deleting record from DB
               }
-            },
-            (error) => {
-              console.log(error.response.data);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error.response.data.message,
-              });
-            }
-          );
-      }
+            );
+        },
+        reject: () => {
+          this.$confirm.close();
+        },
+      });
     },
+  },
+  updated() {
+    document.title = this.petition.petition_standard_title + " | Petition";
   },
   mounted() {
     console.log("Case Details Component Mounted");
-    document.title = "Petitions";
   },
 };
 </script>

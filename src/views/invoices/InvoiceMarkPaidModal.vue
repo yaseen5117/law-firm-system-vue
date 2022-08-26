@@ -17,6 +17,36 @@
       >
         <div class="row">
           <input type="hidden" v-model="invoice_payment.id" />
+          <div class="col-lg-12 col-md-12 col-lg-12">
+            <div class="form-group mt-3 text-end">
+              <div class="col-lg-12 col-md-12 col-sm-12 add_remove_btn">
+                <button
+                  type="button"
+                  class="btn action-btn text-success"
+                  @click="add(index)"
+                  v-show="index == invoice.invoice_payments.length - 1"
+                  v-tooltip.top="'Add Another Payment'"
+                >
+                  <i
+                    style="font-size: 24px"
+                    class="fa fa-plus-circle"
+                    aria-hidden="true"
+                  ></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn action-btn text-danger"
+                  @click="remove(index, invoice_payment.id)"
+                  v-show="
+                    index || (!index && invoice.invoice_payments.length > 1)
+                  "
+                  v-tooltip.top="'Remove Payment'"
+                >
+                  <i class="fa fa-minus-circle" style="font-size: 24px"></i>
+                </button>
+              </div>
+            </div>
+          </div>
           <div class="col-lg-6 col-md-6 col-sm-6">
             <label>
               Paid Date
@@ -81,31 +111,12 @@
               </div>
               <div class="col-lg-12 col-md-12 col-sm-12" style="float: right">
                 <button
-                  type="button"
-                  class="btn btn-danger btn-sm"
-                  @click="remove(index, invoice_payment.id)"
-                  v-show="
-                    index || (!index && invoice.invoice_payments.length > 1)
-                  "
-                >
-                  Remove
-                </button>
-                <button
-                  type="button"
-                  style="margin-left: 5px"
-                  class="btn btn-warning btn-sm"
-                  @click="add(index)"
-                  v-show="index == invoice.invoice_payments.length - 1"
-                >
-                  Add Another Payment
-                </button>
-                <button
                   style="margin-left: 5px"
                   class="btn btn-success btn-sm"
                   :disabled="saving"
                   v-show="index == invoice.invoice_payments.length - 1"
                 >
-                  Mark as Paid
+                  Save Payment
                 </button>
                 <button
                   type="button"
@@ -138,7 +149,7 @@ import moment from "moment";
 
 export default {
   emits: ["afterSubmit", "closeModal"],
-  props: ["title", "invoice", "excute", "invoice_id"],
+  props: ["title", "invoice", "excute", "invoiceable_id", "invoiceable_type"],
   components: {
     FileUpload,
     InvoiceThumb,
@@ -212,14 +223,14 @@ export default {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         },
       };
-      //this.invoice.invoice_payments.append("invoice_id", this.invoice_id);
       if (true) {
         axios
           .post(
             this.base_url + "/api/invoice/mark_as_paid",
             {
               payments: this.invoice.invoice_payments,
-              invoice_id: this.invoice_id,
+              invoiceable_id: this.invoiceable_id,
+              invoiceable_type: this.invoiceable_type,
             },
             config
           )
@@ -253,8 +264,18 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.action-btn {
+  padding: 1px 2px;
+  font-size: 0.875rem;
+  border-radius: 0.2rem;
+  font-size: 13px;
+  font-weight: 700;
+}
 label {
   display: inline !important;
+}
+.add_remove_btn {
+  float: right;
 }
 </style>

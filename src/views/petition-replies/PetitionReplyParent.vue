@@ -1,4 +1,5 @@
 <template>
+  <ConfirmPopup></ConfirmPopup>
   <main id="main">
     <page-header title="Petition Replies Parent" />
     <nav-components activeNavPill="reply" :petition_id="petition.id" />
@@ -87,6 +88,7 @@
                         v-show="!petition_reply_parent.editMode"
                         @click="
                           deletePetitionReply(
+                            $event,
                             petition_reply_parent.id,
                             petitionReplyParentIndex
                           )
@@ -150,9 +152,10 @@ import NavComponents from "../Cases/NavComponents.vue";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { mapState } from "vuex";
+import ConfirmPopup from "primevue/confirmpopup";
 
 export default {
-  components: { PageHeader, NavComponents },
+  components: { PageHeader, NavComponents, ConfirmPopup },
   computed: mapState(["user"]),
   setup() {
     return {
@@ -226,39 +229,57 @@ export default {
           });
         });
     },
-    deletePetitionReply(petitionId, petitionReplyParentIndex) {
-      if (confirm("Do you really want to delete?")) {
-        var headers = {
-          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+    deletePetitionReply(event, petitionId, petitionReplyParentIndex) {
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: "Do you want to Delete?",
+        icon: "pi pi-exclamation-triangle",
+        acceptLabel: "Delete",
+        acceptClass: "p-button-danger",
+        rejectClass: "p-button-primary",
+        rejectLabel: "Cancel",
+        accept: () => {
+          var headers = {
+            Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+          };
 
-        axios
-          .delete(this.base_url + "/api/petition_reply_parents/" + petitionId, {
-            headers,
-          })
-          .then(
-            (response) => {
-              console.log(response);
-              if (response.status === 200) {
-                this.$notify({
-                  type: "success",
-                  title: "Success",
-                  text: "Deleted Successfully!",
-                });
-                //this.getCaseDetails()
-                this.petition_reply_parents.splice(petitionReplyParentIndex, 1); //removing record from list/index after deleting record from DB
+          axios
+            .delete(
+              this.base_url + "/api/petition_reply_parents/" + petitionId,
+              {
+                headers,
               }
-            },
-            (error) => {
-              console.log(error.response.data);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error.response.data.message,
-              });
-            }
-          );
-      }
+            )
+            .then(
+              (response) => {
+                console.log(response);
+                if (response.status === 200) {
+                  this.$notify({
+                    type: "success",
+                    title: "Success",
+                    text: "Deleted Successfully!",
+                  });
+                  //this.getCaseDetails()
+                  this.petition_reply_parents.splice(
+                    petitionReplyParentIndex,
+                    1
+                  ); //removing record from list/index after deleting record from DB
+                }
+              },
+              (error) => {
+                console.log(error.response.data);
+                this.$notify({
+                  type: "error",
+                  title: "Something went wrong!",
+                  text: error.response.data.message,
+                });
+              }
+            );
+        },
+        reject: () => {
+          this.$confirm.close();
+        },
+      });
     },
     editPetitionReplyParent(petitionReplyParentToUpdate) {
       if (true) {

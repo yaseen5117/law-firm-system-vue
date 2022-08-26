@@ -37,7 +37,7 @@
           id="file"
           class="form-control"
           @change="onChange"
-          multiple
+          :multiple="multiple_or_single ? multiple : ''"
           :class="compactInlineView ? 'width-p' : ''"
           ref="fileupload"
         />
@@ -75,6 +75,7 @@ export default {
     "upload_site_image",
     "image_type",
     "petition_id",
+    "multiple_or_single",
   ],
   setup() {
     return {

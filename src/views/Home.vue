@@ -58,6 +58,7 @@
           <div
             class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content"
             data-aos="fade-right"
+            id="about_us"
           >
             <h3>ABOUT US</h3>
             <p class="fst-italic">
@@ -78,7 +79,7 @@
             </ul>
             <a
               href="javascript:void(0)"
-              @click="scrollIntoView('features')"
+              @click="scrollIntoView('main_features')"
               class="read-more"
               >Read More <i class="bi bi-long-arrow-right"></i
             ></a>
@@ -137,9 +138,9 @@
     <!-- End Counts Section -->
 
     <!-- ======= Features Section ======= -->
-    <section id="features" class="features">
+    <section id="features" class="features section-bg">
       <div class="container" data-aos="fade-up">
-        <div class="section-title">
+        <div class="section-title" id="main_features">
           <h2>Features</h2>
           <p>Our Main Features are:</p>
         </div>
@@ -190,15 +191,13 @@
     </section>
     <!-- End Features Section -->
 
-    <!-- ======= Testimonials Section ======= -->
-    <section
-      style="display: none"
-      id="testimonials"
-      class="testimonials section-bg"
-    >
+    <!-- ======= Portfolio Section ======= -->
+
+    <!-- ======= Pricing Section ======= -->
+    <section id="pricing" class="pricing">
       <div class="container" data-aos="fade-up">
-        <div class="section-title">
-          <h2>Testimonials</h2>
+        <div class="section-title" id="pricing_plans">
+          <h2>Pricing</h2>
           <p>
             Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex
             aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos
@@ -207,6 +206,108 @@
           </p>
         </div>
 
+        <div class="row">
+          <div
+            class="col-lg-3 col-md-6"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <div class="box">
+              <h3>Free</h3>
+              <h4><sup>$</sup>0<span> / month</span></h4>
+              <ul>
+                <li>Aida dere</li>
+                <li>Nec feugiat nisl</li>
+                <li>Nulla at volutpat dola</li>
+                <li class="na">Pharetra massa</li>
+                <li class="na">Massa ultricies mi</li>
+              </ul>
+              <div class="btn-wrap">
+                <a href="#" class="btn-buy">Buy Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="col-lg-3 col-md-6 mt-4 mt-md-0"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <div class="box featured">
+              <h3>Business</h3>
+              <h4><sup>$</sup>19<span> / month</span></h4>
+              <ul>
+                <li>Aida dere</li>
+                <li>Nec feugiat nisl</li>
+                <li>Nulla at volutpat dola</li>
+                <li>Pharetra massa</li>
+                <li class="na">Massa ultricies mi</li>
+              </ul>
+              <div class="btn-wrap">
+                <a href="#" class="btn-buy">Buy Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="col-lg-3 col-md-6 mt-4 mt-lg-0"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
+            <div class="box">
+              <h3>Developer</h3>
+              <h4><sup>$</sup>29<span> / month</span></h4>
+              <ul>
+                <li>Aida dere</li>
+                <li>Nec feugiat nisl</li>
+                <li>Nulla at volutpat dola</li>
+                <li>Pharetra massa</li>
+                <li>Massa ultricies mi</li>
+              </ul>
+              <div class="btn-wrap">
+                <a href="#" class="btn-buy">Buy Now</a>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="col-lg-3 col-md-6 mt-4 mt-lg-0"
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
+            <div class="box">
+              <span class="advanced">Advanced</span>
+              <h3>Ultimate</h3>
+              <h4><sup>$</sup>49<span> / month</span></h4>
+              <ul>
+                <li>Aida dere</li>
+                <li>Nec feugiat nisl</li>
+                <li>Nulla at volutpat dola</li>
+                <li>Pharetra massa</li>
+                <li>Massa ultricies mi</li>
+              </ul>
+              <div class="btn-wrap">
+                <a href="#" class="btn-buy">Buy Now</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Pricing Section -->
+
+    <!-- ======= Testimonials Section ======= -->
+    <section class="testimonials section-bg">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title" id="testimonials">
+          <h2>Testimonials</h2>
+          <p>
+            Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex
+            aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos
+            quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
+            fugiat sit in iste officiis commodi quidem hic quas.
+          </p>
+        </div>
         <div
           class="testimonials-slider swiper"
           data-aos="fade-up"
@@ -295,24 +396,6 @@
             </div>
             <!-- End testimonial item -->
 
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Quis quorum aliqua sint quem legam fore sunt eram irure aliqua
-                  veniam tempor noster veniam enim culpa labore duis sunt culpa
-                  nulla illum cillum fugiat legam esse veniam culpa.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img
-                  src="assets/img/testimonials/testimonials-5.jpg"
-                  class="testimonial-img"
-                  alt=""
-                />
-                <h3>John Larson</h3>
-                <h4>Entrepreneur</h4>
-              </div>
-            </div>
             <!-- End testimonial item -->
           </div>
           <div class="swiper-pagination"></div>
@@ -321,18 +404,13 @@
     </section>
     <!-- End Testimonials Section -->
 
-    <!-- ======= Portfolio Section ======= -->
-
-    <!-- ======= Pricing Section ======= -->
-    <!-- End Pricing Section -->
-
     <!-- ======= Frequently Asked Questions Section ======= -->
     <!-- End Frequently Asked Questions Section -->
 
     <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact section-bg">
+    <section id="contact" class="contact">
       <div class="container" data-aos="fade-up">
-        <div class="section-title">
+        <div class="section-title" id="contact_us">
           <h2>Contact</h2>
           <p>Umer Ijaz Gilani <small>(Advocate High Courts)</small></p>
           <p>Muhammed Alee Qureshi <small>(Advocate High Courts)</small></p>
@@ -473,6 +551,7 @@ import { required, email } from "@vuelidate/validators";
 
 export default {
   name: "Home",
+  components: {},
   computed: mapState(["user", "globalGeneralSetting"]),
   setup() {
     return {
@@ -503,6 +582,34 @@ export default {
   mounted() {
     document.getElementById("header");
     document.title = "Home";
+    /**
+     * Testimonials slider
+     */
+    new Swiper(".testimonials-slider", {
+      speed: 600,
+      loop: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      slidesPerView: "auto",
+      pagination: {
+        el: ".swiper-pagination",
+        type: "bullets",
+        clickable: true,
+      },
+      breakpoints: {
+        320: {
+          slidesPerView: 1,
+          spaceBetween: 40,
+        },
+
+        1200: {
+          slidesPerView: 3,
+          spaceBetween: 40,
+        },
+      },
+    });
   },
   methods: {
     scrollIntoView(id) {

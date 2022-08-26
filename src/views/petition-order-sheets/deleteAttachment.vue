@@ -1,17 +1,18 @@
 <template>
+  <ConfirmPopup></ConfirmPopup>
   <button
     v-if="showDeleteBtn"
     class="btn btn-sm btn-danger"
     data-bs-toggle="tooltip"
     data-bs-placement="top"
     title="Delete"
-    @click="deleteAll()"
+    @click="deleteAll($event)"
   >
     Delete Selected
   </button>
   <table class="table table-bordered">
     <thead>
-      <th>
+      <th v-if="order_sheet.attachments.length > 0">
         <input
           class="margin-left-checkbox"
           type="checkbox"
@@ -24,7 +25,7 @@
     </thead>
     <tbody>
       <tr v-for="attachment in order_sheet.attachments" :key="attachment">
-        <td>
+        <td v-if="order_sheet.attachments.length > 0">
           <div class="checkbox">
             <input
               type="checkbox"
@@ -81,42 +82,57 @@ export default {
       }
     },
     //delete all selected
-    deleteAll() {
-      if (confirm("Do you really want to delete?")) {
-        var headers = {
-          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+    deleteAll(event) {
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: "Do you want to Delete?",
+        icon: "pi pi-exclamation-triangle",
+        acceptLabel: "Delete",
+        acceptClass: "p-button-danger",
+        rejectClass: "p-button-primary",
+        rejectLabel: "Cancel",
+        accept: () => {
+          var headers = {
+            Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+          };
 
-        axios
-          .post(
-            this.base_url + "/api/delete_selected",
-            { id: this.selected },
-            {
-              headers,
-            }
-          )
-          .then(
-            (response) => {
-              if (response.status === 200) {
-                this.$notify({
-                  type: "success",
-                  title: "Success",
-                  text: "Deleted Successfully!",
-                });
-                this.showDeleteBtn = false;
-                this.$emit("afterDelete", "Reloading the Data of attachments");
+          axios
+            .post(
+              this.base_url + "/api/delete_selected",
+              { id: this.selected },
+              {
+                headers,
               }
-            },
-            (error) => {
-              console.log(error.response.data);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error.response.data.message,
-              });
-            }
-          );
-      }
+            )
+            .then(
+              (response) => {
+                if (response.status === 200) {
+                  this.$notify({
+                    type: "success",
+                    title: "Success",
+                    text: "Deleted Successfully!",
+                  });
+                  this.showDeleteBtn = false;
+                  this.$emit(
+                    "afterDelete",
+                    "Reloading the Data of attachments"
+                  );
+                }
+              },
+              (error) => {
+                console.log(error.response.data);
+                this.$notify({
+                  type: "error",
+                  title: "Something went wrong!",
+                  text: error.response.data.message,
+                });
+              }
+            );
+        },
+        reject: () => {
+          this.$confirm.close();
+        },
+      });
     },
     updateCheckall: function () {
       if (this.order_sheet.attachments.length == this.selected.length) {

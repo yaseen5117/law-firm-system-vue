@@ -1,4 +1,5 @@
 <template>
+  <ConfirmPopup />
   <BlockUI :blocked="!isLoaded" :fullScreen="true">
     <main id="main">
       <page-header
@@ -108,6 +109,7 @@
                             class="btn btn-sm btn-danger action-btn"
                             @click="
                               deleteContactAndAgreement(
+                                $event,
                                 contractAndAgreemnet.id,
                                 contract_and_agreemnet_index
                               )
@@ -212,47 +214,60 @@ export default {
         });
     },
     deleteContactAndAgreement(
+      event,
       contract_agreeent_id,
       contract_and_agreemnet_index
     ) {
-      if (confirm("Do you really want to delmete?")) {
-        var headers = {
-          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: "Do you want to Delete?",
+        icon: "pi pi-exclamation-triangle",
+        acceptLabel: "Delete",
+        acceptClass: "p-button-danger",
+        rejectClass: "p-button-primary",
+        rejectLabel: "Cancel",
+        accept: () => {
+          var headers = {
+            Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+          };
 
-        axios
-          .delete(
-            this.base_url +
-              "/api/contracts_and_agreements/" +
-              contract_agreeent_id,
-            {
-              headers,
-            }
-          )
-          .then(
-            (response) => {
-              if (response.status === 200) {
-                this.$notify({
-                  type: "success",
-                  title: "Success",
-                  text: "Deleted Successfully!",
-                });
-                this.contractsAndAgreemnets.splice(
-                  contract_and_agreemnet_index,
-                  1
-                ); //removing record from list/index after deleting record from DB
+          axios
+            .delete(
+              this.base_url +
+                "/api/contracts_and_agreements/" +
+                contract_agreeent_id,
+              {
+                headers,
               }
-            },
-            (error) => {
-              console.log(error.response.data.error);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error.response.data.message,
-              });
-            }
-          );
-      }
+            )
+            .then(
+              (response) => {
+                if (response.status === 200) {
+                  this.$notify({
+                    type: "success",
+                    title: "Success",
+                    text: "Deleted Successfully!",
+                  });
+                  this.contractsAndAgreemnets.splice(
+                    contract_and_agreemnet_index,
+                    1
+                  ); //removing record from list/index after deleting record from DB
+                }
+              },
+              (error) => {
+                console.log(error.response.data.error);
+                this.$notify({
+                  type: "error",
+                  title: "Something went wrong!",
+                  text: error.response.data.message,
+                });
+              }
+            );
+        },
+        reject: () => {
+          this.$confirm.close();
+        },
+      });
     },
     getContractCategories() {
       if (true) {

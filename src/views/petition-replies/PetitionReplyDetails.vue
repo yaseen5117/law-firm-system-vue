@@ -1,4 +1,5 @@
 <template>
+  <ConfirmPopup></ConfirmPopup>
   <main id="main">
     <!-- ======= Breadcrumbs ======= -->
     <page-header
@@ -159,13 +160,15 @@
                       data-bs-toggle="tooltip"
                       data-bs-placement="top"
                       title="Delete"
-                      @click="deleteAll()"
+                      @click="deleteAll($event)"
                     >
                       Delete Selected
                     </button>
                     <table class="table table-bordered">
                       <thead>
-                        <th>
+                        <th
+                          v-if="petition_reply_details.attachments.length > 0"
+                        >
                           <input
                             class="margin-left-checkbox"
                             type="checkbox"
@@ -186,7 +189,9 @@
                           ) in petition_reply_details.attachments"
                           :key="attachment"
                         >
-                          <td>
+                          <td
+                            v-if="petition_reply_details.attachments.length > 0"
+                          >
                             <div class="checkbox">
                               <input
                                 type="checkbox"
@@ -284,6 +289,7 @@
                               v-show="!attachment.editMode"
                               @click="
                                 deletePetitionReplyAttachment(
+                                  $event,
                                   attachment.id,
                                   attachmentReplyIndex
                                 )
@@ -478,41 +484,53 @@ export default {
           );
       }
     },
-    deletePetitionReplyAttachment(attachmentId, attachmentReplyIndex) {
-      if (confirm("Do you really want to delete?")) {
-        var headers = {
-          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+    deletePetitionReplyAttachment(event, attachmentId, attachmentReplyIndex) {
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: "Do you want to Delete?",
+        icon: "pi pi-exclamation-triangle",
+        acceptLabel: "Delete",
+        acceptClass: "p-button-danger",
+        rejectClass: "p-button-primary",
+        rejectLabel: "Cancel",
+        accept: () => {
+          var headers = {
+            Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+          };
 
-        axios
-          .delete(this.base_url + "/api/attachments/" + attachmentId, {
-            headers,
-          })
-          .then(
-            (response) => {
-              if (response.status === 200) {
+          axios
+            .delete(this.base_url + "/api/attachments/" + attachmentId, {
+              headers,
+            })
+            .then(
+              (response) => {
+                if (response.status === 200) {
+                  this.$notify({
+                    type: "success",
+                    title: "Success",
+                    text: "Deleted Successfully!",
+                  });
+                  //this.getPetitionReplyDetails()
+                  this.petition_reply_details.attachments.splice(
+                    attachmentReplyIndex,
+                    1
+                  ); //removing record from list/index after deleting record from DB
+                }
+              },
+              (error) => {
+                console.log(error.response.data);
                 this.$notify({
-                  type: "success",
-                  title: "Success",
-                  text: "Deleted Successfully!",
+                  type: "error",
+                  title: "Something went wrong!",
+                  text: error.response.data.message,
                 });
-                //this.getPetitionReplyDetails()
-                this.petition_reply_details.attachments.splice(
-                  attachmentReplyIndex,
-                  1
-                ); //removing record from list/index after deleting record from DB
               }
-            },
-            (error) => {
-              console.log(error.response.data);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error.response.data.message,
-              });
-            }
-          );
-      }
+            );
+        },
+        reject: () => {
+          this.$confirm.close();
+        },
+      });
     },
     //select all to delete all
     selectAllToDelete() {
@@ -539,41 +557,53 @@ export default {
       }
     },
     deleteAll() {
-      if (confirm("Do you really want to delete?")) {
-        var headers = {
-          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: "Do you want to Delete?",
+        icon: "pi pi-exclamation-triangle",
+        acceptLabel: "Delete",
+        acceptClass: "p-button-danger",
+        rejectClass: "p-button-primary",
+        rejectLabel: "Cancel",
+        accept: () => {
+          var headers = {
+            Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+          };
 
-        axios
-          .post(
-            this.base_url + "/api/delete_selected",
-            { id: this.selected },
-            {
-              headers,
-            }
-          )
-          .then(
-            (response) => {
-              if (response.status === 200) {
-                this.$notify({
-                  type: "success",
-                  title: "Success",
-                  text: "Deleted Successfully!",
-                });
-                this.showDeleteBtn = false;
-                this.getPetitionReplyDetails(); //Reload all records from DB
+          axios
+            .post(
+              this.base_url + "/api/delete_selected",
+              { id: this.selected },
+              {
+                headers,
               }
-            },
-            (error) => {
-              console.log(error.response.data);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error.response.data.message,
-              });
-            }
-          );
-      }
+            )
+            .then(
+              (response) => {
+                if (response.status === 200) {
+                  this.$notify({
+                    type: "success",
+                    title: "Success",
+                    text: "Deleted Successfully!",
+                  });
+                  this.showDeleteBtn = false;
+                  this.getPetitionReplyDetails(); //Reload all records from DB
+                }
+              },
+              (error) => {
+                console.log(error.response.data);
+                this.$notify({
+                  type: "error",
+                  title: "Something went wrong!",
+                  text: error.response.data.message,
+                });
+              }
+            );
+        },
+        reject: () => {
+          this.$confirm.close();
+        },
+      });
     },
   },
 };

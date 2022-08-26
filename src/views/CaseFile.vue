@@ -89,6 +89,11 @@
                         type="button"
                         class="btn btn-warning btn-sm mr-md-2"
                         style="margin-left: 2px"
+                        v-tooltip.top="
+                          filters.archived
+                            ? 'Show Active Cases'
+                            : 'Show Archived Cases'
+                        "
                         @click="filters.archived = !filters.archived"
                       >
                         {{ filters.archived ? "Active Cases" : "Archived" }}
@@ -225,9 +230,7 @@
                               }"
                               class="btn btn-success btn-sm action-btn"
                               role="button"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              title="View"
+                              v-tooltip.top="'View Case'"
                               >View
                             </router-link>
                             <router-link
@@ -239,9 +242,7 @@
                               }"
                               class="btn btn-primary btn-sm action-btn"
                               role="button"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              title="Edit"
+                              v-tooltip.top="'Edit Case'"
                               v-on:click.stop
                               >Edit
                             </router-link>
@@ -251,9 +252,7 @@
                               to="#"
                               class="btn btn-info btn-sm action-btn"
                               role="button"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              title="Alert"
+                              v-tooltip.top="'Alert'"
                               >Alert</router-link
                             >
                             <button
@@ -262,7 +261,11 @@
                               "
                               style="margin-right: 2px"
                               class="btn btn-warning btn-sm action-btn"
-                              title="Archive Case"
+                              v-tooltip.top="
+                                !petition.archived
+                                  ? 'Add to Archive'
+                                  : 'Remove From Archive'
+                              "
                             >
                               {{ !petition.archived ? "Archive" : "Unarchive" }}
                             </button>
@@ -528,10 +531,7 @@ export default {
 };
 </script>
 
-<style>
-label {
-  font-size: 14px;
-}
+<style scoped>
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
   label {
@@ -540,5 +540,8 @@ label {
 }
 .margin_left {
   margin-left: 1px;
+}
+label {
+  font-size: 14px;
 }
 </style>
