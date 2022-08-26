@@ -58,6 +58,7 @@
           <div
             class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content"
             data-aos="fade-right"
+            id="about_us"
           >
             <h3>ABOUT US</h3>
             <p class="fst-italic">
@@ -78,7 +79,7 @@
             </ul>
             <a
               href="javascript:void(0)"
-              @click="scrollIntoView('features')"
+              @click="scrollIntoView('main_features')"
               class="read-more"
               >Read More <i class="bi bi-long-arrow-right"></i
             ></a>
@@ -137,9 +138,9 @@
     <!-- End Counts Section -->
 
     <!-- ======= Features Section ======= -->
-    <section id="features" class="features">
+    <section id="features" class="features section-bg">
       <div class="container" data-aos="fade-up">
-        <div class="section-title">
+        <div class="section-title" id="main_features">
           <h2>Features</h2>
           <p>Our Main Features are:</p>
         </div>
@@ -190,14 +191,60 @@
     </section>
     <!-- End Features Section -->
 
-    <!-- ======= Testimonials Section ======= -->
-    <section
-      style="display: none"
-      id="testimonials"
-      class="testimonials section-bg"
-    >
+    <!-- ======= Portfolio Section ======= -->
+
+    <!-- ======= Pricing Section ======= -->
+    <section id="pricing" class="pricing">
       <div class="container" data-aos="fade-up">
-        <div class="section-title">
+        <div class="section-title" id="pricing_plans">
+          <h2>Pricing</h2>
+          <p>
+            Choose Plan according to your needs.
+          </p>
+        </div>
+
+        <div class="row">
+          <div
+            class="col-lg-12 col-md-12"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <div class="box">
+
+              <table class="table  pricing_table">
+
+                <tr>
+                  <td></td>
+                  <td class="pricing_table_header_col">Free</td>
+                  <td class="pricing_table_header_col">Student</td>
+                  <td class="pricing_table_header_col">Individual Lawyer</td>
+                  <td class="pricing_table_header_col">Law Firm</td>
+                </tr>
+                
+                
+                <tr v-for="plan in this.plans_n_features" :key="plan.id">
+                  <td class="text-start" style="padding-left:20px">{{plan.feature_name}}</td>
+                  <td v-html="plan.free_plan"></td>
+                  <td v-html="plan.student_plan"></td>
+                  <td v-html="plan.individual_plan"></td>
+                  <td v-html="plan.lawfirm_plan"></td>
+                  
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          
+          
+        </div>
+      </div>
+    </section>
+    <!-- End Pricing Section -->
+
+    <!-- ======= Testimonials Section ======= -->
+    <section class="testimonials section-bg">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title" id="testimonials">
           <h2>Testimonials</h2>
           <p>
             Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex
@@ -206,7 +253,6 @@
             fugiat sit in iste officiis commodi quidem hic quas.
           </p>
         </div>
-
         <div
           class="testimonials-slider swiper"
           data-aos="fade-up"
@@ -295,24 +341,6 @@
             </div>
             <!-- End testimonial item -->
 
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Quis quorum aliqua sint quem legam fore sunt eram irure aliqua
-                  veniam tempor noster veniam enim culpa labore duis sunt culpa
-                  nulla illum cillum fugiat legam esse veniam culpa.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img
-                  src="assets/img/testimonials/testimonials-5.jpg"
-                  class="testimonial-img"
-                  alt=""
-                />
-                <h3>John Larson</h3>
-                <h4>Entrepreneur</h4>
-              </div>
-            </div>
             <!-- End testimonial item -->
           </div>
           <div class="swiper-pagination"></div>
@@ -321,18 +349,13 @@
     </section>
     <!-- End Testimonials Section -->
 
-    <!-- ======= Portfolio Section ======= -->
-
-    <!-- ======= Pricing Section ======= -->
-    <!-- End Pricing Section -->
-
     <!-- ======= Frequently Asked Questions Section ======= -->
     <!-- End Frequently Asked Questions Section -->
 
     <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact section-bg">
+    <section id="contact" class="contact">
       <div class="container" data-aos="fade-up">
-        <div class="section-title">
+        <div class="section-title" id="contact_us">
           <h2>Contact</h2>
           <p>Umer Ijaz Gilani <small>(Advocate High Courts)</small></p>
           <p>Muhammed Alee Qureshi <small>(Advocate High Courts)</small></p>
@@ -473,6 +496,7 @@ import { required, email } from "@vuelidate/validators";
 
 export default {
   name: "Home",
+  components: {},
   computed: mapState(["user", "globalGeneralSetting"]),
   setup() {
     return {
@@ -488,7 +512,100 @@ export default {
         email: "",
         subject: "",
         message: "",
+        
       },
+      plans_n_features:[
+        {
+            id:0,
+            feature_name:"",
+            free_plan:"",
+            student_plan:"Rs. 5,000/quater per student",
+            individual_plan:"Rs. 5,000/month",
+            lawfirm_plan:"Rs. 10,000/month ",
+          },
+          {
+            id:1,
+            feature_name:"Calendar",
+            free_plan:"&#10004",
+            student_plan:"",
+            individual_plan:"&#10004",
+            lawfirm_plan:"&#10004",
+          },
+          {
+            id:2,
+            feature_name:"Case Files",
+            free_plan:"Up to 5 case files",
+            student_plan:"Access to 10 pre-uploaded case files",
+            individual_plan:"Up to 50 case files",
+            lawfirm_plan:"Unlimited case files",
+          },
+          {
+            id:3,
+            feature_name:"Frequently Asked Legal Propositions",
+            free_plan:"",
+            student_plan:"&#10004",
+            individual_plan:"",
+            lawfirm_plan:"&#10004",
+          },
+          {
+            id:4,
+            feature_name:"Sample Pleadings",
+            free_plan:"",
+            student_plan:"&#10004",
+            individual_plan:"&#10004",
+            lawfirm_plan:"&#10004",
+          },
+          {
+            id:5,
+            feature_name:"Sample Contracts",
+            free_plan:"",
+            student_plan:"&#10004",
+            individual_plan:"&#10004",
+            lawfirm_plan:"&#10004",
+          },
+          {
+            id:6,
+            feature_name:"Case Law Library",
+            free_plan:"",
+            student_plan:"",
+            individual_plan:"&#10004",
+            lawfirm_plan:"&#10004",
+          },
+          {
+            id:7,
+            feature_name:"Legal Opinions Module",
+            free_plan:"",
+            student_plan:"",
+            individual_plan:"",
+            lawfirm_plan:"&#10004",
+          },
+          {
+            id:8,
+            feature_name:"Accounts Module",
+            free_plan:"",
+            student_plan:"",
+            individual_plan:"",
+            lawfirm_plan:"&#10004",
+          },
+          {
+            id:9,
+            feature_name:"Client Consultation Module",
+            free_plan:"",
+            student_plan:"",
+            individual_plan:"",
+            lawfirm_plan:"&#10004",
+          },
+          {
+            id:10,
+            feature_name:"Separate Sub-Domain",
+            free_plan:"",
+            student_plan:"",
+            individual_plan:"",
+            lawfirm_plan:"&#10004",
+          }
+
+
+        ]
     };
   },
   validations() {
@@ -503,6 +620,34 @@ export default {
   mounted() {
     document.getElementById("header");
     document.title = "Home";
+    /**
+     * Testimonials slider
+     */
+    new Swiper(".testimonials-slider", {
+      speed: 600,
+      loop: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      slidesPerView: "auto",
+      pagination: {
+        el: ".swiper-pagination",
+        type: "bullets",
+        clickable: true,
+      },
+      breakpoints: {
+        320: {
+          slidesPerView: 1,
+          spaceBetween: 40,
+        },
+
+        1200: {
+          slidesPerView: 3,
+          spaceBetween: 40,
+        },
+      },
+    });
   },
   methods: {
     scrollIntoView(id) {

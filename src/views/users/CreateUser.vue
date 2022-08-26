@@ -1,4 +1,5 @@
 <template>
+  <ConfirmPopup />
   <main id="main">
     <page-header :title="page_title" :petition="null" />
     <section id="services" class="services section-bg">
@@ -234,6 +235,7 @@
                               class="btn-danger"
                               @click="
                                 removeContactPerson(
+                                  $event,
                                   user.contact_persons,
                                   contact_person_index,
                                   contact_person.id
@@ -320,39 +322,57 @@ export default {
     this.getUser();
     this.getRoles();
   },
+  updated() {
+    document.title = this.user.name
+      ? this.user.name + " | " + this.page_title
+      : this.page_title;
+  },
   mounted() {
     document.getElementById("header");
-    document.title = this.page_title;
   },
   methods: {
-    removeContactPerson: function (obj, index, userId) {
+    removeContactPerson: function (event, obj, index, userId) {
       if (userId) {
-        this.saving = true;
-        var headers = {
-          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-        };
-        let url = this.base_url + "/api/users/" + userId;
-        axios
-          .delete(url, { headers })
-          .then((response) => {
-            this.saving = false;
-            obj.splice(index, 1);
-            console.log(response);
-            this.$notify({
-              type: "success",
-              title: "Success",
-              text: "User Deleted Successfully!",
-            });
-          })
-          .catch((error) => {
-            this.saving = false;
-            console.log(error);
-            this.$notify({
-              type: "error",
-              title: "Something went wrong!",
-              text: error,
-            });
-          });
+        this.$confirm.require({
+          target: event.currentTarget,
+          message: "Do you want to Delete?",
+          icon: "pi pi-exclamation-triangle",
+          acceptLabel: "Delete",
+          acceptClass: "p-button-danger",
+          rejectClass: "p-button-primary",
+          rejectLabel: "Cancel",
+          accept: () => {
+            this.saving = true;
+            var headers = {
+              Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+            };
+            let url = this.base_url + "/api/users/" + userId;
+            axios
+              .delete(url, { headers })
+              .then((response) => {
+                this.saving = false;
+                obj.splice(index, 1);
+                console.log(response);
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "User Deleted Successfully!",
+                });
+              })
+              .catch((error) => {
+                this.saving = false;
+                console.log(error);
+                this.$notify({
+                  type: "error",
+                  title: "Something went wrong!",
+                  text: error,
+                });
+              });
+          },
+          reject: () => {
+            this.$confirm.close();
+          },
+        });
       } else {
         obj.splice(index, 1);
       }

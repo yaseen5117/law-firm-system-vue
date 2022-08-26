@@ -1,4 +1,5 @@
 <template>
+  <ConfirmPopup></ConfirmPopup>
   <main id="main">
     <!-- ======= Breadcrumbs ======= -->
     <page-header
@@ -67,7 +68,7 @@
             <a
               v-if="this.user.is_admin && orderSheetsActive"
               class="btn btn-danger btn-sm"
-              @click="deletePetitionOrderSheet(orderSheetsActive.id)"
+              @click="deletePetitionOrderSheet($event, orderSheetsActive.id)"
               data-bs-toggle="tooltip"
               data-bs-placement="top"
               title="Delete"
@@ -388,44 +389,56 @@ export default {
           );
       }
     },
-    deletePetitionOrderSheet(orderSheetId) {
-      if (confirm("Do you really want to delete?")) {
-        var headers = {
-          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+    deletePetitionOrderSheet(event, orderSheetId) {
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: "Do you want to Delete?",
+        icon: "pi pi-exclamation-triangle",
+        acceptLabel: "Delete",
+        acceptClass: "p-button-danger",
+        rejectClass: "p-button-primary",
+        rejectLabel: "Cancel",
+        accept: () => {
+          var headers = {
+            Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+          };
 
-        axios
-          .delete(
-            this.base_url + "/api/petition_order_sheets/" + orderSheetId,
-            {
-              headers,
-            }
-          )
-          .then(
-            (response) => {
-              if (response.status === 200) {
-                this.$notify({
-                  type: "success",
-                  title: "Success",
-                  text: "Deleted Successfully!",
-                });
-                this.getOrderSheets();
-                // this.petition_index_details.attachments.splice(
-                //   attachmentIndex,
-                //   1
-                // ); //removing record from list/index after deleting record from DB
+          axios
+            .delete(
+              this.base_url + "/api/petition_order_sheets/" + orderSheetId,
+              {
+                headers,
               }
-            },
-            (error) => {
-              console.log(error.response.data);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error.response.data.message,
-              });
-            }
-          );
-      }
+            )
+            .then(
+              (response) => {
+                if (response.status === 200) {
+                  this.$notify({
+                    type: "success",
+                    title: "Success",
+                    text: "Deleted Successfully!",
+                  });
+                  this.getOrderSheets();
+                  // this.petition_index_details.attachments.splice(
+                  //   attachmentIndex,
+                  //   1
+                  // ); //removing record from list/index after deleting record from DB
+                }
+              },
+              (error) => {
+                console.log(error.response.data);
+                this.$notify({
+                  type: "error",
+                  title: "Something went wrong!",
+                  text: error.response.data.message,
+                });
+              }
+            );
+        },
+        reject: () => {
+          this.$confirm.close();
+        },
+      });
     },
   },
 };

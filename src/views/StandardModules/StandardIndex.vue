@@ -1,4 +1,5 @@
 <template>
+  <ConfirmPopup />
   <main id="main">
     <page-header :title="page_title" :petition="petition" />
     <nav-components :activeNavPill="module_type" :petition_id="petition.id" />
@@ -130,7 +131,11 @@
                         class="btn btn-sm btn-danger action-btn"
                         v-show="!index_data_single.editMode"
                         @click="
-                          deleteStandardIndex(index_data_single.id, row_index)
+                          deleteStandardIndex(
+                            $event,
+                            index_data_single.id,
+                            row_index
+                          )
                         "
                         href="javascript:void"
                         style="margin-left: 2px"
@@ -372,38 +377,53 @@ export default {
           );
       }
     },
-    deleteStandardIndex(moduleId, row_index) {
-      if (confirm("Do you really want to delete?")) {
-        var headers = {
-          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+    deleteStandardIndex(event, moduleId, row_index) {
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: "Do you want to Delete?",
+        icon: "pi pi-exclamation-triangle",
+        acceptLabel: "Delete",
+        acceptClass: "p-button-danger",
+        rejectClass: "p-button-primary",
+        rejectLabel: "Cancel",
+        accept: () => {
+          var headers = {
+            Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+          };
 
-        axios
-          .delete(this.base_url + "/api/" + this.module_type + "/" + moduleId, {
-            headers,
-          })
-          .then(
-            (response) => {
-              if (response.status === 200) {
-                this.$notify({
-                  type: "success",
-                  title: "Success",
-                  text: "Deleted Successfully!",
-                });
-                //this.getCaseDetails()
-                this.index_data.splice(row_index, 1); //removing record from list/index after deleting record from DB
+          axios
+            .delete(
+              this.base_url + "/api/" + this.module_type + "/" + moduleId,
+              {
+                headers,
               }
-            },
-            (error) => {
-              console.log(error.response.data);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error.response.data.message,
-              });
-            }
-          );
-      }
+            )
+            .then(
+              (response) => {
+                if (response.status === 200) {
+                  this.$notify({
+                    type: "success",
+                    title: "Success",
+                    text: "Deleted Successfully!",
+                  });
+                  //this.getCaseDetails()
+                  this.index_data.splice(row_index, 1); //removing record from list/index after deleting record from DB
+                }
+              },
+              (error) => {
+                console.log(error.response.data);
+                this.$notify({
+                  type: "error",
+                  title: "Something went wrong!",
+                  text: error.response.data.message,
+                });
+              }
+            );
+        },
+        reject: () => {
+          this.$confirm.close();
+        },
+      });
     },
   },
   mounted() {

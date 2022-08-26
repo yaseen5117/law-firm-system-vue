@@ -477,8 +477,13 @@ export default {
           .get(url, { headers })
           .then((response) => {
             this.petition = response.data.petition;
-            //this.lawyers = response.data.petition.lawyers;
-            this.opponents = [{}];
+
+            if (this.petition.petitioners.length < 1) {
+              this.addMorePetitioner();
+            }
+            if (this.petition.opponents.length < 1) {
+              this.addMoreOpponent();
+            }
 
             this.petition.lawyer_ids = response.data.petition.lawyer_ids_array;
           })

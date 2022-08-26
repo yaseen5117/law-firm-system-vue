@@ -34,6 +34,7 @@ import StandardIndex from "../views/StandardModules/StandardIndex";
 import StandardIndexDetails from "../views/StandardModules/StandardIndexDetails";
 
 import GeneralCaseLawIndex from "../views/general-case-laws/GeneralCaseLawIndex";
+import EditGeneralCaseLawIndex from "../views/general-case-laws/Update";
 
 import CourtList from "../views/courts/CourtList";
 
@@ -317,6 +318,14 @@ const routes = [
     path: "/petition-general-case-law",
     name: "petition-general-case-law",
     component: GeneralCaseLawIndex,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/petition-general-case-law/edit/:general_case_law_id",
+    name: "edit-petition-general-case-law",
+    component: EditGeneralCaseLawIndex,
     meta: {
       auth: true,
     },

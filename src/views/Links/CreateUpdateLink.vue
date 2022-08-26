@@ -58,6 +58,7 @@
                       v-model="linkData.description"
                       type="text"
                       class="form-control"
+                      cols="43"
                       rows="4"
                     />
                   </label>

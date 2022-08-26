@@ -13,7 +13,49 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li v-show="!this.user">
-            <router-link class="nav-link" to="/">Home</router-link>
+            <router-link class="nav-link" @click="scrollIntoView('hero')" to="/"
+              >Home</router-link
+            >
+          </li>
+          <li v-show="!this.user">
+            <a
+              class="nav-link"
+              href="javascript:void(0)"
+              @click="scrollIntoView('about_us')"
+              >About Us</a
+            >
+          </li>
+          <li v-show="!this.user">
+            <a
+              class="nav-link"
+              href="javascript:void(0)"
+              @click="scrollIntoView('main_features')"
+              >Features</a
+            >
+          </li>
+          <li v-show="!this.user">
+            <a
+              class="nav-link"
+              href="javascript:void(0)"
+              @click="scrollIntoView('pricing_plans')"
+              >Pricing</a
+            >
+          </li>
+          <li v-show="!this.user">
+            <a
+              class="nav-link"
+              href="javascript:void(0)"
+              @click="scrollIntoView('testimonials')"
+              >Testimonials</a
+            >
+          </li>
+          <li v-show="!this.user">
+            <a
+              class="nav-link"
+              href="javascript:void(0)"
+              @click="scrollIntoView('contact_us')"
+              >Contact Us</a
+            >
           </li>
           <li v-if="this.user && this.user.id">
             <router-link class="nav-link" to="/dashboard"
@@ -118,6 +160,13 @@ export default {
       localStorage.removeItem("lfms_user");
       this.$store.dispatch("authUser");
       this.$router.push({ name: "Login" });
+    },
+    scrollIntoView(id) {
+      const yOffset = -200;
+      const element = document.getElementById(id);
+      const y =
+        element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
     },
   },
 

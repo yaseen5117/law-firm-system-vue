@@ -21,7 +21,7 @@ import ConfirmationService from "primevue/confirmationservice";
 import Dialog from "primevue/dialog";
 import InputNumber from "primevue/inputnumber";
 import Paginator from "primevue/paginator";
-
+import ConfirmPopup from "primevue/confirmpopup";
 //app.component("hello-world", HelloWorld);
 
 createApp(App)
@@ -42,4 +42,5 @@ createApp(App)
   .component("Sidebar", Sidebar)
   .component("Dialog", Dialog)
   .component("InputNumber", InputNumber)
+  .component("ConfirmPopup", ConfirmPopup)
   .mount("#app");

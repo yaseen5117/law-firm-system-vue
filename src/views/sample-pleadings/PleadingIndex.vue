@@ -1,4 +1,5 @@
 <template>
+  <ConfirmPopup />
   <BlockUI :blocked="!isLoaded" :fullScreen="true">
     <main id="main">
       <page-header
@@ -97,6 +98,7 @@
                             class="btn btn-sm btn-danger action-btn"
                             @click="
                               deleteSamplePleading(
+                                $event,
                                 samplePleading.id,
                                 sample_pleading_index
                               )
@@ -199,40 +201,52 @@ export default {
           console.log(error);
         });
     },
-    deleteSamplePleading(sample_pleading_id, sample_pleading_index) {
-      if (confirm("Do you really want to delmete?")) {
-        var headers = {
-          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+    deleteSamplePleading(event, sample_pleading_id, sample_pleading_index) {
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: "Do you want to Delete?",
+        icon: "pi pi-exclamation-triangle",
+        acceptLabel: "Delete",
+        acceptClass: "p-button-danger",
+        rejectClass: "p-button-primary",
+        rejectLabel: "Cancel",
+        accept: () => {
+          var headers = {
+            Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+          };
 
-        axios
-          .delete(
-            this.base_url + "/api/sample_pleadings/" + sample_pleading_id,
-            {
-              headers,
-            }
-          )
-          .then(
-            (response) => {
-              if (response.status === 200) {
-                this.$notify({
-                  type: "success",
-                  title: "Success",
-                  text: "Deleted Successfully!",
-                });
-                this.samplePleadings.splice(sample_pleading_index, 1); //removing record from list/index after deleting record from DB
+          axios
+            .delete(
+              this.base_url + "/api/sample_pleadings/" + sample_pleading_id,
+              {
+                headers,
               }
-            },
-            (error) => {
-              console.log(error.response.data.error);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error.response.data.message,
-              });
-            }
-          );
-      }
+            )
+            .then(
+              (response) => {
+                if (response.status === 200) {
+                  this.$notify({
+                    type: "success",
+                    title: "Success",
+                    text: "Deleted Successfully!",
+                  });
+                  this.samplePleadings.splice(sample_pleading_index, 1); //removing record from list/index after deleting record from DB
+                }
+              },
+              (error) => {
+                console.log(error.response.data.error);
+                this.$notify({
+                  type: "error",
+                  title: "Something went wrong!",
+                  text: error.response.data.message,
+                });
+              }
+            );
+        },
+        reject: () => {
+          this.$confirm.close();
+        },
+      });
     },
     reset() {
       this.saving = true;

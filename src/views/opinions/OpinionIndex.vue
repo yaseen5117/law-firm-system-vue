@@ -1,4 +1,5 @@
 <template>
+  <ConfirmPopup />
   <BlockUI
     :blocked="blockPanel"
     :fullScreen="true"
@@ -190,7 +191,9 @@
                         <a
                           class="btn btn-sm btn-danger action-btn"
                           v-show="!opinion.editMode"
-                          @click="deleteOpinion(opinion.id, opinionIndex)"
+                          @click="
+                            deleteOpinion($event, opinion.id, opinionIndex)
+                          "
                           href="javascript:void"
                           style="margin-left: 2px"
                           data-bs-toggle="tooltip"
@@ -361,39 +364,51 @@ export default {
           });
         });
     },
-    deleteOpinion(opinionId, opinionIndex) {
-      if (confirm("Do you really want to delete?")) {
-        var headers = {
-          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-        };
+    deleteOpinion(event, opinionId, opinionIndex) {
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: "Do you want to Delete?",
+        icon: "pi pi-exclamation-triangle",
+        acceptLabel: "Delete",
+        acceptClass: "p-button-danger",
+        rejectClass: "p-button-primary",
+        rejectLabel: "Cancel",
+        accept: () => {
+          var headers = {
+            Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+          };
 
-        axios
-          .delete(this.base_url + "/api/opinions/" + opinionId, {
-            headers,
-          })
-          .then(
-            (response) => {
-              console.log(response);
-              if (response.status === 200) {
+          axios
+            .delete(this.base_url + "/api/opinions/" + opinionId, {
+              headers,
+            })
+            .then(
+              (response) => {
+                console.log(response);
+                if (response.status === 200) {
+                  this.$notify({
+                    type: "success",
+                    title: "Success",
+                    text: "Deleted Successfully!",
+                  });
+                  //this.getCaseDetails()
+                  this.opinions.splice(opinionIndex, 1); //removing record from list/index after deleting record from DB
+                }
+              },
+              (error) => {
+                console.log(error.response.data);
                 this.$notify({
-                  type: "success",
-                  title: "Success",
-                  text: "Deleted Successfully!",
+                  type: "error",
+                  title: "Something went wrong!",
+                  text: error.response.data.message,
                 });
-                //this.getCaseDetails()
-                this.opinions.splice(opinionIndex, 1); //removing record from list/index after deleting record from DB
               }
-            },
-            (error) => {
-              console.log(error.response.data);
-              this.$notify({
-                type: "error",
-                title: "Something went wrong!",
-                text: error.response.data.message,
-              });
-            }
-          );
-      }
+            );
+        },
+        reject: () => {
+          this.$confirm.close();
+        },
+      });
     },
     editOpinion(OpinionToUpdate) {
       if (true) {
