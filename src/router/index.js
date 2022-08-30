@@ -7,6 +7,7 @@ import PetitionIndexDetails from "../views/petition-index/PetitionIndexDetails";
 import CreatePetition from "../views/petitions/CreatePetition";
 import Login from "../views/Auth/Login";
 import SignUp from "../views/Auth/SignUp";
+import PrintPendingCase from "../views/petitions/PrintPendingCase";
 
 import PetitionReply from "../views/petition-replies/PetitionReply";
 import PetitionReplyDetails from "../views/petition-replies/PetitionReplyDetails";
@@ -163,6 +164,14 @@ const routes = [
     path: "/all-indexes-details/:petition_id",
     name: "all-indexes",
     component: AllIndexesDetail,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/print-pending-cases",
+    name: "print-pending-cases",
+    component: PrintPendingCase,
     meta: {
       auth: true,
     },

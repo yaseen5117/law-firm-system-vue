@@ -135,9 +135,7 @@
                             "
                             :disabled="saving"
                             style="margin-left: 2px"
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="Delete"
+                            v-tooltip.top="'Delete'"
                           >
                             Delete
                             <!-- <i class="fa fa-trash-o"></i> -->

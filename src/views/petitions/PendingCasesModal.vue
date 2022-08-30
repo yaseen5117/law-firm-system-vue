@@ -23,7 +23,7 @@
             <tbody>
               <tr
                 v-for="(pendingCase, pendingCaseIndex) in pendingCases"
-                :key="pendingCase.id"
+                :key="pendingCaseIndex"
               >
                 <td>{{ pendingCase.pending_tag }}</td>
                 <td>{{ pendingCase.title }}</td>
@@ -119,44 +119,11 @@ export default {
           console.log(error);
         });
     },
-    afterCancle() {
-      alert("ssss");
-    },
-    printPendingCases() {
-      // var mywindow = window.open("", "PRINT", "height=780,width=1920");
-      // mywindow.document.write(
-      //   "<html><head><title>" + document.title + "</title>"
-      // );
-      // mywindow.document.write("</head><body>");
-
-      // mywindow.document.write("<h1>" + document.title + "</h1>");
-      // mywindow.document.write(
-      //   "<div class='row' id='modal'><div class='table-responsive'><div class='col-lg-12 col-md-12 col-sm-12'><table class='table table-bordered' style='border-style: solid;'>" +
-      //     document.getElementById("modal").innerHTML +
-      //     "</table></div></div></div>"
-      // );
-
-      // mywindow.document.getElementById("modal_table").style.border =
-      //   "1px solid black";
-      // mywindow.document.getElementById("modal_table").style.textAlign = "left";
-
-      // mywindow.document.write("</body></html>");
-
-      // mywindow.document.getElementById("modal").innerHTML;
-      // mywindow.document.body.innerHTML;
-
-      // mywindow.document.close(); // necessary for IE >= 10
-      // mywindow.focus(); // necessary for IE >= 10*/
-      // mywindow.print();
-      // mywindow.document.close();
-
-      var printContents = document.getElementById("modal").innerHTML;
-      var originalContents = document.body.innerHTML;
-      document.body.innerHTML = printContents;
-      window.print();
-      document.body.innerHTML = originalContents;
-      setTimeout(1000);
-    },
+    printPendingCases(){
+      let route = this.$router.resolve({ path: "/print-pending-cases" });
+      // let route = this.$router.resolve('/link/to/page'); // This also works.
+      window.open(route.href, '_blank');       
+    }
   },
 };
 </script>

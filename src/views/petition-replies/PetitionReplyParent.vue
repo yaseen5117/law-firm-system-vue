@@ -48,9 +48,7 @@
                         @click="petition_reply_parent.editMode = true"
                         href="javascript:void"
                         style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Edit"
+                        v-tooltip.top="'Edit'"
                       >
                         Edit
                         <!-- <i class="fa fa-edit"></i> -->
@@ -61,9 +59,7 @@
                         @click="editPetitionReplyParent(petition_reply_parent)"
                         href="javascript:void"
                         style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Update"
+                        v-tooltip.top="'Update'"
                       >
                         Update
                         <!-- <i class="fa fa-save"></i> -->
@@ -75,9 +71,7 @@
                         class="btn btn-sm btn-info action-btn"
                         href="javascript:void"
                         style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Cancel"
+                        v-tooltip.top="'Cancel'"
                       >
                         Cancel
                         <!-- <i class="fa fa-remove"></i> -->
@@ -95,9 +89,7 @@
                         "
                         href="javascript:void"
                         style="margin-left: 2px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="top"
-                        title="Delete"
+                        v-tooltip.top="'Delete'"
                       >
                         Delete
                         <!-- <i class="fa fa-trash-o"></i> -->
@@ -127,6 +119,7 @@
                         :disabled="saving"
                         @click="submitPetitionReply()"
                         class="btn btn-sm btn-success action-btn"
+                        v-tooltip.top="'Save'"
                       >
                         Save
                         <!-- <i class="fa fa-save"></i> -->

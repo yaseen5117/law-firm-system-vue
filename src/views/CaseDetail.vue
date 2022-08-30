@@ -209,7 +209,7 @@
                         "
                         href="javascript:void"
                         style="margin-left: 2px"
-                        v-tooltip.top="'Click To Change/Remove'"
+                        v-tooltip.top="'Delete'"
                       >
                         Delete
                         <!-- <i class="fa fa-trash-o"></i> -->

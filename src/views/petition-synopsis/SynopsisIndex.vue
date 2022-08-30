@@ -61,6 +61,7 @@
                   >{{ SynopsisActive.synopsis_date }}
                   <router-link
                     v-if="this.user.is_admin"
+                    v-tooltip.top="'Edit'"
                     class="btn btn-success btn-sm action-btn"
                     :to="{
                       name: 'petition-synopsis-edit',
@@ -77,9 +78,7 @@
                     class="btn btn-danger btn-sm action-btn"
                     style="margin-left: 2px"
                     @click="deletePetitionSynopsis($event, SynopsisActive.id)"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="Delete"
+                    v-tooltip.top="'Delete'"
                   >
                     Delete
                   </a>

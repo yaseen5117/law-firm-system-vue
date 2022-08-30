@@ -59,9 +59,7 @@
                   editable_order_sheet_id: orderSheetsActive.id,
                 },
               }"
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              title="Edit"
+              v-tooltip.top="'Edit'"
             >
               Edit
             </router-link>
@@ -69,9 +67,7 @@
               v-if="this.user.is_admin && orderSheetsActive"
               class="btn btn-danger btn-sm"
               @click="deletePetitionOrderSheet($event, orderSheetsActive.id)"
-              data-bs-toggle="tooltip"
-              data-bs-placement="top"
-              title="Delete"
+              v-tooltip.top="'Delete'"
             >
               Delete
             </a>

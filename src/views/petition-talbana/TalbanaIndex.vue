@@ -56,6 +56,7 @@
                   <strong>Talbana Date: </strong
                   >{{ TalbanaActive.talbana_date }}
                   <router-link
+                    v-tooltip.top="'Edit'"
                     v-if="this.user.is_admin"
                     class="btn btn-success btn-sm action-btn"
                     :to="{
@@ -73,9 +74,7 @@
                     class="btn btn-danger btn-sm action-btn"
                     style="margin-left: 2px"
                     @click="deletePetitionTalbana($event, TalbanaActive.id)"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="Delete"
+                    v-tooltip.top="'Delete'"
                   >
                     Delete
                   </a>
