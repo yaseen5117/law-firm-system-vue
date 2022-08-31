@@ -63,7 +63,8 @@
             <h3>ABOUT US</h3>
             <p class="fst-italic">
               This is a cloud-based law firm management system tailored for your
-              needs. Here’s how it’s better than other solutions out there:
+              needs. It can also be adopted by a court automation of its entire
+              process. Here’s how it’s better than other solutions out there:
             </p>
             <ul>
               <li>
@@ -198,9 +199,7 @@
       <div class="container" data-aos="fade-up">
         <div class="section-title" id="pricing_plans">
           <h2>Pricing</h2>
-          <p>
-            Choose Plan according to your needs.
-          </p>
+          <p>Choose Plan according to your needs.</p>
         </div>
 
         <div class="row">
@@ -210,32 +209,29 @@
             data-aos-delay="100"
           >
             <div class="box">
-
-              <table class="table  pricing_table">
-
+              <table class="table pricing_table">
                 <tr>
                   <td></td>
                   <td class="pricing_table_header_col">Free</td>
                   <td class="pricing_table_header_col">Student</td>
                   <td class="pricing_table_header_col">Individual Lawyer</td>
-                  <td class="pricing_table_header_col">Law Firm</td>
+                  <td class="pricing_table_header_col">
+                    Law Firm OR In-house Legal Department
+                  </td>
                 </tr>
-                
-                
+
                 <tr v-for="plan in this.plans_n_features" :key="plan.id">
-                  <td class="text-start" style="padding-left:20px">{{plan.feature_name}}</td>
+                  <td class="text-start" style="padding-left: 20px">
+                    {{ plan.feature_name }}
+                  </td>
                   <td v-html="plan.free_plan"></td>
                   <td v-html="plan.student_plan"></td>
                   <td v-html="plan.individual_plan"></td>
                   <td v-html="plan.lawfirm_plan"></td>
-                  
                 </tr>
               </table>
             </div>
           </div>
-
-          
-          
         </div>
       </div>
     </section>
@@ -512,100 +508,97 @@ export default {
         email: "",
         subject: "",
         message: "",
-        
       },
-      plans_n_features:[
+      plans_n_features: [
         {
-            id:0,
-            feature_name:"",
-            free_plan:"",
-            student_plan:"Rs. 5,000/quarter per student",
-            individual_plan:"Rs. 5,000/month",
-            lawfirm_plan:"Rs. 10,000/month ",
-          },
-          {
-            id:1,
-            feature_name:"Calendar",
-            free_plan:"&#10004",
-            student_plan:"",
-            individual_plan:"&#10004",
-            lawfirm_plan:"&#10004",
-          },
-          {
-            id:2,
-            feature_name:"Case Files",
-            free_plan:"Up to 5 case files",
-            student_plan:"Access to 10 pre-uploaded case files",
-            individual_plan:"Up to 50 case files",
-            lawfirm_plan:"Unlimited case files",
-          },
-          {
-            id:3,
-            feature_name:"Frequently Asked Legal Propositions",
-            free_plan:"",
-            student_plan:"&#10004",
-            individual_plan:"",
-            lawfirm_plan:"&#10004",
-          },
-          {
-            id:4,
-            feature_name:"Sample Pleadings",
-            free_plan:"",
-            student_plan:"&#10004",
-            individual_plan:"&#10004",
-            lawfirm_plan:"&#10004",
-          },
-          {
-            id:5,
-            feature_name:"Sample Contracts",
-            free_plan:"",
-            student_plan:"&#10004",
-            individual_plan:"&#10004",
-            lawfirm_plan:"&#10004",
-          },
-          {
-            id:6,
-            feature_name:"Case Law Library",
-            free_plan:"",
-            student_plan:"",
-            individual_plan:"&#10004",
-            lawfirm_plan:"&#10004",
-          },
-          {
-            id:7,
-            feature_name:"Legal Opinions Module",
-            free_plan:"",
-            student_plan:"",
-            individual_plan:"",
-            lawfirm_plan:"&#10004",
-          },
-          {
-            id:8,
-            feature_name:"Accounts Module",
-            free_plan:"",
-            student_plan:"",
-            individual_plan:"",
-            lawfirm_plan:"&#10004",
-          },
-          {
-            id:9,
-            feature_name:"Client Consultation Module",
-            free_plan:"",
-            student_plan:"",
-            individual_plan:"",
-            lawfirm_plan:"&#10004",
-          },
-          {
-            id:10,
-            feature_name:"Separate Sub-Domain",
-            free_plan:"",
-            student_plan:"",
-            individual_plan:"",
-            lawfirm_plan:"&#10004",
-          }
-
-
-        ]
+          id: 0,
+          feature_name: "",
+          free_plan: "",
+          student_plan: "Rs. 5,000/quarter per student",
+          individual_plan: "Rs. 5,000/month",
+          lawfirm_plan: "Rs. 10,000/month ",
+        },
+        {
+          id: 1,
+          feature_name: "Calendar",
+          free_plan: "&#10004",
+          student_plan: "",
+          individual_plan: "&#10004",
+          lawfirm_plan: "&#10004",
+        },
+        {
+          id: 2,
+          feature_name: "Case Files",
+          free_plan: "Up to 5 case files",
+          student_plan: "Access up to 10 pre-uploaded case files",
+          individual_plan: "Up to 50 case files",
+          lawfirm_plan: "Unlimited case files",
+        },
+        {
+          id: 3,
+          feature_name: "Frequently Asked Legal Propositions",
+          free_plan: "",
+          student_plan: "&#10004",
+          individual_plan: "",
+          lawfirm_plan: "&#10004",
+        },
+        {
+          id: 4,
+          feature_name: "Sample Pleadings",
+          free_plan: "",
+          student_plan: "&#10004",
+          individual_plan: "&#10004",
+          lawfirm_plan: "&#10004",
+        },
+        {
+          id: 5,
+          feature_name: "Sample Contracts",
+          free_plan: "",
+          student_plan: "&#10004",
+          individual_plan: "&#10004",
+          lawfirm_plan: "&#10004",
+        },
+        {
+          id: 6,
+          feature_name: "Case Law Library",
+          free_plan: "",
+          student_plan: "",
+          individual_plan: "&#10004",
+          lawfirm_plan: "&#10004",
+        },
+        {
+          id: 7,
+          feature_name: "Legal Opinions Module",
+          free_plan: "",
+          student_plan: "",
+          individual_plan: "",
+          lawfirm_plan: "&#10004",
+        },
+        {
+          id: 8,
+          feature_name: "Accounts Module",
+          free_plan: "",
+          student_plan: "",
+          individual_plan: "",
+          lawfirm_plan: "&#10004",
+        },
+        {
+          id: 9,
+          feature_name: "Client Consultation Module",
+          free_plan: "",
+          student_plan: "",
+          individual_plan: "",
+          lawfirm_plan: "&#10004",
+        },
+        {
+          id: 10,
+          feature_name: "Separate Sub-Domain",
+          free_plan: "",
+          student_plan: "",
+          individual_plan: "",
+          lawfirm_plan: "&#10004",
+        },
+      ],
     };
   },
   validations() {

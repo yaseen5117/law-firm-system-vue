@@ -522,7 +522,7 @@ export default {
           setTimeout(() => {
             this.getCaseFiles();
             this.awaitingSearch = false;
-          }, 800); // 1 sec delay
+          }, 4000); // 1 sec delay
         }
         this.awaitingSearch = true;
       },
