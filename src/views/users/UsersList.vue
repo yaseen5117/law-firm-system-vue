@@ -139,7 +139,7 @@
                         <td>
                           <span
                             class="text-capitalize"
-                            v-for="(role, index) in user.roles"
+                            v-for="role in user.roles"
                             :key="role"
                             >{{ role.name }}
                           </span>
@@ -451,7 +451,7 @@ export default {
           setTimeout(() => {
             this.getUsers();
             this.awaitingSearch = false;
-          }, 1500); // 1 sec delay
+          }, 4000); // 1 sec delay
         }
         this.awaitingSearch = true;
       },

@@ -261,7 +261,7 @@ export default {
           setTimeout(() => {
             this.getGeneralCaseLaws();
             this.awaitingSearch = false;
-          }, 1500); // 1 sec delay
+          }, 4000); // 1 sec delay
         }
         this.awaitingSearch = true;
       },
