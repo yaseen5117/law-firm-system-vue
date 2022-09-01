@@ -67,43 +67,34 @@
                   My Profile
                 </router-link>
               </li>
-              <li class="dropdown" v-show="this.user && this.user.is_admin">
+              <li v-show="this.user && this.user.is_admin">
+                <router-link class="nav-link" to="/users">Users</router-link>
+              </li>
+              <li>
+                <router-link class="nav-link" to="/settings"
+                  >General Settings</router-link
+                >
+              </li>
+              <li>
+                <router-link class="nav-link" to="/courts">Courts</router-link>
+              </li>
+              <li>
+                <router-link to="/petition-types">Case Categories</router-link>
+              </li>
+              <li>
+                <router-link to="/module-types">Module Types</router-link>
+              </li>
+              <li>
+                <router-link to="/contact-requests"
+                  >Contact Requests</router-link
+                >
+              </li>
+              <!-- <li class="dropdown" v-show="this.user && this.user.is_admin">
                 <a href="javascript:void"
                   ><span>System Settings</span>
                   <i class="bi bi-chevron-right"></i
-                ></a>
-                <ul>
-                  <li v-show="this.user && this.user.is_admin">
-                    <router-link class="nav-link" to="/users"
-                      >Users</router-link
-                    >
-                  </li>
-                  <li>
-                    <router-link class="nav-link" to="/settings"
-                      >General Settings</router-link
-                    >
-                  </li>
-                  <li>
-                    <router-link class="nav-link" to="/courts"
-                      >Courts</router-link
-                    >
-                  </li>
-                  <li>
-                    <router-link to="/petition-types"
-                      >Case Categories</router-link
-                    >
-                  </li>
-                  <li>
-                    <router-link to="/module-types">Module Types</router-link>
-                  </li>
-                  <li>
-                    <router-link to="/contact-requests"
-                      >Contact Requests</router-link
-                    >
-                  </li>
-                  <!-- <li><a href="#">System Setting 4</a></li> -->
-                </ul>
-              </li>
+                ></a>                
+              </li> -->
             </ul>
           </li>
           <li v-if="this.user">

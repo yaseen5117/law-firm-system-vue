@@ -80,9 +80,9 @@
               <p class="line_height">{{ petition.petitioner_names }}</p>
               <p>VERSUS</p>
               <p class="line_height">{{ petition.opponent_names }}</p>
-              <p class="line_height">
+              <!-- <p class="line_height">
                 {{ petition.title }}
-              </p>
+              </p> -->
               <p>
                 <u><strong>INDEX</strong></u>
               </p>

@@ -9,7 +9,7 @@
             <form @submit.prevent="submitForm($event)">
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Name<span style="color: red">*</span></label>
                     <input
                       class="form-control"
@@ -23,8 +23,17 @@
                       >Name field is required.</span
                     >
                   </div>
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <label>CNIC</label>
+                    <InputMask
+                      type="text"
+                      class="form-control"
+                      v-model="user.cnic"
+                      mask="99999-9999999-9"
+                    />
+                  </div>
 
-                  <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Email<span style="color: red">*</span></label>
                     <input
                       type="email"
@@ -190,7 +199,7 @@
                       :key="contact_person"
                     >
                       <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                           <label for="">Name</label>
                           <input
                             type="text"
@@ -198,7 +207,7 @@
                             v-model="contact_person.name"
                           />
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                           <label for="">Email</label>
                           <input
                             v-model="contact_person.email"
@@ -213,7 +222,7 @@
                             >{{ contact_person_email_error }}
                           </small>
                         </div>
-                        <div class="col-md-3">
+                        <!-- <div class="col-md-3">
                           <label for="">CNIC</label>
                           <InputMask
                             type="text"
@@ -221,8 +230,8 @@
                             v-model="contact_person.cnic"
                             mask="99999-9999999-9"
                           />
-                        </div>
-                        <div class="col-md-3">
+                        </div> -->
+                        <div class="col-md-4">
                           <label for="">Phone</label>
                           <div class="input-group">
                             <InputMask
@@ -382,7 +391,6 @@ export default {
         name: "",
         email: "",
         phone: "",
-        cnic: "",
       };
       this.user.contact_persons.push(contact_person_single);
     },

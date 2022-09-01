@@ -44,7 +44,7 @@
           >
           <span
             ><strong>&nbsp;Case #:</strong>
-            {{ petition ? petition.writ_number : "" }},</span
+            {{ petition ? petition.case_no : "" }},</span
           >
           <span
             ><strong>&nbsp;Client Name:</strong>
@@ -79,5 +79,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
