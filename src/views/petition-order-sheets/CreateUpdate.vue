@@ -4,14 +4,14 @@
     <section id="services" class="services section-bg">
       <div class="container">
         <div class="row">
-          <div class="col-9">
+          <div class="col-lg-8 col-md-8 col-sm-12">
             <form @submit.prevent="submitForm($event)">
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <file-upload
                       v-if="this.user.is_admin && order_sheet.id"
-                      @afterUpload="getOrderSheet"
+                      @afterUpload="getEditableOrderSheet"
                       type="App\Models\PetitonOrderSheet"
                       :attachmentable_id="order_sheet.id"
                       :petition_id="petition.id"
@@ -22,10 +22,6 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-4 col-md-4 col-sm-12">
-                    <label>Title</label>
-                    <input class="form-control" v-model="order_sheet.title" />
-                  </div>
-                  <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Order Sheet Date</label>
                     <InputMask
                       mask="99/99/9999"
@@ -33,6 +29,16 @@
                       type="text"
                       placeholder="dd/mm/yyyy"
                       v-model="order_sheet.order_sheet_date"
+                    />
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <label>Next Hearing Date</label>
+                    <InputMask
+                      mask="99/99/9999"
+                      class="form-control"
+                      type="text"
+                      placeholder="dd/mm/yyyy"
+                      v-model="order_sheet.next_hearing_date"
                     />
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-12">
@@ -50,18 +56,6 @@
                         {{ order_sheet_type.title }}
                       </option>
                     </select>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-lg-12 col-md-12 col-sm-12">
-                    <label>Description </label>
-                    <input
-                      class="form-control"
-                      v-model="order_sheet.description"
-                    />
                   </div>
                 </div>
               </div>
@@ -92,7 +86,7 @@
             </form>
           </div>
 
-          <div class="col-3">
+          <div class="col-lg-4 col-md-4 col-sm-12">
             <delete-attachment
               v-if="order_sheet.attachments"
               :order_sheet="order_sheet"
@@ -130,8 +124,7 @@ export default {
         petition_id: this.$route.params.petition_id,
         order_sheet_type_id: "",
         id: this.$route.params.editable_order_sheet_id, //this is the id from the browser
-        title: "",
-        description: "",
+        next_hearing_date: "",
       },
       petition: {},
       order_sheet_types: [],

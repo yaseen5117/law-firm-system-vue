@@ -21,7 +21,7 @@
         />
         Select all
       </th>
-      <th>Image</th>
+      <th>Attachments</th>
     </thead>
     <tbody>
       <tr v-for="attachment in order_sheet.attachments" :key="attachment">
@@ -51,15 +51,20 @@
           />
         </td>
       </tr>
+      <not-found-message :index_details="order_sheet" />
     </tbody>
   </table>
 </template>
 <script>
 import axios from "axios";
+import NotFoundMessage from "../shared/NotFoundMessage.vue";
 
 export default {
   emits: ["afterDelete"],
   props: ["order_sheet"],
+  components: {
+    NotFoundMessage,
+  },
   data() {
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,

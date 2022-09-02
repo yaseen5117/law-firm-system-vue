@@ -71,11 +71,6 @@
             >
               Delete
             </a>
-            <span style="margin-left: 10px" class="ml-2 text-primary"
-              ><small v-if="orderSheetsActive"
-                >({{ orderSheetsActive.title }})</small
-              ></span
-            >
           </div>
           <div>
             <div class="mt-4" v-if="orderSheetsActive">
@@ -245,7 +240,8 @@ export default {
   },
   updated() {
     if (this.orderSheetsActive) {
-      document.title = this.orderSheetsActive.title + " | Order Sheet";
+      document.title =
+        this.orderSheetsActive.order_sheet_types.title + " | Order Sheet";
     } else {
       document.title = "Order Sheet";
     }

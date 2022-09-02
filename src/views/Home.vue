@@ -148,7 +148,7 @@
 
         <div class="row">
           <div
-            class="col-lg-6 order-2 order-lg-1 d-flex flex-column align-items-lg-center"
+            class="col-lg-5 order-2 order-lg-1 d-flex flex-column align-items-lg-center"
           >
             <div
               class="icon-box mt-5 mt-lg-0"
@@ -181,7 +181,39 @@
             </div>
           </div>
           <div
-            class="image col-lg-6 order-1 order-lg-2"
+            class="col-lg-5 order-2 order-lg-1 d-flex flex-column align-items-lg-center"
+          >
+            <div
+              class="icon-box mt-5 mt-lg-0"
+              data-aos="fade-up"
+              data-aos-delay="100"
+            >
+              <i class="fa fa-book"></i>
+              <h4>Frequently Asked Legal Propositions</h4>
+              <!-- <p>
+                You can view all your case files online - and from anywhere.
+              </p> -->
+            </div>
+
+            <div class="icon-box mt-5" data-aos="fade-up" data-aos-delay="400">
+              <i class="fa fa-tasks"></i>
+              <h4>Sample Pleadings</h4>
+              <!-- <p>
+                Use our Invoice-generator to generate professional invoices and
+                keep a track of your firm's finances.
+              </p> -->
+            </div>
+            <div class="icon-box mt-5" data-aos="fade-up" data-aos-delay="400">
+              <i class="fa fa-handshake-o"></i>
+              <h4>Sample Contracts</h4>
+              <!-- <p>
+                Use our Invoice-generator to generate professional invoices and
+                keep a track of your firm's finances.
+              </p> -->
+            </div>
+          </div>
+          <div
+            class="image col-lg-2 order-1 order-lg-2"
             data-aos="zoom-in"
             data-aos-delay="100"
           >
