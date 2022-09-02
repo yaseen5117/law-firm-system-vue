@@ -103,9 +103,10 @@
                 <tbody>
                   <tr
                     v-for="(petition_detail, petitionIndex) in petition_details"
-                    :key="petition_detail.id"
+                    :key="petition_detail.id" class="draggable" draggable="true" @dragstart="startDrag($event,petitionIndex)"  @drop="onDrop($event,petitionIndex)" @dragenter.prevent @dragover.prevent
                   >
                     <td>
+                      {{petitionIndex+1}} - 
                       <AutoComplete
                         v-show="petition_detail.editMode"
                         :delay="1"
@@ -347,6 +348,54 @@ export default {
     this.getCaseDetails();
   },
   methods: {
+
+    array_move(arr, old_index, new_index) {
+        if (new_index >= arr.length) {
+            var k = new_index - arr.length + 1;
+            while (k--) {
+                arr.push(undefined);
+            }
+        }
+        arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+        return arr; // for testing
+    },
+
+     startDrag(event,index ){
+      console.log(index);
+      event.dataTransfer.dropEffect = "move";
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("petition_index_id",index);
+    },
+
+    onDrop(event,newIndex ){
+      var old_index = event.dataTransfer.getData("petition_index_id");
+      this.petition_details = this.array_move(this.petition_details,old_index,newIndex);
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      axios
+          .post(
+            this.base_url + "/api/petitions_index/update_display_order",
+            {
+              petition_details: this.petition_details,
+            },
+            { headers }
+          )
+          .then((response) => {
+            
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
+          });
+      
+
+    },
+
     //Start Methods About All Pending Tag
     confirmToDelete(event) {
       this.$confirm.require({
@@ -621,4 +670,12 @@ export default {
   background-color: #7e7e7e;
   border-color: #7e7e7e;
 } */
+
+
+
+.draggable:active {
+    cursor: move;
+    cursor:    -moz-grabbing;
+    cursor:         grabbing;
+}
 </style>
