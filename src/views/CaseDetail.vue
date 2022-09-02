@@ -94,6 +94,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
               <table class="table table-striped">
                 <thead>
+                  <th>Sr.</th>
                   <th>Description of Documents</th>
                   <th>Date</th>
                   <th>Annexure</th>
@@ -105,8 +106,10 @@
                     v-for="(petition_detail, petitionIndex) in petition_details"
                     :key="petition_detail.id" class="draggable" draggable="true" @dragstart="startDrag($event,petitionIndex)"  @drop="onDrop($event,petitionIndex)" @dragenter.prevent @dragover.prevent
                   >
+                    <td width="3%">{{petitionIndex+1}}</td>
                     <td>
-                      {{petitionIndex+1}} - 
+                       
+                      
                       <AutoComplete
                         v-show="petition_detail.editMode"
                         :delay="1"
@@ -218,6 +221,7 @@
                     </td>
                   </tr>
                   <tr v-if="this.user.is_admin">
+                    <td></td>
                     <td>
                       <AutoComplete
                         :delay="1"
