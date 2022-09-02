@@ -1,4 +1,5 @@
 <template>
+  <ConfirmPopup></ConfirmPopup>
   <BlockUI :blocked="!isLoaded" :fullScreen="true">
     <div class="case_file">
       <main id="main">
@@ -269,6 +270,20 @@
                             >
                               {{ !petition.archived ? "Archive" : "Unarchive" }}
                             </button>
+                            <button
+                              @click="
+                                deletePetition(
+                                  $event,
+                                  petition.id,
+                                  petitionIndex
+                                )
+                              "
+                              style="margin-right: 2px"
+                              class="btn btn-danger btn-sm action-btn"
+                              v-tooltip.top="'Delete'"
+                            >
+                              Delete
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -508,6 +523,50 @@ export default {
     },
     closePrintPendingCasesModal() {
       this.showPendingCasePrintModal = false;
+    },
+    deletePetition(event, petitionId, petitionIndex) {
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: "Do you want to Delete?",
+        icon: "pi pi-exclamation-triangle",
+        acceptLabel: "Delete",
+        acceptClass: "p-button-danger",
+        rejectClass: "p-button-primary",
+        rejectLabel: "Cancel",
+        accept: () => {
+          this.petitions.splice(petitionIndex, 1);
+          var headers = {
+            Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+          };
+
+          axios
+            .delete(this.base_url + "/api/petitions/" + petitionId, {
+              headers,
+            })
+            .then(
+              (response) => {
+                if (response.status === 200) {
+                  this.$notify({
+                    type: "success",
+                    title: "Success",
+                    text: "Deleted Successfully!",
+                  });
+                }
+              },
+              (error) => {
+                console.log(error.response.data);
+                this.$notify({
+                  type: "error",
+                  title: "Something went wrong!",
+                  text: error.response.data.message,
+                });
+              }
+            );
+        },
+        reject: () => {
+          this.$confirm.close();
+        },
+      });
     },
   },
   mounted() {

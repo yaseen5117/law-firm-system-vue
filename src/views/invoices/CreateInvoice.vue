@@ -277,7 +277,6 @@
                         v-model="invoice.amount"
                         :disabled="invoice.invoice_status_id == 3"
                         type="number"
-                        min="0"
                         class="form-control"
                         placeholder="25000"
                       />

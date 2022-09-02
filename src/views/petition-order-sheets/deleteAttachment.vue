@@ -38,7 +38,7 @@
         <td>
           <img
             :class="activePage == attachment.id ? 'active-img' : ''"
-            style="width: 80px"
+            style="width: 150px"
             :src="
               this.base_url +
               '/storage/attachments/petitions/' +
