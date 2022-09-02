@@ -372,7 +372,6 @@ import PageNumberSideBar from "../shared/PageNumberLeftSideBar.vue";
 import AnnexureRightSideBar from "../shared/AnnexureRightSideBar.vue";
 import { mapState } from "vuex";
 import NotFoundMessage from "../shared/NotFoundMessage.vue";
-import draggable from 'vuedraggable'
 
 export default {
   components: {
@@ -386,7 +385,6 @@ export default {
     PageNumberSideBar,
     AnnexureRightSideBar,
     NotFoundMessage,
-    draggable,
   },
   computed: mapState(["user"]),
   data() {
