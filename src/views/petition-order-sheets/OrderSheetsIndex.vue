@@ -180,7 +180,11 @@
               petition_id: orderSheet.petition_id,
             },
           }"
-          >{{ orderSheet.order_sheet_types.title }}<br />
+          >{{
+            orderSheet.order_sheet_types
+              ? orderSheet.order_sheet_types.title
+              : ""
+          }}<br />
           {{ orderSheet.order_sheet_date }}
         </router-link>
       </ul>
@@ -410,11 +414,10 @@ export default {
                     title: "Success",
                     text: "Deleted Successfully!",
                   });
+                  this.$router.push({
+                    path: "/petition-order-sheets-index/" + this.petition_id,
+                  });
                   this.getOrderSheets();
-                  // this.petition_index_details.attachments.splice(
-                  //   attachmentIndex,
-                  //   1
-                  // ); //removing record from list/index after deleting record from DB
                 }
               },
               (error) => {

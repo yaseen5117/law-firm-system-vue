@@ -32,16 +32,6 @@
                     />
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-12">
-                    <label>Next Hearing Date</label>
-                    <InputMask
-                      mask="99/99/9999"
-                      class="form-control"
-                      type="text"
-                      placeholder="dd/mm/yyyy"
-                      v-model="order_sheet.next_hearing_date"
-                    />
-                  </div>
-                  <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Type</label>
                     <select
                       class="form-control"
@@ -56,6 +46,16 @@
                         {{ order_sheet_type.title }}
                       </option>
                     </select>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <label>Next Hearing Date</label>
+                    <InputMask
+                      mask="99/99/9999"
+                      class="form-control"
+                      type="text"
+                      placeholder="dd/mm/yyyy"
+                      v-model="order_sheet.next_hearing_date"
+                    />
                   </div>
                 </div>
               </div>
