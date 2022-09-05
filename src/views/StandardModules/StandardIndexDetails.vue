@@ -108,7 +108,11 @@
                 >
                   <div class="col-12">
                     <img
-                      v-if="attachment.mime_type != 'application/pdf'"
+                      v-if="
+                        attachment.mime_type == 'image/png' ||
+                        attachment.mime_type == 'image/jpeg' ||
+                        attachment.mime_type == 'image/jpg'
+                      "
                       :class="
                         activePage == index_attachment + 1 ? 'active-img' : ''
                       "
@@ -130,7 +134,13 @@
                       :class="
                         activePage == index_attachment + 1 ? 'active-img' : ''
                       "
-                      v-if="attachment.mime_type == 'application/pdf'"
+                      v-if="
+                        !(
+                          attachment.mime_type == 'image/png' ||
+                          attachment.mime_type == 'image/jpeg' ||
+                          attachment.mime_type == 'image/jpg'
+                        )
+                      "
                       :href="
                         this.base_url +
                         '/storage/attachments/petitions/' +
@@ -203,6 +213,11 @@
                           </td>
                           <td>
                             <img
+                              v-if="
+                                attachment.mime_type == 'image/png' ||
+                                attachment.mime_type == 'image/jpeg' ||
+                                attachment.mime_type == 'image/jpg'
+                              "
                               :class="
                                 activePage == attachment.id ? 'active-img' : ''
                               "
@@ -219,6 +234,36 @@
                                 attachment.file_name
                               "
                             />
+                            <a
+                              :class="
+                                activePage == index_attachment + 1
+                                  ? 'active-img'
+                                  : ''
+                              "
+                              v-if="
+                                !(
+                                  attachment.mime_type == 'image/png' ||
+                                  attachment.mime_type == 'image/jpeg' ||
+                                  attachment.mime_type == 'image/jpg'
+                                )
+                              "
+                              :href="
+                                this.base_url +
+                                '/storage/attachments/petitions/' +
+                                petition.id +
+                                '/' +
+                                modal_name +
+                                '/' +
+                                this.$route.params.module_id +
+                                '/' +
+                                attachment.file_name
+                              "
+                              target="_blank"
+                              ><u
+                                ><span>Click to Open: </span
+                                >{{ attachment.title }}</u
+                              ></a
+                            >
                           </td>
                           <td>
                             <input

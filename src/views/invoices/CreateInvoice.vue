@@ -115,6 +115,7 @@
                           forceSelection="true"
                           class="p-autocomplete"
                           delay="1"
+                          autofocus
                           :style="'width:100%'"
                           :inputStyle="'width:100%'"
                           @blur="v$.invoice.selectedClient.name.$touch"
@@ -273,13 +274,21 @@
                   <div class="form-group">
                     <div class="input-group">
                       <span class="input-group-text">RS</span>
-                      <input
+                      <InputNumber
+                        class="p-inputnumber-input"
+                        inputId="withoutgrouping"
+                        v-model="invoice.amount"
+                        mode="decimal"
+                        :useGrouping="false"
+                        :disabled="invoice.invoice_status_id == 3"
+                      />
+                      <!-- <input
                         v-model="invoice.amount"
                         :disabled="invoice.invoice_status_id == 3"
                         type="number"
                         class="form-control"
                         placeholder="25000"
-                      />
+                      /> -->
                     </div>
                   </div>
                 </div>
@@ -335,13 +344,22 @@
                         <label for="">Amount</label>
                         <div class="input-group">
                           <span class="input-group-text">RS</span>
-                          <input
+                          <InputNumber
+                            class="p-inputnumber-input"
+                            inputId="withoutgrouping"
+                            v-model="invoice_expense.amount"
+                            mode="decimal"
+                            :useGrouping="false"
+                            :disabled="invoice.invoice_status_id == 3"
+                          />
+
+                          <!-- <input
                             v-model="invoice_expense.amount"
                             :disabled="invoice.invoice_status_id == 3"
                             type="number"
                             class="form-control"
                             placeholder="300"
-                          />
+                          /> -->
                           <button
                             type="button"
                             :disabled="invoice.invoice_status_id == 3"

@@ -546,9 +546,9 @@ export default {
           id: 0,
           feature_name: "",
           free_plan: "",
-          student_plan: '<a href="#quote">"Get a Quote"</a>',
-          individual_plan: '<a href="#quote">"Get a Quote"</a>',
-          lawfirm_plan: '<a href="#quote">"Get a Quote"</a>',
+          student_plan: '<a href="#quote">Get a Quote</a>',
+          individual_plan: '<a href="#quote">Get a Quote</a>',
+          lawfirm_plan: '<a href="#quote">Get a Quote</a>',
         },
         {
           id: 1,

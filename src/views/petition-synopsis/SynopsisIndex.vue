@@ -102,7 +102,11 @@
                 >
                   <div class="col-12">
                     <img
-                      v-if="attachment.mime_type != 'application/pdf'"
+                      v-if="
+                        attachment.mime_type == 'image/png' ||
+                        attachment.mime_type == 'image/jpeg' ||
+                        attachment.mime_type == 'image/jpg'
+                      "
                       :class="activePage == attachment.id ? 'active-img' : ''"
                       class="img-fluid"
                       style="width: 90%"
@@ -118,7 +122,13 @@
                     />
                     <a
                       :class="activePage == attachment.id ? 'active-img' : ''"
-                      v-if="attachment.mime_type == 'application/pdf'"
+                      v-if="
+                        !(
+                          attachment.mime_type == 'image/png' ||
+                          attachment.mime_type == 'image/jpeg' ||
+                          attachment.mime_type == 'image/jpg'
+                        )
+                      "
                       :href="
                         this.base_url +
                         '/storage/attachments/petitions/' +

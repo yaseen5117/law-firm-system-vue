@@ -38,6 +38,11 @@
         <td>
           <img
             :class="activePage == attachment.id ? 'active-img' : ''"
+            v-if="
+              attachment.mime_type == 'image/png' ||
+              attachment.mime_type == 'image/jpeg' ||
+              attachment.mime_type == 'image/jpg'
+            "
             style="width: 150px"
             :src="
               this.base_url +
@@ -49,6 +54,27 @@
               attachment.file_name
             "
           />
+          <a
+            :class="activePage == attachment.id ? 'active-img' : ''"
+            v-if="
+              !(
+                attachment.mime_type == 'image/png' ||
+                attachment.mime_type == 'image/jpeg' ||
+                attachment.mime_type == 'image/jpg'
+              )
+            "
+            :href="
+              this.base_url +
+              '/storage/attachments/petitions/' +
+              order_sheet.petition_id +
+              '/PetitonOrderSheet/' +
+              this.$route.params.editable_order_sheet_id +
+              '/' +
+              attachment.file_name
+            "
+            target="_blank"
+            ><u><span>Click to Open: </span>{{ attachment.title }}</u></a
+          >
         </td>
       </tr>
       <not-found-message :index_details="order_sheet" />
