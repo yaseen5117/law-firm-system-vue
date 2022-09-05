@@ -1525,9 +1525,9 @@ section {
 /* for all action buttons on index pages */
 .action-btn{
   padding: 1px 8px;
-  font-size: .875rem;
+  /* font-size: .875rem; */
   border-radius: 0.2rem;
-  font-size: 9.5px;
+  font-size: 11px;
   font-weight: 700;
 }
 .form-group{

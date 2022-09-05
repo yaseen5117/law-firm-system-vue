@@ -247,7 +247,7 @@
                               v-on:click.stop
                               >Edit
                             </router-link>
-                            <router-link
+                            <!-- <router-link
                               v-if="this.user.is_admin"
                               style="margin-right: 2px"
                               to="#"
@@ -255,7 +255,7 @@
                               role="button"
                               v-tooltip.top="'Alert'"
                               >Alert</router-link
-                            >
+                            > -->
                             <button
                               @click="
                                 toggleArchiveStatus(petition, petitionIndex)
