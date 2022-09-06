@@ -112,7 +112,8 @@
                       v-if="
                         attachment.mime_type == 'image/png' ||
                         attachment.mime_type == 'image/jpeg' ||
-                        attachment.mime_type == 'image/jpg'
+                        attachment.mime_type == 'image/jpg' ||
+                        attachment.mime_type == 'jpg'
                       "
                       :class="
                         activePage == index_attachment + 1 ? 'active-img' : ''
@@ -133,13 +134,7 @@
                       :class="
                         activePage == index_attachment + 1 ? 'active-img' : ''
                       "
-                      v-if="
-                        !(
-                          attachment.mime_type == 'image/png' ||
-                          attachment.mime_type == 'image/jpeg' ||
-                          attachment.mime_type == 'image/jpg'
-                        )
-                      "
+                      v-else
                       :href="
                         this.base_url +
                         '/storage/attachments/petitions/' +
