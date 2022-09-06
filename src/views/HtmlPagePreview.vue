@@ -1,6 +1,6 @@
 <template>
   <main id="main">
-    <page-header :title="page_slug" :petition="null" />
+    <page-header :title="page_title" :petition="null" :hideBreadCrumbs="true" />
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="row">
@@ -20,10 +20,10 @@ export default {
   components: { PageHeader },
   data() {
     return {
-      page_title: "Sample Page",
       page_content: "",
       page_type: this.$route.params.page_type,
       page_slug: this.$route.params.page_slug,
+      page_title: "...",
       base_url: process.env.VUE_APP_SERVICE_URL,
     };
   },
@@ -43,6 +43,7 @@ export default {
         })
         .then((response) => {
           this.page_content = response.data.content;
+          this.page_title = response.data.title;
           console.log(response);
           
         })

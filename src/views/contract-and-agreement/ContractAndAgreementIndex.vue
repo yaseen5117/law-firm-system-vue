@@ -81,12 +81,12 @@
                             <p
                               class="card-text"
                               v-html="
-                                (contractAndAgreemnet.content && contractAndAgreemnet.content.length) > 20
-                                  ? contractAndAgreemnet.content.substring(
+                                (contractAndAgreemnet.plain_content && contractAndAgreemnet.plain_content.length) > 50
+                                  ? contractAndAgreemnet.plain_content.substring(
                                       0,
-                                      19
+                                      49
                                     ) + '...'
-                                  : contractAndAgreemnet.content
+                                  : contractAndAgreemnet.plain_content
                               "
                             ></p>
                           </div>
@@ -101,7 +101,7 @@
                               :to="{
                                 name: 'preview-html',
                                 params: {
-                                  page_slug:contractAndAgreemnet.title,
+                                  page_slug:contractAndAgreemnet.slug,
                                   page_type:'contract-and-agreement'
                                 },
                               }"
@@ -110,7 +110,7 @@
                               data-bs-toggle="tooltip"
                               data-bs-placement="top"
                               title="View"
-                              >Read More
+                              >Preview
                             </router-link>
                             <router-link
                               v-if="this.user.is_admin"
