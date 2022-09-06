@@ -81,7 +81,7 @@
                             <p
                               class="card-text"
                               v-html="
-                                contractAndAgreemnet.content > 20
+                                (contractAndAgreemnet.content && contractAndAgreemnet.content.length) > 20
                                   ? contractAndAgreemnet.content.substring(
                                       0,
                                       19
@@ -97,11 +97,12 @@
                           <div class="pull-right">
                             <router-link
                               style="margin-right: 2px"
+                              target="_blank"
                               :to="{
-                                name: 'edit-contract-and-agreement',
+                                name: 'preview-html',
                                 params: {
-                                  contract_agreement_id:
-                                    contractAndAgreemnet.id,
+                                  page_slug:contractAndAgreemnet.title,
+                                  page_type:'contract-and-agreement'
                                 },
                               }"
                               class="btn btn-success btn-sm action-btn"

@@ -62,6 +62,8 @@ import createUpdatePleadingIndex from "../views/sample-pleadings/CreateUpdate";
 
 import AllIndexesDetail from "../views/petition-index/AllIndexesDetail";
 
+import HtmlPagePreview from "../views/HtmlPagePreview";
+
 const routes = [
   {
     path: "/login",
@@ -569,6 +571,18 @@ const routes = [
     component: GeneralSettings,
     meta: {
       auth: true,
+    },
+  },
+  //General settings
+ 
+ 
+  //HTML previews
+  {
+    path: "/preview/:page_type/:page_slug",
+    name: "preview-html",
+    component: HtmlPagePreview,
+    meta: {
+      auth: false,
     },
   },
   //General settings
