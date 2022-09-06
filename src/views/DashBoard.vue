@@ -368,7 +368,7 @@ export default {
   },
   mounted() {
     document.getElementById("header");
-    document.title = "DashBoard";
+    document.title = "Dashboard";
   },
 };
 </script>

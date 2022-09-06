@@ -4,14 +4,15 @@
     <page-header :title="page_title" :petition="null" />
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
-        <div class="row">
-          <div class="col-12">
-            <form @submit.prevent="submitForm($event)">
+        <form @submit.prevent="submitForm($event)">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Name<span style="color: red">*</span></label>
                     <input
+                      autofocus
                       class="form-control"
                       v-model="user.name"
                       v-bind:class="{
@@ -23,7 +24,7 @@
                       >Name field is required.</span
                     >
                   </div>
-                  <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>CNIC</label>
                     <InputMask
                       type="text"
@@ -33,7 +34,7 @@
                     />
                   </div>
 
-                  <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Email<span style="color: red">*</span></label>
                     <input
                       type="email"
@@ -50,6 +51,14 @@
                     >
                     <small class="text-danger">{{ error_email }} </small>
                   </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <label>Phone</label>
+                    <InputMask
+                      class="form-control"
+                      mask="9999-9999999"
+                      v-model="user.phone"
+                    />
+                  </div>
                 </div>
               </div>
               <div class="form-group">
@@ -61,7 +70,7 @@
                       ></label
                     >
                     <input
-                      type="password"
+                      type="text"
                       class="form-control"
                       v-model="user.password"
                     />
@@ -76,7 +85,7 @@
                       ></label
                     >
                     <input
-                      type="password"
+                      type="text"
                       v-bind:class="{
                         'error-boarder': v$.user.confirm_password.$error,
                       }"
@@ -140,34 +149,27 @@
                         v-model="user.country"                                             
                         />                     
                   </div>  -->
-                  <div class="col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>City</label>
                     <input class="form-control" v-model="user.city" />
                   </div>
 
-                  <div class="col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Province</label>
                     <input class="form-control" v-model="user.province" />
                   </div>
 
-                  <div class="col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Zip</label>
                     <input class="form-control" v-model="user.zip" />
                   </div>
-                  <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label>Phone</label>
-                    <InputMask
-                      class="form-control"
-                      mask="9999-9999999"
-                      v-model="user.phone"
-                    />
-                  </div>
                 </div>
               </div>
-
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Profile Image</label>
                     <input
                       accept="image/png, image/jpeg, image/jpg"
@@ -179,7 +181,10 @@
                       @input="pickFile"
                     />
                   </div>
-                  <div class="col-lg-3 col-md-3 col-sm-12">
+                  <div
+                    class="col-lg-4 col-md-4 col-sm-12"
+                    v-show="previewImage"
+                  >
                     <div
                       class="imagePreviewWrapper"
                       :style="{ 'background-image': `url(${previewImage})` }"
@@ -202,6 +207,7 @@
                         <div class="col-md-4">
                           <label for="">Name</label>
                           <input
+                            autofocus
                             type="text"
                             class="form-control"
                             v-model="contact_person.name"
@@ -250,9 +256,7 @@
                                   contact_person.id
                                 )
                               "
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              title="Remove"
+                              v-tooltip.top="'Remove'"
                               :disabled="saving"
                             >
                               <span class="fa fa-minus"></span>
@@ -267,15 +271,20 @@
                   </div>
                 </div>
               </div>
-
-              <div class="form-group">
-                <button :disabled="saving" class="btn btn-success btn-sm">
-                  {{ btnTitle }}
-                </button>
-              </div>
-            </form>
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" v-model="user.send_email" />
+                Send Details with Email</label
+              >
+            </div>
+            <div class="form-group">
+              <button :disabled="saving" class="btn btn-success btn-sm">
+                {{ btnTitle }}
+              </button>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </section>
   </main>
@@ -301,10 +310,11 @@ export default {
       btnTitle: this.$route.params.id ? "Update" : "Save",
       base_url: process.env.VUE_APP_SERVICE_URL,
       user: {
-        password: "",
+        password: this.$route.params.id ? "" : this.generatePassword(),
         role_id: "",
         confirm_password: "",
         contact_persons: [],
+        send_email: this.$route.params.id ? false : true,
       },
       roles: [],
       error_email: "",
@@ -335,11 +345,28 @@ export default {
     document.title = this.user.name
       ? this.user.name + " | " + this.page_title
       : this.page_title;
+    this.user.confirm_password = this.user.password;
   },
   mounted() {
     document.getElementById("header");
   },
   methods: {
+    generatePassword() {
+      // program to generate random Password
+
+      // declare all characters
+      const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      let length = 6;
+      let result = "";
+      const charactersLength = characters.length;
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(
+          Math.floor(Math.random() * charactersLength)
+        );
+      }
+      return result;
+    },
     removeContactPerson: function (event, obj, index, userId) {
       if (userId) {
         this.$confirm.require({
@@ -514,7 +541,7 @@ export default {
 .imagePreviewWrapper {
   background-repeat: no-repeat;
   width: 100px;
-  height: 60px;
+  height: 70px;
   display: block;
   cursor: pointer;
   margin: 0 auto 0px;
