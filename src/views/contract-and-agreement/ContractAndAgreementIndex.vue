@@ -81,12 +81,12 @@
                             <p
                               class="card-text"
                               v-html="
-                                contractAndAgreemnet.content > 20
-                                  ? contractAndAgreemnet.content.substring(
+                                (contractAndAgreemnet.plain_content && contractAndAgreemnet.plain_content.length) > 50
+                                  ? contractAndAgreemnet.plain_content.substring(
                                       0,
-                                      19
+                                      49
                                     ) + '...'
-                                  : contractAndAgreemnet.content
+                                  : contractAndAgreemnet.plain_content
                               "
                             ></p>
                           </div>
@@ -97,11 +97,12 @@
                           <div class="pull-right">
                             <router-link
                               style="margin-right: 2px"
+                              target="_blank"
                               :to="{
-                                name: 'edit-contract-and-agreement',
+                                name: 'preview-html',
                                 params: {
-                                  contract_agreement_id:
-                                    contractAndAgreemnet.id,
+                                  page_slug:contractAndAgreemnet.slug,
+                                  page_type:'contract-and-agreement'
                                 },
                               }"
                               class="btn btn-success btn-sm action-btn"
@@ -109,7 +110,7 @@
                               data-bs-toggle="tooltip"
                               data-bs-placement="top"
                               title="View"
-                              >Read More
+                              >Preview
                             </router-link>
                             <router-link
                               v-if="this.user.is_admin"
