@@ -2,7 +2,7 @@
   <ConfirmPopup></ConfirmPopup>
   <main id="main">
     <page-header title="Petition" />
-    <nav-components activeNavPill="petition" :petition_id="id" />
+    <nav-components activeNavPill="petition" :petition_id="petition.id" />
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
@@ -71,6 +71,7 @@
                 ><i class="fa fa-download"></i> Download PDF</a
               >
             </div>
+            <div class="text-end"><hearing-date :petition="petition" :petition_detail="petition_detail" /></div>
             <div class="card-body align-center case_heading">
               <h6>
                 <u
@@ -310,6 +311,7 @@ import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 import Tooltip from "primevue/tooltip";
 import ConfirmPopup from "primevue/confirmpopup";
+import HearingDate from "../views/shared/HearingDate.vue";
 
 export default {
   components: {
@@ -319,6 +321,7 @@ export default {
     Button,
     Tooltip,
     ConfirmPopup,
+    HearingDate,
   },
   computed: mapState(["user"]),
   setup() {

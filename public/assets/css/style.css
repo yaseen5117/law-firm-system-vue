@@ -1749,6 +1749,7 @@ label{
   font-family: 'Poppins';
   color: #8f3a302b;
 }
+/* style for pending tag */
 .btn-grey{
   color: #fff;
   background-color: #7e7e7e;
@@ -1759,6 +1760,25 @@ label{
   background-color: #414141;
   border-color: #414141;
 }
+/* style for pending tag */
+
+/* style for Hearing Date */
+.btn-green{
+  color: #fff;
+  background-color: #6aa885;
+  border-color: #6aa885;
+}
+.btn-green:hover {
+  color: #fff;
+  background-color: #3f6b52;
+  border-color: #3f6b52;
+}
+.btn-dark{
+  color: #fff;
+  background-color: #6e5f2d;
+  border-color: #6e5f2d;
+}
+/* style for Hearing Date */
 
 .pricing_table_header_col{
  
