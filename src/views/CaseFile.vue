@@ -271,6 +271,7 @@
                               {{ !petition.archived ? "Archive" : "Unarchive" }}
                             </button>
                             <button
+                              v-if="this.user.is_admin"
                               @click="
                                 deletePetition(
                                   $event,

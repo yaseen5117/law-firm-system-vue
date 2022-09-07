@@ -12,7 +12,7 @@
       <div class="container" v-if="this.user">
         <div class="row gy-4">
           <div
-            v-if="this.user.is_admin"
+            v-if="this.user.is_admin || this.user.is_lawyer"
             @click="gotoLink('petitions-calendar')"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="100"
@@ -75,7 +75,7 @@
 
           <div
             @click="gotoLink('opinions')"
-            v-if="this.user.is_admin"
+            v-if="this.user.is_admin || this.user.is_lawyer"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
           >
             <div class="icon-box iconbox-pink border">
@@ -113,7 +113,7 @@
 
           <div
             @click="gotoLink('contract-and-agreement')"
-            v-if="this.user.is_admin"
+            v-if="this.user.is_admin || this.user.is_lawyer"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="100"
           >
@@ -154,7 +154,7 @@
           <!-- pleading link -->
           <div
             @click="gotoLink('sample-pleading')"
-            v-if="this.user.is_admin"
+            v-if="this.user.is_admin || this.user.is_lawyer"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="200"
           >
@@ -188,7 +188,7 @@
 
           <div
             @click="gotoLink('petition-general-case-law')"
-            v-if="this.user.is_admin"
+            v-if="this.user.is_admin || this.user.is_lawyer"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="200"
           >
@@ -254,7 +254,7 @@
           </div>
 
           <div
-            v-if="this.user.is_admin"
+            v-if="this.user.is_admin || this.user.is_lawyer"
             class="col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="100"
           >
@@ -285,7 +285,7 @@
 
           <div
             @click="gotoLink('links')"
-            v-if="this.user.is_admin"
+            v-if="this.user.is_admin || this.user.is_lawyer"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="200"
           >
@@ -316,7 +316,7 @@
           </div>
 
           <div
-            v-if="this.user.is_admin"
+            v-if="this.user.is_admin || this.user.is_lawyer"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="200"
           >

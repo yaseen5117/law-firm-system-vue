@@ -69,8 +69,8 @@
                     <thead>
                       <th>Propositions</th>
                       <th>Legal Provisions &#38; Citations</th>
-                      <th width="10%">Actions</th>
-                      <th>Upload File</th>
+                      <th v-if="this.user.is_admin" width="10%">Actions</th>
+                      <th v-if="this.user.is_admin">Upload File</th>
                     </thead>
                     <tbody>
                       <tr
@@ -124,6 +124,7 @@
                           </router-link>
 
                           <button
+                            v-if="this.user.is_admin"
                             class="btn btn-sm btn-danger action-btn"
                             v-show="!general_case_law.editMode"
                             @click="
@@ -143,6 +144,7 @@
                         </td>
                         <td>
                           <file-upload
+                            v-if="this.user.is_admin"
                             @afterUpload="getGeneralCaseLaws"
                             type="App\Models\GeneralCaseLaw"
                             :attachmentable_id="general_case_law.id"
@@ -159,7 +161,7 @@
                           />
                         </td>
                       </tr>
-                      <tr>
+                      <tr v-if="this.user.is_admin">
                         <td>
                           <AutoComplete
                             :delay="1"

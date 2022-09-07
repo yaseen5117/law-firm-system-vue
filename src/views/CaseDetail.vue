@@ -2,7 +2,7 @@
   <ConfirmPopup></ConfirmPopup>
   <main id="main">
     <page-header title="Petition" />
-    <nav-components activeNavPill="petition" :petition_id="petition.id" />
+    <nav-components activeNavPill="petition" :petition_id="id" />
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
@@ -21,7 +21,11 @@
 
               <button
                 style="margin-right: 2px"
-                v-if="!insertPendingTag && !petition.pending_tag"
+                v-if="
+                  !insertPendingTag &&
+                  !petition.pending_tag &&
+                  this.user.is_admin
+                "
                 @click="openInsertField"
                 class="btn btn-sm btn-success action-btn"
               >
@@ -104,12 +108,16 @@
                 <tbody>
                   <tr
                     v-for="(petition_detail, petitionIndex) in petition_details"
-                    :key="petition_detail.id" class="draggable" draggable="true" @dragstart="startDrag($event,petitionIndex)"  @drop="onDrop($event,petitionIndex)" @dragenter.prevent @dragover.prevent
+                    :key="petition_detail.id"
+                    class="draggable"
+                    draggable="true"
+                    @dragstart="startDrag($event, petitionIndex)"
+                    @drop="onDrop($event, petitionIndex)"
+                    @dragenter.prevent
+                    @dragover.prevent
                   >
-                    <td width="3%">{{petitionIndex+1}}</td>
+                    <td width="3%">{{ petitionIndex + 1 }}</td>
                     <td>
-                       
-                      
                       <AutoComplete
                         v-show="petition_detail.editMode"
                         :delay="1"
@@ -352,52 +360,51 @@ export default {
     this.getCaseDetails();
   },
   methods: {
-
     array_move(arr, old_index, new_index) {
-        if (new_index >= arr.length) {
-            var k = new_index - arr.length + 1;
-            while (k--) {
-                arr.push(undefined);
-            }
+      if (new_index >= arr.length) {
+        var k = new_index - arr.length + 1;
+        while (k--) {
+          arr.push(undefined);
         }
-        arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-        return arr; // for testing
+      }
+      arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+      return arr; // for testing
     },
 
-     startDrag(event,index ){
+    startDrag(event, index) {
       console.log(index);
       event.dataTransfer.dropEffect = "move";
       event.dataTransfer.effectAllowed = "move";
-      event.dataTransfer.setData("petition_index_id",index);
+      event.dataTransfer.setData("petition_index_id", index);
     },
 
-    onDrop(event,newIndex ){
+    onDrop(event, newIndex) {
       var old_index = event.dataTransfer.getData("petition_index_id");
-      this.petition_details = this.array_move(this.petition_details,old_index,newIndex);
+      this.petition_details = this.array_move(
+        this.petition_details,
+        old_index,
+        newIndex
+      );
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
       axios
-          .post(
-            this.base_url + "/api/petitions_index/update_display_order",
-            {
-              petition_details: this.petition_details,
-            },
-            { headers }
-          )
-          .then((response) => {
-            
-          })
-          .catch((error) => {
-            console.log(error);
-            this.$notify({
-              type: "error",
-              title: "Something went wrong!",
-              text: error.response.data.message,
-            });
+        .post(
+          this.base_url + "/api/petitions_index/update_display_order",
+          {
+            petition_details: this.petition_details,
+          },
+          { headers }
+        )
+        .then((response) => {})
+        .catch((error) => {
+          console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
           });
-      
-
+        });
     },
 
     //Start Methods About All Pending Tag
@@ -675,11 +682,9 @@ export default {
   border-color: #7e7e7e;
 } */
 
-
-
 .draggable:active {
-    cursor: move;
-    cursor:    -moz-grabbing;
-    cursor:         grabbing;
+  cursor: move;
+  cursor: -moz-grabbing;
+  cursor: grabbing;
 }
 </style>

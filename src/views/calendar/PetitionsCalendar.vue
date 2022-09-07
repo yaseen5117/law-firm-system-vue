@@ -20,7 +20,7 @@
     :title="popupTitle"
     :selected_date="selected_date"
     :eventToUpdateProp="eventToUpdate"
-    v-if="displayModal"
+    v-if="displayModal && this.user.is_admin"
     @close-modal-event="hideModal"
     @triggerGetEvents="getEvents"
   />
@@ -39,6 +39,7 @@ import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction";
 import BootstrapModalNoJquery from "./BootstrapModalNoJquery.vue";
 import moment from "moment";
+import { mapState } from "vuex";
 
 export default {
   components: { PageHeader, FullCalendar, BootstrapModalNoJquery },
@@ -69,6 +70,7 @@ export default {
       popupTitle: null,
     };
   },
+  computed: mapState(["user", "globalGeneralSetting"]),
   created() {
     this.getEvents();
   },
