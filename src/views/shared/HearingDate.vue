@@ -60,7 +60,6 @@
 import axios from "axios";
 
 export default {
-  props: ["petition", "petition_detail"],
   components: {},
   data() {
     return {
