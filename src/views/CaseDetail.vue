@@ -71,7 +71,9 @@
                 ><i class="fa fa-download"></i> Download PDF</a
               >
             </div>
-            <div class="text-end"><hearing-date :petition="petition" :petition_detail="petition_detail" /></div>
+            <div class="text-end">
+              <hearing-date />
+            </div>
             <div class="card-body align-center case_heading">
               <h6>
                 <u
@@ -97,7 +99,7 @@
         <div class="row">
           <div class="table-responsive">
             <div class="col-lg-12 col-md-12 col-sm-12">
-              <table class="table table-striped">
+              <table class="table table-striped" v-if="isLoaded">
                 <thead>
                   <th>Sr.</th>
                   <th>Description of Documents</th>
@@ -229,6 +231,12 @@
                       </a>
                     </td>
                   </tr>
+                  <tr
+                    v-if="petition_details.length == 0"
+                    class="alert alert-warning"
+                  >
+                    <td colspan="6" class="text-danger">No Records found.</td>
+                  </tr>
                   <tr v-if="this.user.is_admin">
                     <td></td>
                     <td>
@@ -290,6 +298,9 @@
                   </tr>
                 </tbody>
               </table>
+              <div v-if="!isLoaded" class="col-md-12">
+                <p class="alert alert-warning">Loading....</p>
+              </div>
             </div>
           </div>
         </div>
@@ -350,6 +361,7 @@ export default {
       pending_tag: "",
       showEditTagBtn: true,
       pendingTag: true,
+      isLoaded: false,
     };
   },
   validations() {
@@ -527,6 +539,7 @@ export default {
       }, 250);
     },
     getCaseDetails() {
+      this.isLoaded = false;
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
@@ -535,6 +548,7 @@ export default {
         .then((response) => {
           this.petition = response.data.petition;
           this.petition_details = response.data.petition_details;
+          this.isLoaded = true;
         })
         .catch((error) => {
           console.log(error);
