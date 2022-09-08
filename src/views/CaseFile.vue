@@ -184,6 +184,7 @@
                                 v-tooltip.top="
                                   petition.type ? '' + petition.type.title : ''
                                 "
+                                v-if="petition.type_abrivation"
                                 >{{
                                   petition.type_abrivation != ""
                                     ? "" + petition.type_abrivation + ""
