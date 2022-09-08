@@ -23,9 +23,11 @@ import InputNumber from "primevue/inputnumber";
 import Paginator from "primevue/paginator";
 import ConfirmPopup from "primevue/confirmpopup";
 //app.component("hello-world", HelloWorld);
+import myMixin from "./myMixin.js";
 
-createApp(App)
-  .use(store)
+const app = createApp(App);
+app.mixin(myMixin);
+  app.use(store)
   .use(router)
   .use(PrimeVue)
   .use(Notifications)
