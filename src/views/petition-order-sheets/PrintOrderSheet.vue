@@ -5,31 +5,27 @@
         class="col-lg-12 col-md-12 col-sm-12 mt-4 mb-2"
         style="text-align: center"
       >
-        <h2>Pending Cases | {{ this.globalGeneralSetting.site_name }}</h2>
+        <h2>Order Sheets | {{ this.globalGeneralSetting.site_name }}</h2>
       </div>
       <div class="col-lg-12 col-md-12 col-sm-12">
         <table class="table table-bordered" id="modal_table">
           <thead>
-            <th>Library No.</th>
-            <th>Title</th>
             <th>Case No.</th>
-            <th>Court</th>
+            <th>Order Sheet Date</th>
+            <th>Order Sheet Type</th>
           </thead>
           <tbody>
             <tr
-              v-for="(pendingCase, pendingCaseIndex) in pendingCases"
-              :key="pendingCaseIndex"
+              v-for="(singleOrderSheet, orderSheetIndex) in orderSheets"
+              :key="orderSheetIndex"
             >
-              <td>{{ pendingCase.pending_tag }}</td>
-              <td>{{ pendingCase.title }}</td>
-              <td>
-                {{
-                  pendingCase.type_abrivation != ""
-                    ? "" + pendingCase.type_abrivation + ""
-                    : ""
-                }}&nbsp; {{ pendingCase.case_no }}/{{ pendingCase.year }}
+              <td v-if="singleOrderSheet.petition">
+                {{ singleOrderSheet.petition.petition_standard_title }}
               </td>
-              <td v-if="pendingCase.court">{{ pendingCase.court.title }}</td>
+              <td>{{ singleOrderSheet.order_sheet_date }}</td>
+              <td v-if="singleOrderSheet.order_sheet_types">
+                {{ singleOrderSheet.order_sheet_types.title }}
+              </td>
             </tr>
           </tbody>
         </table>
@@ -44,16 +40,16 @@ import { mapState } from "vuex";
 
 export default {
   computed: mapState(["user", "globalGeneralSetting"]),
-  props: ["petitions"],
 
   data() {
     return {
-      pendingCases: [],
+      orderSheets: [],
       base_url: process.env.VUE_APP_SERVICE_URL,
+      petition_id: this.$route.params.petition_id,
     };
   },
   created() {
-    this.getPendingCaseFiles();
+    this.getOrderSheets();
   },
   methods: {
     printContents() {
@@ -67,18 +63,19 @@ export default {
     closePrintPendingCasesModal() {
       this.$emit("close-modal-event");
     },
-    async getPendingCaseFiles() {
-      let url = this.base_url + "/api/get_pending_cases";
+    async getOrderSheets() {
+      let url = this.base_url + "/api/petition_order_sheets";
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
       await axios
         .get(url, {
           headers,
+          params: { petition_id: this.petition_id },
         })
         .then((response) => {
-          this.pendingCases = response.data.pendingCases;
-          console.log(response.data.pendingCases);
+          this.orderSheets = response.data.records;
+          console.log(response.data.records);
           setTimeout(this.printContents, 1500);
         })
         .catch((error) => {

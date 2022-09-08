@@ -71,6 +71,13 @@
             >
               Delete
             </a>
+            <a
+              class="btn btn-grey btn-sm"
+              style="margin-left: 2px"
+              v-tooltip.top="'Print Order Sheets'"
+              @click="printOrderSheets()"
+              ><i class="fa fa-print"></i> Print</a
+            >
           </div>
           <div>
             <div class="mt-4" v-if="orderSheetsActive">
@@ -439,6 +446,12 @@ export default {
           this.$confirm.close();
         },
       });
+    },
+    printOrderSheets() {
+      let routeData = this.$router.resolve({
+        name: "print-order-sheets",
+      });
+      window.open(routeData.href, "_blank");
     },
   },
 };

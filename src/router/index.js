@@ -18,6 +18,7 @@ import PetitionsCalendar from "../views/calendar/PetitionsCalendar";
 import PetitionOrderSheetCreateUpdate from "../views/petition-order-sheets/CreateUpdate";
 import OrderSheetIndex from "../views/petition-order-sheets/OrderSheetsIndex";
 import ModuleType from "../views/shared/ModuleType";
+import PrintOrderSheets from "../views/petition-order-sheets/PrintOrderSheet";
 
 import PetitionTalbanaCreateUpdate from "../views/petition-talbana/CreateUpdate";
 import TalbanaIndex from "../views/petition-talbana/TalbanaIndex";
@@ -217,6 +218,14 @@ const routes = [
     path: "/module-types",
     name: "module-types",
     component: ModuleType,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/print-order-sheets/:petition_id",
+    name: "print-order-sheets",
+    component: PrintOrderSheets,
     meta: {
       auth: true,
     },
@@ -574,8 +583,7 @@ const routes = [
     },
   },
   //General settings
- 
- 
+
   //HTML previews
   {
     path: "/preview/:page_type/:page_slug",
