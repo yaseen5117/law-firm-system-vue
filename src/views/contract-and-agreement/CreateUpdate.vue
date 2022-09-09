@@ -28,7 +28,7 @@
                       filterPlaceholder="Find by Category Name"
                     />
                   </div>
-                  <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Title<span style="color: red">*</span></label>
                     <input
                       autofocus
@@ -56,15 +56,46 @@
                       ref="fileupload"
                     />
                   </div>
+                  <div class="col-lg-5 col-md-5 col-sm-12">
+                    <label>Public URL 
+
+                      <router-link
+                              style="margin-right: 2px"
+                              target="_blank"
+                              :to="{
+                                name: 'preview-html',
+                                params: {
+                                  page_slug:contract_and_agreement.slug,
+                                  page_type:'contract-and-agreement'
+                                },
+                              }"
+                              class=" btn btn-success action-btn"
+                              role="button"
+                              data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                              title="View"
+                              >Preview
+                            </router-link>
+                      <button v-if="contract_and_agreement.id" class=" btn btn-success action-btn" type="button" @click="copyToClipboard(html_page_url)">Copy To Clipboard</button>
+                    </label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      v-model="html_page_url"
+                      readonly
+                    />
+                  </div>
                 </div>
               </div>
               <div class="form-group">
+                
                 <div class="row">
                   <label for="">
-                    Content
+                    Content <button v-if="contract_and_agreement.id" class="btn btn-success action-btn" type="button" @click="copyToClipboard(contract_and_agreement.content)">Copy To Clipboard</button>
                     <Editor
                       v-model="contract_and_agreement.content"
                       editorStyle="height: 220px"
+                      
                     />
                   </label>
                 </div>
@@ -109,6 +140,7 @@ export default {
   },
   data() {
     return {
+      contract_and_agreement: {},
       categories: [],
       saving: false,
       page_title: this.$route.params.contract_agreement_id
@@ -118,7 +150,7 @@ export default {
         ? "Update"
         : "Save",
       base_url: process.env.VUE_APP_SERVICE_URL,
-      contract_and_agreement: {},
+      html_page_url: null,
       files: "",
     };
   },
@@ -132,6 +164,9 @@ export default {
   created() {
     this.getContractAndAgreement();
     this.getContractCategories();
+  },
+  updated() {
+    this.html_page_url = window.location.origin+"/preview-html/contract-and-agreement/"+this.contract_and_agreement.slug;
   },
   mounted() {
     document.getElementById("header");
