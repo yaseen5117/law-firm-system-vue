@@ -11,8 +11,8 @@
         <table class="table table-bordered" id="modal_table">
           <thead>
             <th>Case No.</th>
-            <th>Order Sheet Date</th>
-            <th>Order Sheet Type</th>
+            <th>Date</th>
+            <th>Type</th>
           </thead>
           <tbody>
             <tr

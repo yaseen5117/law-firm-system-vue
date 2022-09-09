@@ -17,7 +17,7 @@
     v-tooltip.top="'Add Hearing Date'"
     v-if="!insertHearingDate && !nextHearingOrderSheet.order_sheet_date"
     @click="openHearingDateInsertField()"
-    class="btn btn-sm btn-dark action-btn"
+    class="btn btn-sm btn-success action-btn"
   >
     Add Hearing Date
   </button>
