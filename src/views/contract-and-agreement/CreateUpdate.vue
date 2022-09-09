@@ -90,7 +90,7 @@
                 
                 <div class="row">
                   <label for="">
-                    Content <button v-if="contract_and_agreement.id" class="pull-right btn btn-success action-btn" type="button" @click="copyToClipboard(contract_and_agreement.content)">Copy To Clipboard</button>
+                    Content <button v-if="contract_and_agreement.id" class="btn btn-success action-btn" type="button" @click="copyToClipboard(contract_and_agreement.content)">Copy To Clipboard</button>
                     <Editor
                       v-model="contract_and_agreement.content"
                       editorStyle="height: 220px"
