@@ -8,22 +8,21 @@
             <form @submit.prevent="submitForm($event)">
               <div class="form-group row">
                 <div class="col-sm-12">
-                  <label for="">
-                    Title<span style="color: red">*</span>
-                    <input
-                      v-model="linkData.title"
-                      type="text"
-                      class="form-control"
-                      id=""
-                      @blur="v$.linkData.title.$touch"
-                      v-bind:class="{
-                        'error-boarder': v$.linkData.title.$error,
-                      }"
-                    />
-                    <span v-if="v$.linkData.title.$error" class="errorMessage"
-                      >Title field is required.</span
-                    >
-                  </label>
+                  <label for=""> Title<span style="color: red">*</span> </label>
+                  <input
+                    autofocus
+                    v-model="linkData.title"
+                    type="text"
+                    class="form-control"
+                    id=""
+                    @blur="v$.linkData.title.$touch"
+                    v-bind:class="{
+                      'error-boarder': v$.linkData.title.$error,
+                    }"
+                  />
+                  <span v-if="v$.linkData.title.$error" class="errorMessage"
+                    >Title field is required.</span
+                  >
                 </div>
               </div>
               <div class="form-group row">
@@ -33,35 +32,33 @@
                     <span style="font-size: 12px; color: red"
                       >(Note: Sample URL:
                       https://en.wikipedia.org/wiki/Main_Page)</span
-                    >
-                    <input
-                      v-model="linkData.url"
-                      type="text"
-                      class="form-control"
-                      id=""
-                      @blur="v$.linkData.url.$touch"
-                      v-bind:class="{
-                        'error-boarder': v$.linkData.url.$error,
-                      }"
-                    />
-                    <span v-if="v$.linkData.url.$error" class="errorMessage"
-                      >URL field is required.</span
-                    >
-                  </label>
+                    ></label
+                  >
+                  <input
+                    v-model="linkData.url"
+                    type="text"
+                    class="form-control"
+                    id=""
+                    @blur="v$.linkData.url.$touch"
+                    v-bind:class="{
+                      'error-boarder': v$.linkData.url.$error,
+                    }"
+                  />
+                  <span v-if="v$.linkData.url.$error" class="errorMessage"
+                    >URL field is required.</span
+                  >
                 </div>
               </div>
               <div class="form-group row">
                 <div class="col-sm-12">
-                  <label for="">
-                    Description
-                    <textarea
-                      v-model="linkData.description"
-                      type="text"
-                      class="form-control"
-                      cols="43"
-                      rows="4"
-                    />
-                  </label>
+                  <label for=""> Description </label>
+                  <textarea
+                    v-model="linkData.description"
+                    type="text"
+                    class="form-control"
+                    cols="43"
+                    rows="4"
+                  />
                 </div>
               </div>
               <div class="form-group row">

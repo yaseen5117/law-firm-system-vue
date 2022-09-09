@@ -7,29 +7,28 @@
           <div class="col-lg-12 col-md-12 col-sm-12">
             <form @submit.prevent="submitForm($event)">
               <div class="form-group row">
-                <div class="col-sm-6">
-                  <label for="">
-                    Title<span style="color: red">*</span>
-                    <input
-                      v-model="petitionTypeData.title"
-                      type="text"
-                      class="form-control"
-                      id=""
-                      @blur="v$.petitionTypeData.title.$touch"
-                      v-bind:class="{
-                        'error-boarder': v$.petitionTypeData.title.$error,
-                      }"
-                    />
-                    <span
-                      v-if="v$.petitionTypeData.title.$error"
-                      class="errorMessage"
-                      >Title field is required.</span
-                    >
-                  </label>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                  <label for=""> Title<span style="color: red">*</span></label>
+                  <input
+                    autofocus
+                    v-model="petitionTypeData.title"
+                    type="text"
+                    class="form-control"
+                    id=""
+                    @blur="v$.petitionTypeData.title.$touch"
+                    v-bind:class="{
+                      'error-boarder': v$.petitionTypeData.title.$error,
+                    }"
+                  />
+                  <span
+                    v-if="v$.petitionTypeData.title.$error"
+                    class="errorMessage"
+                    >Title field is required.</span
+                  >
                 </div>
               </div>
               <div class="form-group row">
-                <div class="col-sm-12">
+                <div class="col-lg-4 col-md-4 col-sm-12">
                   <label>Court</label>
                   <Multiselect
                     placeholder="--Select--"

@@ -21,6 +21,12 @@
                       petition_reply_parent, petitionReplyParentIndex
                     ) in petition_reply_parents"
                     :key="petition_reply_parent.id"
+                    class="draggable"
+                    draggable="true"
+                    @dragstart="startDrag($event, petitionReplyParentIndex)"
+                    @drop="onDrop($event, petitionReplyParentIndex)"
+                    @dragenter.prevent
+                    @dragover.prevent
                   >
                     <td>
                       <input
@@ -182,6 +188,43 @@ export default {
     document.title = "Petition Reply Parents";
   },
   methods: {
+    //Drag and Drop Functionality
+    startDrag(event, index) {
+      console.log(index);
+      event.dataTransfer.dropEffect = "move";
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("index_id", index);
+    },
+
+    onDrop(event, newIndex) {
+      var old_index = event.dataTransfer.getData("index_id");
+      this.petition_reply_parents = this.array_move(
+        this.petition_reply_parents,
+        old_index,
+        newIndex
+      );
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      axios
+        .post(
+          this.base_url + "/api/petition_reply_parents/update_display_order",
+          {
+            petition_reply_parents: this.petition_reply_parents,
+          },
+          { headers }
+        )
+        .then((response) => {})
+        .catch((error) => {
+          console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
+        });
+    },
+    //Drag and Drop Functionality
     getCaseDetails() {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),

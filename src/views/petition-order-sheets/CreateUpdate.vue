@@ -24,6 +24,7 @@
                   <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Order Sheet Date</label>
                     <InputMask
+                      autofocus
                       mask="99/99/9999"
                       class="form-control"
                       type="text"

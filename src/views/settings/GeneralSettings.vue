@@ -77,6 +77,7 @@
                           <label for="">
                             Site Name
                             <input
+                              autofocus
                               v-model="setting.site_name"
                               type="text"
                               class="form-control"

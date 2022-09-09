@@ -14,6 +14,7 @@
                   <div class="col-lg-7 col-md-7 col-sm-12">
                     <label>Title<span style="color: red">*</span></label>
                     <input
+                      autofocus
                       class="form-control"
                       v-model="SamplePleading.title"
                       v-bind:class="{

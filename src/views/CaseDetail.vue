@@ -241,6 +241,7 @@
                     <td></td>
                     <td>
                       <AutoComplete
+                        v-on:keyup.enter="submitPetitionIndex()"
                         :delay="1"
                         v-model="new_petition_index.document_description"
                         :suggestions="filteredDocumentDiscriptions"
@@ -287,6 +288,7 @@
                     </td>
                     <td>
                       <button
+                        type="submit"
                         :disabled="saving"
                         @click="submitPetitionIndex()"
                         class="btn btn-sm btn-success action-btn"

@@ -11,6 +11,7 @@
                   <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Title<span style="color: red">*</span></label>
                     <input
+                      autofocus
                       class="form-control"
                       v-model="talbana.title"
                       v-bind:class="{

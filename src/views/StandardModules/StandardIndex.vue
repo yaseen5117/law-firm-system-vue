@@ -27,6 +27,12 @@
                   <tr
                     v-for="(index_data_single, row_index) in index_data"
                     :key="index_data_single.id"
+                    class="draggable"
+                    draggable="true"
+                    @dragstart="startDrag($event, row_index)"
+                    @drop="onDrop($event, row_index)"
+                    @dragenter.prevent
+                    @dragover.prevent
                   >
                     <td>
                       <input
@@ -244,6 +250,40 @@ export default {
     this.getModuleIndex();
   },
   methods: {
+    //Drag and Drop Functionality for All Standard Modules(OralArgument,CaseLaw,ExtraDocument,Judgement)
+    startDrag(event, index) {
+      console.log(index);
+      event.dataTransfer.dropEffect = "move";
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("index_id", index);
+    },
+
+    onDrop(event, newIndex) {
+      var old_index = event.dataTransfer.getData("index_id");
+      this.index_data = this.array_move(this.index_data, old_index, newIndex);
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      axios
+        .post(
+          this.base_url + "/api/standard_index_data/update_display_order",
+          {
+            index_data: this.index_data,
+            model_type: this.model_type,
+          },
+          { headers }
+        )
+        .then((response) => {})
+        .catch((error) => {
+          console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
+        });
+    },
+    //Drag and Drop Functionality
     getCaseDetails() {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),

@@ -23,6 +23,12 @@
                       petition_reply, petitionReplyIndex
                     ) in petition_replies"
                     :key="petition_reply.id"
+                    class="draggable"
+                    draggable="true"
+                    @dragstart="startDrag($event, petitionReplyIndex)"
+                    @drop="onDrop($event, petitionReplyIndex)"
+                    @dragenter.prevent
+                    @dragover.prevent
                   >
                     <td>
                       <input
@@ -246,6 +252,43 @@ export default {
     }
   },
   methods: {
+    //Drag and Drop Functionality
+    startDrag(event, index) {
+      console.log(index);
+      event.dataTransfer.dropEffect = "move";
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("index_id", index);
+    },
+
+    onDrop(event, newIndex) {
+      var old_index = event.dataTransfer.getData("index_id");
+      this.petition_replies = this.array_move(
+        this.petition_replies,
+        old_index,
+        newIndex
+      );
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      axios
+        .post(
+          this.base_url + "/api/petition_replies/update_display_order",
+          {
+            petition_replies: this.petition_replies,
+          },
+          { headers }
+        )
+        .then((response) => {})
+        .catch((error) => {
+          console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
+        });
+    },
+    //Drag and Drop Functionality
     getPetitionReplyDetails() {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),

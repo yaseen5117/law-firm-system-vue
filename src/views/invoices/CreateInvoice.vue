@@ -89,6 +89,7 @@
                           data-bs-placement="top"
                           title="Make changes to user's profile"
                           ><input
+                            autofocus
                             :disabled="invoice.invoice_status_id == 3"
                             id="edit_client"
                             type="checkbox"

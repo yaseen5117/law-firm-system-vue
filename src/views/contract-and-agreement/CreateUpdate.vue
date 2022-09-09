@@ -31,6 +31,7 @@
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Title<span style="color: red">*</span></label>
                     <input
+                      autofocus
                       class="form-control"
                       v-model="contract_and_agreement.title"
                       v-bind:class="{
