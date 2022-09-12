@@ -21,7 +21,7 @@
             <button
               v-if="removePageHeader"
               @click="pageHeader()"
-              class="btn btn-success btn-sm"
+              class="btn btn-success btn-sm mobile-margin-top"
               style="margin-right: 2px"
               for="flexSwitchCheckDefault"
             >
@@ -30,7 +30,7 @@
             <button
               v-if="!removePageHeader"
               @click="pageHeader()"
-              class="btn btn-success btn-sm"
+              class="btn btn-success btn-sm mobile-margin-top"
               style="margin-right: 2px"
               for="flexSwitchCheckDefault"
             >
@@ -40,7 +40,7 @@
             <router-link
               v-if="this.user.is_admin"
               style="margin-right: 2px"
-              class="btn btn-primary btn-sm"
+              class="btn btn-primary btn-sm mobile-margin-top"
               :to="{
                 name: 'petition-order-sheets-save',
                 params: { petition_id: petition_id },
@@ -51,7 +51,7 @@
             <router-link
               style="margin-right: 2px"
               v-if="this.user.is_admin && orderSheetsActive"
-              class="btn btn-success btn-sm"
+              class="btn btn-success btn-sm mobile-margin-top"
               :to="{
                 name: 'petition-order-sheets-edit',
                 params: {
@@ -65,14 +65,14 @@
             </router-link>
             <a
               v-if="this.user.is_admin && orderSheetsActive"
-              class="btn btn-danger btn-sm"
+              class="btn btn-danger btn-sm mobile-margin-top"
               @click="deletePetitionOrderSheet($event, orderSheetsActive.id)"
               v-tooltip.top="'Delete'"
             >
               Delete
             </a>
             <a
-              class="btn btn-grey btn-sm"
+              class="btn btn-grey btn-sm mobile-margin-top"
               style="margin-left: 2px"
               v-tooltip.top="'Print Order Sheets'"
               @click="printOrderSheets()"
@@ -460,5 +460,10 @@ export default {
 <style>
 .p-side-bar-ordersheet {
   width: 130px !important;
+}
+@media only screen and (max-width: 600px) {
+  .mobile-margin-top {
+    margin-top: 2px;
+  }
 }
 </style>

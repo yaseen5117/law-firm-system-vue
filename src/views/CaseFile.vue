@@ -64,17 +64,15 @@
                         aria-describedby="ClientName"
                       />
                     </div>
-                    <div class="col-lg-2 col-md-2 col-sm-6 col-6 mt-4">
-                      <div class="field-checkbox">
-                        <Checkbox
-                          inputClass="p-checkbox p-checkbox-box"
-                          v-model="filters.pending_tag"
-                          :binary="true"
-                        />
-                        <label style="margin-left: 5px"
-                          >Pending Cases Only</label
-                        >
-                      </div>
+                    <div class="col-lg-2 col-md-2 col-sm-6 col-6">
+                      <label for="">Pending Tag</label>
+                      <input
+                        v-model="filters.pendingTag"
+                        type="text"
+                        id="PendingTag"
+                        class="form-control form-control-sm"
+                        aria-describedby="PendingTag"
+                      />
                     </div>
 
                     <div class="col-lg-4 col-md-4 col-sm-12 mt-lg-4 mt-md-4 mt">
@@ -102,11 +100,23 @@
                       <button
                         type="button"
                         style="margin-left: 2px"
-                        class="btn btn-primary btn-sm mr-md-2"
+                        class="btn btn-primary btn-sm mr-md-2 mobile-margin-top"
                         @click="openPrintPendingCasesModal()"
                       >
                         Print Pending Cases
                       </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-6 col-6 mt-1">
+                      <div class="field-checkbox">
+                        <Checkbox
+                          inputClass="p-checkbox p-checkbox-box"
+                          v-model="filters.pending_tag"
+                          :binary="true"
+                        />
+                        <label style="margin-left: 5px"
+                          >Pending Cases Only</label
+                        >
+                      </div>
                     </div>
                   </form>
                 </Transition>
@@ -367,6 +377,7 @@ export default {
       petitions: Array,
       filters: {
         court_id: "",
+        pendingTag: "",
       },
       courts: [],
 
@@ -517,6 +528,7 @@ export default {
     reset() {
       this.filters = {
         court_id: "",
+        pendingTag: "",
       };
       this.getCaseFiles();
     },
@@ -580,10 +592,13 @@ export default {
       deep: true,
       handler() {
         if (!this.awaitingSearch) {
-          setTimeout(() => {
-            this.getCaseFiles();
-            this.awaitingSearch = false;
-          }, 4000); // 1 sec delay
+          setTimeout(
+            () => {
+              this.getCaseFiles();
+              this.awaitingSearch = false;
+            },
+            this.filters.court_id || this.filters.pending_tag ? 500 : 4000
+          );
         }
         this.awaitingSearch = true;
       },
@@ -596,7 +611,10 @@ export default {
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
   label {
-    font-size: 10px;
+    font-size: 11px !important;
+  }
+  .mobile-margin-top {
+    margin-top: 2px;
   }
 }
 .margin_left {
