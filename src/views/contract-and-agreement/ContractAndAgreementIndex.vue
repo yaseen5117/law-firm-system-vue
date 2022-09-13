@@ -81,7 +81,9 @@
                             <p
                               class="card-text"
                               v-html="
-                                (contractAndAgreemnet.plain_content && contractAndAgreemnet.plain_content.length) > 50
+                                (contractAndAgreemnet.plain_content &&
+                                  contractAndAgreemnet.plain_content.length) >
+                                50
                                   ? contractAndAgreemnet.plain_content.substring(
                                       0,
                                       49
@@ -101,8 +103,8 @@
                               :to="{
                                 name: 'preview-html',
                                 params: {
-                                  page_slug:contractAndAgreemnet.slug,
-                                  page_type:'contract-and-agreement'
+                                  page_slug: contractAndAgreemnet.slug,
+                                  page_type: 'contract-and-agreement',
                                 },
                               }"
                               class="btn btn-success btn-sm action-btn"
@@ -142,7 +144,7 @@
                               "
                               class="btn btn-danger btn-sm action-btn"
                               href="javascript:void(0);"
-                              v-tooltip.top="Delete"
+                              v-tooltip.top="'Delete'"
                               >Delete</a
                             >
                           </div>

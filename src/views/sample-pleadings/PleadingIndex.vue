@@ -43,79 +43,116 @@
                 </Transition>
               </div>
               <div class="col-md-12">
-                <div class="table-responsive">
-                  <table class="table table-striped" v-if="isLoaded">
-                    <thead>
-                      <tr>
-                        <!-- <th>Category</th> -->
-                        <th>Title</th>
-                        <th>Display Order</th>
-                        <th>Attachment</th>
-                        <th class="text-end">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr
-                        v-for="(
-                          samplePleading, sample_pleading_index
-                        ) in samplePleadings"
-                        :key="sample_pleading_index"
+                <div class="row">
+                  <div
+                    class="col-sm-12 col-md-6 col-lg-6 col-12 d-flex align-self-stretch"
+                    v-for="(
+                      samplePleading, sample_pleading_index
+                    ) in samplePleadings"
+                    :key="sample_pleading_index"
+                  >
+                    <div
+                      class="card listing-cards shadow-sm mb-4"
+                      style="width: 100%"
+                    >
+                      <div class="text-end">
+                        <InvoiceThumb
+                          v-show="samplePleading.attachment"
+                          folder_name="sample-pleadings"
+                          :base_url="base_url"
+                          :invoice="samplePleading"
+                          :isSamplePleading="true"
+                        />
+                      </div>
+                      <div
+                        class="card-body"
+                        @click="goToDetails(samplePleading.id)"
                       >
-                        <!-- <td>
-                        <span v-if="samplePleading.category">
-                          {{samplePleading.category.title}}
-                        </span>                         
-                      </td> -->
-                        <td>{{ samplePleading.title }}</td>
-                        <td>{{ samplePleading.display_order }}</td>
-                        <td>
-                          <InvoiceThumb
-                            v-show="samplePleading.attachment"
-                            folder_name="sample-pleadings"
-                            :base_url="base_url"
-                            :invoice="samplePleading"
-                          />
-                        </td>
-                        <td class="text-end">
-                          <router-link
-                            class="btn btn-sm btn-success action-btn"
-                            :to="{
-                              name: 'edit-sample-pleading',
-                              params: {
-                                sample_pleading_id: samplePleading.id,
-                              },
-                            }"
-                            href="javascript:void"
-                            style="margin-left: 2px"
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="Edit"
-                          >
-                            Edit
-                          </router-link>
+                        <div class="row">
+                          <p class="card-title" style="margin-bottom: 0px">
+                            <strong>{{ samplePleading.title }}</strong>
+                          </p>
 
-                          <a
-                            class="btn btn-sm btn-danger action-btn"
-                            @click="
-                              deleteSamplePleading(
-                                $event,
-                                samplePleading.id,
-                                sample_pleading_index
-                              )
-                            "
-                            href="javascript:void"
-                            style="margin-left: 2px"
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="Delete"
-                          >
-                            Delete
-                          </a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                          <div class="col-md-12">
+                            <p
+                              class="card-text"
+                              v-html="
+                                (samplePleading.plain_content &&
+                                  samplePleading.plain_content.length) > 50
+                                  ? samplePleading.plain_content.substring(
+                                      0,
+                                      49
+                                    ) + '...'
+                                  : samplePleading.plain_content
+                              "
+                            ></p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-footer">
+                        <div class="mt-auto">
+                          <div class="pull-right">
+                            <router-link
+                              style="margin-right: 2px"
+                              target="_blank"
+                              :to="{
+                                name: 'preview-html',
+                                params: {
+                                  page_slug: samplePleading.slug,
+                                  page_type: 'sample-pleading',
+                                },
+                              }"
+                              class="btn btn-success btn-sm action-btn"
+                              role="button"
+                              v-tooltip.top="'View'"
+                              >Preview
+                            </router-link>
+
+                            <router-link
+                              v-if="this.user.is_admin"
+                              class="btn btn-sm btn-primary action-btn"
+                              :to="{
+                                name: 'edit-sample-pleading',
+                                params: {
+                                  sample_pleading_id: samplePleading.id,
+                                },
+                              }"
+                              href="javascript:void"
+                              style="margin-left: 2px"
+                              v-tooltip.top="'Edit'"
+                            >
+                              Edit
+                            </router-link>
+
+                            <a
+                              v-if="this.user.is_admin"
+                              class="btn btn-sm btn-danger action-btn"
+                              @click="
+                                deleteSamplePleading(
+                                  $event,
+                                  samplePleading.id,
+                                  sample_pleading_index
+                                )
+                              "
+                              href="javascript:void"
+                              style="margin-left: 2px"
+                              v-tooltip.top="'Delete'"
+                            >
+                              Delete
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    v-if="samplePleadings.length == 0 && isLoaded"
+                    class="col-md-12"
+                  >
+                    <p class="alert alert-warning">No Records found.</p>
+                  </div>
                 </div>
+
                 <div v-if="!isLoaded" class="col-md-12">
                   <p class="alert alert-warning">Loading....</p>
                 </div>
@@ -135,12 +172,15 @@ import PageHeader from "../shared/PageHeader.vue";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import InvoiceThumb from "../invoices/InvoiceThumb.vue";
+import { mapState } from "vuex";
 
 export default {
+  computed: mapState(["user"]),
   components: {
     PageHeader,
     InvoiceThumb,
   },
+
   setup() {
     return {
       v$: useVuelidate(),

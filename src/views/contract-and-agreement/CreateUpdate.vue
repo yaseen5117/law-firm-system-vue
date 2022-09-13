@@ -61,7 +61,6 @@
                       >Public URL
 
                       <router-link
-                        v-if="contract_and_agreement.id"
                         style="margin-right: 2px"
                         target="_blank"
                         :to="{
@@ -183,7 +182,7 @@ export default {
   updated() {
     this.html_page_url =
       window.location.origin +
-      "/preview-html/contract-and-agreement/" +
+      "/preview/contract-and-agreement/" +
       this.contract_and_agreement.slug;
   },
   mounted() {

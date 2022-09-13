@@ -231,12 +231,6 @@
                       </a>
                     </td>
                   </tr>
-                  <tr
-                    v-if="petition_details.length == 0"
-                    class="alert alert-warning"
-                  >
-                    <td colspan="6" class="text-danger">No Records found.</td>
-                  </tr>
                   <tr v-if="this.user.is_admin">
                     <td></td>
                     <td>

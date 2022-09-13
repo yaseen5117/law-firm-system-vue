@@ -2,7 +2,13 @@
   <ConfirmPopup />
   <BlockUI :blocked="!isLoaded" :fullScreen="true">
     <main id="main" class="margintop85">
-      <page-header :title="page_title" :hideBreadCrumbs="true" />
+      <page-header
+        :title="page_title"
+        :hideBreadCrumbs="true"
+        :route_object="route_obj"
+        :header_button="header_button"
+        :header_button_text="header_button_text"
+      />
       <!-- ======= Services Section ======= -->
       <section id="services" class="services section-bg mt-3">
         <BlockUI :blocked="general_case_laws" :fullScreen="true">
@@ -63,50 +69,88 @@
                   Show Filters
                 </button>
               </div>
-              <div class="table-responsive">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                  <table class="table table-striped" v-if="isLoaded">
-                    <thead>
-                      <th>Propositions</th>
-                      <th>Legal Provisions &#38; Citations</th>
-                      <th v-if="this.user.is_admin" width="10%">Actions</th>
-                      <th v-if="this.user.is_admin">Upload File</th>
-                    </thead>
-                    <tbody>
-                      <tr
-                        v-for="(
-                          general_case_law, row_index
-                        ) in general_case_laws"
-                        :key="general_case_law.id"
-                      >
-                        <td>
-                          <input
-                            v-show="general_case_law.editMode"
-                            class="form-control"
-                            v-model="general_case_law.case_title"
-                            v-on:keyup.enter="
-                              editGeneralLawIndex(general_case_law)
-                            "
-                          />
-                          <span v-show="!general_case_law.editMode">
-                            {{ general_case_law.case_title }}
-                          </span>
-                        </td>
-                        <td>
-                          <input
-                            v-show="general_case_law.editMode"
-                            class="form-control"
-                            v-model="general_case_law.legal_provisions"
-                            v-on:keyup.enter="
-                              editGeneralLawIndex(general_case_law)
-                            "
-                          />
-                          <span v-show="!general_case_law.editMode">{{
-                            general_case_law.legal_provisions
-                          }}</span>
-                        </td>
+              <div class="row">
+                <div
+                  class="col-sm-12 col-md-6 col-lg-6 col-12 d-flex align-self-stretch"
+                  v-for="(general_case_law, row_index) in general_case_laws"
+                  :key="general_case_law.id"
+                >
+                  <div
+                    class="card listing-cards shadow-sm mb-4"
+                    style="width: 100%"
+                  >
+                    <div
+                      class="card-body"
+                      @click="goToDetails(general_case_law.id)"
+                    >
+                      <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-12">
+                          <p class="card-title" style="margin-bottom: 0px">
+                            <strong>{{ general_case_law.case_title }}</strong>
+                          </p>
+                          <p class="card-title" style="margin-bottom: 0px">
+                            <strong>{{
+                              general_case_law.legal_provisions
+                            }}</strong>
+                          </p>
 
-                        <td width="15%">
+                          <div class="col-md-12">
+                            <p
+                              class="card-text"
+                              v-html="
+                                (general_case_law.plain_content &&
+                                  general_case_law.plain_content.length) > 50
+                                  ? general_case_law.plain_content.substring(
+                                      0,
+                                      49
+                                    ) + '...'
+                                  : general_case_law.plain_content
+                              "
+                            ></p>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                          <div class="text-end">
+                            <InvoiceThumb
+                              :base_url="base_url"
+                              folder_name="Frequently-Asked-Legal-Propositions"
+                              :invoice="general_case_law"
+                              :isSamplePleading="true"
+                            />
+                            <file-upload
+                              style="float: right"
+                              v-if="this.user.is_admin"
+                              @afterUpload="getGeneralCaseLaws"
+                              type="App\Models\GeneralCaseLaw"
+                              :attachmentable_id="general_case_law.id"
+                              :compactInlineView="compactInlineView"
+                              class="mt-1"
+                              :petition_id="petition.id"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-footer">
+                      <div class="mt-auto">
+                        <div class="pull-right">
+                          <router-link
+                            v-if="general_case_law.slug"
+                            style="margin-right: 2px"
+                            target="_blank"
+                            :to="{
+                              name: 'preview-html',
+                              params: {
+                                page_slug: general_case_law.slug,
+                                page_type: 'general-case-law',
+                              },
+                            }"
+                            class="btn btn-success btn-sm action-btn"
+                            role="button"
+                            v-tooltip.top="'View'"
+                            >Preview
+                          </router-link>
+
                           <router-link
                             v-if="this.user.is_admin"
                             style="margin-right: 2px"
@@ -141,62 +185,20 @@
                             Delete
                             <!-- <i class="fa fa-trash-o"></i> -->
                           </button>
-                        </td>
-                        <td>
-                          <file-upload
-                            v-if="this.user.is_admin"
-                            @afterUpload="getGeneralCaseLaws"
-                            type="App\Models\GeneralCaseLaw"
-                            :attachmentable_id="general_case_law.id"
-                            :compactInlineView="compactInlineView"
-                            class="mt-1"
-                            :petition_id="petition.id"
-                          />
-                        </td>
-                        <td>
-                          <InvoiceThumb
-                            :base_url="base_url"
-                            folder_name="Frequently-Asked-Legal-Propositions"
-                            :invoice="general_case_law"
-                          />
-                        </td>
-                      </tr>
-                      <tr v-if="this.user.is_admin">
-                        <td>
-                          <AutoComplete
-                            :delay="1"
-                            v-model="new_general_case_law.case_title"
-                            :suggestions="filteredCaseTitle"
-                            @complete="searchForAutocomplete($event)"
-                            :style="'width:100%'"
-                            :inputStyle="'width:100%'"
-                            ref="caseTitle"
-                          />
-                        </td>
-                        <td>
-                          <input
-                            class="form-control"
-                            v-model="new_general_case_law.legal_provisions"
-                            v-on:keyup.enter="submitGeneralCaseLaw()"
-                          />
-                        </td>
-                        <td colspan="3">
-                          <button
-                            :disabled="saving"
-                            @click="submitGeneralCaseLaw()"
-                            class="btn btn-sm btn-success action-btn"
-                          >
-                            Save
-                            <!-- <i class="fa fa-save"></i> -->
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div v-if="!isLoaded" class="col-md-12">
-                  <p class="alert alert-warning">Loading....</p>
+                <div
+                  v-if="general_case_laws.length == 0 && isLoaded"
+                  class="col-md-12"
+                >
+                  <p class="alert alert-warning">No Records found.</p>
                 </div>
+              </div>
+              <div v-if="!isLoaded" class="col-md-12">
+                <p class="alert alert-warning">Loading....</p>
               </div>
             </div>
           </div>
@@ -246,6 +248,11 @@ export default {
       filteredCaseTitle: null,
       isLoaded: false,
       compactInlineView: "",
+      route_obj: {
+        name: "create-petition-general-case-law",
+      },
+      header_button: true,
+      header_button_text: "Create Frequently Asked Legal Propositions",
     };
   },
   validations() {

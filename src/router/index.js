@@ -350,6 +350,14 @@ const routes = [
       auth: true,
     },
   },
+  {
+    path: "/petition-general-case-law/create",
+    name: "create-petition-general-case-law",
+    component: EditGeneralCaseLawIndex,
+    meta: {
+      auth: true,
+    },
+  },
   ////////////////GENERAL CASE LAW/////////////
 
   //////////////// COURTS /////////////
