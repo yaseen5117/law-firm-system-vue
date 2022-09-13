@@ -97,6 +97,10 @@
                       <div class="card-footer">
                         <div class="mt-auto">
                           <div class="pull-right">
+
+                            <a style="margin-right: 2px"  :href="'https://www.facebook.com/share.php?u=https://elawfirmpk.com/preview/contract-and-agreement/' + contractAndAgreemnet.slug" target="_blank"> <i class="fa fa-facebook-square" aria-hidden="true"></i></a>
+
+                            
                             <router-link
                               style="margin-right: 2px"
                               target="_blank"
@@ -112,8 +116,12 @@
                               data-bs-toggle="tooltip"
                               data-bs-placement="top"
                               title="View"
-                              >Preview
+                              >View
                             </router-link>
+                            
+                           
+                           
+
                             <router-link
                               v-if="this.user.is_admin"
                               style="margin-right: 2px"
@@ -180,6 +188,8 @@ import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import InvoiceThumb from "../invoices/InvoiceThumb.vue";
 import { mapState } from "vuex";
+import Button from 'primevue/button';
+
 
 export default {
   computed: mapState(["user"]),
