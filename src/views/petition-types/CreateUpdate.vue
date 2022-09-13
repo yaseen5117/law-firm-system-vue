@@ -29,6 +29,17 @@
               </div>
               <div class="form-group row">
                 <div class="col-lg-4 col-md-4 col-sm-12">
+                  <label for="">Abbreviation</label>
+                  <input
+                    autofocus
+                    v-model="petitionTypeData.abbreviation"
+                    type="text"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-lg-4 col-md-4 col-sm-12">
                   <label>Court</label>
                   <Multiselect
                     placeholder="--Select--"
@@ -102,9 +113,10 @@ export default {
     this.getCourts();
   },
   updated() {
-    document.title = this.petitionTypeData
-      ? this.petitionTypeData.title + " | " + this.page_title
-      : this.page_title;
+    document.title =
+      this.petitionTypeData && this.petitionTypeData.title
+        ? this.petitionTypeData.title + " | " + this.page_title
+        : this.page_title;
   },
   mounted() {
     document.getElementById("header");

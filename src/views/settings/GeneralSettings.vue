@@ -115,6 +115,18 @@
                           </label>
                         </div>
                       </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label for="">
+                            Site URL
+                            <input
+                              v-model="setting.site_url"
+                              type="text"
+                              class="form-control"
+                            />
+                          </label>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="col-sm-4">
@@ -314,6 +326,11 @@ export default {
   mounted() {
     document.getElementById("header");
     document.title = this.page_title;
+  },
+  updated() {
+    if (this.setting.site_url == null) {
+      this.setting.site_url = "https://elawfirmpk.com";
+    }
   },
 
   methods: {

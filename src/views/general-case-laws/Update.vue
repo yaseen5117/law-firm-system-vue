@@ -62,6 +62,7 @@
                 <div class="row">
                   <div class="col-lg-9 col-md-9 col-sm-12">
                     <file-upload
+                      v-if="this.$route.params.general_case_law_id"
                       :multiple_or_single="true"
                       @afterUpload="getGeneralCaseLaw"
                       type="App\Models\GeneralCaseLaw"
