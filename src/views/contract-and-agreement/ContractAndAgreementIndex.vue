@@ -73,34 +73,62 @@
                         @click="goToDetails(contractAndAgreemnet.id)"
                       >
                         <div class="row">
-                          <p class="card-title" style="margin-bottom: 0px">
-                            <strong>{{ contractAndAgreemnet.title }}</strong>
-                          </p>
+                          <div class="col-lg-8 col-md-8 col-sm-12">
+                            <p class="card-title" style="margin-bottom: 0px">
+                              <strong>{{ contractAndAgreemnet.title }}</strong>
+                            </p>
 
-                          <div class="col-md-12">
-                            <p
-                              class="card-text"
-                              v-html="
-                                (contractAndAgreemnet.plain_content &&
-                                  contractAndAgreemnet.plain_content.length) >
-                                50
-                                  ? contractAndAgreemnet.plain_content.substring(
-                                      0,
-                                      49
-                                    ) + '...'
-                                  : contractAndAgreemnet.plain_content
-                              "
-                            ></p>
+                            <div class="col-md-12">
+                              <p
+                                style="font-size: 14px"
+                                v-tooltip.top="
+                                  contractAndAgreemnet.plain_content
+                                "
+                                :fitContent="true"
+                                class="card-text"
+                                v-html="
+                                  (contractAndAgreemnet.plain_content &&
+                                    contractAndAgreemnet.plain_content.length) >
+                                  80
+                                    ? contractAndAgreemnet.plain_content.substring(
+                                        0,
+                                        79
+                                      ) + '...'
+                                    : contractAndAgreemnet.plain_content
+                                "
+                              ></p>
+                            </div>
+                          </div>
+                          <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="text-end">
+                              <InvoiceThumb
+                                v-show="contractAndAgreemnet.attachment"
+                                folder_name="contracts-and-agreements"
+                                :base_url="base_url"
+                                :invoice="contractAndAgreemnet"
+                                :isSamplePleading="true"
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
                       <div class="card-footer">
                         <div class="mt-auto">
                           <div class="pull-right">
+                            <a
+                              style="margin-right: 2px"
+                              :href="
+                                'https://www.facebook.com/share.php?u=https://elawfirmpk.com/preview/contract-and-agreement/' +
+                                contractAndAgreemnet.slug
+                              "
+                              target="_blank"
+                            >
+                              <i
+                                class="fa fa-facebook-square"
+                                aria-hidden="true"
+                              ></i
+                            ></a>
 
-                            <a style="margin-right: 2px"  :href="'https://www.facebook.com/share.php?u=https://elawfirmpk.com/preview/contract-and-agreement/' + contractAndAgreemnet.slug" target="_blank"> <i class="fa fa-facebook-square" aria-hidden="true"></i></a>
-
-                            
                             <router-link
                               style="margin-right: 2px"
                               target="_blank"
@@ -118,9 +146,6 @@
                               title="View"
                               >View
                             </router-link>
-                            
-                           
-                           
 
                             <router-link
                               v-if="this.user.is_admin"
@@ -188,8 +213,7 @@ import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import InvoiceThumb from "../invoices/InvoiceThumb.vue";
 import { mapState } from "vuex";
-import Button from 'primevue/button';
-
+import Button from "primevue/button";
 
 export default {
   computed: mapState(["user"]),

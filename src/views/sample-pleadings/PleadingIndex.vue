@@ -55,37 +55,54 @@
                       class="card listing-cards shadow-sm mb-4"
                       style="width: 100%"
                     >
-                      <div class="text-end">
-                        <InvoiceThumb
-                          v-show="samplePleading.attachment"
-                          folder_name="sample-pleadings"
-                          :base_url="base_url"
-                          :invoice="samplePleading"
-                          :isSamplePleading="true"
-                        />
-                      </div>
                       <div
                         class="card-body"
                         @click="goToDetails(samplePleading.id)"
                       >
                         <div class="row">
-                          <p class="card-title" style="margin-bottom: 0px">
-                            <strong>{{ samplePleading.title }}</strong>
-                          </p>
+                          <div class="col-lg-8 col-md-8 col-sm-12">
+                            <p class="card-title" style="margin-bottom: 0px">
+                              <strong>{{ samplePleading.title }}</strong>
+                            </p>
 
-                          <div class="col-md-12">
-                            <p
-                              class="card-text"
-                              v-html="
-                                (samplePleading.plain_content &&
-                                  samplePleading.plain_content.length) > 50
-                                  ? samplePleading.plain_content.substring(
-                                      0,
-                                      49
-                                    ) + '...'
-                                  : samplePleading.plain_content
-                              "
-                            ></p>
+                            <div class="col-md-12">
+                              <p
+                                v-tooltip.top="samplePleading.plain_content"
+                                :fitContent="true"
+                                class="card-text"
+                                style="font-size: 14px"
+                                v-html="
+                                  (samplePleading.plain_content &&
+                                    samplePleading.plain_content.length) > 80
+                                    ? samplePleading.plain_content.substring(
+                                        0,
+                                        79
+                                      ) + '...'
+                                    : samplePleading.plain_content
+                                "
+                              ></p>
+                            </div>
+                          </div>
+                          <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="text-end">
+                              <InvoiceThumb
+                                v-show="samplePleading.attachment"
+                                folder_name="sample-pleadings"
+                                :base_url="base_url"
+                                :invoice="samplePleading"
+                                :isSamplePleading="true"
+                              />
+                              <!-- <file-upload
+                                style="float: right"
+                                v-if="this.user.is_admin"
+                                @afterUpload="getSamplePleadings"
+                                type="App\Models\SamplePleading"
+                                :attachmentable_id="samplePleading.id"
+                                :compactInlineView="true"
+                                class="mt-1"
+                                petition_id=""
+                              /> -->
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -173,12 +190,14 @@ import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import InvoiceThumb from "../invoices/InvoiceThumb.vue";
 import { mapState } from "vuex";
+import FileUpload from "../petition-index/FileUpload.vue";
 
 export default {
   computed: mapState(["user"]),
   components: {
     PageHeader,
     InvoiceThumb,
+    FileUpload,
   },
 
   setup() {

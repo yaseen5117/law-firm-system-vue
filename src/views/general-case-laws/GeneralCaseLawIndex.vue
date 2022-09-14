@@ -86,15 +86,28 @@
                       <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-12">
                           <p class="card-title" style="margin-bottom: 0px">
-                            <strong>{{ general_case_law.case_title }}</strong>
-                          </p>
-                          <p class="card-title" style="margin-bottom: 0px">
-                            <strong>{{
-                              general_case_law.legal_provisions
+                            <strong style="font-size: 15px">{{
+                              general_case_law.case_title
                             }}</strong>
                           </p>
+                          <p
+                            class="card-title"
+                            style="margin-bottom: 0px"
+                            v-tooltip.top="general_case_law.legal_provisions"
+                            :fitContent="true"
+                          >
+                            <span style="font-size: 14px">{{
+                              (general_case_law.legal_provisions &&
+                                general_case_law.legal_provisions.length) > 80
+                                ? general_case_law.legal_provisions.substring(
+                                    0,
+                                    79
+                                  ) + "..."
+                                : general_case_law.legal_provisions
+                            }}</span>
+                          </p>
 
-                          <div class="col-md-12">
+                          <!-- <div class="col-md-12">
                             <p
                               class="card-text"
                               v-html="
@@ -107,7 +120,7 @@
                                   : general_case_law.plain_content
                               "
                             ></p>
-                          </div>
+                          </div> -->
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-12">
                           <div class="text-end">

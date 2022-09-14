@@ -61,10 +61,11 @@ import axios from "axios";
 
 export default {
   components: {},
+  props: ["petition_id"],
   data() {
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,
-      id: this.$route.params.id,
+      id: this.$route.params.id ? this.$route.params.id : this.petition_id,
       hearingDate: true,
       insertHearingDate: false,
       nextHearingOrderSheet: {},

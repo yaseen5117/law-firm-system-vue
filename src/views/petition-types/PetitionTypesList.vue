@@ -77,6 +77,7 @@
                 <table class="table table-hover" v-if="isLoaded">
                   <thead>
                     <th>Title</th>
+                    <th>Abbreviation</th>
                     <th>Court</th>
                     <th width="10%">Actions</th>
                   </thead>
@@ -96,7 +97,7 @@
                           petition_type.title
                         }}</span>
                       </td>
-
+                      <td>{{ petition_type.abbreviation }}</td>
                       <td>
                         <span
                           class="text-capitalize"

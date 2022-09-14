@@ -233,6 +233,27 @@
                           </div>
                         </div>
                       </div>
+                      <!-- <div class="row" style="margin-left: 3px">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                          <i
+                            v-tooltip.top="
+                              'Total No Of Indexes ' + petition.index_total
+                            "
+                            class="fa fa-plus-circle"
+                          ></i>
+                          <i
+                            v-tooltip.top="
+                              'Total No of OrderSheet ' +
+                              petition.order_sheet_total
+                            "
+                            class="fa fa-calendar"
+                            style="margin-left: 10px"
+                          ></i>
+                          <span style="margin-left: 10px">
+                            <hearing-date :petition_id="petition.id" />
+                          </span>
+                        </div>
+                      </div> -->
                       <div class="card-footer">
                         <div class="mt-auto">
                           <div class="pull-right">
@@ -359,12 +380,14 @@ import PageHeader from "../views/shared/PageHeader";
 import { mapState } from "vuex";
 import Checkbox from "primevue/checkbox";
 import PendingCasesModal from "../views/petitions/PendingCasesModal.vue";
+import HearingDate from "../views/shared/HearingDate.vue";
 
 export default {
   components: {
     PageHeader,
     Checkbox,
     PendingCasesModal,
+    HearingDate,
   },
   name: "CaseFile",
   data() {
