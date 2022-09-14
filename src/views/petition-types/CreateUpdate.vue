@@ -49,6 +49,7 @@
                     :searchable="true"
                     v-model="petitionTypeData.court_ids"
                     :options="courts"
+                    label="short_title"
                     :value="petitionTypeData.court_ids"
                   />
                 </div>
