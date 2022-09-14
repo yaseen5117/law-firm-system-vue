@@ -82,7 +82,9 @@
                 </u>
               </h6>
               <p>
-                <strong>{{ petition.petition_standard_title }}</strong>
+                <strong v-tooltip.top="petition.type.title">{{
+                  petition.petition_standard_title
+                }}</strong>
               </p>
               <p class="line_height">{{ petition.petitioner_names }}</p>
               <p>VERSUS</p>
