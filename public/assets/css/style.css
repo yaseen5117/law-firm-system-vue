@@ -1810,3 +1810,7 @@ label{
 .ql-align-left{
   text-align: left;
 }
+.p-tooltip	{}
+.p-tooltip-text	{
+  font-size: 12px;
+}
