@@ -1,26 +1,57 @@
 <template>
   <button
-    style="margin-right: 2px"
     @click="confirmToDelete($event)"
     class="btn btn-sm btn-green action-btn"
     v-if="
       nextHearingOrderSheet &&
       nextHearingOrderSheet.order_sheet_date &&
-      hearingDate
+      hearingDate &&
+      !isShowIcon
     "
     v-tooltip.top="'Click To Change/Remove'"
   >
     Next Hearing Date: {{ nextHearingOrderSheet.order_sheet_date }}
   </button>
+  <i
+    class="fa fa-calendar"
+    @click="confirmToDelete($event)"
+    v-if="
+      nextHearingOrderSheet &&
+      nextHearingOrderSheet.order_sheet_date &&
+      hearingDate &&
+      isShowIcon
+    "
+    v-tooltip.top="
+      'Next Hearing Date: ' + nextHearingOrderSheet.order_sheet_date
+    "
+  ></i>
   <!-- && !nextHearingOrderSheet.order_sheet_date -->
   <button
     v-tooltip.top="'Add Hearing Date'"
-    v-if="!insertHearingDate && !nextHearingOrderSheet.order_sheet_date"
+    v-if="
+      !insertHearingDate &&
+      !nextHearingOrderSheet.order_sheet_date &&
+      !isShowIcon
+    "
     @click="openHearingDateInsertField()"
     class="btn btn-sm btn-success action-btn"
   >
     Add Hearing Date
   </button>
+  <i
+    @click="openHearingDateInsertField()"
+    v-tooltip.top="
+      nextHearingOrderSheet.order_sheet_date
+        ? 'Hearing Date: ' + nextHearingOrderSheet.order_sheet_date
+        : 'Add Hearing Date '
+    "
+    v-if="
+      !insertHearingDate &&
+      !nextHearingOrderSheet.order_sheet_date &&
+      isShowIcon
+    "
+    class="fa fa-calendar"
+  ></i>
   <button class="btn" v-if="insertHearingDate">
     <div class="p-inputgroup">
       <Calendar
@@ -61,7 +92,7 @@ import axios from "axios";
 
 export default {
   components: {},
-  props: ["petition_id"],
+  props: ["petition_id", "isShowIcon"],
   data() {
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,

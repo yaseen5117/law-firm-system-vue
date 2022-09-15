@@ -8,93 +8,82 @@
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="text-end">
-              <button
-                style="margin-right: 2px"
-                @click="confirmToDelete($event)"
-                class="btn btn-sm btn-grey action-btn"
-                v-if="petition && petition.pending_tag && pendingTag"
-                v-tooltip.top="'Click To Change/Remove'"
-              >
-                Pending Tag: {{ petition.pending_tag }}
-              </button>
+            <div class="row">
+              <div class="col-lg-4 col-md-4 col-sm-4"></div>
 
-              <button
-                style="margin-right: 2px"
-                v-if="
-                  !insertPendingTag &&
-                  !petition.pending_tag &&
-                  this.user.is_admin
-                "
-                @click="openInsertField"
-                class="btn btn-sm btn-success action-btn"
-              >
-                Insert "Pending" Tag
-              </button>
-              <button class="btn" v-if="insertPendingTag">
-                <div class="p-inputgroup">
-                  <input
-                    class="form-control form-control-sm"
-                    v-on:keyup.enter="addPendingTag(petition_detail)"
-                    v-model="pending_tag"
-                    placeholder="Insert 'Pending' Tag"
-                  />
-                  <button
-                    @click="addPendingTag()"
-                    class="btn btn-success btn-sm action-btn"
-                  >
-                    <i class="fa fa-check" aria-hidden="true"></i>
-                  </button>
-                  <button
-                    @click="colseInsertField()"
-                    class="btn btn-danger btn-sm action-btn"
-                  >
-                    <i class="fa fa-close" aria-hidden="true"></i>
-                  </button>
+              <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="card-body align-center case_heading">
+                  <petition-detail :petition="petition" :showIndex="true" />
                 </div>
-              </button>
-              <router-link
-                v-if="this.user.is_admin"
-                class="btn btn-primary action-btn"
-                style="margin-right: 2px"
-                :to="{
-                  name: 'edit-petition',
-                  params: { id: petition.id },
-                }"
-                role="button"
-                ><i class="fa fa-edit"></i> Edit Petition</router-link
-              >
-              <a
-                class="btn btn-warning action-btn"
-                :href="petition.pdf_download_url"
-                download=""
-                ><i class="fa fa-download"></i> Download PDF</a
-              >
-            </div>
-            <div class="text-end">
-              <hearing-date />
-            </div>
-            <div class="card-body align-center case_heading">
-              <h6>
-                <u
-                  >BEFORE THE
-                  {{ petition.court ? petition.court.title : "Court NA" }}
-                </u>
-              </h6>
-              <p>
-                <strong v-tooltip.top="petition.type.title">{{
-                  petition.petition_standard_title
-                }}</strong>
-              </p>
-              <p class="line_height">{{ petition.petitioner_names }}</p>
-              <p>VERSUS</p>
-              <p class="line_height">{{ petition.opponent_names }}</p>
-              <!-- <p class="line_height">
-                {{ petition.title }}
-              </p> -->
-              <p>
-                <u><strong>INDEX</strong></u>
-              </p>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="text-end">
+                  <button
+                    @click="confirmToDelete($event)"
+                    class="btn btn-sm btn-grey action-btn right_margin"
+                    v-if="petition && petition.pending_tag && pendingTag"
+                    v-tooltip.top="'Click To Change/Remove'"
+                  >
+                    Pending Tag: {{ petition.pending_tag }}
+                  </button>
+
+                  <button
+                    v-if="
+                      !insertPendingTag &&
+                      !petition.pending_tag &&
+                      this.user.is_admin
+                    "
+                    @click="openInsertField"
+                    class="btn btn-sm btn-success action-btn right_margin"
+                  >
+                    Insert "Pending" Tag
+                  </button>
+                  <button class="btn" v-if="insertPendingTag">
+                    <div class="p-inputgroup">
+                      <input
+                        class="form-control form-control-sm"
+                        v-on:keyup.enter="addPendingTag(petition_detail)"
+                        v-model="pending_tag"
+                        placeholder="Insert 'Pending' Tag"
+                      />
+                      <button
+                        @click="addPendingTag()"
+                        class="btn btn-success btn-sm action-btn"
+                      >
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                      </button>
+                      <button
+                        @click="colseInsertField()"
+                        class="btn btn-danger btn-sm action-btn"
+                      >
+                        <i class="fa fa-close" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                  </button>
+                  <router-link
+                    v-if="this.user.is_admin"
+                    class="btn btn-primary action-btn right_margin"
+                    :to="{
+                      name: 'edit-petition',
+                      params: { id: petition.id },
+                    }"
+                    role="button"
+                    ><i class="fa fa-edit"></i> Edit Petition</router-link
+                  >
+                  <a
+                    class="btn btn-warning action-btn"
+                    :href="petition.pdf_download_url"
+                    download=""
+                    ><i class="fa fa-download"></i> Download PDF</a
+                  >
+                </div>
+                <div class="text-end">
+                  <hearing-date />
+                </div>
+                <div class="mt-3">
+                  <lawyers-list :lawyers="petition.lawyers" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -180,11 +169,10 @@
                     </td>
                     <td width="15%" v-if="this.user.is_admin">
                       <a
-                        class="btn btn-sm btn-primary action-btn"
+                        class="btn btn-sm btn-primary action-btn left_margin"
                         v-show="!petition_detail.editMode"
                         @click="petition_detail.editMode = true"
                         href="javascript:void"
-                        style="margin-left: 2px"
                         v-tooltip.top="'Edit'"
                       >
                         Edit
@@ -192,10 +180,9 @@
                       </a>
                       <a
                         v-show="petition_detail.editMode"
-                        class="btn btn-sm btn-warning action-btn"
+                        class="btn btn-sm btn-warning action-btn left_margin"
                         @click="editPetitionIndex(petition_detail)"
                         href="javascript:void"
-                        style="margin-left: 2px"
                         v-tooltip.top="'Update'"
                       >
                         Update
@@ -205,9 +192,8 @@
                       <a
                         v-show="petition_detail.editMode"
                         @click="petition_detail.editMode = false"
-                        class="btn btn-sm btn-info action-btn"
+                        class="btn btn-sm btn-info action-btn left_margin"
                         href="javascript:void"
-                        style="margin-left: 2px"
                         v-tooltip.top="'Cancel'"
                       >
                         Cancel
@@ -215,7 +201,7 @@
                       </a>
 
                       <a
-                        class="btn btn-sm btn-danger action-btn"
+                        class="btn btn-sm btn-danger action-btn left_margin"
                         v-show="!petition_detail.editMode"
                         @click="
                           deletePetitionIndex(
@@ -225,7 +211,6 @@
                           )
                         "
                         href="javascript:void"
-                        style="margin-left: 2px"
                         v-tooltip.top="'Delete'"
                       >
                         Delete
@@ -321,6 +306,8 @@ import Button from "primevue/button";
 import Tooltip from "primevue/tooltip";
 import ConfirmPopup from "primevue/confirmpopup";
 import HearingDate from "../views/shared/HearingDate.vue";
+import PetitionDetail from "../views/shared/PetitionDetail.vue";
+import LawyersList from "../views/shared/LawyersList.vue";
 
 export default {
   components: {
@@ -331,6 +318,8 @@ export default {
     Tooltip,
     ConfirmPopup,
     HearingDate,
+    PetitionDetail,
+    LawyersList,
   },
   computed: mapState(["user"]),
   setup() {
@@ -690,5 +679,11 @@ export default {
   cursor: move;
   cursor: -moz-grabbing;
   cursor: grabbing;
+}
+.right_margin {
+  margin-right: 2px;
+}
+.left_margin {
+  margin-left: 2px;
 }
 </style>

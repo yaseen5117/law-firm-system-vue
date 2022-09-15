@@ -233,27 +233,43 @@
                           </div>
                         </div>
                       </div>
-                      <!-- <div class="row" style="margin-left: 3px">
+                      <div class="row" style="margin-left: 3px">
                         <div class="col-lg-12 col-md-12 col-sm-12">
-                          <i
-                            v-tooltip.top="
-                              'Total No Of Indexes ' + petition.index_total
-                            "
-                            class="fa fa-plus-circle"
-                          ></i>
-                          <i
-                            v-tooltip.top="
-                              'Total No of OrderSheet ' +
-                              petition.order_sheet_total
-                            "
-                            class="fa fa-calendar"
-                            style="margin-left: 10px"
-                          ></i>
+                          <router-link
+                            :to="{
+                              name: 'case-detail',
+                              params: { id: petition.id },
+                            }"
+                            style="color: #444444"
+                          >
+                            <i
+                              v-tooltip.top="'Indexes: ' + petition.index_total"
+                              class="fa fa-list"
+                            ></i>
+                          </router-link>
+                          <router-link
+                            :to="{
+                              name: 'petition-order-sheets-index',
+                              params: { petition_id: petition.id },
+                            }"
+                            style="color: #444444"
+                          >
+                            <i
+                              v-tooltip.top="
+                                'Order Sheets: ' + petition.order_sheet_total
+                              "
+                              class="fa fa-file-text-o"
+                              style="margin-left: 10px"
+                            ></i>
+                          </router-link>
                           <span style="margin-left: 10px">
-                            <hearing-date :petition_id="petition.id" />
+                            <hearing-date
+                              :petition_id="petition.id"
+                              :isShowIcon="true"
+                            />
                           </span>
                         </div>
-                      </div> -->
+                      </div>
                       <div class="card-footer">
                         <div class="mt-auto">
                           <div class="pull-right">
