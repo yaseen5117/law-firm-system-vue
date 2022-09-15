@@ -265,6 +265,18 @@
                               :isShowIcon="true"
                             />
                           </span>
+                          <span @click="printOrderSheets(petition.id)">
+                            <i
+                              v-tooltip.top="'Print Order Sheets'"
+                              class="fa fa-print petition_listing_icons icon_margin_left"
+                            ></i>
+                          </span>
+                          <a :href="petition.pdf_download_url" download=""
+                            ><i
+                              v-tooltip.top="'Download PDF'"
+                              class="fa fa-download petition_listing_icons icon_margin_left"
+                            ></i
+                          ></a>
                         </div>
                       </div>
                       <div class="card-footer">
@@ -619,6 +631,13 @@ export default {
           this.$confirm.close();
         },
       });
+    },
+    printOrderSheets(petition_id) {
+      let routeData = this.$router.resolve({
+        name: "print-order-sheets",
+        params: { petition_id: petition_id },
+      });
+      window.open(routeData.href, "_blank");
     },
   },
   mounted() {

@@ -1,9 +1,9 @@
 <template>
   <Dialog
+    header="User Profile"
     @hide="afterHideProfile()"
     :dismissableMask="true"
     :modal="true"
-    :showHeader="false"
     v-model:visible="display"
     :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
     :style="{ width: '70vw' }"
@@ -15,7 +15,7 @@
             <div class="card mb-4">
               <div class="card-body text-center">
                 <img
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                  src="assets/img/user/profile-icon.PNG"
                   alt="avatar"
                   class="rounded-circle img-fluid"
                   style="width: 150px"
@@ -96,8 +96,7 @@
               <div class="col-md-6">
                 <div class="card mb-4 mb-md-0">
                   <div class="card-body">
-                    <p class="mb-4">Petitions Status</p>
-                    <p class="mb-1" style="font-size: 0.77rem">
+                    <p class="mb-1" style="font-size: 0.97rem">
                       Total Petitions
                     </p>
                     <p>{{ lawyerTotalPetitions }}</p>
@@ -153,7 +152,11 @@ export default {
   emits: ["afterHideProfileCard"],
   props: ["lawyer", "display", "lawyerTotalPetitions"],
   components: {},
-
+  data() {
+    return {
+      base_url: process.env.VUE_APP_SERVICE_URL,
+    };
+  },
   methods: {
     afterHideProfile() {
       this.$emit(
@@ -167,6 +170,6 @@ export default {
 
 <style scoped>
 .section-padding {
-  padding: 40px 0 10px 0 !important;
+  padding: 20px 0 10px 0 !important;
 }
 </style>
