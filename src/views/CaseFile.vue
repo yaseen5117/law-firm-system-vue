@@ -240,11 +240,10 @@
                               name: 'case-detail',
                               params: { id: petition.id },
                             }"
-                            style="color: #444444"
                           >
                             <i
                               v-tooltip.top="'Indexes: ' + petition.index_total"
-                              class="fa fa-list"
+                              class="fa fa-list petition_listing_icons"
                             ></i>
                           </router-link>
                           <router-link
@@ -252,17 +251,15 @@
                               name: 'petition-order-sheets-index',
                               params: { petition_id: petition.id },
                             }"
-                            style="color: #444444"
                           >
                             <i
                               v-tooltip.top="
                                 'Order Sheets: ' + petition.order_sheet_total
                               "
-                              class="fa fa-file-text-o"
-                              style="margin-left: 10px"
+                              class="fa fa-file-text-o petition_listing_icons icon_margin_left"
                             ></i>
                           </router-link>
-                          <span style="margin-left: 10px">
+                          <span class="icon_margin_left">
                             <hearing-date
                               :petition_id="petition.id"
                               :isShowIcon="true"
@@ -663,5 +660,8 @@ export default {
 }
 label {
   font-size: 14px;
+}
+.icon_margin_left {
+  margin-left: 5px;
 }
 </style>

@@ -13,7 +13,7 @@
     Next Hearing Date: {{ nextHearingOrderSheet.order_sheet_date }}
   </button>
   <i
-    class="fa fa-calendar"
+    class="fa fa-calendar petition_listing_icons"
     @click="confirmToDelete($event)"
     v-if="
       nextHearingOrderSheet &&
@@ -50,7 +50,7 @@
       !nextHearingOrderSheet.order_sheet_date &&
       isShowIcon
     "
-    class="fa fa-calendar"
+    class="fa fa-calendar petition_listing_icons"
   ></i>
   <button class="btn" v-if="insertHearingDate">
     <div class="p-inputgroup">
@@ -249,4 +249,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped></style>
