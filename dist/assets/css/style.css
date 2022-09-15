@@ -1819,3 +1819,6 @@ label{
   color: #2d2d2d;
   font-weight: bold !important;
 }
+.p-tooltip-text	{
+  font-size: 12px;
+}
