@@ -1,6 +1,6 @@
 <template>
   <button
-  @click="openHearingDateInsertField()"
+    @click="openHearingDateInsertField()"
     class="btn btn-sm btn-green action-btn"
     v-if="
       nextHearingOrderSheet &&
@@ -58,7 +58,6 @@
         @date-select="addHearingDate()"
         placeholder="Click to enter date"
         class="p-calendar p-inputtext-sm"
-        
         v-model="this.order_sheet_date"
         dateFormat="dd/mm/yy"
         :autoZIndex="true"
@@ -66,8 +65,7 @@
         :inline="true"
         :touchUI="true"
         @clear-click="clearDate()"
-        :id="'calendar-'+id"
-        
+        :id="'calendar-' + id"
       />
       <!-- <input
         class="form-control form-control-sm"
@@ -75,7 +73,7 @@
         v-model="pending_tag"
         placeholder="Insert 'Pending' Tag"
       /> -->
-     
+
       <!-- <button
         v-tooltip.top="'Cancel'"
         @click="colseInsertField()"
@@ -101,15 +99,15 @@ export default {
       insertHearingDate: false,
       nextHearingOrderSheet: {},
       order_sheet_date: "",
+      previous_ordersheet_date: "",
     };
   },
   created() {
     this.getNextOderSheet();
   },
   methods: {
-
-    clearDate(){
-      this.insertHearingDate=false;
+    clearDate() {
+      this.insertHearingDate = false;
     },
     getNextOderSheet() {
       if (true) {
@@ -127,6 +125,8 @@ export default {
           .then((response) => {
             if (response.data.nextHearingOrderSheet) {
               this.nextHearingOrderSheet = response.data.nextHearingOrderSheet;
+              this.previous_ordersheet_date =
+                response.data.nextHearingOrderSheet.order_sheet_date;
               console.log(response.data.nextHearingOrderSheet);
             } else {
               this.order_sheet_date = "";
@@ -158,6 +158,7 @@ export default {
               id: this.nextHearingOrderSheet.id,
               order_sheet_date: this.order_sheet_date,
               petition_id: this.id,
+              previous_ordersheet_date: this.previous_ordersheet_date,
             },
             { headers }
           )
@@ -204,7 +205,7 @@ export default {
         },
       });
     },
-    removeHearingDate() {
+    clearDate() {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
