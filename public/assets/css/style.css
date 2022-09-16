@@ -1814,3 +1814,7 @@ label{
 .p-tooltip-text	{
   font-size: 12px;
 }
+
+.p-datepicker{
+  z-index: 1000;
+}
