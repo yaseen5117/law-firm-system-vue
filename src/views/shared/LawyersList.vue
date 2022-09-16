@@ -2,10 +2,11 @@
   <div class="lawyer-list">
     <ul v-for="lawyer in lawyers" :key="lawyer.id">
       <li
-        v-tooltip.top="'Click To Show Lawyer Detail'"
+        style="cursor: pointer"
+        v-tooltip.top="'Show Detail'"
         @click="showProfilePopUp(lawyer)"
       >
-        {{ lawyer.user.name }}
+        <u>{{ lawyer.user.name }}</u>
       </li>
     </ul>
   </div>

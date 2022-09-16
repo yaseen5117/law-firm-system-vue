@@ -240,11 +240,10 @@
                               name: 'case-detail',
                               params: { id: petition.id },
                             }"
-                            style="color: #444444"
                           >
                             <i
                               v-tooltip.top="'Indexes: ' + petition.index_total"
-                              class="fa fa-list"
+                              class="fa fa-list petition_listing_icons"
                             ></i>
                           </router-link>
                           <router-link
@@ -252,22 +251,32 @@
                               name: 'petition-order-sheets-index',
                               params: { petition_id: petition.id },
                             }"
-                            style="color: #444444"
                           >
                             <i
                               v-tooltip.top="
                                 'Order Sheets: ' + petition.order_sheet_total
                               "
-                              class="fa fa-file-text-o"
-                              style="margin-left: 10px"
+                              class="fa fa-file-text-o petition_listing_icons icon_margin_left"
                             ></i>
                           </router-link>
-                          <span style="margin-left: 10px">
+                          <span class="icon_margin_left">
                             <hearing-date
                               :petition_id="petition.id"
                               :isShowIcon="true"
                             />
                           </span>
+                          <span @click="printOrderSheets(petition.id)">
+                            <i
+                              v-tooltip.top="'Print Order Sheets'"
+                              class="fa fa-print petition_listing_icons icon_margin_left"
+                            ></i>
+                          </span>
+                          <a :href="petition.pdf_download_url" download=""
+                            ><i
+                              v-tooltip.top="'Download PDF'"
+                              class="fa fa-download petition_listing_icons icon_margin_left"
+                            ></i
+                          ></a>
                         </div>
                       </div>
                       <div class="card-footer">
@@ -623,6 +632,13 @@ export default {
         },
       });
     },
+    printOrderSheets(petition_id) {
+      let routeData = this.$router.resolve({
+        name: "print-order-sheets",
+        params: { petition_id: petition_id },
+      });
+      window.open(routeData.href, "_blank");
+    },
   },
   mounted() {
     console.log("Case File Component Mounted");
@@ -663,5 +679,8 @@ export default {
 }
 label {
   font-size: 14px;
+}
+.icon_margin_left {
+  margin-left: 5px;
 }
 </style>

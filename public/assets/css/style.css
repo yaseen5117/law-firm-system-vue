@@ -1810,7 +1810,15 @@ label{
 .ql-align-left{
   text-align: left;
 }
-
+/* petition icons */
+.petition_listing_icons {
+  color: #bdbdbd;
+  font-weight: bold !important;
+}
+.petition_listing_icons:hover {
+  color: #2d2d2d;
+  font-weight: bold !important;
+}
 .p-tooltip-text	{
   font-size: 12px;
 }
