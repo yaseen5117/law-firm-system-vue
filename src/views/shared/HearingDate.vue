@@ -59,7 +59,7 @@
         placeholder="Click to enter date"
         class="p-calendar p-inputtext-sm"
         
-        v-model="nextHearingOrderSheet.order_sheet_date"
+        v-model="this.order_sheet_date"
         dateFormat="dd/mm/yy"
         :autoZIndex="true"
         :showButtonBar="true"
