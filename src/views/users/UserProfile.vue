@@ -15,6 +15,20 @@
             <div class="card mb-4">
               <div class="card-body text-center">
                 <img
+                  v-if="lawyer.user.attachment"
+                  :src="
+                    this.base_url +
+                    '/storage/attachments/user/' +
+                    lawyer.user.id +
+                    '/' +
+                    lawyer.user.attachment.file_name
+                  "
+                  alt="avatar"
+                  class="rounded-circle img-fluid"
+                  style="width: 150px"
+                />
+                <img
+                  v-else
                   src="assets/img/user/profile-icon.PNG"
                   alt="avatar"
                   class="rounded-circle img-fluid"
@@ -93,13 +107,13 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6">
-                <div class="card mb-4 mb-md-0">
+              <div class="col-md-5">
+                <div class="card mb-md-0">
                   <div class="card-body">
-                    <p class="mb-1" style="font-size: 0.97rem">
-                      Total Petitions
+                    <p class="" style="font-size: 0.97rem">
+                      Total Petitions:
+                      <span>{{ lawyerTotalPetitions }}</span>
                     </p>
-                    <p>{{ lawyerTotalPetitions }}</p>
                   </div>
                 </div>
               </div>
@@ -170,6 +184,6 @@ export default {
 
 <style scoped>
 .section-padding {
-  padding: 20px 0 10px 0 !important;
+  padding: 5px 0 0px 0 !important;
 }
 </style>
