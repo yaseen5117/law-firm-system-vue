@@ -322,6 +322,7 @@ export default {
       contact_person_email_error: "",
       previewImage: null,
       saving: false,
+      files: "",
     };
   },
   validations() {
@@ -422,7 +423,7 @@ export default {
       this.user.contact_persons.push(contact_person_single);
     },
     onChange(e) {
-      this.file = e.target.file;
+      this.files = e.target.files;
     },
     pickFile() {
       let input = this.$refs.fileInput;
@@ -462,6 +463,7 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
+                this.UploadImage(response.data.user.id);
                 this.saving = false;
                 this.$router.push({ path: "/users" });
               }
@@ -491,6 +493,33 @@ export default {
           );
       }
     },
+    UploadImage(user_id) {
+      let formData = new FormData();
+
+      for (var i = 0; i < this.files.length; i++) {
+        let file = this.files[i];
+        formData.append("files[" + i + "]", file);
+      }
+
+      formData.append("attachmentable_id", user_id);
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      let url = this.base_url + "/api/upload_user_image";
+      axios
+        .post(url, formData, { headers })
+        .then((response) => {
+          console.log("Image Uploaded successfully");
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
+        });
+    },
     getUser() {
       if (this.$route.params.id) {
         var headers = {
@@ -503,6 +532,13 @@ export default {
           .then((response) => {
             this.user = response.data.user;
             this.user.role_id = response.data.user.roles[0].id;
+            this.previewImage =
+              this.base_url +
+              "/storage/attachments/user/" +
+              response.data.user.id +
+              "/" +
+              response.data.user.attachment.file_name;
+            console.log(this.previewImage);
           })
           .catch((error) => {
             console.log(error);

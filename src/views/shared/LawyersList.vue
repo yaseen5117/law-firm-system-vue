@@ -2,11 +2,12 @@
   <div class="lawyer-list">
     <ul v-for="lawyer in lawyers" :key="lawyer.id">
       <li
+        v-if="lawyer.user && lawyer.user.name"
         style="cursor: pointer"
         v-tooltip.top="'Show Detail'"
         @click="showProfilePopUp(lawyer)"
       >
-        <u>{{ lawyer.user.name }}</u>
+        <u>{{ lawyer.user ? lawyer.user.name : "" }}</u>
       </li>
     </ul>
   </div>
