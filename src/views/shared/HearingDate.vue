@@ -1,6 +1,6 @@
 <template>
   <button
-    @click="confirmToDelete($event)"
+  @click="openHearingDateInsertField()"
     class="btn btn-sm btn-green action-btn"
     v-if="
       nextHearingOrderSheet &&
@@ -14,7 +14,7 @@
   </button>
   <i
     class="fa fa-calendar petition_listing_icons"
-    @click="confirmToDelete($event)"
+    @click="openHearingDateInsertField()"
     v-if="
       nextHearingOrderSheet &&
       nextHearingOrderSheet.order_sheet_date &&
@@ -56,12 +56,18 @@
     <div class="p-inputgroup">
       <Calendar
         @date-select="addHearingDate()"
-        placeholder="dd/mm/yy"
+        placeholder="Click to enter date"
         class="p-calendar p-inputtext-sm"
-        v-on:keyup.enter="addHearingDate()"
-        v-model="order_sheet_date"
+        
+        v-model="this.order_sheet_date"
         dateFormat="dd/mm/yy"
+        :autoZIndex="true"
+        :showButtonBar="true"
+        :inline="true"
         :touchUI="true"
+        @clear-click="clearDate()"
+        :id="'calendar-'+id"
+        
       />
       <!-- <input
         class="form-control form-control-sm"
@@ -69,20 +75,14 @@
         v-model="pending_tag"
         placeholder="Insert 'Pending' Tag"
       /> -->
-      <button
-        v-tooltip.top="'Save'"
-        @click="addHearingDate()"
-        class="btn btn-success btn-sm action-btn"
-      >
-        <i class="fa fa-check" aria-hidden="true"></i>
-      </button>
-      <button
+     
+      <!-- <button
         v-tooltip.top="'Cancel'"
         @click="colseInsertField()"
         class="btn btn-danger btn-sm action-btn"
       >
         <i class="fa fa-close" aria-hidden="true"></i>
-      </button>
+      </button> -->
     </div>
   </button>
 </template>
@@ -107,6 +107,10 @@ export default {
     this.getNextOderSheet();
   },
   methods: {
+
+    clearDate(){
+      this.insertHearingDate=false;
+    },
     getNextOderSheet() {
       if (true) {
         var headers = {
