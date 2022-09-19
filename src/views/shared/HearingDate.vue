@@ -106,9 +106,6 @@ export default {
     this.getNextOderSheet();
   },
   methods: {
-    clearDate() {
-      this.insertHearingDate = false;
-    },
     getNextOderSheet() {
       if (true) {
         var headers = {
@@ -206,41 +203,44 @@ export default {
       });
     },
     clearDate() {
-      var headers = {
-        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-      };
       this.insertHearingDate = false;
-      this.hearingDate = false;
+      if (this.previous_ordersheet_date) {
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+        this.hearingDate = false;
 
-      let order_sheet_date = this.nextHearingOrderSheet.order_sheet_date;
-      this.nextHearingOrderSheet.order_sheet_date = "";
+        let order_sheet_date = this.nextHearingOrderSheet.order_sheet_date;
+        this.nextHearingOrderSheet.order_sheet_date = "";
 
-      axios
-        .post(
-          this.base_url + "/api/remove_hearing_date",
-          {
-            order_sheet_date: order_sheet_date,
-            petition_id: this.id,
-          },
-          { headers }
-        )
-        .then((response) => {
-          this.$notify({
-            type: "success",
-            title: "Success",
-            text: "Hearing Date & Calendar Event Remove Successfully!",
+        axios
+          .post(
+            this.base_url + "/api/remove_hearing_date",
+            {
+              order_sheet_date: order_sheet_date,
+              petition_id: this.id,
+            },
+            { headers }
+          )
+          .then((response) => {
+            this.$notify({
+              type: "success",
+              title: "Success",
+              text: "Hearing Date & Calendar Event Remove Successfully!",
+            });
+            this.order_sheet_date = "";
+            this.nextHearingOrderSheet = {};
+            this.previous_ordersheet_date = "";
+          })
+          .catch((error) => {
+            console.log(error);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
           });
-          this.order_sheet_date = "";
-          this.nextHearingOrderSheet = {};
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$notify({
-            type: "error",
-            title: "Something went wrong!",
-            text: error.response.data.message,
-          });
-        });
+      }
     },
     editHearingDate() {
       this.insertHearingDate = true;

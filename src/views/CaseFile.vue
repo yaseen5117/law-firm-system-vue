@@ -55,7 +55,7 @@
                       </select>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-6 col-6">
-                      <label for="">Client Name</label>
+                      <label for="">Party Name</label>
                       <input
                         v-model="filters.petitioner_name"
                         type="text"
