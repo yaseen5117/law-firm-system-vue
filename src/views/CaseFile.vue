@@ -263,10 +263,12 @@
                             <hearing-date
                               :petition_id="petition.id"
                               :isShowIcon="true"
+                              v-if="this.user.is_admin || this.user.is_lawyer"
                             />
                           </span>
                           <span @click="printOrderSheets(petition.id)">
                             <i
+                              v-if="this.user.is_admin || this.user.is_lawyer"
                               v-tooltip.top="'Print Order Sheets'"
                               class="fa fa-print petition_listing_icons icon_margin_left"
                             ></i>
