@@ -68,12 +68,12 @@
                       class="card listing-cards shadow-sm mb-4"
                       style="width: 100%"
                     >
-                      <div
-                        class="card-body"
-                        @click="goToDetails(contractAndAgreemnet.id)"
-                      >
+                      <div class="card-body">
                         <div class="row">
-                          <div class="col-lg-8 col-md-8 col-sm-12">
+                          <div
+                            class="col-lg-8 col-md-8 col-sm-12"
+                            @click="goToDetails(contractAndAgreemnet)"
+                          >
                             <p class="card-title" style="margin-bottom: 0px">
                               <strong>{{ contractAndAgreemnet.title }}</strong>
                             </p>
@@ -254,6 +254,11 @@ export default {
     document.title = "Sample Contracts";
   },
   methods: {
+    goToDetails(contractAndAgreemnet) {
+      this.$router.push({
+        path: "/contract-and-agreement/edit/" + contractAndAgreemnet.id,
+      });
+    },
     getContractAndAgreement() {
       this.isLoaded = false;
       let url = this.base_url + "/api/contracts_and_agreements";
