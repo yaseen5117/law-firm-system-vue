@@ -61,6 +61,10 @@
                       >Public URL
 
                       <router-link
+                        v-if="
+                          contract_and_agreement.length > 0 &&
+                          contract_and_agreement.slug
+                        "
                         style="margin-right: 2px"
                         target="_blank"
                         :to="{

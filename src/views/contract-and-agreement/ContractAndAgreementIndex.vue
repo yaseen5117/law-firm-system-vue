@@ -81,9 +81,6 @@
                             <div class="col-md-12">
                               <p
                                 style="font-size: 14px"
-                                v-tooltip.top="
-                                  contractAndAgreemnet.plain_content
-                                "
                                 :fitContent="true"
                                 class="card-text"
                                 v-html="
@@ -115,7 +112,7 @@
                       <div class="card-footer">
                         <div class="mt-auto">
                           <div class="pull-right">
-                            <a
+                            <!-- <a
                               style="margin-right: 2px"
                               :href="
                                 'https://www.facebook.com/share.php?u=https://elawfirmpk.com/preview/contract-and-agreement/' +
@@ -127,7 +124,7 @@
                                 class="fa fa-facebook-square"
                                 aria-hidden="true"
                               ></i
-                            ></a>
+                            ></a> -->
 
                             <router-link
                               style="margin-right: 2px"
