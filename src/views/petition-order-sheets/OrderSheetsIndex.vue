@@ -286,7 +286,7 @@ export default {
     },
     getOrderSheets() {
       var headers = {
-        Authorization: `Bearer` + localStorage.getItem("lfms_user"),
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
       axios
         .get(

@@ -49,7 +49,7 @@ export default {
       base_url: process.env.VUE_APP_SERVICE_URL,
       calendarOptions: {
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
-        initialView: "dayGridMonth",
+        initialView: "dayGridMonth", // listWeek,  dayGridWeek, dayGridMonth
         dateClick: this.handleDateClick,
         eventClick: this.handleEventClick,
         //Dynamic Event Source
@@ -73,11 +73,22 @@ export default {
   computed: mapState(["user", "globalGeneralSetting"]),
   created() {
     this.getEvents();
+
+    this.calendarOptions.initialView = this.isMobile()? "dayGridWeek" : "dayGridMonth";
+    
   },
   updated() {
     document.title = "Calendar";
   },
   methods: {
+
+    isMobile() {
+      if (screen.width <= 760) {
+        return true
+      } else {
+        return false
+      }
+    },
     showModal() {
       this.displayModal = true;
     },
@@ -143,3 +154,14 @@ export default {
   },
 };
 </script>
+<style >
+.fc-today-button{
+  display: none!important;;
+}
+
+@media only screen and (max-width: 600px) {
+  .fc-toolbar-title{
+    font-size: 16px!important;
+  }
+}
+</style>
