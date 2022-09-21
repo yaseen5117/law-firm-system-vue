@@ -73,11 +73,22 @@ export default {
   computed: mapState(["user", "globalGeneralSetting"]),
   created() {
     this.getEvents();
+
+    this.calendarOptions.initialView = this.isMobile()? "dayGridWeek" : "dayGridMonth";
+    
   },
   updated() {
     document.title = "Calendar";
   },
   methods: {
+
+    isMobile() {
+      if (screen.width <= 760) {
+        return true
+      } else {
+        return false
+      }
+    },
     showModal() {
       this.displayModal = true;
     },
