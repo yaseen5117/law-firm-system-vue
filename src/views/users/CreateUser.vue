@@ -5,6 +5,31 @@
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <form @submit.prevent="submitForm($event)">
+          <div class="row" v-if="this.$route.params.company_setup">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group">
+                <label>Company <span style="color: red">*</span></label>
+                <Dropdown
+                  v-model="user.company_id"
+                  :options="companies"
+                  class="text-capitalize"
+                  optionLabel="name"
+                  optionValue="id"
+                  placeholder="Select company"
+                  :filter="true"
+                  appendTo="self"
+                  filterPlaceholder="Find by Company Name"
+                  v-bind:class="{
+                    'error-boarder': v$.user.company_id.$error,
+                  }"
+                  @blur="v$.user.company_id.$touch"
+                />
+                <span v-if="v$.user.company_id.$error" class="errorMessage"
+                  >Company field is required.</span
+                >
+              </div>
+            </div>
+          </div>
           <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12">
               <div class="form-group">
@@ -323,6 +348,7 @@ export default {
       previewImage: null,
       saving: false,
       files: "",
+      companies: [],
     };
   },
   validations() {
@@ -335,12 +361,16 @@ export default {
         },
         contact_persons: [],
         role_id: { required },
+        company_id: this.$route.params.company_setup ? required : "",
       },
     };
   },
   created() {
     this.getUser();
     this.getRoles();
+    if (this.$route.params.company_setup) {
+      this.getCompanies();
+    }
   },
   updated() {
     document.title = this.user.name
@@ -559,6 +589,25 @@ export default {
         .post(url, { headers })
         .then((response) => {
           this.roles = response.data.roles;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
+        });
+    },
+    getCompanies() {
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      let url = this.base_url + "/api/companies";
+      axios
+        .get(url, { headers })
+        .then((response) => {
+          this.companies = response.data.companies;
         })
         .catch((error) => {
           console.log(error);

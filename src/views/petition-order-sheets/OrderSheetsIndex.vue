@@ -289,7 +289,12 @@ export default {
         Authorization: `Bearer` + localStorage.getItem("lfms_user"),
       };
       axios
-        .get(this.base_url + "/api/petition_order_sheets?petition_id=" + this.petition_id, { headers })
+        .get(
+          this.base_url +
+            "/api/petition_order_sheets?petition_id=" +
+            this.petition_id,
+          { headers }
+        )
         .then((response) => {
           this.orderSheets = response.data.records;
 

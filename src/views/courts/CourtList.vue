@@ -20,7 +20,7 @@
                         v-show="court.editMode"
                         class="form-control"
                         v-model="court.title"
-                        v-on:keyup.enter="editGeneralLawIndex(court)"
+                        v-on:keyup.enter="editCourt(court)"
                       />
                       <span v-show="!court.editMode">{{ court.title }}</span>
                     </td>
@@ -42,7 +42,7 @@
                       <a
                         v-show="court.editMode"
                         class="btn btn-sm btn-warning action-btn"
-                        @click="editGeneralLawIndex(court)"
+                        @click="editCourt(court)"
                         href="javascript:void"
                         style="margin-left: 2px"
                         data-bs-toggle="tooltip"
@@ -87,7 +87,7 @@
                       <input
                         class="form-control"
                         v-model="new_court.title"
-                        v-on:keyup.enter="submitGeneralCaseLaw()"
+                        v-on:keyup.enter="submitCourt()"
                         v-bind:class="{
                           'error-boarder': v$.new_court.title.$error,
                         }"
@@ -103,7 +103,7 @@
                     <td>
                       <button
                         :disabled="saving"
-                        @click="submitGeneralCaseLaw()"
+                        @click="submitCourt()"
                         class="btn btn-sm btn-success action-btn"
                       >
                         Save
@@ -180,7 +180,7 @@ export default {
         });
     },
 
-    submitGeneralCaseLaw() {
+    submitCourt() {
       this.v$.$validate();
       if (!this.v$.$error) {
         var headers = {
@@ -219,14 +219,14 @@ export default {
           );
       }
     },
-    editGeneralLawIndex(standardIndexToUpdate) {
+    editCourt(courtToUpdate) {
       if (true) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
-          .post(this.base_url + "/api/courts", standardIndexToUpdate, {
+          .post(this.base_url + "/api/courts", courtToUpdate, {
             headers,
           })
           .then(
@@ -237,7 +237,7 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
-                standardIndexToUpdate.editMode = false;
+                courtToUpdate.editMode = false;
               }
             },
             (error) => {

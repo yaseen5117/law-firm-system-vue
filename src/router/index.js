@@ -65,6 +65,9 @@ import AllIndexesDetail from "../views/petition-index/AllIndexesDetail";
 
 import HtmlPagePreview from "../views/HtmlPagePreview";
 
+import CreateCompany from "../views/company-settings/CreateCompany";
+import CompaniesList from "../views/company-settings/CompaniesList";
+
 const routes = [
   {
     path: "/login",
@@ -601,7 +604,40 @@ const routes = [
       auth: false,
     },
   },
-  //General settings
+
+  //New Company Setting
+  {
+    path: "/companies",
+    name: "companies",
+    component: CompaniesList,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/create-company",
+    name: "create-company",
+    component: CreateCompany,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/company/edit/:company_id",
+    name: "edit-company",
+    component: CreateCompany,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/register-company-admin/:company_setup",
+    name: "add-new-company",
+    component: CreateUser,
+    meta: {
+      auth: true,
+    },
+  },
 ];
 
 const router = createRouter({
