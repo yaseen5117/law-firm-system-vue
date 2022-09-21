@@ -84,7 +84,7 @@
                       @click="goToDetails(general_case_law.id)"
                     >
                       <div class="row">
-                        <div class="col-lg-8 col-md-8 col-sm-12">
+                        <div class="col-lg-7 col-md-7 col-sm-12">
                           <p class="card-title" style="margin-bottom: 0px">
                             <strong style="font-size: 15px">{{
                               general_case_law.case_title
@@ -93,7 +93,6 @@
                           <p
                             class="card-title"
                             style="margin-bottom: 0px"
-                            v-tooltip.top="general_case_law.legal_provisions"
                             :fitContent="true"
                           >
                             <span style="font-size: 14px">{{
@@ -122,7 +121,7 @@
                             ></p>
                           </div> -->
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="col-lg-5 col-md-5 col-sm-12">
                           <div class="text-end">
                             <InvoiceThumb
                               :base_url="base_url"
@@ -161,7 +160,7 @@
                             class="btn btn-success btn-sm action-btn"
                             role="button"
                             v-tooltip.top="'View'"
-                            >Preview
+                            >View
                           </router-link>
 
                           <router-link

@@ -71,7 +71,7 @@
                       <div class="card-body">
                         <div class="row">
                           <div
-                            class="col-lg-8 col-md-8 col-sm-12"
+                            class="col-lg-7 col-md-7 col-sm-12"
                             @click="goToDetails(contractAndAgreemnet)"
                           >
                             <p class="card-title" style="margin-bottom: 0px">
@@ -96,7 +96,7 @@
                               ></p>
                             </div>
                           </div>
-                          <div class="col-lg-4 col-md-4 col-sm-12">
+                          <div class="col-lg-5 col-md-5 col-sm-12">
                             <div class="text-end">
                               <InvoiceThumb
                                 v-show="contractAndAgreemnet.attachment"

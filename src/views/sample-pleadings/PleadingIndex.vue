@@ -60,14 +60,13 @@
                         @click="goToDetails(samplePleading.id)"
                       >
                         <div class="row">
-                          <div class="col-lg-8 col-md-8 col-sm-12">
+                          <div class="col-lg-7 col-md-7 col-sm-12">
                             <p class="card-title" style="margin-bottom: 0px">
                               <strong>{{ samplePleading.title }}</strong>
                             </p>
 
                             <div class="col-md-12">
                               <p
-                                v-tooltip.top="samplePleading.plain_content"
                                 :fitContent="true"
                                 class="card-text"
                                 style="font-size: 14px"
@@ -83,7 +82,7 @@
                               ></p>
                             </div>
                           </div>
-                          <div class="col-lg-4 col-md-4 col-sm-12">
+                          <div class="col-lg-5 col-md-5 col-sm-12">
                             <div class="text-end">
                               <InvoiceThumb
                                 v-show="samplePleading.attachment"
@@ -122,7 +121,7 @@
                               class="btn btn-success btn-sm action-btn"
                               role="button"
                               v-tooltip.top="'View'"
-                              >Preview
+                              >View
                             </router-link>
 
                             <router-link

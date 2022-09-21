@@ -75,7 +75,7 @@
                         class="btn btn-success btn-sm action-btn"
                         role="button"
                         v-tooltip.top="'View'"
-                        >Preview
+                        >View
                       </router-link>
                       <button
                         v-if="SamplePleading.id"
