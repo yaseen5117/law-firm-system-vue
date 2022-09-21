@@ -21,7 +21,13 @@
                   <button
                     @click="confirmToDelete($event)"
                     class="btn btn-sm btn-grey action-btn right_margin"
-                    v-if="petition && petition.pending_tag && pendingTag"
+                    v-if="
+                      (petition &&
+                        petition.pending_tag &&
+                        pendingTag &&
+                        this.user.is_admin) ||
+                      this.user.is_lawyer
+                    "
                     v-tooltip.top="'Click To Change/Remove'"
                   >
                     Pending Tag: {{ petition.pending_tag }}
@@ -29,16 +35,24 @@
 
                   <button
                     v-if="
-                      !insertPendingTag &&
-                      !petition.pending_tag &&
-                      this.user.is_admin
+                      (!insertPendingTag &&
+                        !petition.pending_tag &&
+                        this.user.is_admin &&
+                        this.user.is_admin) ||
+                      this.user.is_lawyer
                     "
                     @click="openInsertField"
                     class="btn btn-sm btn-success action-btn right_margin"
                   >
                     Insert "Pending" Tag
                   </button>
-                  <button class="btn" v-if="insertPendingTag">
+                  <button
+                    class="btn"
+                    v-if="
+                      (insertPendingTag && this.user.is_admin) ||
+                      this.user.is_lawyer
+                    "
+                  >
                     <div class="p-inputgroup">
                       <input
                         class="form-control form-control-sm"
@@ -78,7 +92,9 @@
                   >
                 </div>
                 <div class="text-end">
-                  <hearing-date />
+                  <hearing-date
+                    v-if="this.user.is_admin || this.user.is_lawyer"
+                  />
                 </div>
                 <div class="mt-3">
                   <lawyers-list :lawyers="petition.lawyers" />

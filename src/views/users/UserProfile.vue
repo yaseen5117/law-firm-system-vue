@@ -29,7 +29,7 @@
                 />
                 <img
                   v-else
-                  src="assets/img/user/profile-icon.PNG"
+                  src="assets/img/user/profile-icon.png"
                   alt="avatar"
                   class="rounded-circle img-fluid"
                   style="width: 150px"

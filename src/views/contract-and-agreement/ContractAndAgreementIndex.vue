@@ -68,12 +68,12 @@
                       class="card listing-cards shadow-sm mb-4"
                       style="width: 100%"
                     >
-                      <div
-                        class="card-body"
-                        @click="goToDetails(contractAndAgreemnet.id)"
-                      >
+                      <div class="card-body">
                         <div class="row">
-                          <div class="col-lg-8 col-md-8 col-sm-12">
+                          <div
+                            class="col-lg-8 col-md-8 col-sm-12"
+                            @click="goToDetails(contractAndAgreemnet)"
+                          >
                             <p class="card-title" style="margin-bottom: 0px">
                               <strong>{{ contractAndAgreemnet.title }}</strong>
                             </p>
@@ -81,9 +81,6 @@
                             <div class="col-md-12">
                               <p
                                 style="font-size: 14px"
-                                v-tooltip.top="
-                                  contractAndAgreemnet.plain_content
-                                "
                                 :fitContent="true"
                                 class="card-text"
                                 v-html="
@@ -115,7 +112,7 @@
                       <div class="card-footer">
                         <div class="mt-auto">
                           <div class="pull-right">
-                            <a
+                            <!-- <a
                               style="margin-right: 2px"
                               :href="
                                 'https://www.facebook.com/share.php?u=https://elawfirmpk.com/preview/contract-and-agreement/' +
@@ -127,7 +124,7 @@
                                 class="fa fa-facebook-square"
                                 aria-hidden="true"
                               ></i
-                            ></a>
+                            ></a> -->
 
                             <router-link
                               style="margin-right: 2px"
@@ -257,6 +254,11 @@ export default {
     document.title = "Sample Contracts";
   },
   methods: {
+    goToDetails(contractAndAgreemnet) {
+      this.$router.push({
+        path: "/contract-and-agreement/edit/" + contractAndAgreemnet.id,
+      });
+    },
     getContractAndAgreement() {
       this.isLoaded = false;
       let url = this.base_url + "/api/contracts_and_agreements";

@@ -15,7 +15,7 @@
   >
     <span v-if="isSamplePleading" style="font-size: 15px">
       <i class="fa fa-external-link"></i>
-      Click to open
+      Click to Download
     </span>
     <span v-else>
       <span
@@ -28,7 +28,7 @@
         "
       >
         <i class="fa fa-external-link"></i>
-        Click to open
+        Click to Download
       </span>
       <img
         class="img img-thumbnail"
