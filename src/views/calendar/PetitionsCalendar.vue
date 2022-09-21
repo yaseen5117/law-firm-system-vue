@@ -154,3 +154,14 @@ export default {
   },
 };
 </script>
+<style >
+.fc-today-button{
+  display: none!important;;
+}
+
+@media only screen and (max-width: 600px) {
+  .fc-toolbar-title{
+    font-size: 16px!important;
+  }
+}
+</style>
