@@ -49,7 +49,7 @@ export default {
       base_url: process.env.VUE_APP_SERVICE_URL,
       calendarOptions: {
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
-        initialView: "dayGridMonth",
+        initialView: "dayGridMonth", // listWeek,  dayGridWeek, dayGridMonth
         dateClick: this.handleDateClick,
         eventClick: this.handleEventClick,
         //Dynamic Event Source
