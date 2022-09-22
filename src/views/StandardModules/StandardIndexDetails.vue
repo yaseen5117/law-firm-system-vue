@@ -450,6 +450,7 @@ export default {
             this.module_type +
             "/" +
             this.module_id,
+          {},
           { headers }
         )
         .then((response) => {

@@ -35,7 +35,7 @@
                   style="width: 150px"
                 />
                 <h5 class="my-3">{{ lawyer.user.name }}</h5>
-                <p class="text-muted mb-1">
+                <p class="text-muted mb-1 text-capitalize">
                   <span v-for="role in lawyer.user.roles" :key="role.id">
                     {{ role.name }}
                   </span>

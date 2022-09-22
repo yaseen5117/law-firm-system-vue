@@ -207,7 +207,7 @@
                     />
                   </div>
                   <div
-                    class="col-lg-4 col-md-4 col-sm-12"
+                    class="col-lg-3 col-md-3 col-sm-12"
                     v-show="previewImage"
                   >
                     <div
@@ -215,6 +215,20 @@
                       :style="{ 'background-image': `url(${previewImage})` }"
                       @click="selectImage"
                     ></div>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-12" v-show="profileImg">
+                    <img
+                      v-if="user && user.attachment"
+                      :src="
+                        this.base_url +
+                        '/storage/attachments/user/' +
+                        user.id +
+                        '/' +
+                        user.attachment.file_name
+                      "
+                      alt="avatar"
+                      style="width: 75px; height: 70px"
+                    />
                   </div>
                 </div>
               </div>
@@ -345,10 +359,12 @@ export default {
       error_email: "",
       error_password: "",
       contact_person_email_error: "",
-      previewImage: null,
+      previewImage:
+        "localhost:8000/storage/attachments/user/1/1663842553_Profile Picture.jpg",
       saving: false,
       files: "",
       companies: [],
+      profileImg: true,
     };
   },
   validations() {
@@ -456,6 +472,7 @@ export default {
       this.files = e.target.files;
     },
     pickFile() {
+      this.profileImg = false;
       let input = this.$refs.fileInput;
       let file = input.files;
       if (file && file[0]) {
@@ -562,12 +579,11 @@ export default {
           .then((response) => {
             this.user = response.data.user;
             this.user.role_id = response.data.user.roles[0].id;
-            this.previewImage =
-              this.base_url +
-              "/storage/attachments/user/" +
-              response.data.user.id +
-              "/" +
-              response.data.user.attachment.file_name;
+            // this.previewImage =
+            //   "localhost:8000/storage/attachments/user/" +
+            //   response.data.user.id +
+            //   "/" +
+            //   response.data.user.attachment.file_name;
             console.log(this.previewImage);
           })
           .catch((error) => {

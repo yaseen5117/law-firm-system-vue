@@ -399,7 +399,7 @@ export default {
     },
     async getPetitionReplyDetails() {
       var headers = {
-        Authorization: `Bearer` + localStorage.getItem("lfms_user"),
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
       await axios
         .post(

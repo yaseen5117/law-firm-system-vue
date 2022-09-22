@@ -102,7 +102,7 @@
             </div>
 
             <div class="form-group mt-3 text-end">
-              <div class="col-lg-3 col-md-3 col-sm-12 mb-2">
+              <div class="col-lg-6 col-md-6 col-sm-12 mb-2">
                 <InvoiceThumb
                   :base_url="base_url"
                   folder_name="Invoice/Payment"

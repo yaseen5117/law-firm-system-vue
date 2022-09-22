@@ -166,7 +166,6 @@ export default {
                   response.data.record
                 );
                 this.order_sheet = response.data.record;
-                this.order_sheet_types = response.data.record.order_sheet_types;
               }
             },
             (error) => {

@@ -437,6 +437,7 @@ export default {
       isLoaded: false,
       pending_tag: "",
       showPendingCasePrintModal: false,
+      resetDuration: false,
     };
   },
   created() {
@@ -578,6 +579,7 @@ export default {
     },
 
     reset() {
+      this.resetDuration = true;
       this.filters = {
         court_id: "",
         pendingTag: "",
@@ -656,7 +658,13 @@ export default {
               this.getCaseFiles();
               this.awaitingSearch = false;
             },
-            this.filters.court_id || this.filters.pending_tag ? 500 : 4000
+            this.filters.court_id ||
+              this.filters.archived ||
+              !this.filters.archived ||
+              this.resetDuration ||
+              this.filters.pending_tag
+              ? 500
+              : 4000
           );
         }
         this.awaitingSearch = true;
