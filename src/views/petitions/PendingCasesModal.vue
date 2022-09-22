@@ -13,7 +13,7 @@
     <div class="row" id="modal">
       <div class="table-responsive">
         <div class="col-lg-12 col-md-12 col-sm-12">
-          <table class="table table-bordered" id="modal_table">
+          <table class="table table-bordered" id="modal_table" v-if="isLoaded">
             <thead>
               <th>Library No.</th>
               <th>Title</th>
@@ -36,12 +36,18 @@
                 </td>
                 <td v-if="pendingCase.court">{{ pendingCase.court.title }}</td>
               </tr>
+              <tr v-if="pendingCases.length == 0" class="alert alert-warning">
+                <td colspan="4">No Pending Cases found.</td>
+              </tr>
             </tbody>
           </table>
+           <div v-if="!isLoaded" class="col-md-12">
+                  <p class="alert alert-warning">Loading....</p>
+                </div>
         </div>
       </div>
     </div>
-    <template #footer>
+    <template #footer v-if="isLoaded">
       <a
         class="btn btn-grey action-btn"
         style="margin-right: 2px"
@@ -87,6 +93,7 @@ export default {
       base_url: process.env.VUE_APP_SERVICE_URL,
       download_url: "",
       pageTitle: true,
+      isLoaded: false
     };
   },
   created() {
@@ -97,6 +104,7 @@ export default {
       this.$emit("close-modal-event");
     },
     async getPendingCaseFiles() {
+      this.isLoaded = false;
       let url = this.base_url + "/api/get_pending_cases";
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
@@ -106,6 +114,7 @@ export default {
           headers,
         })
         .then((response) => {
+          this.isLoaded = true;
           this.pendingCases = response.data.pendingCases;
           this.download_url = response.data.url;
           console.log(response.data.pendingCases);
@@ -116,6 +125,7 @@ export default {
             title: "Something went wrong!",
             text: error.response.data.message,
           });
+          this.isLoaded = true;
           console.log(error);
         });
     },
