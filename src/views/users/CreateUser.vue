@@ -377,7 +377,7 @@ export default {
         },
         contact_persons: [],
         role_id: { required },
-        company_id: this.$route.params.company_setup ? required : "",
+        company_id: this.$route.params.company_setup ? { required } : "",
       },
     };
   },
