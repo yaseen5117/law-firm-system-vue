@@ -26,6 +26,26 @@
                       >Name field is required.</span
                     >
                   </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <label
+                      >Company Domain<span style="color: red">*</span
+                      ><span style="font-size: 12px; color: red">
+                        (Note: i.e https://elawfirmpk.com/)</span
+                      ></label
+                    >
+                    <input
+                      autofocus
+                      class="form-control"
+                      v-model="company.domain"
+                      v-bind:class="{
+                        'error-boarder': v$.company.domain.$error,
+                      }"
+                      @blur="v$.company.domain.$touch"
+                    />
+                    <span v-if="v$.company.domain.$error" class="errorMessage"
+                      >Domain field is required.</span
+                    >
+                  </div>
                 </div>
               </div>
 
@@ -87,6 +107,7 @@ export default {
     return {
       company: {
         name: { required },
+        domain: { required },
       },
     };
   },

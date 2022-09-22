@@ -24,6 +24,7 @@
                 <table class="table table-hover" v-if="isLoaded">
                   <thead>
                     <th>Company Name</th>
+                    <th>Company Domain</th>
                     <th width="10%">Actions</th>
                   </thead>
                   <tbody>
@@ -34,8 +35,26 @@
                       <td>
                         {{ company.name }}
                       </td>
+                      <td>
+                        {{ company.domain }}
+                      </td>
 
-                      <td width="15%">
+                      <td width="18%">
+                        <router-link
+                          class="btn btn-sm btn-success action-btn"
+                          :to="{
+                            name: 'add-new-company',
+                            params: {
+                              company_setup: true,
+                            },
+                          }"
+                          style="margin-left: 2px"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Edit"
+                        >
+                          Add Admin
+                        </router-link>
                         <router-link
                           class="btn btn-sm btn-primary action-btn"
                           :to="{
