@@ -5,7 +5,7 @@
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <form @submit.prevent="submitForm($event)">
-          <div class="row" v-if="this.$route.params.company_setup">
+          <div class="row" v-if="this.$route.params.company_id">
             <div class="col-lg-6 col-md-6 col-sm-12">
               <div class="form-group">
                 <label>Company <span style="color: red">*</span></label>
@@ -355,6 +355,7 @@ export default {
         contact_persons: [],
         send_email: this.$route.params.id ? false : true,
       },
+      company_id: this.$route.params.company_id,
       roles: [],
       error_email: "",
       error_password: "",
@@ -377,14 +378,14 @@ export default {
         },
         contact_persons: [],
         role_id: { required },
-        company_id: this.$route.params.company_setup ? { required } : "",
+        company_id: this.$route.params.company_id ? { required } : "",
       },
     };
   },
   created() {
     this.getUser();
     this.getRoles();
-    if (this.$route.params.company_setup) {
+    if (this.$route.params.company_id) {
       this.getCompanies();
     }
   },
@@ -392,7 +393,6 @@ export default {
     document.title = this.user.name
       ? this.user.name + " | " + this.page_title
       : this.page_title;
-    this.user.confirm_password = this.user.password;
   },
   mounted() {
     document.getElementById("header");
@@ -624,6 +624,7 @@ export default {
         .get(url, { headers })
         .then((response) => {
           this.companies = response.data.companies;
+          this.user.company_id = parseInt(this.company_id);
         })
         .catch((error) => {
           console.log(error);

@@ -631,7 +631,7 @@ const routes = [
     },
   },
   {
-    path: "/register-company-admin/:company_setup",
+    path: "/register-company-admin/:company_id",
     name: "add-new-company",
     component: CreateUser,
     meta: {

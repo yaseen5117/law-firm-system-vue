@@ -106,7 +106,7 @@
                         Print Pending Cases
                       </button>
                     </div>
-                    <div class="col-lg-2 col-md-2 col-sm-6 col-6 mt-1">
+                    <div class="col-lg-2 col-md-2 col-sm-12 mt-1">
                       <div class="field-checkbox">
                         <Checkbox
                           inputClass="p-checkbox p-checkbox-box"
@@ -682,6 +682,10 @@ export default {
   }
   .mobile-margin-top {
     margin-top: 2px;
+  }
+  i {
+    font-size: 20px;
+    margin-right: 12px;
   }
 }
 .margin_left {

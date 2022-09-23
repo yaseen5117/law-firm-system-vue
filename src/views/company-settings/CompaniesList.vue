@@ -45,7 +45,7 @@
                           :to="{
                             name: 'add-new-company',
                             params: {
-                              company_setup: true,
+                              company_id: company.id,
                             },
                           }"
                           style="margin-left: 2px"
