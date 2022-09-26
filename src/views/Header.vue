@@ -42,6 +42,16 @@
               >Dashboard</router-link
             >
           </li>
+          <li v-show="this.user && this.user.is_client">
+            <router-link
+              class="nav-link"
+              :to="{
+                name: 'edit-user',
+                params: { edit_user_id: parseInt(this.user.id) },
+              }"
+              >My Profile</router-link
+            >
+          </li>
           <li v-show="!this.user">
             <router-link class="nav-link" to="/login">Login</router-link>
           </li>
@@ -61,7 +71,7 @@
                   class="nav-link"
                   :to="{
                     name: 'edit-user',
-                    params: { id: this.user.id },
+                    params: { edit_user_id: this.user.id },
                   }"
                 >
                   My Profile

@@ -486,7 +486,7 @@ const routes = [
     },
   },
   {
-    path: "/users/edit/:id",
+    path: "/users/edit/:edit_user_id",
     name: "edit-user",
     component: CreateUser,
     meta: {

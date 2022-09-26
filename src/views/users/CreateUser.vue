@@ -128,7 +128,10 @@
               </div>
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div
+                    class="col-lg-6 col-md-6 col-sm-12"
+                    v-if="!user.is_client"
+                  >
                     <label>Role <span style="color: red">*</span></label>
                     <Dropdown
                       v-model="user.role_id"
@@ -345,15 +348,19 @@ export default {
   },
   data() {
     return {
-      page_title: this.$route.params.id ? "Edit User" : "Add New User",
-      btnTitle: this.$route.params.id ? "Update" : "Save",
+      page_title: this.$route.params.edit_user_id
+        ? "Edit User"
+        : "Add New User",
+      btnTitle: this.$route.params.edit_user_id ? "Update" : "Save",
       base_url: process.env.VUE_APP_SERVICE_URL,
       user: {
-        password: this.$route.params.id ? "" : this.generatePassword(),
+        password: this.$route.params.edit_user_id
+          ? ""
+          : this.generatePassword(),
         role_id: "",
         confirm_password: "",
         contact_persons: [],
-        send_email: this.$route.params.id ? false : true,
+        send_email: this.$route.params.edit_user_id ? false : true,
       },
       company_id: this.$route.params.company_id,
       roles: [],
@@ -512,7 +519,11 @@ export default {
                 });
                 this.UploadImage(response.data.user.id);
                 this.saving = false;
-                this.$router.push({ path: "/users" });
+                if (response.data.is_admin_user) {
+                  this.$router.push({ path: "/users" });
+                } else {
+                  this.getUser();
+                }
               }
               console.log(response);
             },
@@ -568,12 +579,13 @@ export default {
         });
     },
     getUser() {
-      if (this.$route.params.id) {
+      if (this.$route.params.edit_user_id) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
-        var url = this.base_url + "/api/users/" + this.$route.params.id;
+        var url =
+          this.base_url + "/api/users/" + this.$route.params.edit_user_id;
         axios
           .get(url, { headers })
           .then((response) => {

@@ -163,7 +163,7 @@
                               <router-link
                                 :to="{
                                   name: 'edit-user',
-                                  params: { id: petitioner.user.id },
+                                  params: { edit_user_id: petitioner.user.id },
                                 }"
                                 target="_blank"
                               >
@@ -229,7 +229,7 @@
                               ><router-link
                                 :to="{
                                   name: 'edit-user',
-                                  params: { id: opponent.user.id },
+                                  params: { edit_user_id: opponent.user.id },
                                 }"
                               >
                                 View

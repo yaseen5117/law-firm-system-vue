@@ -176,7 +176,7 @@
                             v-show="!user.editMode"
                             :to="{
                               name: 'edit-user',
-                              params: { id: user.id },
+                              params: { edit_user_id: user.id },
                             }"
                             href="javascript:void"
                             style="margin-left: 2px"
