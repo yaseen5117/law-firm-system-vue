@@ -42,7 +42,7 @@
               >Dashboard</router-link
             >
           </li>
-          <li v-show="this.user && this.user.is_client">
+          <!-- <li v-show="this.user && this.user.is_client">
             <router-link
               class="nav-link"
               :to="{
@@ -51,7 +51,7 @@
               }"
               >My Profile</router-link
             >
-          </li>
+          </li> -->
           <li v-show="!this.user">
             <router-link class="nav-link" to="/login">Login</router-link>
           </li>
