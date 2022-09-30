@@ -48,7 +48,7 @@
                       </option>
                     </select>
                   </div>
-                  <div class="col-lg-4 col-md-4 col-sm-12">
+                  <!-- <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Next Hearing Date</label>
                     <InputMask
                       mask="99/99/9999"
@@ -57,7 +57,7 @@
                       placeholder="dd/mm/yyyy"
                       v-model="order_sheet.next_hearing_date"
                     />
-                  </div>
+                  </div> -->
                 </div>
               </div>
 
@@ -125,7 +125,7 @@ export default {
         petition_id: this.$route.params.petition_id,
         order_sheet_type_id: "",
         id: this.$route.params.editable_order_sheet_id, //this is the id from the browser
-        next_hearing_date: "",
+        //next_hearing_date: "",
       },
       petition: {},
       order_sheet_types: [],
