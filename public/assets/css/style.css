@@ -659,6 +659,37 @@ section {
 .services .iconbox-orange:hover .icon path {
   fill: #ffa76e;
 }
+
+.services .iconbox-dark-red i {
+  color: #3d0a07;
+}
+.services .iconbox-dark-red:hover .icon i {
+  color: #fff;
+}
+.services .iconbox-dark-red:hover .icon path {
+  fill: #3d0a07;
+}
+
+.services .iconbox-service-rules i {
+  color: #964609;
+}
+.services .iconbox-service-rules:hover .icon i {
+  color: #fff;
+}
+.services .iconbox-service-rules:hover .icon path {
+  fill: #964609;
+}
+
+.services .iconbox-grey i {
+  color: #56556b;
+}
+.services .iconbox-grey:hover .icon i {
+  color: #fff;
+}
+.services .iconbox-grey:hover .icon path {
+  fill: #56556b;
+}
+
 .services .iconbox-redish i {
   color: rgb(143 58 48);
 }
