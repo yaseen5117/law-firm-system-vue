@@ -5,7 +5,7 @@
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="col-12 col-md-8 offset-md-2">
-            <FullCalendar :options="calendarOptions" />
+            <FullCalendar :events="calEvents" :options="calendarOptions" />
 
             <p>
               <small>(Server Time: {{ server_time }})</small>
@@ -48,23 +48,21 @@ export default {
       displayModal: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
       calendarOptions: {
+        headerToolbar: {
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,timeGridWeek,timeGridDay",
+        },
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
         initialView: "dayGridMonth", // listWeek,  dayGridWeek, dayGridMonth
         dateClick: this.handleDateClick,
         eventClick: this.handleEventClick,
+        eventMouseEnter: this.handleMouseOver,
         //Dynamic Event Source
         events: [],
         editable: false,
-        eventDrop: function (info) {
-          //alert(info.event.title + " was dropped on " + info.event.start.toISOString());
-
-          if (!confirm("Are you sure about this change?")) {
-            info.revert();
-          }
-
-          this.eventToUpdate = info.event;
-        },
       },
+
       eventToUpdate: {},
       server_time: null,
       popupTitle: null,
@@ -74,19 +72,19 @@ export default {
   created() {
     this.getEvents();
 
-    this.calendarOptions.initialView = this.isMobile()? "dayGridWeek" : "dayGridMonth";
-    
+    this.calendarOptions.initialView = this.isMobile()
+      ? "dayGridWeek"
+      : "dayGridMonth";
   },
   updated() {
     document.title = "Calendar";
   },
   methods: {
-
     isMobile() {
       if (screen.width <= 760) {
-        return true
+        return true;
       } else {
-        return false
+        return false;
       }
     },
     showModal() {
@@ -151,17 +149,21 @@ export default {
       // change the border color just for fun
       info.el.style.borderColor = "red";
     },
+
+    handleMouseOver(info) {
+      
+    },
   },
 };
 </script>
 <style >
-.fc-today-button{
-  display: none!important;;
+.fc-today-button {
+  display: none !important;
 }
 
 @media only screen and (max-width: 600px) {
-  .fc-toolbar-title{
-    font-size: 16px!important;
+  .fc-toolbar-title {
+    font-size: 16px !important;
   }
 }
 </style>
