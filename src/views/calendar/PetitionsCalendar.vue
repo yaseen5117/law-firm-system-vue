@@ -5,10 +5,9 @@
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="col-12 col-md-12 ">
-            <iframe src="https://elawfirmpk.whereby.com/c493cdcf-11f8-4d4d-81e9-76f9e9cf48fc?roomKey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZWV0aW5nSWQiOiI2MTI5OTM2MSIsInJvb21SZWZlcmVuY2UiOnsicm9vbU5hbWUiOiIvYzQ5M2NkY2YtMTFmOC00ZDRkLTgxZTktNzZmOWU5Y2Y0OGZjIiwib3JnYW5pemF0aW9uSWQiOiIxNzA0NTQifSwiaXNzIjoiaHR0cHM6Ly9hY2NvdW50cy5zcnYud2hlcmVieS5jb20iLCJpYXQiOjE2NjQ5Njc0MjcsInJvb21LZXlUeXBlIjoibWVldGluZ0hvc3QifQ.9kUwPwG-b1OFEP9vhHWOGkZdVJhHC_KZM9dTGs0YQfw" allow="camera; microphone; fullscreen; speaker; display-capture" style="height: 700px; width: 100%"></iframe>
-
-
+            <iframe :src="globalGeneralSetting.whereby_iframe" allow="camera; microphone; fullscreen; speaker; display-capture" style="height: 700px; width: 100%"></iframe>
             </div>
+
 
             
           <div class="col-12 col-md-8 offset-md-2">

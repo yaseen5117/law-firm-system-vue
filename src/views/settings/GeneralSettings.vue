@@ -127,6 +127,15 @@
                           </label>
                         </div>
                       </div>
+
+                      <div class="col-md-12 col-lg-12">
+                        <div class="form-group">
+                          <label for="">
+                            Whereby iFrame
+                            <textarea class="form-control" style="width:100%" v-model="setting.whereby_iframe" ></textarea>
+                          </label>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="col-sm-4">
