@@ -4,12 +4,6 @@
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="row">
-          <div class="col-12 col-md-12 ">
-            <iframe :src="globalGeneralSetting.whereby_iframe" allow="camera; microphone; fullscreen; speaker; display-capture" style="height: 700px; width: 100%"></iframe>
-            </div>
-
-
-            
           <div class="col-12 col-md-8 offset-md-2">
             <FullCalendar :events="calEvents" :options="calendarOptions" />
 

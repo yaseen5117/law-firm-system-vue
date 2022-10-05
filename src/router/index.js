@@ -68,6 +68,8 @@ import HtmlPagePreview from "../views/HtmlPagePreview";
 import CreateCompany from "../views/company-settings/CreateCompany";
 import CompaniesList from "../views/company-settings/CompaniesList";
 
+import MeetingPage from "../views/online_meetings/MeetingPage";
+
 const routes = [
   {
     path: "/login",
@@ -634,6 +636,15 @@ const routes = [
     path: "/register-company-admin/:company_id",
     name: "add-new-company",
     component: CreateUser,
+    meta: {
+      auth: true,
+    },
+  },
+
+  {
+    path: "/online-meeting",
+    name: "online-meeting",
+    component: MeetingPage,
     meta: {
       auth: true,
     },

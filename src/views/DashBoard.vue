@@ -258,7 +258,7 @@
             class="col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="100"
           >
-            <div class="icon-box iconbox-blue border">
+            <div @click="gotoLink('online-meeting')" class="icon-box iconbox-blue border cursor-pointer ">
               <div class="icon">
                 <svg
                   width="100"
@@ -275,7 +275,7 @@
                 </svg>
                 <i class="fa fa-users"></i>
               </div>
-              <h4><a href="">Client Consultation/Zoom</a></h4>
+              <h4><router-link to="online-meeting">Zoom</router-link></h4>
               <p>
                 Contains all Details of Client Consultation/Zoom. Click to Open
                 all Details.
