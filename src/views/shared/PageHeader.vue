@@ -11,6 +11,14 @@
               :to="route_object"
               >{{ header_button_text }}</router-link
             >
+            <button
+              v-if="copyToClipBtn"
+              class="btn btn-success action-btn"
+              type="button"
+              @click="copyToClipboard(title)"
+            >
+              Copy To Clipboard
+            </button>
           </h4>
 
           <template v-if="!hideBreadCrumbs">
@@ -75,6 +83,7 @@ export default {
     "header_button",
     "showInvoices",
     "hideCaseFiles",
+    "copyToClipBtn",
   ],
 };
 </script>
