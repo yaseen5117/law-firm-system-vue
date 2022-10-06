@@ -258,7 +258,10 @@
             class="col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="100"
           >
-            <div @click="gotoLink('online-meeting')" class="icon-box iconbox-blue border cursor-pointer ">
+            <div
+              @click="gotoLink('online-meeting')"
+              class="icon-box iconbox-blue border cursor-pointer"
+            >
               <div class="icon">
                 <svg
                   width="100"
@@ -407,7 +410,7 @@
                   ></path>
                 </svg>
 
-                <i class="fa fa-gavel"></i>
+                <i class="fa fa-book"></i>
               </div>
               <h4>
                 <router-link to="#service-rules-library"
