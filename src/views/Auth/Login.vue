@@ -19,7 +19,7 @@
             >
               <div class="col-md-12 col-sm-12">
                 <label>Email</label>
-                <input
+                <!-- <input
                   v-model="email"
                   type="text"
                   name="email"
@@ -28,17 +28,35 @@
                 />
                 <span v-if="v$.email.$error" class="errorMessage"
                   >Email is Required.</span
+                > -->
+                <InputText
+                  placeholder="Enter your email"
+                  name="email"
+                  type="text"
+                  v-model="email"
+                />
+                <span v-if="v$.email.$error" class="errorMessage"
+                  >Email is Required.</span
                 >
               </div>
               <div class="col-md-12 col-sm-12">
                 <label>Password</label>
-                <input
+                <!-- <input
                   v-model="password"
                   type="password"
                   name="password"
                   class="form-control"
                   placeholder="Enter your password"
                 />
+                <span v-if="v$.password.$error" class="errorMessage"
+                  >Password is Required.</span
+                > -->
+                <Password
+                  v-model="password"
+                  :feedback="false"
+                  toggleMask
+                  placeholder="Enter your password"
+                ></Password>
                 <span v-if="v$.password.$error" class="errorMessage"
                   >Password is Required.</span
                 >
@@ -105,10 +123,12 @@ import { required, email } from "@vuelidate/validators";
 import PageHeader from "../shared/PageHeader.vue";
 import { mapState } from "vuex";
 import Image from "primevue/image";
+import Password from "primevue/password";
+import InputText from "primevue/inputtext";
 
 export default {
   name: "Login",
-  components: { PageHeader, Image },
+  components: { PageHeader, Image, Password, InputText },
   computed: mapState(["globalGeneralSetting"]),
   setup() {
     return {
@@ -175,6 +195,9 @@ export default {
 </script>
 
 <style>
+.p-component {
+  width: 100% !important;
+}
 .errorMessage {
   color: red;
 }
