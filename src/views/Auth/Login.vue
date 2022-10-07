@@ -30,6 +30,7 @@
                   >Email is Required.</span
                 > -->
                 <InputText
+                  style="width: 100%"
                   placeholder="Enter your email"
                   name="email"
                   type="text"
@@ -52,6 +53,8 @@
                   >Password is Required.</span
                 > -->
                 <Password
+                  style="width: 100%"
+                  :inputStyle="'width: 100%'"
                   v-model="password"
                   :feedback="false"
                   toggleMask
@@ -195,9 +198,6 @@ export default {
 </script>
 
 <style>
-.p-component {
-  width: 100% !important;
-}
 .errorMessage {
   color: red;
 }
