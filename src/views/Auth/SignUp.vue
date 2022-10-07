@@ -47,7 +47,11 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label>Email<span style="color: red">*</span></label>
+                    <label
+                      >Email of Client or his/her Lawyer<span style="color: red"
+                        >*</span
+                      ></label
+                    >
                     <input
                       type="email"
                       class="form-control"
