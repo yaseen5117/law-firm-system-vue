@@ -41,7 +41,7 @@
           <iframe
             width="560"
             height="315"
-            src="https://www.youtube.com/embed/UTNyuiy-5Wg?autoplay=1&mute=1"
+            src="https://www.youtube-nocookie.com/embed/z3gch7kq7RM"
             title="YouTube video player"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -284,105 +284,148 @@
       <div class="container" data-aos="fade-up">
         <div class="section-title">
           <h2>Reviews</h2>
-          <p>
-            Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex
-            aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos
-            quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
-            fugiat sit in iste officiis commodi quidem hic quas.
-          </p>
         </div>
+        <!-- Carousel wrapper -->
         <div
-          class="testimonials-slider swiper"
-          data-aos="fade-up"
-          data-aos-delay="100"
+          id="carouselMultiItemExample"
+          class="carousel slide carousel-dark text-center"
+          data-mdb-ride="carousel"
         >
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Proin iaculis purus consequat sem cure digni ssim donec
-                  porttitora entum suscipit rhoncus. Accusantium quam, ultricies
-                  eget id, aliquam eget nibh et. Maecen aliquam, risus at
-                  semper.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img
-                  src="assets/img/testimonials/testimonials-1.jpg"
-                  class="testimonial-img"
-                  alt=""
-                />
-                <h3>Saul Goodman</h3>
-                <h4>Ceo &amp; Founder</h4>
+          <!-- Controls -->
+          <!-- Inner -->
+          <div class="carousel-inner py-4">
+            <!-- Single item -->
+            <div class="carousel-item active">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-4">
+                    <img
+                      class="rounded-circle shadow-1-strong mb-4"
+                      src="assets/img/testimonials/ashir.jpeg"
+                      alt="avatar"
+                      style="width: 150px; height: 150px"
+                    />
+                    <h5 class="mb-3">Aashir Khan</h5>
+                    <p>&nbsp;</p>
+                    <p class="text-muted">
+                      <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                      <span v-show="showMoreOrLessTestimonial1">
+                        I recently started practicing law in Pakistan. As a
+                        graduate of University of London, understanding
+                        Pakistani legal system...
+                        <span
+                          v-if="showMoreOrLessTestimonial1"
+                          style="cursor: pointer; color: blue"
+                          @click="
+                            showMoreOrLessTestimonial1 =
+                              !showMoreOrLessTestimonial1
+                          "
+                        >
+                          Show More
+                        </span>
+                      </span>
+                      <span v-show="!showMoreOrLessTestimonial1"
+                        >I recently started practicing law in Pakistan. As a
+                        graduate of University of London, understanding
+                        Pakistani legal system and practices has been my biggest
+                        challenge. This is where “ELawFirm" has really helped
+                        me. The law firm I interned at was using ELawFirm. I was
+                        a able to see all case files ahead of meetings, use
+                        sample contracts and pleadings for drafting. As far my
+                        learning experience goes, this technology has given me a
+                        lot edger over my peers in the profession.</span
+                      >
+                      <span
+                        v-if="!showMoreOrLessTestimonial1"
+                        style="cursor: pointer; color: blue"
+                        @click="
+                          showMoreOrLessTestimonial1 =
+                            !showMoreOrLessTestimonial1
+                        "
+                      >
+                        Show Less
+                      </span>
+                      <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                    </p>
+                  </div>
+
+                  <div class="col-lg-4 d-none d-lg-block">
+                    <img
+                      class="rounded-circle shadow-1-strong mb-4"
+                      src="assets/img/testimonials/profile-icon.png"
+                      alt="avatar"
+                      style="width: 150px; height: 150px"
+                    />
+
+                    <h5 class="mb-3">Syed Umair Javed</h5>
+                    <p style="font-size: 13px; font-weight: bold">
+                      Registrar, Competition Commission of Pakistan
+                    </p>
+                    <p class="text-muted">
+                      <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                      <span v-show="showMoreOrLessTestimonial2">
+                        ELawFirm is a wonderful addition to the emerging Law and
+                        Tech industry. It can help make in-house legal
+                        departments more organized...
+                        <span
+                          v-if="showMoreOrLessTestimonial2"
+                          style="cursor: pointer; color: blue"
+                          @click="
+                            showMoreOrLessTestimonial2 =
+                              !showMoreOrLessTestimonial2
+                          "
+                        >
+                          Show More
+                        </span>
+                      </span>
+                      <span v-show="!showMoreOrLessTestimonial2"
+                        >ELawFirm is a wonderful addition to the emerging Law
+                        and Tech industry. It can help make in-house legal
+                        departments more organized and efficient. If adopted by
+                        courts, it could actually add the accessibility and
+                        transparency which is needed to bolster public
+                        confidence in the legal system.</span
+                      >
+                      <span
+                        v-if="!showMoreOrLessTestimonial2"
+                        style="cursor: pointer; color: blue"
+                        @click="
+                          showMoreOrLessTestimonial2 =
+                            !showMoreOrLessTestimonial2
+                        "
+                      >
+                        Show Less
+                      </span>
+                      <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                    </p>
+                  </div>
+
+                  <div class="col-lg-4 d-none d-lg-block">
+                    <img
+                      class="rounded-circle shadow-1-strong mb-4"
+                      src="assets/img/testimonials/profile-icon.png"
+                      alt="avatar"
+                      style="width: 150px; height: 150px"
+                    />
+                    <h5 class="mb-3">Advocate Waleed Usman</h5>
+                    <p style="font-size: 13px; font-weight: bold">
+                      Senior In-house Counsel
+                    </p>
+                    <p class="text-muted">
+                      <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                      ELawFirm is a fascinating Law & Tech tool. It's probably
+                      the most useful IT solution to have come up in Pakistan
+                      after PakistanLawSite. Definitely worth a try.
+                      <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
-            <!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Export tempor illum tamen malis malis eram quae irure esse
-                  labore quem cillum quid cillum eram malis quorum velit fore
-                  eram velit sunt aliqua noster fugiat irure amet legam anim
-                  culpa.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img
-                  src="assets/img/testimonials/testimonials-2.jpg"
-                  class="testimonial-img"
-                  alt=""
-                />
-                <h3>Sara Wilsson</h3>
-                <h4>Designer</h4>
-              </div>
-            </div>
-            <!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Enim nisi quem export duis labore cillum quae magna enim sint
-                  quorum nulla quem veniam duis minim tempor labore quem eram
-                  duis noster aute amet eram fore quis sint minim.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img
-                  src="assets/img/testimonials/testimonials-3.jpg"
-                  class="testimonial-img"
-                  alt=""
-                />
-                <h3>Jena Karlis</h3>
-                <h4>Store Owner</h4>
-              </div>
-            </div>
-            <!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Fugiat enim eram quae cillum dolore dolor amet nulla culpa
-                  multos export minim fugiat minim velit minim dolor enim duis
-                  veniam ipsum anim magna sunt elit fore quem dolore labore.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img
-                  src="assets/img/testimonials/testimonials-4.jpg"
-                  class="testimonial-img"
-                  alt=""
-                />
-                <h3>Matt Brandon</h3>
-                <h4>Freelancer</h4>
-              </div>
-            </div>
-            <!-- End testimonial item -->
-
-            <!-- End testimonial item -->
           </div>
-          <div class="swiper-pagination"></div>
+          <!-- Inner -->
         </div>
+        <!-- Carousel wrapper -->
       </div>
     </section>
     <!-- End Testimonials Section -->
@@ -431,13 +474,13 @@
         <div class="row" id="quote">
           <div class="col-lg-6">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3320.4985850154235!2d73.01338161520496!3d33.670151880711735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x8002693aa3eb051!2zMzPCsDQwJzEyLjYiTiA3M8KwMDAnNTYuMSJF!5e0!3m2!1sen!2s!4v1650019163750!5m2!1sen!2s"
-              width="100%"
-              height="450"
-              style="border: 0"
-              allowfullscreen=""
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
+              width="560"
+              height="315"
+              src="https://www.youtube-nocookie.com/embed/z3gch7kq7RM"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
             ></iframe>
           </div>
 
@@ -641,6 +684,8 @@ export default {
           lawfirm_plan: "&#10004",
         },
       ],
+      showMoreOrLessTestimonial1: true,
+      showMoreOrLessTestimonial2: true,
     };
   },
   validations() {
@@ -652,6 +697,7 @@ export default {
       },
     };
   },
+
   mounted() {
     document.getElementById("header");
     document.title = "Home";
@@ -732,4 +778,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped></style>
