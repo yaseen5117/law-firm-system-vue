@@ -20,6 +20,7 @@
                     <div class="col-lg-1 col-md-1 col-sm-6 col-6">
                       <label for="">Case #</label>
                       <input
+                        v-on:keyup.enter="searchPetition()"
                         type="text"
                         id="Case"
                         v-model="filters.case_no"
@@ -30,6 +31,7 @@
                     <div class="col-lg-1 col-md-1 col-sm-6 col-6">
                       <label for="">Year</label>
                       <input
+                        v-on:keyup.enter="searchPetition()"
                         type="text"
                         id="year"
                         v-model="filters.year"
@@ -57,6 +59,7 @@
                     <div class="col-lg-2 col-md-2 col-sm-6 col-6">
                       <label for="">Party Name</label>
                       <input
+                        v-on:keyup.enter="searchPetition()"
                         v-model="filters.petitioner_name"
                         type="text"
                         id="ClientName"
@@ -67,6 +70,7 @@
                     <div class="col-lg-2 col-md-2 col-sm-6 col-6">
                       <label for="">Pending Tag</label>
                       <input
+                        v-on:keyup.enter="searchPetition()"
                         v-model="filters.pendingTag"
                         type="text"
                         id="PendingTag"
@@ -78,8 +82,16 @@
                     <div class="col-lg-4 col-md-4 col-sm-12 mt-lg-4 mt-md-4 mt">
                       <button
                         type="button"
+                        class="btn btn-success btn-sm mr-md-2"
+                        @click="searchPetition()"
+                      >
+                        Search
+                      </button>
+                      <button
+                        type="button"
                         class="btn btn-danger btn-sm mr-md-2"
                         @click="reset()"
+                        style="margin-left: 2px"
                       >
                         Reset
                       </button>
@@ -446,6 +458,9 @@ export default {
   },
   computed: mapState(["user"]),
   methods: {
+    searchPetition() {
+      this.getCaseFiles();
+    },
     //START EDIT PENDING TAG
     addPendingTag(petition) {
       if (true) {
@@ -648,29 +663,29 @@ export default {
     console.log("Case File Component Mounted");
     document.title = "Case Files";
   },
-  watch: {
-    filters: {
-      deep: true,
-      handler() {
-        if (!this.awaitingSearch) {
-          setTimeout(
-            () => {
-              this.getCaseFiles();
-              this.awaitingSearch = false;
-            },
-            this.filters.court_id ||
-              this.filters.archived ||
-              !this.filters.archived ||
-              this.resetDuration ||
-              this.filters.pending_tag
-              ? 500
-              : 4000
-          );
-        }
-        this.awaitingSearch = true;
-      },
-    },
-  },
+  // watch: {
+  //   filters: {
+  //     deep: true,
+  //     handler() {
+  //       if (!this.awaitingSearch) {
+  //         setTimeout(
+  //           () => {
+  //             this.getCaseFiles();
+  //             this.awaitingSearch = false;
+  //           },
+  //           this.filters.court_id ||
+  //             this.filters.archived ||
+  //             !this.filters.archived ||
+  //             this.resetDuration ||
+  //             this.filters.pending_tag
+  //             ? 500
+  //             : 4000
+  //         );
+  //       }
+  //       this.awaitingSearch = true;
+  //     },
+  //   },
+  // },
 };
 </script>
 
