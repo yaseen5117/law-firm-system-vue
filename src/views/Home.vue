@@ -41,7 +41,7 @@
           <iframe
             width="560"
             height="315"
-            src="https://www.youtube-nocookie.com/embed/z3gch7kq7RM?autoplay=1&muted=1"
+            src="https://www.youtube-nocookie.com/embed/z3gch7kq7RM?autoplay=1&muted=0"
             title="YouTube video player"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -325,8 +325,8 @@
                           Show More
                         </span>
                       </span>
-                      <span v-show="!showMoreOrLessTestimonial1"
-                        >I recently started practicing law in Pakistan. As a
+                      <span v-show="!showMoreOrLessTestimonial1">
+                        I recently started practicing law in Pakistan. As a
                         graduate of University of London, understanding
                         Pakistani legal system and practices has been my biggest
                         challenge. This is where “ELawFirm" has really helped
@@ -380,9 +380,9 @@
                           Show More
                         </span>
                       </span>
-                      <span v-show="!showMoreOrLessTestimonial2"
-                        >ELawFirm is a wonderful addition to the emerging Law
-                        and Tech industry. It can help make in-house legal
+                      <span v-show="!showMoreOrLessTestimonial2">
+                        ELawFirm is a wonderful addition to the emerging Law and
+                        Tech industry. It can help make in-house legal
                         departments more organized and efficient. If adopted by
                         courts, it could actually add the accessibility and
                         transparency which is needed to bolster public
@@ -475,7 +475,7 @@
 
         <div class="row" id="quote">
           <div class="col-lg-6">
-            <iframe
+            <!-- <iframe
               width="560"
               height="315"
               src="https://www.youtube-nocookie.com/embed/z3gch7kq7RM"
@@ -483,7 +483,7 @@
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
-            ></iframe>
+            ></iframe> -->
           </div>
 
           <div class="col-lg-6">
