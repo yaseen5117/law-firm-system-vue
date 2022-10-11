@@ -405,7 +405,7 @@
                   <div class="col-lg-4 d-none d-lg-block">
                     <img
                       class="rounded-circle shadow-1-strong mb-4"
-                      src="assets/img/testimonials/profile-icon.png"
+                      src="assets/img/testimonials/waleed.png"
                       alt="avatar"
                       style="width: 150px; height: 150px"
                     />
