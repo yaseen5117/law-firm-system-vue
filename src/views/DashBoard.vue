@@ -278,7 +278,7 @@
                 </svg>
                 <i class="fa fa-users"></i>
               </div>
-              <h4><router-link to="online-meeting">Zoom</router-link></h4>
+              <h4><router-link to="online-meeting">Video Call</router-link></h4>
               <p>
                 Contains all Details of Client Consultation/Zoom. Click to Open
                 all Details.

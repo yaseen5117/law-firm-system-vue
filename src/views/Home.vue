@@ -300,10 +300,10 @@
                 <div class="row">
                   <div class="col-lg-4">
                     <img
-                      class="rounded-circle shadow-1-strong mb-4"
-                      src="assets/img/testimonials/ashir.jpeg"
+                      class="rounded-circle shadow-1-strong mb-4 text-center"
+                      src="assets/img/testimonials/ashir_new.jpeg"
                       alt="avatar"
-                      style="width: 150px; height: 150px"
+                      style="object-fit: cover; width: 150px; height: 150px"
                     />
                     <h5 class="mb-3">Aashir Khan</h5>
                     <p>&nbsp;</p>
@@ -312,7 +312,8 @@
                       <span v-show="showMoreOrLessTestimonial1">
                         I recently started practicing law in Pakistan. As a
                         graduate of University of London, understanding
-                        Pakistani legal system...
+                        Pakistani legal system and practices has been my biggest
+                        challenge. This is...
                         <span
                           v-if="showMoreOrLessTestimonial1"
                           style="cursor: pointer; color: blue"
@@ -366,7 +367,8 @@
                       <span v-show="showMoreOrLessTestimonial2">
                         ELawFirm is a wonderful addition to the emerging Law and
                         Tech industry. It can help make in-house legal
-                        departments more organized...
+                        departments more organized and efficient. If adopted by
+                        courts, it could actually add...
                         <span
                           v-if="showMoreOrLessTestimonial2"
                           style="cursor: pointer; color: blue"
