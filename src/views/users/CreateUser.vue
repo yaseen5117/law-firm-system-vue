@@ -313,7 +313,7 @@
                   </div>
                   <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
                     <ToggleButton
-                      v-if="user"
+                      v-if="user && user.id"
                       v-tooltip.top="
                         blockOrApproved
                           ? 'Click To Approve User'
