@@ -311,6 +311,24 @@
                       <span class="fa fa-plus"></span> Add Contact Person
                     </button>
                   </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
+                    <ToggleButton
+                      v-if="user"
+                      v-tooltip.top="
+                        blockOrApproved
+                          ? 'Click To Approve User'
+                          : 'Click To Block User'
+                      "
+                      v-model="blockOrApproved"
+                      onLabel="Approve"
+                      offLabel="Block"
+                      onIcon="pi pi-check"
+                      offIcon="pi pi-ban"
+                      class="w-full sm:w-10rem"
+                      aria-label="do you confirm"
+                      @change="blockOrApprove(user, !blockOrApproved)"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -338,9 +356,10 @@ import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
 import useVuelidate from "@vuelidate/core";
 import { required, email, helpers, sameAs } from "@vuelidate/validators";
+import ToggleButton from "primevue/togglebutton";
 
 export default {
-  components: { PageHeader },
+  components: { PageHeader, ToggleButton },
   setup() {
     return {
       v$: useVuelidate(),
@@ -373,6 +392,8 @@ export default {
       files: "",
       companies: [],
       profileImg: true,
+      blockOrApproved: true,
+      fromApproveBlockBtn: true,
     };
   },
   validations() {
@@ -405,6 +426,12 @@ export default {
     document.getElementById("header");
   },
   methods: {
+    blockOrApprove(user, param) {
+      user.is_approved = param;
+      this.fromApproveBlockBtn = false;
+      this.submitForm();
+    },
+
     generatePassword() {
       // program to generate random Password
 
@@ -494,7 +521,7 @@ export default {
     selectImage() {
       this.$refs.fileInput.click();
     },
-    submitForm: function (event) {
+    submitForm() {
       this.v$.$validate();
       if (!this.v$.$error) {
         event.preventDefault();
@@ -519,7 +546,7 @@ export default {
                 });
                 this.UploadImage(response.data.user.id);
                 this.saving = false;
-                if (response.data.is_admin_user) {
+                if (response.data.is_admin_user && this.fromApproveBlockBtn) {
                   this.$router.push({ path: "/users" });
                 } else {
                   this.getUser();
@@ -591,12 +618,14 @@ export default {
           .then((response) => {
             this.user = response.data.user;
             this.user.role_id = response.data.user.roles[0].id;
-            // this.previewImage =
-            //   "localhost:8000/storage/attachments/user/" +
-            //   response.data.user.id +
-            //   "/" +
-            //   response.data.user.attachment.file_name;
-            console.log(this.previewImage);
+            (this.blockOrApproved =
+              this.user && this.user.is_approved ? false : true),
+              // this.previewImage =
+              //   "localhost:8000/storage/attachments/user/" +
+              //   response.data.user.id +
+              //   "/" +
+              //   response.data.user.attachment.file_name;
+              console.log(this.previewImage);
           })
           .catch((error) => {
             console.log(error);

@@ -280,8 +280,8 @@
               </div>
               <h4><router-link to="online-meeting">Video Call</router-link></h4>
               <p>
-                Contains all Details of Client Consultation/Zoom. Click to Open
-                all Details.
+                Contains all Details of Client Consultation. Click to Open all
+                Details.
               </p>
             </div>
           </div>
