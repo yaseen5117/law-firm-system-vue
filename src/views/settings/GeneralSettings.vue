@@ -132,7 +132,11 @@
                         <div class="form-group">
                           <label for="">
                             Host Whereby iFrame
-                            <textarea class="form-control" style="width:100%" v-model="setting.host_whereby_iframe" ></textarea>
+                            <textarea
+                              class="form-control"
+                              style="width: 100%"
+                              v-model="setting.host_whereby_iframe"
+                            ></textarea>
                           </label>
                         </div>
                       </div>
@@ -149,15 +153,13 @@
                           </label>
                         </div>
                       </div>
-
-
                     </div>
                   </div>
                   <div class="col-sm-4">
                     <label for="">Additional Email</label>
                     <div
                       v-for="(additionalEmail, i) in setting.additionalemails"
-                      :key="additionalEmail.id"
+                      :key="additionalEmail"
                     >
                       <div class="row">
                         <div class="col-sm-12">
