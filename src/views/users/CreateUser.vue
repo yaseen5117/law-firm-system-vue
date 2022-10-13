@@ -312,18 +312,43 @@
                     </button>
                   </div>
                   <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
+                    <!-- <button type="button" class="btn btn-success">
+                      Approve this User
+                    </button>
+                    <button type="button" class="btn btn-danger">
+                      Block this User
+                    </button> -->
+                    <p
+                      style="font-weight: bold; font-size: 14px; color: green"
+                      v-if="user && user.id && user.is_approved > 0"
+                    >
+                      (User approved at:
+                      <span style="font-size: 15px">{{
+                        user.approved_at
+                      }}</span>
+                      by
+                      <span style="font-size: 15px">{{
+                        user.approve_by.name
+                      }}</span
+                      >)
+                    </p>
                     <ToggleButton
                       v-if="user && user.id"
                       v-tooltip.top="
                         blockOrApproved
-                          ? 'Click To Approve User'
-                          : 'Click To Block User'
+                          ? 'Click To Approve this User'
+                          : 'Click To Block this User'
                       "
                       v-model="blockOrApproved"
-                      onLabel="Approve"
-                      offLabel="Block"
+                      onLabel="Approve this User"
+                      offLabel="Block this User"
                       onIcon="pi pi-check"
                       offIcon="pi pi-ban"
+                      :style="
+                        blockOrApproved
+                          ? 'background-color: green; color: white'
+                          : 'background-color: red; color: white'
+                      "
                       class="w-full sm:w-10rem"
                       aria-label="do you confirm"
                       @change="blockOrApprove(user, !blockOrApproved)"
