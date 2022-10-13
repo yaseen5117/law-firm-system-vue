@@ -716,4 +716,7 @@ export default {
   background-size: contain;
   background-position: center center;
 }
+.pi-ban:before {
+  color: white;
+}
 </style>
