@@ -10,7 +10,10 @@
         <div class="row">
           <div class="col-12 col-md-12">
             <iframe
-              :src="userMeeting.host_meeting_iframe"
+              :src="
+                userMeeting.host_meeting_iframe +
+                '&displayName=ELawFirmPk&pipButton=off'
+              "
               allow="camera; microphone; fullscreen; speaker; display-capture"
               style="height: 700px; width: 100%"
             ></iframe>
