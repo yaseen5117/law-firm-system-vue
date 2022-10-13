@@ -165,7 +165,7 @@
                         <div class="col-sm-12">
                           <div class="input-group mb-3">
                             <input
-                              v-model="setting.additionalemails[i]"
+                              v-model.lazy="setting.additionalemails[i]"
                               type="email"
                               class="form-control"
                               placeholder="Additional Email"
@@ -370,8 +370,9 @@ export default {
       this.imagePreview = true;
     },
     addMoreAdditionalEmail() {
-      var single_new_email = {};
+      var single_new_email = "";
       this.setting.additionalemails.push(single_new_email);
+      console.log(this.setting.additionalemails);
     },
     generelSetting() {
       this.page_title = "General Settings";
