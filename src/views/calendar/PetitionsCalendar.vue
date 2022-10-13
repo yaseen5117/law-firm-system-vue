@@ -4,7 +4,7 @@
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="row">
-          <div class="col-12 col-md-8 offset-md-2">
+          <div class="col-lg-12 col-md-12 col-sm-12">
             <FullCalendar :events="calEvents" :options="calendarOptions" />
 
             <p>
@@ -40,6 +40,8 @@ import interactionPlugin from "@fullcalendar/interaction";
 import BootstrapModalNoJquery from "./BootstrapModalNoJquery.vue";
 import moment from "moment";
 import { mapState } from "vuex";
+import { Tooltip } from "bootstrap";
+let tooltipInstance = null;
 
 export default {
   components: { PageHeader, FullCalendar, BootstrapModalNoJquery },
@@ -58,6 +60,7 @@ export default {
         dateClick: this.handleDateClick,
         eventClick: this.handleEventClick,
         eventMouseEnter: this.handleMouseOver,
+        eventMouseLeave: this.handleMouseLeave,
         //Dynamic Event Source
         events: [],
         editable: false,
@@ -151,12 +154,29 @@ export default {
     },
 
     handleMouseOver(info) {
-      
+      console.log(info.event.title);
+      if (info.event.title) {
+        tooltipInstance = new Tooltip(info.el, {
+          title: info.event.title,
+          html: true,
+          placement: "top",
+          trigger: "hover",
+          container: "body",
+        });
+
+        tooltipInstance.show();
+      }
+    },
+    handleMouseLeave(info) {
+      if (tooltipInstance) {
+        tooltipInstance.dispose();
+        tooltipInstance = null;
+      }
     },
   },
 };
 </script>
-<style >
+<style>
 .fc-today-button {
   display: none !important;
 }
