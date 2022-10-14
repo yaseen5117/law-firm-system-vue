@@ -167,6 +167,7 @@
 
 <script>
 import { integer } from "@vuelidate/validators";
+import "bootstrap/dist/js/bootstrap.min.js";
 
 export default {
   props: ["activeNavPill", "petition_id"],
