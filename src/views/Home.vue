@@ -780,4 +780,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  iframe {
+    width: 100%;
+  }
+}
+</style>
