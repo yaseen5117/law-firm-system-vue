@@ -9,7 +9,11 @@
         :createMeetingBtnText="createMeetingBtnText"
         @afterMeetingCreate="getUserMeeting"
       />
-      <section id="services" class="services section-bg">
+      <section
+        id="services"
+        class="services section-bg"
+        v-if="userMeeting && userMeeting.id"
+      >
         <div class="container" data-aos="fade-up">
           <div class="row">
             <div class="col-12 col-md-12">
