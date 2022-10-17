@@ -19,6 +19,15 @@
             >
               Copy To Clipboard
             </button>
+            <button
+              style="margin-left: 2px"
+              v-if="createMeetingBtn"
+              class="btn btn-info action-btn"
+              type="button"
+              @click="createNewMeeting()"
+            >
+              {{ createMeetingBtnText }}
+            </button>
           </h4>
 
           <template v-if="!hideBreadCrumbs">
@@ -70,6 +79,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import { mapState } from "vuex";
 export default {
   computed: mapState(["user"]),
@@ -84,7 +94,42 @@ export default {
     "showInvoices",
     "hideCaseFiles",
     "copyToClipBtn",
+    "createMeetingBtn",
+    "createMeetingBtnText",
   ],
+  data() {
+    return {
+      base_url: process.env.VUE_APP_SERVICE_URL,
+    };
+  },
+  methods: {
+    createNewMeeting() {
+      if (true) {
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+        let url = this.base_url + "/api/create_new_meeting";
+        axios
+          .post(url, {}, { headers })
+          .then((response) => {
+            if (response.status === 200) {
+              this.$notify({
+                type: "success",
+                title: "Success",
+                text: "Meeting Created Successfully!",
+              });
+            }
+          })
+          .catch((error) => {
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
+          });
+      }
+    },
+  },
 };
 </script>
 

@@ -4,6 +4,9 @@
       :title="userMeeting.meeting_id_public"
       :copyToClipBtn="true"
       :hideBreadCrumbs="true"
+      :route_object="route_obj"
+      :createMeetingBtn="createMeetingBtn"
+      :createMeetingBtnText="createMeetingBtnText"
     />
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
@@ -37,6 +40,11 @@ export default {
   components: { PageHeader },
   data() {
     return {
+      route_obj: {
+        name: "create-petition",
+      },
+      createMeetingBtn: true,
+      createMeetingBtnText: "New Meeting",
       base_url: process.env.VUE_APP_SERVICE_URL,
       server_time: null,
       popupTitle: null,
