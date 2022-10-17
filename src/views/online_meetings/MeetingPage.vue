@@ -7,6 +7,7 @@
       :route_object="route_obj"
       :createMeetingBtn="createMeetingBtn"
       :createMeetingBtnText="createMeetingBtnText"
+      @afterMeetingCreate="getUserMeeting"
     />
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">

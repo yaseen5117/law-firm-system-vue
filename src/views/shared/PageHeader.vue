@@ -83,6 +83,7 @@ import axios from "axios";
 import { mapState } from "vuex";
 export default {
   computed: mapState(["user"]),
+  emits: ["afterMeetingCreate"],
   props: [
     "title",
     "petition",
@@ -113,6 +114,7 @@ export default {
           .post(url, {}, { headers })
           .then((response) => {
             if (response.status === 200) {
+              this.$emit("afterMeetingCreate", "Reloading the Data of Meeting");
               this.$notify({
                 type: "success",
                 title: "Success",
