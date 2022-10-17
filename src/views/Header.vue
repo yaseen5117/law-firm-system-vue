@@ -68,7 +68,7 @@
             <ul>
               <li v-if="this.user && this.user.id">
                 <router-link
-                  class="nav-link"
+                  class="nav-link drop-down"
                   :to="{
                     name: 'edit-user',
                     params: { edit_user_id: this.user.id },
@@ -78,24 +78,32 @@
                 </router-link>
               </li>
               <li v-show="this.user && this.user.is_admin">
-                <router-link class="nav-link" to="/users">Users</router-link>
+                <router-link class="nav-link drop-down" to="/users"
+                  >Users</router-link
+                >
               </li>
               <li>
-                <router-link class="nav-link" to="/settings"
+                <router-link class="nav-link drop-down" to="/settings"
                   >General Settings</router-link
                 >
               </li>
               <li>
-                <router-link class="nav-link" to="/courts">Courts</router-link>
+                <router-link class="nav-link drop-down" to="/courts"
+                  >Courts</router-link
+                >
               </li>
               <li>
-                <router-link to="/petition-types">Case Categories</router-link>
+                <router-link class="nav-link drop-down" to="/petition-types"
+                  >Case Categories</router-link
+                >
               </li>
               <li>
-                <router-link to="/module-types">Module Types</router-link>
+                <router-link class="nav-link drop-down" to="/module-types"
+                  >Module Types</router-link
+                >
               </li>
               <li>
-                <router-link to="/contact-requests"
+                <router-link class="nav-link drop-down" to="/contact-requests"
                   >Contact Requests</router-link
                 >
               </li>
@@ -174,4 +182,17 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+nav .dropdown .drop-down {
+  border: 1px solid rgb(143 58 48 / 8%);
+  color: rgb(143 58 48);
+}
+nav .dropdown .drop-down:hover {
+  background-color: rgb(143 58 48);
+  color: #f3be32;
+}
+nav .dropdown .drop-down.active {
+  color: #f3be32;
+  background-color: rgb(143 58 48);
+}
+</style>

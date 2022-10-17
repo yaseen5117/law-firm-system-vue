@@ -30,7 +30,7 @@
               </div>
 
               <div class="form-group form-group-dropdown">
-                <label for="">Case</label>
+                <label for="">Title of Case or Meeting</label>
                 <AutoComplete
                   v-model="petition_hearing_event.petition"
                   :suggestions="filteredPetitions"
@@ -40,20 +40,15 @@
                   appendTo="self"
                   minLength="3"
                   autoHighlight="true"
-                  forceSelection="true"
                   :style="'width:100%'"
                   :inputStyle="'width:100%'"
                   delay="1"
-                  v-bind:class="{
-                    'error-boarder': v$.petition_hearing_event.petition.$error,
-                  }"
-                  @blur="v$.petition_hearing_event.petition.$touch"
                 />
-                <span
+                <!-- <span
                   v-if="v$.petition_hearing_event.petition.$error"
                   class="errorMessage"
                   >Case field is required.
-                </span>
+                </span> -->
 
                 <!-- <Dropdown
                   v-model="petition_hearing_event.petition_id"
@@ -95,6 +90,7 @@
             <!-- <button @click="gotoLink('petitions/'+petition_hearing_event.petition_id)"  >Open Case File</button> -->
             <button
               type="button"
+              v-if="petition_hearing_event.petition_id"
               :disabled="saving_event"
               class="btn btn-success btn-sm"
               v-show="petition_hearing_event.id"
@@ -141,16 +137,10 @@
 <script>
 import axios from "axios";
 import moment from "moment";
-import useVuelidate from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
 
 export default {
   props: ["selected_date", "eventToUpdateProp", "title"],
-  setup() {
-    return {
-      v$: useVuelidate(),
-    };
-  },
+
   data() {
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,
@@ -176,13 +166,7 @@ export default {
       saving_event: false,
     };
   },
-  validations() {
-    return {
-      petition_hearing_event: {
-        petition: { required },
-      },
-    };
-  },
+
   watch: {
     eventToUpdateProp: function (newVal, oldVal) {
       // watch it
@@ -243,8 +227,7 @@ export default {
     },
 
     savePetitionHearing() {
-      this.v$.$validate();
-      if (!this.v$.$error) {
+      if (true) {
         let url = this.base_url + "/api/petition_hearing";
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
