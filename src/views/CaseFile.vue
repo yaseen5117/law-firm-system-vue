@@ -507,7 +507,7 @@ export default {
       var new_page_no = event.page + 1; //adding 1 because event.page returns index of page # clicked.
 
       this.filters.page = new_page_no;
-
+      this.getCaseFiles();
       //event.page: New page number
       //event.first: Index of first record
       //event.rows: Number of rows to display in new page
