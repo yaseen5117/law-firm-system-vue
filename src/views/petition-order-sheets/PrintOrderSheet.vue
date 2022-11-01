@@ -85,8 +85,10 @@
             <td>
               {{ singleOrderSheet.order_sheet_date }}
             </td>
-            <td v-if="singleOrderSheet.petition.type">
-              {{ singleOrderSheet.petition.type.title }}
+            <td>
+              <span v-if="singleOrderSheet.order_sheet_types">{{
+                singleOrderSheet.order_sheet_types.title
+              }}</span>
             </td>
           </tr>
         </tbody>
