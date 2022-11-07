@@ -49,7 +49,7 @@
         ><br />
         <button
           :disabled="saving"
-          :class="compactInlineView ? 'display' : ''"
+          :class="compactInlineView || disableUploadBtn ? 'display' : ''"
           class="btn btn-primary btn-sm"
         >
           Upload
@@ -76,6 +76,7 @@ export default {
     "image_type",
     "petition_id",
     "multiple_or_single",
+    "disableUploadBtn",
   ],
   setup() {
     return {
@@ -107,7 +108,8 @@ export default {
       }
     },
     onUploadFile(e) {
-      if (!this.compactInlineView) {
+      console.log("File Uploading Event: ", e);
+      if (!this.compactInlineView && !this.disableUploadBtn) {
         e.preventDefault();
       }
 
@@ -130,17 +132,24 @@ export default {
 
       this.v$.$validate();
       if (!this.v$.$error) {
+        if (this.disableUploadBtn) {
+          formData.append("attachmentable_id", e.attachmentable_id);
+        } else {
+          formData.append("attachmentable_id", this.attachmentable_id);
+        }
         formData.append("attachmentable_type", this.type);
-        formData.append("attachmentable_id", this.attachmentable_id);
         formData.append("petition_id", this.petition_id);
         axios.post(this.base_url + "/api/attachments", formData, config).then(
           (response) => {
             if (response.status === 200) {
-              this.$notify({
-                type: "success",
-                title: "Success",
-                text: "Files Uploaded Successfully!",
-              });
+              if (!this.disableUploadBtn) {
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: "Files Uploaded Successfully!",
+                });
+              }
+
               this.saving = true;
               this.beforUploading = "";
               this.$refs.fileupload.value = null;

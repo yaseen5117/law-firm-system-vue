@@ -10,11 +10,13 @@
                 <div class="row">
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <file-upload
-                      v-if="this.user.is_admin && order_sheet.id"
+                      v-if="this.user.is_admin"
                       @afterUpload="getEditableOrderSheet"
                       type="App\Models\PetitonOrderSheet"
                       :attachmentable_id="order_sheet.id"
                       :petition_id="petition.id"
+                      ref="image_upload_ref"
+                      :disableUploadBtn="true"
                     />
                   </div>
                 </div>
@@ -110,7 +112,7 @@ import PageHeader from "../shared/PageHeader.vue";
 import deleteAttachment from "../petition-order-sheets/deleteAttachment.vue";
 import { mapState } from "vuex";
 import FileUpload from "../petition-index/FileUpload.vue";
-
+import { ref } from "vue";
 export default {
   components: { PageHeader, deleteAttachment, FileUpload },
   computed: mapState(["user"]),
@@ -199,6 +201,11 @@ export default {
           .then(
             (response) => {
               if (response.status === 200) {
+                this.order_sheet = response.data.petitionOrderSheet;
+                this.$refs.image_upload_ref.onUploadFile({
+                  attachmentable_id: this.order_sheet.id,
+                });
+
                 this.$notify({
                   type: "success",
                   title: "Success",
