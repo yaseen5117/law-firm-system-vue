@@ -183,7 +183,10 @@ export default {
                   response.data.record
                 );
                 this.order_sheet = response.data.record;
-                this.order_sheet.order_sheet_type_id = "";
+                this.order_sheet.order_sheet_type_id = this.order_sheet
+                  .order_sheet_type_id
+                  ? this.order_sheet.order_sheet_type_id
+                  : "";
               }
             },
             (error) => {
