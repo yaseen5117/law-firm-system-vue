@@ -49,7 +49,7 @@
         ><br />
         <button
           :disabled="saving"
-          :class="compactInlineView || disableUploadBtn ? 'display' : ''"
+          :class="compactInlineView ? 'display' : ''"
           class="btn btn-primary btn-sm"
         >
           Upload
@@ -65,7 +65,7 @@ import useVuelidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
 
 export default {
-  emits: ["afterUpload"],
+  emits: ["afterUpload", "disableOrderSheetBtn"],
   props: [
     "type",
     "attachmentable_id",
@@ -76,7 +76,7 @@ export default {
     "image_type",
     "petition_id",
     "multiple_or_single",
-    "disableUploadBtn",
+    "fromOrderSheet",
   ],
   setup() {
     return {
@@ -92,6 +92,7 @@ export default {
       success: "",
       beforUploading: "",
       saving: true,
+      orderSheetId: "",
     };
   },
   validations() {
@@ -107,15 +108,22 @@ export default {
         this.onUploadFile();
       }
     },
-    onUploadFile(e) {
-      console.log("File Uploading Event: ", e);
-      if (!this.compactInlineView && !this.disableUploadBtn) {
+    async onUploadFile(e) {
+      if (!this.compactInlineView) {
         e.preventDefault();
       }
-
+      this.$emit(
+        "disableOrderSheetBtn",
+        "disable the order sheet buttons while uploading attachments"
+      );
       this.beforUploading = "Please Wait..!";
       this.saving = true;
-      //let existingObj = this;
+      console.log("attachmentable_id: ", this.attachmentable_id);
+      //if control coming from Order Sheet page
+      if (this.fromOrderSheet && !this.attachmentable_id) {
+        //first creating Order Sheet
+        await this.createOrderSheet();
+      }
 
       const config = {
         headers: {
@@ -132,29 +140,34 @@ export default {
 
       this.v$.$validate();
       if (!this.v$.$error) {
-        if (this.disableUploadBtn) {
-          formData.append("attachmentable_id", e.attachmentable_id);
+        if (this.orderSheetId) {
+          formData.append("attachmentable_id", this.orderSheetId);
         } else {
           formData.append("attachmentable_id", this.attachmentable_id);
         }
+        console.log("FormData: ", formData);
         formData.append("attachmentable_type", this.type);
         formData.append("petition_id", this.petition_id);
+
         axios.post(this.base_url + "/api/attachments", formData, config).then(
           (response) => {
             if (response.status === 200) {
-              if (!this.disableUploadBtn) {
-                this.$notify({
-                  type: "success",
-                  title: "Success",
-                  text: "Files Uploaded Successfully!",
-                });
-              }
+              this.$notify({
+                type: "success",
+                title: "Success",
+                text: "Files Uploaded Successfully!",
+              });
 
               this.saving = true;
               this.beforUploading = "";
               this.$refs.fileupload.value = null;
               console.log(response.data);
-              this.$emit("afterUpload", "Reloading the Data of attachments");
+
+              this.$emit(
+                "afterUpload",
+                this.orderSheetId ? this.orderSheetId : "",
+                "Reloading the Data of attachments"
+              );
             }
           },
           (error) => {
@@ -169,6 +182,37 @@ export default {
           }
         );
       }
+    },
+    createOrderSheet() {
+      var order_sheet = {
+        petition_id: this.petition_id,
+      };
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      return axios
+        .post(this.base_url + "/api/petition_order_sheets", order_sheet, {
+          headers,
+        })
+        .then(
+          (response) => {
+            if (response.status === 200) {
+              order_sheet = response.data.petitionOrderSheet;
+              this.orderSheetId = order_sheet.id;
+              console.log("New Created Order Sheet Data: ", order_sheet);
+            }
+            console.log(response);
+          },
+          (error) => {
+            this.saving = false;
+            console.log(error.response.data);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong to create New ordersheet!",
+              text: error.response.data.message,
+            });
+          }
+        );
     },
   },
 };

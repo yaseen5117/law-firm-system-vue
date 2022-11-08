@@ -1,7 +1,7 @@
 <template>
   <div
     class="text-center text-danger mt-3 mb-3"
-    v-if="index_details.attachments.length == 0"
+    v-if="index_details.attachments && index_details.attachments.length == 0"
   >
     <p><strong>No attachments in this category.</strong></p>
   </div>

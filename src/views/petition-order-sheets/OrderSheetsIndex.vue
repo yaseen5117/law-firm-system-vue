@@ -82,7 +82,13 @@
           <div>
             <div class="mt-4" v-if="orderSheetsActive">
               <not-found-message :index_details="orderSheetsActive" />
-              <div v-if="orderSheetsActive.attachments.length > 0">
+              <div
+                v-if="
+                  orderSheetsActive &&
+                  orderSheetsActive.attachments &&
+                  orderSheetsActive.attachments.length > 0
+                "
+              >
                 <div
                   class="row mb-2 text-center"
                   :id="'image-container-' + attachment.id"

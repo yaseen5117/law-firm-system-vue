@@ -50,7 +50,7 @@
               '/storage/attachments/petitions/' +
               order_sheet.petition_id +
               '/PetitonOrderSheet/' +
-              this.$route.params.editable_order_sheet_id +
+              order_sheet.id +
               '/' +
               attachment.file_name
             "
@@ -63,7 +63,7 @@
               '/storage/attachments/petitions/' +
               order_sheet.petition_id +
               '/PetitonOrderSheet/' +
-              this.$route.params.editable_order_sheet_id +
+              order_sheet.id +
               '/' +
               attachment.file_name
             "

@@ -12,11 +12,11 @@
                     <file-upload
                       v-if="this.user.is_admin"
                       @afterUpload="getEditableOrderSheet"
+                      @disableOrderSheetBtn="saving = true"
                       type="App\Models\PetitonOrderSheet"
                       :attachmentable_id="order_sheet.id"
                       :petition_id="petition.id"
-                      ref="image_upload_ref"
-                      :disableUploadBtn="true"
+                      :fromOrderSheet="true"
                     />
                   </div>
                 </div>
@@ -72,14 +72,13 @@
                   {{ btnTitle }}
                 </button>
                 <router-link
-                  :disabled="saving"
+                  :style="saving ? 'cursor: not-allowed' : ''"
                   class="btn btn-secondary btn-sm mt-2"
                   :to="{
                     name: 'petition-order-sheets-index',
                     params: {
                       petition_id: this.$route.params.petition_id,
-                      order_sheet_id:
-                        this.$route.params.editable_order_sheet_id,
+                      order_sheet_id: this.editable_order_sheet_id,
                     },
                   }"
                 >
@@ -118,6 +117,7 @@ export default {
   computed: mapState(["user"]),
   data() {
     return {
+      editable_order_sheet_id: this.$route.params.editable_order_sheet_id,
       page_title: this.$route.params.editable_order_sheet_id
         ? "Edit Order Sheet"
         : "Add New Order Sheet",
@@ -126,7 +126,11 @@ export default {
       order_sheet: {
         petition_id: this.$route.params.petition_id,
         order_sheet_type_id: "",
-        id: this.$route.params.editable_order_sheet_id, //this is the id from the browser
+        id: this.$route.params.editable_order_sheet_id
+          ? this.$route.params.editable_order_sheet_id
+          : this.order_sheet
+          ? this.order_sheet.id
+          : "", //this is the id from the browser
         //next_hearing_date: "",
       },
       petition: {},
@@ -144,8 +148,19 @@ export default {
     document.title = this.page_title;
   },
   methods: {
-    getEditableOrderSheet: function () {
-      if (this.$route.params.editable_order_sheet_id) {
+    getEditableOrderSheet: function (id) {
+      this.saving = false;
+      if (id) {
+        this.editable_order_sheet_id = id;
+        // this.$router.replace({
+        //   path:
+        //     "/petition-order-sheets-edit/" +
+        //     this.order_sheet.petition_id +
+        //     "/" +
+        //     id,
+        // });
+      }
+      if (this.editable_order_sheet_id) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
@@ -154,7 +169,7 @@ export default {
           .get(
             this.base_url +
               "/api/petition_order_sheets/" +
-              this.$route.params.editable_order_sheet_id,
+              this.editable_order_sheet_id,
 
             {
               headers,
@@ -168,6 +183,7 @@ export default {
                   response.data.record
                 );
                 this.order_sheet = response.data.record;
+                this.order_sheet.order_sheet_type_id = "";
               }
             },
             (error) => {
@@ -202,9 +218,6 @@ export default {
             (response) => {
               if (response.status === 200) {
                 this.order_sheet = response.data.petitionOrderSheet;
-                this.$refs.image_upload_ref.onUploadFile({
-                  attachmentable_id: this.order_sheet.id,
-                });
 
                 this.$notify({
                   type: "success",
