@@ -70,6 +70,8 @@ import CompaniesList from "../views/company-settings/CompaniesList";
 
 import MeetingPage from "../views/online_meetings/MeetingPage";
 
+import LimitationCalculator from "../views/limitation-calculator/LimitationCalculator";
+
 const routes = [
   {
     path: "/login",
@@ -645,6 +647,16 @@ const routes = [
     path: "/online-meeting",
     name: "online-meeting",
     component: MeetingPage,
+    meta: {
+      auth: true,
+    },
+  },
+
+  //Limitation Calculator
+  {
+    path: "/limitation-calculator",
+    name: "limitation-calculator",
+    component: LimitationCalculator,
     meta: {
       auth: true,
     },

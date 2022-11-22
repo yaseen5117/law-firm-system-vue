@@ -319,7 +319,7 @@
           </div>
           <!-- New Tabs Added -->
           <div
-            @click="gotoLink('#limitation-calculator')"
+            @click="gotoLink('limitation-calculator')"
             v-if="this.user.is_admin || this.user.is_lawyer"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="200"
@@ -343,8 +343,8 @@
                 <i class="fa fa-calculator"></i>
               </div>
               <h4>
-                <router-link to="#limitation-calculator">
-                  Limitation Calculator (Coming Soon!)
+                <router-link to="limitation-calculator">
+                  Limitation Calculator
                 </router-link>
               </h4>
               <p>
