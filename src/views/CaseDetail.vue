@@ -531,7 +531,7 @@ export default {
       }, 250);
     },
     getCaseDetails() {
-      this.isLoaded = false;
+      //this.isLoaded = false;
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };

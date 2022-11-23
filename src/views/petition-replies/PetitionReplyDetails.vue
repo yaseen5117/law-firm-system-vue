@@ -317,6 +317,37 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+            <router-link
+              v-tooltip.top="'Previous'"
+              style="margin-right: 3px"
+              v-if="previous_index_id"
+              class="btn btn-success ml-3 mr-2"
+              :to="{
+                name: 'petition-reply-details',
+                params: {
+                  id: previous_index_id,
+                },
+              }"
+              ><i class="fa fa-angle-up fa-2x btn-round"></i
+            ></router-link>
+
+            <router-link
+              v-tooltip.top="'Next'"
+              style="margin-right: 3px"
+              v-if="next_index_id"
+              class="btn btn-success ml-3"
+              :to="{
+                name: 'petition-reply-details',
+                params: {
+                  id: next_index_id,
+                },
+              }"
+              ><i class="fa fa-angle-down fa-2x btn-round"></i
+            ></router-link>
+          </div>
+        </div>
       </div>
     </section>
     <page-number-side-bar :petition_index_details="petition_reply_details" />
@@ -357,6 +388,8 @@ export default {
   computed: mapState(["user"]),
   data() {
     return {
+      next_index_id: null,
+      previous_index_id: null,
       showImgCard: false,
       editView: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
@@ -412,6 +445,8 @@ export default {
         .then((response) => {
           this.petition_reply_details = response.data.petition_reply;
           this.petition = response.data.petition;
+          this.previous_index_id = response.data.previous_index_id;
+          this.next_index_id = response.data.next_index_id;
           //console.log("petition",  response.data.petition.petition_reply_parent.petition);
           this.getPetitionReplyAnnexure(
             this.petition_reply_details.petition_reply_parent_id

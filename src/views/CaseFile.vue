@@ -260,6 +260,22 @@
                           </router-link>
                           <router-link
                             :to="{
+                              name: 'petition-reply-parents',
+                              params: { id: petition.id },
+                            }"
+                          >
+                            <i
+                              v-if="this.user.is_admin || this.user.is_lawyer"
+                              v-tooltip.top="
+                                'Petition Reply Parents: ' +
+                                petition.petition_reply_parent_total
+                              "
+                              class="fa fa-reply petition_listing_icons icon_margin_left"
+                              aria-hidden="true"
+                            ></i>
+                          </router-link>
+                          <router-link
+                            :to="{
                               name: 'petition-order-sheets-index',
                               params: { petition_id: petition.id },
                             }"

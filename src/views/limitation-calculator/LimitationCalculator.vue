@@ -14,10 +14,11 @@
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <!-- Title Container -->
                 <div class="container text-center" style="margin-bottom: -22px">
-                  <p><em>Lets start!</em></p>
                   <p>
-                    We Provide the Limitation Calculator. That will help you to
-                    find the last date of filing.
+                    Limitation Calculator allows you to calculate the last date
+                    before which your case must be filed. It is based on
+                    Pakistani laws related to limitation, primarily Limitation
+                    Act, 1908.
                   </p>
                   <br />
                 </div>
@@ -90,7 +91,26 @@
                         <label for="">{{ caseQuestion.question }}</label>
 
                         <br />
-                        <Listbox
+                        <Dropdown
+                          v-model="newlimitationCalculatorCaseObject.answer_id"
+                          :options="caseQuestionAnswers"
+                          optionLabel="answer"
+                          :placeholder="
+                            'Search for ' +
+                            newlimitationCalculatorCaseObject.title +
+                            '..'
+                          "
+                          :filter="true"
+                          appendTo="self"
+                          class="p-inputtext-sm"
+                          :filterPlaceholder="
+                            'Search for ' +
+                            newlimitationCalculatorCaseObject.title +
+                            '..'
+                          "
+                          @change="getSubAnswers()"
+                        />
+                        <!-- <Listbox
                           v-model="newlimitationCalculatorCaseObject.answer_id"
                           :options="caseQuestionAnswers"
                           :multiple="false"
@@ -106,7 +126,7 @@
                           class="mb-2"
                           @change="getSubAnswers()"
                         >
-                        </Listbox>
+                        </Listbox> -->
                       </div>
                       <hr />
                       <!-- Limition box End-->
@@ -127,7 +147,7 @@
                             <br />
                           </div>
                           <div class="col-lg-3 col-md-4 col-sm-12">
-                            <b> {{ subAnswer.date_field_label }} : </b
+                            <b> {{ subAnswer.date_field_label }}: </b
                             ><input
                               class="form-control mb-2"
                               type="date"
@@ -193,7 +213,7 @@
                       <div class="row">
                         <div class="col-12">
                           <h5 class="mt-3">
-                            Time Period : <b> <span id="time"> </span></b>
+                            Time Period: <b> <span id="time"> </span></b>
                           </h5>
                           <h5><span> </span><b>Last Date of Filing:</b></h5>
                           <b>
