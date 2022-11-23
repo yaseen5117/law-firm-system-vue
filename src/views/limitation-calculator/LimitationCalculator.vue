@@ -79,7 +79,9 @@
 
                       <h4 class="mt-3">
                         {{
-                          caseQuestion && caseQuestion.question
+                          caseQuestion &&
+                          caseQuestion.question &&
+                          showCaseQuestion
                             ? newlimitationCalculatorCaseObject.title
                             : "Appeal / Application / Revision / Suit"
                         }}
@@ -110,7 +112,7 @@
                       <!-- Limition box End-->
 
                       <!-- challenging date box -->
-                      <div v-if="subAnswers.length > 0">
+                      <div v-if="showCaseSubAnswers && subAnswers.length > 0">
                         <div
                           class="row"
                           v-for="(subAnswer, subAnswerIndex) in subAnswers"
@@ -285,6 +287,7 @@ export default {
       base_url: process.env.VUE_APP_SERVICE_URL,
       isLoaded: false,
       subAnswers: [],
+      showCaseSubAnswers: false,
     };
   },
   created() {
@@ -550,6 +553,7 @@ export default {
           { headers }
         )
         .then((response) => {
+          this.showCaseSubAnswers = true;
           this.subAnswers = response.data.subAnswers;
           console.log("Sub Answers", this.subAnswers);
         })
@@ -562,6 +566,13 @@ export default {
         });
     },
     getCaseType() {
+      if (!this.newlimitationCalculatorCaseObject) {
+        this.showCaseQuestion = false;
+        this.showCaseSubAnswers = false;
+        document.querySelector("#time").innerHTML = "";
+        document.querySelector("#demo").innerHTML = "";
+        return;
+      }
       this.isLoaded = false;
       this.showCaseQuestion = true;
       var headers = {
@@ -578,6 +589,7 @@ export default {
           this.caseQuestion = response.data.caseQuestion;
           this.caseQuestionAnswers = response.data.caseQuestionAnswers;
           this.isLoaded = true;
+          this.showCaseSubAnswers = false;
         })
         .catch((error) => {
           this.$notify({
