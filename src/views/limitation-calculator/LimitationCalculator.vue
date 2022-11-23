@@ -206,8 +206,11 @@
                         </div>
                         <!-- Reminder button -->
                         <div class="2">
-                          <button class="btn btn-outline-secondary">
-                            click to reminde me
+                          <button
+                            @click="clickToRemind()"
+                            class="btn btn-outline-secondary"
+                          >
+                            Click to reminde me
                           </button>
                         </div>
                         <div class="col-12">
@@ -564,6 +567,9 @@ export default {
             text: error.response.data.message,
           });
         });
+    },
+    clickToRemind() {
+      alert("Coming Soon!");
     },
     getCaseType() {
       if (!this.newlimitationCalculatorCaseObject) {
