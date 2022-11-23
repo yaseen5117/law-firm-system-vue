@@ -2,7 +2,7 @@
   <BlockUI :blocked="!isLoaded" :fullScreen="true">
     <main id="main">
       <page-header
-        :title="'Limitation Calculator'"
+        :title="'Elawfirm Limitation Calculator'"
         :petition="null"
         :hideCaseFiles="true"
         :showInvoices="false"
@@ -13,12 +13,7 @@
             <div class="row">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <!-- Title Container -->
-                <div
-                  id="band"
-                  class="container text-center"
-                  style="margin-top: 75px; text-align: center"
-                >
-                  <h2>Elawfirm Limitation Calculator</h2>
+                <div class="container text-center" style="margin-bottom: -22px">
                   <p><em>Lets start!</em></p>
                   <p>
                     We Provide the Limitation Calculator. That will help you to
@@ -245,7 +240,10 @@
                   <!-- Filing date box End -->
                 </div>
                 <!-- limitation Container end -->
-                <div v-if="!isLoaded" class="col-md-12">
+                <div
+                  v-if="!isLoaded"
+                  class="container col-lg-12 col-md-12 col-sm-12"
+                >
                   <p class="alert alert-warning">Loading....</p>
                 </div>
               </div>
@@ -286,32 +284,7 @@ export default {
       saving: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
       isLoaded: false,
-      subAnswers: [
-        {
-          date_field_label: "Challenging Date",
-          days: "",
-          display_order: "",
-          id: "",
-          limitation_calculator_answer_id: "",
-          sub_answer: "Date of challenging?",
-        },
-        {
-          date_field_label: "Order Date",
-          days: "",
-          display_order: "",
-          id: "",
-          limitation_calculator_answer_id: "",
-          sub_answer: "Date of applied for a certified copy?",
-        },
-        {
-          date_field_label: "Prepared Date",
-          days: "",
-          display_order: "",
-          id: "",
-          limitation_calculator_answer_id: "",
-          sub_answer: "Date of copy prepared?",
-        },
-      ],
+      subAnswers: [],
     };
   },
   created() {
