@@ -71,6 +71,8 @@ import CompaniesList from "../views/company-settings/CompaniesList";
 import MeetingPage from "../views/online_meetings/MeetingPage";
 
 import LimitationCalculator from "../views/limitation-calculator/LimitationCalculator";
+import CreateUpdateLimitationCalculatorCase from "../views/limitation-calculator/CreateUpdateLimitationCalculatorCase";
+import LimitationCalculatorCaseIndex from "../views/limitation-calculator/LimitationCalculatorCaseIndex";
 
 const routes = [
   {
@@ -653,6 +655,22 @@ const routes = [
   },
 
   //Limitation Calculator
+  {
+    path: "/limitation-calculator-index",
+    name: "limitation-calculator-index",
+    component: LimitationCalculatorCaseIndex,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/create-limitation-calculator",
+    name: "create-limitation-calculator",
+    component: CreateUpdateLimitationCalculatorCase,
+    meta: {
+      auth: true,
+    },
+  },
   {
     path: "/limitation-calculator",
     name: "limitation-calculator",

@@ -35,7 +35,7 @@
                       <!-- <h2>What kind of case are you filing?</h2>
                     <br /> -->
                       <!--  Limitation Dropdown -->
-                      <div class="row mt-3">
+                      <div class="row mt-2">
                         <div class="col-lg-4 col-md-4 col-sm-12 mb-2">
                           <label for=""
                             >What kind of case are you filing?</label
@@ -78,7 +78,7 @@
                       <hr />
                       <!--  Limitation box -->
 
-                      <h4 class="mt-3">
+                      <h4 class="mt-2">
                         {{
                           caseQuestion &&
                           caseQuestion.question &&
@@ -87,7 +87,7 @@
                             : "Appeal / Application / Revision / Suit"
                         }}
                       </h4>
-                      <div v-if="showCaseQuestion" class="mt-4">
+                      <div v-if="showCaseQuestion" class="mt-2">
                         <label for="">{{ caseQuestion.question }}</label>
 
                         <br />
@@ -128,6 +128,32 @@
                         >
                         </Listbox> -->
                       </div>
+                      <div
+                        v-if="newlimitationCalculatorCaseObject.answer_id"
+                        class="accordion mt-3"
+                        id="accordionExample"
+                      >
+                        <div class="accordion-item">
+                          <div
+                            id="collapseOne"
+                            class="accordion-collapse collapse show"
+                            aria-labelledby="headingOne"
+                            data-bs-parent="#accordionExample"
+                            style="
+                              border-left-style: solid;
+                              color: rgb(143 58 48);
+                            "
+                          >
+                            <div class="accordion-body">
+                              {{
+                                newlimitationCalculatorCaseObject.answer_id
+                                  .answer
+                              }}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
                       <hr />
                       <!-- Limition box End-->
 
@@ -140,15 +166,14 @@
                           :value="subAnswer"
                         >
                           <div class="col-lg-12 col-md-12 col-sm-12">
-                            <h5 class="mt-3">
+                            <h5 class="">
                               Q{{ subAnswerIndex + 1 }}.
                               {{ subAnswer.sub_answer }}
                             </h5>
-                            <br />
                           </div>
                           <div class="col-lg-3 col-md-4 col-sm-12">
-                            <b> {{ subAnswer.date_field_label }}: </b
-                            ><input
+                            <b> {{ subAnswer.date_field_label }}: </b>
+                            <input
                               class="form-control mb-2"
                               type="date"
                               v-model="date"
