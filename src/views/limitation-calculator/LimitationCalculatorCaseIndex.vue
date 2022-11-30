@@ -37,7 +37,9 @@
                           type="text"
                           v-model="limitationCalculatorCase.title"
                           v-on:keyup.enter="
-                            editOpinion(limitationCalculatorCase)
+                            editLimitationCalculatorCase(
+                              limitationCalculatorCase
+                            )
                           "
                         />
                         <span v-show="!limitationCalculatorCase.editMode">{{
@@ -45,14 +47,22 @@
                         }}</span>
                       </td>
                       <td>
-                        <input
+                        <InputNumber
+                          style="width: 100%"
+                          min="0"
+                          inputId="withoutgrouping"
+                          mode="decimal"
+                          :useGrouping="false"
                           v-show="limitationCalculatorCase.editMode"
-                          class="form-control"
+                          class="p-inputtext-sm"
                           v-model="limitationCalculatorCase.display_order"
                           v-on:keyup.enter="
-                            editOpinion(limitationCalculatorCase)
+                            editLimitationCalculatorCase(
+                              limitationCalculatorCase
+                            )
                           "
                         />
+
                         <span v-show="!limitationCalculatorCase.editMode">{{
                           limitationCalculatorCase.display_order
                         }}</span>
@@ -74,7 +84,11 @@
                         <a
                           v-show="limitationCalculatorCase.editMode"
                           class="btn btn-sm btn-warning action-btn"
-                          @click="editOpinion(limitationCalculatorCase)"
+                          @click="
+                            editLimitationCalculatorCase(
+                              limitationCalculatorCase
+                            )
+                          "
                           href="javascript:void"
                           style="margin-left: 2px"
                           data-bs-toggle="tooltip"
@@ -103,7 +117,7 @@
                           class="btn btn-sm btn-danger action-btn"
                           v-show="!limitationCalculatorCase.editMode"
                           @click="
-                            deleteOpinion(
+                            deleteLimitationCalculatorCase(
                               $event,
                               limitationCalculatorCase.id,
                               limitationCalculatorCaseIndex
@@ -126,21 +140,35 @@
                           class="form-control"
                           type="text"
                           v-model="newLimitationCalculatorCase.title"
-                          v-on:keyup.enter="submitOpinion()"
+                          v-on:keyup.enter="submitLimitationCalculatorCase()"
+                          @blur="v$.newLimitationCalculatorCase.title.$touch"
+                          v-bind:class="{
+                            'error-boarder':
+                              v$.newLimitationCalculatorCase.title.$error,
+                          }"
                         />
+                        <span
+                          v-if="v$.newLimitationCalculatorCase.title.$error"
+                          class="errorMessage"
+                          >Title field is required.</span
+                        >
                       </td>
                       <td>
-                        <input
-                          class="form-control"
-                          type="text"
+                        <InputNumber
+                          style="width: 100%"
+                          min="0"
+                          inputId="withoutgrouping"
+                          mode="decimal"
+                          :useGrouping="false"
+                          class="p-inputtext-sm"
                           v-model="newLimitationCalculatorCase.display_order"
-                          v-on:keyup.enter="submitOpinion()"
+                          v-on:keyup.enter="submitLimitationCalculatorCase()"
                         />
                       </td>
                       <td>
                         <button
                           :disabled="saving"
-                          @click="submitOpinion()"
+                          @click="submitLimitationCalculatorCase()"
                           class="btn btn-sm btn-success action-btn"
                         >
                           Save
@@ -166,27 +194,37 @@ import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
 import NavComponents from "../Cases/NavComponents.vue";
 import useVuelidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
+import InputNumber from "primevue/inputnumber";
 
 export default {
-  components: { PageHeader, NavComponents },
-
+  components: { PageHeader, NavComponents, InputNumber },
+  setup() {
+    return {
+      v$: useVuelidate(),
+    };
+  },
   data() {
     return {
       page_title: "Opinions",
       base_url: process.env.VUE_APP_SERVICE_URL,
       limitationCalculatorCases: [],
       newLimitationCalculatorCase: {},
-      petition: {},
       saving: false,
       blockPanel: true,
     };
   },
-
+  validations() {
+    return {
+      newLimitationCalculatorCase: {
+        title: { required },
+      },
+    };
+  },
   created() {
     this.getLimitationCalculatorCases();
   },
   mounted() {
-    document.getElementById("header");
     document.title = "Limitation Calculator Cases";
   },
 
@@ -215,7 +253,11 @@ export default {
         });
     },
 
-    deleteOpinion(event, opinionId, opinionIndex) {
+    deleteLimitationCalculatorCase(
+      event,
+      limitationCalculatorCaseId,
+      limitationCalculatorCaseIndex
+    ) {
       this.$confirm.require({
         target: event.currentTarget,
         message: "Do you want to Delete?",
@@ -230,9 +272,14 @@ export default {
           };
 
           axios
-            .delete(this.base_url + "/api/opinions/" + opinionId, {
-              headers,
-            })
+            .delete(
+              this.base_url +
+                "/api/limitation_calculator_cases/" +
+                limitationCalculatorCaseId,
+              {
+                headers,
+              }
+            )
             .then(
               (response) => {
                 console.log(response);
@@ -243,7 +290,10 @@ export default {
                     text: "Deleted Successfully!",
                   });
                   //this.getCaseDetails()
-                  this.opinions.splice(opinionIndex, 1); //removing record from list/index after deleting record from DB
+                  this.limitationCalculatorCases.splice(
+                    limitationCalculatorCaseIndex,
+                    1
+                  ); //removing record from list/index after deleting record from DB
                 }
               },
               (error) => {
@@ -261,16 +311,20 @@ export default {
         },
       });
     },
-    editOpinion(OpinionToUpdate) {
+    editLimitationCalculatorCase(LimitationCalculatorCaseToUpdate) {
       if (true) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
 
         axios
-          .post(this.base_url + "/api/opinions", OpinionToUpdate, {
-            headers,
-          })
+          .post(
+            this.base_url + "/api/limitation_calculator_cases",
+            LimitationCalculatorCaseToUpdate,
+            {
+              headers,
+            }
+          )
           .then(
             (response) => {
               if (response.status === 200) {
@@ -279,7 +333,7 @@ export default {
                   title: "Success",
                   text: "Update Successfully!",
                 });
-                OpinionToUpdate.editMode = false;
+                LimitationCalculatorCaseToUpdate.editMode = false;
                 this.getLimitationCalculatorCases();
               }
             },
@@ -294,15 +348,16 @@ export default {
           );
       }
     },
-    submitOpinion() {
-      if (true) {
+    submitLimitationCalculatorCase() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
         this.saving = true;
         axios
           .post(
-            this.base_url + "/api/opinions",
+            this.base_url + "/api/limitation_calculator_cases",
             this.newLimitationCalculatorCase,
             {
               headers,

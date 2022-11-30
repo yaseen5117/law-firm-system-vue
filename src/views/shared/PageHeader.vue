@@ -36,6 +36,16 @@
               <li v-if="showInvoices">
                 <router-link to="/invoices">Invoices</router-link>
               </li>
+              <li v-if="showLCLink">
+                <router-link to="/limitation-calculator-index"
+                  >Limitation Calculator Cases</router-link
+                >
+              </li>
+              <li v-if="showLCLink">
+                <router-link to="/limitation-calculator-case-question"
+                  >Limitation Calculator Questions</router-link
+                >
+              </li>
               <li v-if="!hideCaseFiles">
                 <router-link to="/petitions">Case Files</router-link>
               </li>
@@ -97,6 +107,7 @@ export default {
     "copyToClipBtn",
     "createMeetingBtn",
     "createMeetingBtnText",
+    "showLCLink",
   ],
   data() {
     return {

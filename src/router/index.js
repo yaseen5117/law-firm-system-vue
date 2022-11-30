@@ -73,6 +73,8 @@ import MeetingPage from "../views/online_meetings/MeetingPage";
 import LimitationCalculator from "../views/limitation-calculator/LimitationCalculator";
 import CreateUpdateLimitationCalculatorCase from "../views/limitation-calculator/CreateUpdateLimitationCalculatorCase";
 import LimitationCalculatorCaseIndex from "../views/limitation-calculator/LimitationCalculatorCaseIndex";
+import LimitationCalculatorCaseQuestionsIndex from "../views/limitation-calculator/LimitationCalculatorCaseQuestionsIndex";
+import CreateUpdateQuestionsAnswers from "../views/limitation-calculator/CreateUpdateQuestionsAnswers";
 
 const routes = [
   {
@@ -663,18 +665,44 @@ const routes = [
       auth: true,
     },
   },
+  // {
+  //   path: "/create-limitation-calculator",
+  //   name: "create-limitation-calculator",
+  //   component: CreateUpdateLimitationCalculatorCase,
+  //   meta: {
+  //     auth: true,
+  //   },
+  // },
   {
-    path: "/create-limitation-calculator",
-    name: "create-limitation-calculator",
-    component: CreateUpdateLimitationCalculatorCase,
+    path: "/limitation-calculator",
+    name: "limitation-calculator",
+    component: LimitationCalculator,
+    meta: {
+      auth: true,
+    },
+  },
+  //Case Questions
+  {
+    path: "/limitation-calculator-case-question",
+    name: "limitation-calculator-case-question",
+    component: LimitationCalculatorCaseQuestionsIndex,
+    meta: {
+      auth: true,
+    },
+  },
+  //Questions Answers add update
+  {
+    path: "/limitation-calculator-questions-answers/edit/:question_id",
+    name: "edit-limitation-calculator-questions-answers",
+    component: CreateUpdateQuestionsAnswers,
     meta: {
       auth: true,
     },
   },
   {
-    path: "/limitation-calculator",
-    name: "limitation-calculator",
-    component: LimitationCalculator,
+    path: "/limitation-calculator-questions-answers/create",
+    name: "create-limitation-calculator-questions-answers",
+    component: CreateUpdateQuestionsAnswers,
     meta: {
       auth: true,
     },

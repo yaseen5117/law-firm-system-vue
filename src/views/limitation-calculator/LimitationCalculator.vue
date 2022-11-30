@@ -638,7 +638,8 @@ export default {
         )
         .then((response) => {
           this.caseQuestion = response.data.caseQuestion;
-          this.caseQuestionAnswers = response.data.caseQuestionAnswers;
+          this.caseQuestionAnswers =
+            response.data.caseQuestion.limitation_calculator_answers;
           this.isLoaded = true;
           this.showCaseSubAnswers = false;
         })
