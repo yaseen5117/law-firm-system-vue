@@ -76,6 +76,9 @@ import LimitationCalculatorCaseIndex from "../views/limitation-calculator/Limita
 import LimitationCalculatorCaseQuestionsIndex from "../views/limitation-calculator/LimitationCalculatorCaseQuestionsIndex";
 import CreateUpdateQuestionsAnswers from "../views/limitation-calculator/CreateUpdateQuestionsAnswers";
 
+import FirIndex from "../views/fir-modules/FirIndex";
+import CreateUpdateFir from "../views/fir-modules/CreateUpdateFir";
+
 const routes = [
   {
     path: "/login",
@@ -707,6 +710,33 @@ const routes = [
       auth: true,
     },
   },
+
+  //FIR Routes START
+  {
+    path: "/fir",
+    name: "fir",
+    component: FirIndex,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/create-fir",
+    name: "create-fir",
+    component: CreateUpdateFir,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/fir/edit/:fir_id",
+    name: "edit-fir",
+    component: CreateUpdateFir,
+    meta: {
+      auth: true,
+    },
+  },
+  //FIR Routes END
 ];
 
 const router = createRouter({
