@@ -176,6 +176,11 @@
                           </a>
                         </td>
                       </tr>
+                      <tr v-if="firs.length == 0" class="text-center">
+                        <td colspan="5" class="text-danger">
+                          Records Not Found!
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                   <!-- <Paginator v-show="pagination_info.total>0" v-model:first="pagination_info.from" v-model:rows="pagination_info.per_page" :totalRecords="pagination_info.total" @page="onPage($event)"></Paginator>
