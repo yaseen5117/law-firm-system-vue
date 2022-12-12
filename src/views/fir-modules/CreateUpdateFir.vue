@@ -19,13 +19,13 @@
               />
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
-              <label for="">Status </label>
+              <label for="">Statute </label>
               <Dropdown
-                v-model="firData.fir_status_id"
-                :options="fir_statuses"
+                v-model="firData.statute_id"
+                :options="statutes"
                 optionLabel="title"
                 optionValue="id"
-                placeholder="Select a Status"
+                placeholder="Select a Statute"
                 :filter="true"
                 appendTo="self"
                 filterPlaceholder="Find by Title"
@@ -206,7 +206,7 @@ export default {
       base_url: process.env.VUE_APP_SERVICE_URL,
       firData: {},
       courts: [],
-      fir_statuses: [],
+      statutes: [],
       validation_errors: [],
     };
   },
@@ -267,12 +267,12 @@ export default {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
-      let url = this.base_url + "/api/get_fir_statuses";
+      let url = this.base_url + "/api/get_statutes";
       axios
         .get(url, { headers })
         .then((response) => {
-          this.fir_statuses = response.data.fir_statuses;
-          console.log(this.fir_statuses);
+          this.statutes = response.data.statutes;
+          console.log(this.statutes);
         })
         .catch((error) => {
           console.log(error);
