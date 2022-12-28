@@ -9,7 +9,7 @@
       />
       <section id="services" class="services section-bg">
         <BlockUI :blocked="links" :fullScreen="true">
-          <div class="container" data-aos="fade-up">
+          <div :class="isMobile() ? '' : 'container'" data-aos="fade-up">
             <div class="row">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <!-- Title Container -->
@@ -27,7 +27,7 @@
                 <!-- limitaion Container start -->
                 <div
                   id="band"
-                  class="container"
+                  :class="isMobile() ? '' : 'container'"
                   v-if="limitationCalculatorCases.length > 0"
                 >
                   <div class="card">
@@ -345,6 +345,13 @@ export default {
     document.title = "Limitation Calculator";
   },
   methods: {
+    isMobile() {
+      if (screen.width <= 760) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     getLimitationCalculatorCases() {
       this.isLoaded = false;
       var headers = {
@@ -638,10 +645,10 @@ export default {
         )
         .then((response) => {
           this.caseQuestion = response.data.caseQuestion;
-          this.caseQuestionAnswers =
-            response.data.caseQuestion.limitation_calculator_answers;
+          this.caseQuestionAnswers = response.data.caseQuestionAnswers;
           this.isLoaded = true;
           this.showCaseSubAnswers = false;
+          console.log("Limitation Questions", this.caseQuestionAnswers);
         })
         .catch((error) => {
           this.$notify({
@@ -655,4 +662,7 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+@media only screen and (max-width: 768px) {
+}
+</style>
