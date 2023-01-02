@@ -255,7 +255,7 @@
                             @click="clickToRemind()"
                             class="btn btn-outline-secondary"
                           >
-                            Click to reminde me
+                            Click to remind me
                           </button>
                         </div>
                         <div class="col-12">

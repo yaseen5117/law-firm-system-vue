@@ -6,22 +6,9 @@
         <form @submit.prevent="submitForm($event)">
           <div class="form-group row">
             <div class="col-lg-4 col-md-6 col-sm-12">
-              <label for=""> Court </label>
+              <label for=""> Statute </label>
               <Dropdown
-                v-model="firData.court_id"
-                :options="courts"
-                optionLabel="title"
-                optionValue="id"
-                placeholder="Select a Court"
-                :filter="true"
-                appendTo="self"
-                filterPlaceholder="Find by Title"
-              />
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-12">
-              <label for="">Statute </label>
-              <Dropdown
-                v-model="firData.statute_id"
+                v-model="sectionData.statute_id"
                 :options="statutes"
                 optionLabel="title"
                 optionValue="id"
@@ -31,129 +18,166 @@
                 filterPlaceholder="Find by Title"
               />
             </div>
-          </div>
-
-          <div class="form-group row">
             <div class="col-lg-4 col-md-6 col-sm-12">
-              <label for=""> Section<span style="color: red">*</span> </label>
+              <label for="">Title </label>
               <input
-                v-model="firData.section"
+                v-model="sectionData.title"
                 type="text"
                 class="form-control"
                 id=""
-                @blur="v$.firData.section.$touch"
+                @blur="v$.sectionData.title.$touch"
                 v-bind:class="{
-                  'error-boarder': v$.firData.section.$error,
+                  'error-boarder': v$.sectionData.title.$error,
                 }"
               />
               <span
                 id="section"
-                v-if="v$.firData.section.$error"
+                v-if="v$.sectionData.title.$error"
                 class="errorMessage"
                 >{{
-                  v$.firData.section.required.$message +
+                  v$.sectionData.title.required.$message +
                   " & " +
-                  v$.firData.section.maxLength.$message
+                  v$.sectionData.title.maxLength.$message
                 }}</span
               >
             </div>
+          </div>
+
+          <div class="form-group row">
             <div class="col-lg-4 col-md-6 col-sm-12">
-              <label for="">Arrest Info </label>
+              <label for=""> Fir No </label>
               <input
-                v-model="firData.arrest_info"
+                v-model="sectionData.fir_no"
                 type="text"
                 class="form-control"
                 id=""
-                @blur="v$.firData.arrest_info.$touch"
+              />
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+              <label for="">Defination</label>
+              <textarea
+                rows="1"
+                v-model="sectionData.defination"
+                type="text"
+                class="form-control"
+                id=""
+              />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+              <label for="">Link</label>
+              <textarea
+                rows="1"
+                v-model="sectionData.link"
+                type="text"
+                class="form-control"
+                id=""
+              />
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+              <label for="">Arrest Info </label>
+              <textarea
+                rows="1"
+                v-model="sectionData.arrest_info"
+                type="text"
+                class="form-control"
+                id=""
+                @blur="v$.sectionData.arrest_info.$touch"
                 v-bind:class="{
-                  'error-boarder': v$.firData.arrest_info.$error,
+                  'error-boarder': v$.sectionData.arrest_info.$error,
                 }"
               />
               <span
                 id="arrest_info"
-                v-if="v$.firData.arrest_info.$error"
+                v-if="v$.sectionData.arrest_info.$error"
                 class="errorMessage"
-                >{{ v$.firData.arrest_info.maxLength.$message }}</span
+                >{{ v$.sectionData.arrest_info.maxLength.$message }}</span
               >
             </div>
           </div>
           <div class="form-group row">
             <div class="col-lg-4 col-md-6 col-sm-12">
               <label for="">Warrent Info </label>
-              <input
-                v-model="firData.warrent_info"
+              <textarea
+                rows="1"
+                v-model="sectionData.warrent_info"
                 type="text"
                 class="form-control"
                 id=""
-                @blur="v$.firData.warrent_info.$touch"
+                @blur="v$.sectionData.warrent_info.$touch"
                 v-bind:class="{
-                  'error-boarder': v$.firData.warrent_info.$error,
+                  'error-boarder': v$.sectionData.warrent_info.$error,
                 }"
               />
               <span
                 id="warrent_info"
-                v-if="v$.firData.warrent_info.$error"
+                v-if="v$.sectionData.warrent_info.$error"
                 class="errorMessage"
-                >{{ v$.firData.warrent_info.maxLength.$message }}</span
+                >{{ v$.sectionData.warrent_info.maxLength.$message }}</span
               >
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
               <label for="">Bailable Info </label>
-              <input
-                v-model="firData.bailable_info"
+              <textarea
+                rows="1"
+                v-model="sectionData.bailable_info"
                 type="text"
                 class="form-control"
                 id=""
-                @blur="v$.firData.bailable_info.$touch"
+                @blur="v$.sectionData.bailable_info.$touch"
                 v-bind:class="{
-                  'error-boarder': v$.firData.bailable_info.$error,
+                  'error-boarder': v$.sectionData.bailable_info.$error,
                 }"
               />
               <span
                 id="bailable_info"
-                v-if="v$.firData.bailable_info.$error"
+                v-if="v$.sectionData.bailable_info.$error"
                 class="errorMessage"
-                >{{ v$.firData.bailable_info.maxLength.$message }}</span
+                >{{ v$.sectionData.bailable_info.maxLength.$message }}</span
               >
             </div>
           </div>
           <div class="form-group row">
             <div class="col-lg-4 col-md-6 col-sm-12">
               <label for="">Compoundable Info </label>
-              <input
-                v-model="firData.compoundable_info"
+              <textarea
+                rows="1"
+                v-model="sectionData.compoundable_info"
                 type="text"
                 class="form-control"
                 id=""
-                @blur="v$.firData.compoundable_info.$touch"
+                @blur="v$.sectionData.compoundable_info.$touch"
                 v-bind:class="{
-                  'error-boarder': v$.firData.compoundable_info.$error,
+                  'error-boarder': v$.sectionData.compoundable_info.$error,
                 }"
               />
               <span
                 id="compoundable_info"
-                v-if="v$.firData.compoundable_info.$error"
+                v-if="v$.sectionData.compoundable_info.$error"
                 class="errorMessage"
-                >{{ v$.firData.compoundable_info.maxLength.$message }}</span
+                >{{ v$.sectionData.compoundable_info.maxLength.$message }}</span
               >
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
               <label for="">Punishment Info </label>
-              <input
-                v-model="firData.punishment_info"
+              <textarea
+                rows="1"
+                v-model="sectionData.punishment_info"
                 type="text"
                 class="form-control"
                 id=""
-                @blur="v$.firData.punishment_info.$touch"
+                @blur="v$.sectionData.punishment_info.$touch"
                 v-bind:class="{
-                  'error-boarder': v$.firData.punishment_info.$error,
+                  'error-boarder': v$.sectionData.punishment_info.$error,
                 }"
               />
               <span
                 id="punishment_info"
-                v-if="v$.firData.punishment_info.$error"
+                v-if="v$.sectionData.punishment_info.$error"
                 class="errorMessage"
-                >{{ v$.firData.punishment_info.maxLength.$message }}</span
+                >{{ v$.sectionData.punishment_info.maxLength.$message }}</span
               >
             </div>
           </div>
@@ -204,7 +228,7 @@ export default {
       page_title: this.$route.params.fir_id ? "Edit Fir" : "Add New Fir",
       button_title: this.$route.params.fir_id ? "Update" : "Save",
       base_url: process.env.VUE_APP_SERVICE_URL,
-      firData: {},
+      sectionData: {},
       courts: [],
       statutes: [],
       validation_errors: [],
@@ -212,14 +236,14 @@ export default {
   },
   validations() {
     return {
-      firData: {
-        section: {
-          required,
+      sectionData: {
+        title: {
           maxLength: helpers.withMessage(
             "must not be greater than 190 characters.",
             maxLength(190)
           ),
         },
+
         arrest_info: {
           maxLength: helpers.withMessage(
             "The arrest info must not be greater than 190 characters.",
@@ -254,7 +278,6 @@ export default {
     };
   },
   created() {
-    this.getCourts();
     this.getStatuses();
     this.getFir();
   },
@@ -283,26 +306,7 @@ export default {
           });
         });
     },
-    async getCourts() {
-      var headers = {
-        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-      };
-      let url = this.base_url + "/api/courts";
-      await axios
-        .get(url, { headers })
-        .then((response) => {
-          this.courts = response.data.courts;
-          console.log(this.courts);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$notify({
-            type: "error",
-            title: "Something went wrong!",
-            text: error.response.data.message,
-          });
-        });
-    },
+
     getFir() {
       if (this.$route.params.fir_id) {
         var headers = {
@@ -312,7 +316,7 @@ export default {
         axios
           .get(url, { headers })
           .then((response) => {
-            this.firData = response.data.firData;
+            this.sectionData = response.data.sectionData;
           })
           .catch((error) => {
             this.$notify({
@@ -335,7 +339,7 @@ export default {
         };
 
         axios
-          .post(this.base_url + "/api/fir", this.firData, {
+          .post(this.base_url + "/api/fir", this.sectionData, {
             headers,
           })
           .then(
@@ -353,14 +357,15 @@ export default {
               this.saving = false;
             },
             (error) => {
+              this.saving = false;
               this.validation_errors = [];
               if (error.response.status === 422) {
                 //showing backend validation errors
-                if (error.response.data.validation_error.section) {
-                  $("#section").append(
-                    error.response.data.validation_error.section[0]
-                  );
-                }
+                // if (error.response.data.validation_error.section) {
+                //   $("#section").append(
+                //     error.response.data.validation_error.section[0]
+                //   );
+                // }
                 if (error.response.data.validation_error.arrest_info) {
                   $("#arrest_info").append(
                     error.response.data.validation_error.arrest_info[0]

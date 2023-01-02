@@ -1,262 +1,195 @@
 <template>
-  <ConfirmPopup />
-  <BlockUI :blocked="!isLoaded" :fullScreen="true">
-    <main id="main">
-      <page-header
-        :title="'Firs'"
-        :petition="null"
-        :hideCaseFiles="true"
-        :showInvoices="false"
-        :route_object="route_obj"
-        :header_button="header_button"
-        :header_button_text="header_button_text"
-      />
-      <section id="services" class="services section-bg">
-        <BlockUI :blocked="firs" :fullScreen="true">
-          <div class="container" data-aos="fade-up">
-            <div class="row">
-              <div class="col-lg-12 col-md-12 col-sm-12">
-                <h4 style="text-align: center" class="mt-1 mb-3">
-                  OFFENCES ATTRACTED
-                </h4>
-
-                <Transition name="fade">
+  <main id="main">
+    <page-header :hideBreadCrumbs="true" />
+    <section id="services" class="services section-bg">
+      <div class="container-fluid" data-aos="fade-up">
+        <div class="row">
+          <fir-heading />
+          <div class="col-lg-8 col-md-8 col-sm-8">
+            <Transition name="fade">
+              <div class="card" id="card">
+                <h3 style="text-align: center" class="mt-4 mb-1">
+                  <b>OFFENCES ATTRACTED</b>
+                </h3>
+                <div class="container-fluid mt-3">
                   <form class="row mb-2">
-                    <div class="form-group row">
-                      <label for="" class="col-sm-2 col-form-label"
-                        >Police Station</label
-                      >
-                      <div class="col-sm-8">
-                        <input
-                          type="text"
-                          id="police_station"
-                          class="form-control form-control-sm"
-                          placeholder="Police Station"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="" class="col-sm-2 col-form-label"
-                        >FIR No.</label
-                      >
-                      <div class="col-sm-4">
-                        <input
-                          type="text"
-                          id="fir_no"
-                          class="form-control form-control-sm"
-                          placeholder="636"
-                        />
-                      </div>
-                      <label for="" class="col-sm-1 col-form-label">of</label>
-                      <label for="" class="col-sm-1 col-form-label">YEAR</label>
-                      <div class="col-sm-4">
-                        <input
-                          id="year"
-                          type="text"
-                          class="form-control form-control-sm"
-                          placeholder="22"
-                        />
-                      </div>
-                    </div>
-
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                      <label for="">Section</label>
-
-                      <input
-                        v-on:keyup.enter="searchFir()"
-                        class="form-control form-control-sm"
-                        type="text"
-                        v-model="filters.section"
-                      />
-                    </div>
-
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                      <label for="">Statute</label>
-                      <select
-                        class="form-control form-control-sm"
-                        v-model="filters.statute_id"
-                      >
-                        <option value="">--All--</option>
-                        <option
-                          v-for="statute in statutes"
-                          :key="statute.id"
-                          :value="statute.id"
+                    <div class="card" id="card">
+                      <div class="form-group row mt-4">
+                        <label for="" class="col-sm-2 col-form-label"
+                          >Police Station</label
                         >
-                          {{ statute.title }}
-                        </option>
-                      </select>
-                    </div>
+                        <div class="col-sm-8">
+                          <input
+                            v-model="sectionData.police_station"
+                            type="text"
+                            id="police_station"
+                            class="form-control form-control-sm"
+                            placeholder="Police Station"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="" class="col-sm-2 col-form-label"
+                          >FIR No.</label
+                        >
+                        <div class="col-sm-4">
+                          <input
+                            v-model="sectionData.fir_no"
+                            type="text"
+                            id="fir_no"
+                            class="form-control form-control-sm"
+                            placeholder="636"
+                          />
+                        </div>
+                        <label for="" class="col-sm-1 col-form-label">of</label>
+                        <label for="" class="col-sm-2 col-form-label"
+                          >YEAR</label
+                        >
+                        <div class="col-sm-3">
+                          <input
+                            v-model="sectionData.year"
+                            id="year"
+                            type="text"
+                            class="form-control form-control-sm"
+                            placeholder="22"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="form-group row"
+                        v-for="(
+                          filterSection, filterSectionIndex
+                        ) in filterSections"
+                        :key="filterSectionIndex"
+                      >
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                          <label for="">Section</label>
 
+                          <input
+                            v-on:keyup.enter="searchFir()"
+                            class="form-control form-control-sm"
+                            type="text"
+                            v-model="filterSections[filterSectionIndex].section"
+                          />
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 mb-2">
+                          <label for="">Statute</label>
+
+                          <div class="input-group input-group-sm">
+                            <select
+                              class="form-control form-control-sm"
+                              v-model="
+                                filterSections[filterSectionIndex].statute_id
+                              "
+                            >
+                              <option value="">--All--</option>
+                              <option
+                                v-for="statute in statutes"
+                                :key="statute.id"
+                                :value="statute.id"
+                              >
+                                {{ statute.title }}
+                              </option>
+                            </select>
+                            <div
+                              class="input-group-append"
+                              v-if="filterSectionIndex > 0"
+                            >
+                              <label class="input-group-text"
+                                ><i
+                                  @click="removeSection(filterSectionIndex)"
+                                  v-tooltip.top="'Remove'"
+                                  class="fa fa-remove rmIcon"
+                                ></i
+                              ></label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="add_more"></div>
+                  </form>
+                  <div class="row mb-4">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                       <button
                         style="width: 100%"
                         type="button"
-                        class="btn btn-success btn-sm mr-md-2 mt-3"
+                        class="btn btn-primary btn-sm mr-md-2 mt-3"
+                        @click="addMoreSection()"
+                        v-tooltip.top="'Add more'"
+                      >
+                        <i class="fa fa-plus" aria-hidden="true"></i> Add
+                      </button>
+
+                      <button
+                        style="width: 100%"
+                        type="button"
+                        class="btn btn-success btn-sm mr-md-2 mt-2"
                         @click="searchFir()"
                         v-tooltip.top="'Click to Search'"
                       >
                         <i class="fa fa-search" aria-hidden="true"></i> Go
                       </button>
                     </div>
-                  </form>
-                </Transition>
-              </div>
-              <div
-                v-if="firs.length > 0"
-                class="col-lg-12 col-md-12 col-sm-12"
-                style="text-align: right"
-              >
-                <a
-                  class="btn btn-sm btn-warning action-btn"
-                  :href="fir_pdf_download_url"
-                  style="margin-left: 2px"
-                  v-tooltip.top="'Export to PDF'"
-                >
-                  <i class="fa fa-download"></i> Download PDF
-                </a>
-              </div>
-              <div class="col-md-12">
-                <div class="table-responsive">
-                  <table class="table table-striped" v-if="isLoaded">
-                    <thead>
-                      <tr>
-                        <th>Court</th>
-                        <th>Statute</th>
-                        <th>Section</th>
-                        <th>Arrest Info</th>
-                        <!-- <th>Warrent Info</th>
-                        <th>Bailable Info</th>
-                        <th>Compoundable Info</th>
-                        <th>Punishment Info</th> -->
-                        <th class="text-end">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(fir, fir_index) in firs" :key="fir_index">
-                        <td>
-                          {{ fir.court.title }}
-                        </td>
-                        <td>
-                          {{ fir.statute.title }}
-                        </td>
-                        <td>
-                          {{ fir.section }}
-                        </td>
-                        <td>
-                          {{ fir.arrest_info }}
-                        </td>
-                        <!-- <td>
-                          {{ fir.warrent_info }}
-                        </td>
-                        <td>{{ fir.bailable_info }}</td>
-                        <td>{{ fir.compoundable_info }}</td>
-                        <td>{{ fir.punishment_info }}</td> -->
-                        <td class="text-end">
-                          <router-link
-                            class="btn btn-sm btn-success action-btn"
-                            :to="{
-                              name: 'edit-fir',
-                              params: { fir_id: fir.id },
-                            }"
-                            href="javascript:void"
-                            style="margin-left: 2px"
-                            v-tooltip.top="'Edit'"
-                          >
-                            Edit
-                          </router-link>
-
-                          <a
-                            class="btn btn-sm btn-danger action-btn"
-                            @click="deleteFir($event, fir.id, fir_index)"
-                            href="javascript:void"
-                            style="margin-left: 2px"
-                            v-tooltip.top="'Delete'"
-                          >
-                            Delete
-                          </a>
-                        </td>
-                      </tr>
-                      <tr v-if="firs.length == 0" class="text-center">
-                        <td colspan="5" class="text-danger">
-                          Records Not Found!
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <!-- <Paginator v-show="pagination_info.total>0" v-model:first="pagination_info.from" v-model:rows="pagination_info.per_page" :totalRecords="pagination_info.total" @page="onPage($event)"></Paginator>
-
-              <p v-show="pagination_info.total>0"><small>Showing from {{pagination_info.from}} to {{pagination_info.to}} of {{pagination_info.total}}</small></p> -->
-                </div>
-                <div
-                  v-if="showExtraDetails"
-                  class="col-lg-12 col-md-12 col-sm-12 mb-2"
-                >
-                  <div class="row">
-                    <div
-                      v-if="policeStation"
-                      id="show_police_station"
-                      class="col-lg-6 col-md-6 col-sm-6"
-                    >
-                      Police Station <b>{{ policeStation }}</b>
-                    </div>
-                    <div id="show_fir_year" class="col-lg-6 col-md-6 col-sm-6">
-                      <span v-if="firNo">
-                        FIR No <b>{{ firNo }}</b></span
-                      >
-                      <span v-if="year">
-                        of YEAR <b>{{ year }}</b></span
-                      >
-                    </div>
                   </div>
                 </div>
-                <div v-if="!isLoaded" class="col-md-12">
-                  <p class="alert alert-warning">Loading....</p>
+              </div>
+            </Transition>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 mt-fir">
+            <div class="card" id="">
+              <img src="assets/img/fir/fir.jpg" class="img-fluid" alt="" />
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 mt-4">
+            <div class="card mb-4" id="card">
+              <div class="container-fluid">
+                <div class="mt-5">
+                  <h4>Need : <b> Legal Help</b></h4>
+                  <button class="btn btn-danger">Contact Us</button>
+                  <p style="vertical-align: bottom; padding-top: 25px">
+                    <b>
+                      Reference:
+                      <a
+                        href="https://www.ma-law.org.pk/pdflaw/Limitation%20%20Act%20-%201908.pdf"
+                        target="_blank"
+                        >Code_of_criminal_procedure_1898
+                      </a></b
+                    >
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-        </BlockUI>
-      </section>
-    </main>
-    <!-- End #main -->
-  </BlockUI>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- End #main -->
 </template>
 
 <script>
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
-import Editor from "primevue/editor";
-import useVuelidate from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
-
+import FirHeading from "./FirHeading.vue";
 export default {
   components: {
     PageHeader,
-    Editor,
+    FirHeading,
   },
-  setup() {
-    return {
-      v$: useVuelidate(),
-    };
-  },
+
   data() {
     return {
+      sectionData: { police_station: "", fir_no: "", year: "" },
+      filterSections: [
+        {
+          section: "",
+          statute_id: "",
+        },
+      ],
       firs: [],
-      showDateType: false,
-      excute: false,
-      saving: false,
-      route_obj: {
-        name: "create-fir",
-      },
-      header_button: true,
-      header_button_text: "Create New Fir",
       base_url: process.env.VUE_APP_SERVICE_URL,
-      isLoaded: false,
-      filters: {
-        statute_id: "",
-        court_id: "",
-      },
-      courts: [],
       statutes: [],
       fir_pdf_download_url: null,
       showExtraDetails: false,
@@ -266,82 +199,22 @@ export default {
     };
   },
   created() {
-    this.getFirs();
-    this.getCourts();
     this.getStatuses();
   },
   mounted() {
-    document.title = "Fir";
+    document.title = "Fir Section";
   },
-  // watch: {
-  //   filters: {
-  //     deep: true,
-  //     handler() {
-  //       if (!this.awaitingSearch) {
-  //         setTimeout(() => {
-  //           this.getFirs();
-  //           this.awaitingSearch = false;
-  //         }, 4000); // 1 sec delay
-  //       }
-  //       this.awaitingSearch = true;
-  //     },
-  //   },
-  // },
-  reset() {
-    this.filters = {};
-    this.getFirs();
-  },
+
   methods: {
     searchFir() {
-      this.getFirs();
-      this.showExtraDetails = true;
-      var policeStation = document.getElementById("police_station").value;
-      this.policeStation = policeStation;
-      var firNo = document.getElementById("fir_no").value;
-      this.firNo = firNo;
-      var year = document.getElementById("year").value;
-      this.year = year;
-    },
-    getFirs() {
-      this.isLoaded = false;
-      var headers = {
-        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-      };
-      let url = this.base_url + "/api/fir";
-      axios
-        .get(url, { headers, params: this.filters })
-        .then((response) => {
-          this.firs = response.data.firs;
-          this.fir_pdf_download_url = response.data.fir_pdf_download_url;
-          this.isLoaded = true;
-        })
-        .catch((error) => {
-          this.$notify({
-            type: "error",
-            title: "Something went wrong!",
-            text: error.response.data.message,
-          });
-        });
-    },
-    getCourts() {
-      var headers = {
-        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-      };
-      let url = this.base_url + "/api/courts";
-      axios
-        .get(url, { headers })
-        .then((response) => {
-          this.courts = response.data.courts;
-          console.log(this.courts);
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$notify({
-            type: "error",
-            title: "Something went wrong!",
-            text: error.response.data.message,
-          });
-        });
+      localStorage.setItem(
+        "filterSections",
+        JSON.stringify(this.filterSections)
+      );
+      localStorage.setItem("sectionData", JSON.stringify(this.sectionData));
+      this.$router.push({
+        name: "fir_reader_result",
+      });
     },
     getStatuses() {
       var headers = {
@@ -363,52 +236,40 @@ export default {
           });
         });
     },
-    deleteFir(event, fir_id, fir_index) {
-      this.$confirm.require({
-        target: event.currentTarget,
-        message: "Do you want to Delete?",
-        icon: "pi pi-exclamation-triangle",
-        acceptLabel: "Delete",
-        acceptClass: "p-button-danger",
-        rejectClass: "p-button-primary",
-        rejectLabel: "Cancel",
-        accept: () => {
-          var headers = {
-            Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
-          };
 
-          axios
-            .delete(this.base_url + "/api/fir/" + fir_id, {
-              headers,
-            })
-            .then(
-              (response) => {
-                if (response.status === 200) {
-                  this.$notify({
-                    type: "success",
-                    title: "Success",
-                    text: "Deleted Successfully!",
-                  });
-                  this.firs.splice(fir_index, 1); //removing record from list/index after deleting record from DB
-                }
-              },
-              (error) => {
-                console.log(error.response.data);
-                this.$notify({
-                  type: "error",
-                  title: "Something went wrong!",
-                  text: error.response.data.message,
-                });
-              }
-            );
-        },
-        reject: () => {
-          this.$confirm.close();
-        },
-      });
+    addMoreSection() {
+      var singleSection = {
+        section: "",
+        statute_id: "",
+      };
+      this.filterSections.push(singleSection);
+    },
+    removeSection: function (index) {
+      this.filterSections.splice(index, 1);
     },
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+#card {
+  box-shadow: 0 0 11px rgba(15, 15, 15, 0.11);
+}
+#card:hover {
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+}
+@media only screen and (max-width: 768px) {
+  .mt-fir {
+    margin-top: 8px;
+  }
+}
+.removeIcon {
+  text-align: right;
+  justify-content: right;
+}
+.rmIcon {
+  font-size: 20px;
+  color: red;
+  cursor: pointer;
+}
+</style>

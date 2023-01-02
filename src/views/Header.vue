@@ -13,24 +13,61 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li v-show="!this.user">
-            <router-link class="nav-link" @click="scrollIntoView('hero')" to="/"
+            <router-link
+              :class="
+                !this.$route.name && this.$route.hash == ''
+                  ? 'active nav-link'
+                  : 'nav-link'
+              "
+              @click="scrollIntoView('hero')"
+              to="/"
               >Home</router-link
             >
           </li>
           <li v-show="!this.user">
-            <a class="nav-link" href="#about">About Us</a>
+            <a
+              :class="
+                this.$route.hash == '#about' ? 'active nav-link' : 'nav-link'
+              "
+              href="#about"
+              >About Us</a
+            >
           </li>
           <li v-show="!this.user">
-            <a class="nav-link" href="#features">Features</a>
+            <a
+              :class="
+                this.$route.hash == '#features' ? 'active nav-link' : 'nav-link'
+              "
+              href="#features"
+              >Features</a
+            >
           </li>
           <li v-show="!this.user">
-            <a class="nav-link" href="#pricing">Pricing</a>
+            <a
+              :class="
+                this.$route.hash == '#pricing' ? 'active nav-link' : 'nav-link'
+              "
+              href="#pricing"
+              >Pricing</a
+            >
           </li>
           <li v-show="!this.user">
-            <a class="nav-link" href="#reviews">Reviews</a>
+            <a
+              :class="
+                this.$route.hash == '#reviews' ? 'active nav-link' : 'nav-link'
+              "
+              href="#reviews"
+              >Reviews</a
+            >
           </li>
           <li v-show="!this.user">
-            <a class="nav-link" href="#contact">Contact Us</a>
+            <a
+              :class="
+                this.$route.hash == '#contact' ? 'active nav-link' : 'nav-link'
+              "
+              href="#contact"
+              >Contact Us</a
+            >
           </li>
           <li v-if="this.user && this.user.id">
             <router-link class="nav-link" to="/dashboard"
@@ -38,7 +75,11 @@
             >
           </li>
           <li v-show="this.user">
-            <router-link class="nav-link" to="/dashboard"
+            <router-link
+              :class="
+                this.$route.name == 'DashBoard' ? 'active nav-link' : 'nav-link'
+              "
+              to="/dashboard"
               >Dashboard</router-link
             >
           </li>
@@ -53,22 +94,44 @@
             >
           </li>
           <li v-show="!this.user">
-            <router-link class="nav-link" to="/login">Login</router-link>
+            <router-link
+              :class="
+                this.$route.name == 'Login' ? 'active nav-link' : 'nav-link'
+              "
+              to="/login"
+              >Login</router-link
+            >
           </li>
           <li v-show="!this.user">
-            <router-link class="nav-link" to="/sign-up">Sign Up</router-link>
+            <router-link
+              :class="
+                this.$route.name == 'SignUp' ? 'active nav-link' : 'nav-link'
+              "
+              to="/sign-up"
+              >Sign Up</router-link
+            >
           </li>
 
           <!-- <li><a class="nav-link scrollto" href="#">Link-1</a></li>
           <li><a class="nav-link scrollto" href="#">Link-2</a></li>           -->
           <li v-show="this.user && this.user.is_admin" class="dropdown">
-            <a href="javascript:void"
+            <a
+              :class="
+                this.$route.name && this.$route.name != 'DashBoard'
+                  ? 'active'
+                  : ''
+              "
+              href="javascript:void"
               ><span>Settings</span> <i class="bi bi-chevron-down"></i
             ></a>
             <ul>
               <li v-if="this.user && this.user.id">
                 <router-link
-                  class="nav-link drop-down"
+                  :class="
+                    this.$route.name == 'edit-user'
+                      ? 'active nav-link drop-down'
+                      : 'nav-link drop-down'
+                  "
                   :to="{
                     name: 'edit-user',
                     params: { edit_user_id: this.user.id },
@@ -78,32 +141,68 @@
                 </router-link>
               </li>
               <li v-show="this.user && this.user.is_admin">
-                <router-link class="nav-link drop-down" to="/users"
+                <router-link
+                  :class="
+                    this.$route.name == 'users-list'
+                      ? 'active nav-link drop-down'
+                      : 'nav-link drop-down'
+                  "
+                  to="/users"
                   >Users</router-link
                 >
               </li>
               <li>
-                <router-link class="nav-link drop-down" to="/settings"
+                <router-link
+                  :class="
+                    this.$route.name == 'settings'
+                      ? 'active nav-link drop-down'
+                      : 'nav-link drop-down'
+                  "
+                  to="/settings"
                   >General Settings</router-link
                 >
               </li>
               <li>
-                <router-link class="nav-link drop-down" to="/courts"
+                <router-link
+                  :class="
+                    this.$route.name == 'courts'
+                      ? 'active nav-link drop-down'
+                      : 'nav-link drop-down'
+                  "
+                  to="/courts"
                   >Courts</router-link
                 >
               </li>
               <li>
-                <router-link class="nav-link drop-down" to="/petition-types"
+                <router-link
+                  :class="
+                    this.$route.name == 'petition-types'
+                      ? 'active nav-link drop-down'
+                      : 'nav-link drop-down'
+                  "
+                  to="/petition-types"
                   >Case Categories</router-link
                 >
               </li>
               <li>
-                <router-link class="nav-link drop-down" to="/module-types"
+                <router-link
+                  :class="
+                    this.$route.name == 'module-types'
+                      ? 'active nav-link drop-down'
+                      : 'nav-link drop-down'
+                  "
+                  to="/module-types"
                   >Module Types</router-link
                 >
               </li>
               <li>
-                <router-link class="nav-link drop-down" to="/contact-requests"
+                <router-link
+                  :class="
+                    this.$route.name == 'contact-requests'
+                      ? 'active nav-link drop-down'
+                      : 'nav-link drop-down'
+                  "
+                  to="/contact-requests"
                   >Contact Requests</router-link
                 >
               </li>
@@ -139,6 +238,7 @@ export default {
   components: {
     PageLoader,
   },
+
   methods: {
     logout() {
       localStorage.removeItem("lfms_user");

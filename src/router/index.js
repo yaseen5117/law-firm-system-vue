@@ -78,6 +78,7 @@ import CreateUpdateQuestionsAnswers from "../views/limitation-calculator/CreateU
 
 import FirIndex from "../views/fir-modules/FirIndex";
 import CreateUpdateFir from "../views/fir-modules/CreateUpdateFir";
+import DisplayFirResult from "../views/fir-modules/DisplayFirResult";
 
 const routes = [
   {
@@ -713,12 +714,9 @@ const routes = [
 
   //FIR Routes START
   {
-    path: "/fir",
-    name: "fir",
+    path: "/fir-reader",
+    name: "fir_reader",
     component: FirIndex,
-    meta: {
-      auth: true,
-    },
   },
   {
     path: "/create-fir",
@@ -735,6 +733,11 @@ const routes = [
     meta: {
       auth: true,
     },
+  },
+  {
+    path: "/fir-reader-result",
+    name: "fir_reader_result",
+    component: DisplayFirResult,
   },
   //FIR Routes END
 ];
