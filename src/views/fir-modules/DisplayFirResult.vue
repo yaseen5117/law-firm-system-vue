@@ -67,6 +67,14 @@
                             </td>
                           </tr>
                         </template>
+                        <tr
+                          v-if="sectionSearchResult.data.length == 0"
+                          class="text-center"
+                        >
+                          <td colspan="8" class="text-danger">
+                            Records Not Found!
+                          </td>
+                        </tr>
                       </tbody>
                     </table>
                     <div>
@@ -119,6 +127,7 @@
                           :key="singleSectionResult.id"
                         >
                           <iframe
+                            v-if="singleSectionResult.link"
                             height="300"
                             :src="singleSectionResult.link"
                             title="YouTube video player"
