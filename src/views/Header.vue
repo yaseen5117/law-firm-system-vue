@@ -61,6 +61,17 @@
             >
           </li>
           <li v-show="!this.user">
+            <router-link
+              :class="
+                this.$route.name == 'fir_reader'
+                  ? 'active nav-link'
+                  : 'nav-link'
+              "
+              to="/fir-reader"
+              >Fir Reader</router-link
+            >
+          </li>
+          <li v-show="!this.user">
             <a
               :class="
                 this.$route.hash == '#contact' ? 'active nav-link' : 'nav-link'
@@ -115,13 +126,7 @@
           <!-- <li><a class="nav-link scrollto" href="#">Link-1</a></li>
           <li><a class="nav-link scrollto" href="#">Link-2</a></li>           -->
           <li v-show="this.user && this.user.is_admin" class="dropdown">
-            <a
-              :class="
-                this.$route.name && this.$route.name != 'DashBoard'
-                  ? 'active'
-                  : ''
-              "
-              href="javascript:void"
+            <a href="javascript:void"
               ><span>Settings</span> <i class="bi bi-chevron-down"></i
             ></a>
             <ul>

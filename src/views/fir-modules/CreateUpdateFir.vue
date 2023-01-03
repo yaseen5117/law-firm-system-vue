@@ -31,14 +31,10 @@
                 }"
               />
               <span
-                id="section"
+                id="title"
                 v-if="v$.sectionData.title.$error"
                 class="errorMessage"
-                >{{
-                  v$.sectionData.title.required.$message +
-                  " & " +
-                  v$.sectionData.title.maxLength.$message
-                }}</span
+                >{{ v$.sectionData.title.maxLength.$message }}</span
               >
             </div>
           </div>
@@ -61,7 +57,17 @@
                 type="text"
                 class="form-control"
                 id=""
+                @blur="v$.sectionData.defination.$touch"
+                v-bind:class="{
+                  'error-boarder': v$.sectionData.defination.$error,
+                }"
               />
+              <span
+                id="defination"
+                v-if="v$.sectionData.defination.$error"
+                class="errorMessage"
+                >{{ v$.sectionData.defination.maxLength.$message }}</span
+              >
             </div>
           </div>
 
@@ -193,6 +199,21 @@
               <button :disabled="saving" class="btn btn-success btn-sm">
                 {{ button_title }}
               </button>
+
+              <router-link
+                class="btn btn-sm btn-secondary"
+                :to="{
+                  name: 'fir-sections',
+                }"
+                href="javascript:void"
+                style="margin-left: 2px"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Edit"
+              >
+                <i class="fa fa-arrow-left"></i>
+                Back
+              </router-link>
             </div>
           </div>
         </form>
@@ -225,8 +246,10 @@ export default {
   data() {
     return {
       saving: false,
-      page_title: this.$route.params.fir_id ? "Edit Fir" : "Add New Fir",
-      button_title: this.$route.params.fir_id ? "Update" : "Save",
+      page_title: this.$route.params.fir_section_id
+        ? "Edit Fir Section"
+        : "Add New Fir Section",
+      button_title: this.$route.params.fir_section_id ? "Update" : "Save",
       base_url: process.env.VUE_APP_SERVICE_URL,
       sectionData: {},
       courts: [],
@@ -239,9 +262,10 @@ export default {
       sectionData: {
         title: {
           maxLength: helpers.withMessage(
-            "must not be greater than 190 characters.",
+            "Title is required & must not be greater than 190 characters.",
             maxLength(190)
           ),
+          required,
         },
 
         arrest_info: {
@@ -271,6 +295,12 @@ export default {
         punishment_info: {
           maxLength: helpers.withMessage(
             "The punishment info must not be greater than 190 characters.",
+            maxLength(190)
+          ),
+        },
+        defination: {
+          maxLength: helpers.withMessage(
+            "The Defination must not be greater than 190 characters.",
             maxLength(190)
           ),
         },
@@ -308,15 +338,18 @@ export default {
     },
 
     getFir() {
-      if (this.$route.params.fir_id) {
+      if (this.$route.params.fir_section_id) {
         var headers = {
           Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
         };
-        let url = this.base_url + "/api/fir/" + this.$route.params.fir_id;
+        let url =
+          this.base_url +
+          "/api/fir_sections/" +
+          this.$route.params.fir_section_id;
         axios
           .get(url, { headers })
           .then((response) => {
-            this.sectionData = response.data.sectionData;
+            this.sectionData = response.data.firSectionData;
           })
           .catch((error) => {
             this.$notify({
@@ -339,7 +372,7 @@ export default {
         };
 
         axios
-          .post(this.base_url + "/api/fir", this.sectionData, {
+          .post(this.base_url + "/api/fir_sections", this.sectionData, {
             headers,
           })
           .then(
@@ -350,7 +383,7 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
-                this.$router.push({ path: "/fir" });
+                this.$router.push({ path: "/fir-sections" });
               }
 
               console.log(response);
@@ -361,11 +394,11 @@ export default {
               this.validation_errors = [];
               if (error.response.status === 422) {
                 //showing backend validation errors
-                // if (error.response.data.validation_error.section) {
-                //   $("#section").append(
-                //     error.response.data.validation_error.section[0]
-                //   );
-                // }
+                if (error.response.data.validation_error.title) {
+                  $("#title").append(
+                    error.response.data.validation_error.title[0]
+                  );
+                }
                 if (error.response.data.validation_error.arrest_info) {
                   $("#arrest_info").append(
                     error.response.data.validation_error.arrest_info[0]
@@ -392,8 +425,8 @@ export default {
                   );
                 }
                 console.log(
-                  "Validation error: ",
-                  error.response.data.validation_error.arrest_info[0]
+                  "Validation errors: ",
+                  error.response.data.validation_error
                 );
                 this.$notify({
                   type: "error",

@@ -50,6 +50,7 @@
               >
                 Site Setting
               </button>
+
               <button
                 class="nav-link"
                 id="v-pills-settings-tab"
@@ -59,10 +60,9 @@
                 role="tab"
                 aria-controls="v-pills-settings"
                 aria-selected="false"
-                @click="otherSetting()"
-                style="display: none"
+                @click="FirSections()"
               >
-                Other Settings
+                Fir Sections
               </button>
             </div>
           </div>
@@ -401,12 +401,8 @@ export default {
       document.getElementById("header");
       document.title = this.page_title;
     },
-    otherSetting() {
-      this.page_title = "Other Settings";
-      this.general_setting = false;
-      this.site_setting = false;
-      this.other_setting = true;
-      this.invoice_setting = false;
+    FirSections() {
+      this.$router.push({ path: "/fir-sections" });
     },
     getGeneralSettings() {
       if (true) {

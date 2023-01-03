@@ -1,16 +1,20 @@
 <template>
   <main id="main">
-    <page-header :hideBreadCrumbs="true" />
+    <page-header
+      :title="'We Provide the FIR Reader. That will help you to read FIR.'"
+      :isNotHeading="true"
+      :hideBreadCrumbs="true"
+    />
     <section id="services" class="services section-bg">
       <div class="container-fluid" data-aos="fade-up">
         <div class="row">
-          <fir-heading />
-          <div class="col-lg-8 col-md-8 col-sm-8">
+          <!-- <fir-heading /> -->
+          <div class="col-lg-8 col-md-12 col-sm-12">
             <Transition name="fade">
               <div class="card" id="card">
-                <h3 style="text-align: center" class="mt-4 mb-1">
+                <h4 style="text-align: center" class="mt-4 mb-1">
                   <b>OFFENCES ATTRACTED</b>
-                </h3>
+                </h4>
                 <div class="container-fluid mt-3">
                   <form class="row mb-2">
                     <div class="card" id="card">
@@ -137,7 +141,7 @@
               </div>
             </Transition>
           </div>
-          <div class="col-lg-4 col-md-4 col-sm-4 mt-fir">
+          <div class="col-lg-4 col-md-12 col-sm-12 mt-fir">
             <div class="card" id="">
               <img src="assets/img/fir/fir.jpg" class="img-fluid" alt="" />
             </div>

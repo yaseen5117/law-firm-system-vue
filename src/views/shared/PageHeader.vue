@@ -3,7 +3,8 @@
     <section id="breadcrumbs" class="breadcrumbs" v-if="!hide">
       <div class="container">
         <div class="d-flex justify-content-between align-items-center">
-          <h4 v-if="title">
+          <span v-if="isNotHeading">{{ title }}</span>
+          <h4 v-if="title && !isNotHeading">
             {{ title }}
             <router-link
               v-if="header_button && this.user.is_admin"
@@ -108,6 +109,7 @@ export default {
     "createMeetingBtn",
     "createMeetingBtnText",
     "showLCLink",
+    "isNotHeading",
   ],
   data() {
     return {

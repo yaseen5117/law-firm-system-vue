@@ -1,82 +1,89 @@
 <template>
   <BlockUI :blocked="!isLoaded" :fullScreen="true">
     <main id="main">
-      <page-header :hideBreadCrumbs="true" />
+      <page-header
+        :title="'Fir Reader | Search Results'"
+        :isNotHeading="false"
+        :hideBreadCrumbs="true"
+      />
       <section id="services" class="services section-bg">
         <BlockUI :blocked="sectionSearchResults" :fullScreen="true">
           <div class="container-fluid" data-aos="fade-up">
             <div class="row">
-              <fir-heading />
+              <!-- <fir-heading /> -->
 
-              <div class="col-lg-9 col-md-9 col-sm-12">
-                <h3 class="mt-2 mb-1 centre-align">
+              <div class="col-lg-9 col-md-12 col-sm-12">
+                <!-- <h3 class="mt-2 mb-1 centre-align">
                   <b>Search Result</b>
-                </h3>
+                </h3> -->
                 <div class="card" id="card" style="background-color: white">
                   <div class="container-fluid">
-                    <h3 class="mt-4 mb-1 centre-align">
+                    <!-- <h3 class="mt-4 mb-1 centre-align">
                       FIR Reader By Elawfirmpk
-                    </h3>
-                    <table class="table table-bordered" v-if="isLoaded">
-                      <thead>
-                        <tr>
-                          <th scope="col">Section</th>
-                          <th scope="col">Offences</th>
-                          <th scope="col">
-                            Whether the police may arrest without warrant or not
-                          </th>
-                          <th scope="col">
-                            Whether a warrant or a summon shall ordinarily be
-                            issued in the first instance.
-                          </th>
-                          <th scope="col">Whether bailable or not</th>
-                          <th scope="col">Punishment</th>
-                          <th scope="col">By what Court triable</th>
-                          <th scope="col">Defination</th>
-                        </tr>
-                      </thead>
-                      <tbody
-                        v-for="sectionSearchResult in sectionSearchResults"
-                        :key="sectionSearchResult.id"
-                      >
-                        <template
-                          v-for="singleSectionResult in sectionSearchResult.data"
-                          :key="singleSectionResult.id"
-                        >
+                    </h3> -->
+                    <div class="table-responsive">
+                      <table class="table table-bordered mt-4" v-if="isLoaded">
+                        <thead>
                           <tr>
-                            <td scope="row">
-                              {{ singleSectionResult.fir_no }}
-                            </td>
-                            <td>{{ singleSectionResult.title }}</td>
-                            <td>{{ singleSectionResult.arrest_info }}</td>
-                            <td>{{ singleSectionResult.warrent_info }}</td>
-                            <td>{{ singleSectionResult.bailable_info }}</td>
-                            <td>{{ singleSectionResult.punishment_info }}</td>
-                            <td></td>
-                            <td>{{ singleSectionResult.defination }}</td>
+                            <th scope="col">Section</th>
+                            <th scope="col">Offences</th>
+                            <th scope="col">
+                              Whether the police may arrest without warrant or
+                              not
+                            </th>
+                            <th scope="col">
+                              Whether a warrant or a summon shall ordinarily be
+                              issued in the first instance.
+                            </th>
+                            <th scope="col">Whether bailable or not</th>
+                            <th scope="col">Punishment</th>
+                            <th scope="col">By what Court triable</th>
+                            <th scope="col">Defination</th>
                           </tr>
-                          <tr>
-                            <td colspan="5">
-                              Police Station:
-                              <b>{{ sectionSearchResult.police_station }}</b>
-                            </td>
-                            <td colspan="3">
-                              Fir No.:
-                              <b>{{ sectionSearchResult.fir_no }}</b> of Year:
-                              <b>{{ sectionSearchResult.year }}</b>
-                            </td>
-                          </tr>
-                        </template>
-                        <tr
-                          v-if="sectionSearchResult.data.length == 0"
-                          class="text-center"
+                        </thead>
+                        <tbody
+                          v-for="sectionSearchResult in sectionSearchResults"
+                          :key="sectionSearchResult.id"
                         >
-                          <td colspan="8" class="text-danger">
-                            Records Not Found!
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                          <template
+                            v-for="singleSectionResult in sectionSearchResult.data"
+                            :key="singleSectionResult.id"
+                          >
+                            <tr>
+                              <td scope="row">
+                                {{ singleSectionResult.fir_no }}
+                              </td>
+                              <td>{{ singleSectionResult.title }}</td>
+                              <td>{{ singleSectionResult.arrest_info }}</td>
+                              <td>{{ singleSectionResult.warrent_info }}</td>
+                              <td>{{ singleSectionResult.bailable_info }}</td>
+                              <td>{{ singleSectionResult.punishment_info }}</td>
+                              <td></td>
+                              <td>{{ singleSectionResult.defination }}</td>
+                            </tr>
+                            <tr>
+                              <td colspan="5">
+                                Police Station:
+                                <b>{{ sectionSearchResult.police_station }}</b>
+                              </td>
+                              <td colspan="3">
+                                Fir No.:
+                                <b>{{ sectionSearchResult.fir_no }}</b> of Year:
+                                <b>{{ sectionSearchResult.year }}</b>
+                              </td>
+                            </tr>
+                          </template>
+                          <tr
+                            v-if="sectionSearchResult.data.length == 0"
+                            class="text-center"
+                          >
+                            <td colspan="8" class="text-danger">
+                              Records Not Found!
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                     <div>
                       <div
                         v-if="sectionSearchResults.length == 0 && isLoaded"
@@ -111,7 +118,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-lg-3 col-md-3 col-sm-12">
+              <div class="col-lg-3 col-md-12 col-sm-12">
                 <div class="margn-top">
                   <h5 class="centre-align">
                     <b>Video</b>
@@ -140,6 +147,22 @@
                     </div>
                   </div>
                 </div>
+              </div>
+              <div class="col-12">
+                <router-link
+                  class="btn btn-sm btn-secondary mb-3 mt-3"
+                  :to="{
+                    name: 'fir_reader',
+                  }"
+                  href="javascript:void"
+                  style="margin-left: 2px"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Edit"
+                >
+                  <i class="fa fa-arrow-left"></i>
+                  Back
+                </router-link>
               </div>
             </div>
           </div>
