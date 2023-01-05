@@ -52,6 +52,7 @@
               </button>
 
               <button
+                v-if="this.user.is_admin"
                 class="nav-link"
                 id="v-pills-settings-tab"
                 data-bs-toggle="pill"
@@ -314,6 +315,7 @@ import { required, email, helpers } from "@vuelidate/validators";
 import Editor from "primevue/editor";
 import FileUpload from "../petition-index/FileUpload.vue";
 import Image from "primevue/image";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -322,6 +324,7 @@ export default {
     FileUpload,
     Image,
   },
+  computed: mapState(["user"]),
   setup() {
     return {
       v$: useVuelidate(),

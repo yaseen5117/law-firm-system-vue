@@ -67,20 +67,20 @@
                                 <b>{{ sectionSearchResult.police_station }}</b>
                               </td>
                               <td colspan="3">
-                                Fir No.:
+                                Fir No:
                                 <b>{{ sectionSearchResult.fir_no }}</b> of Year:
                                 <b>{{ sectionSearchResult.year }}</b>
                               </td>
                             </tr>
                           </template>
-                          <tr
+                          <!-- <tr
                             v-if="sectionSearchResult.data.length == 0"
                             class="text-center"
                           >
                             <td colspan="8" class="text-danger">
                               Records Not Found!
                             </td>
-                          </tr>
+                          </tr> -->
                         </tbody>
                       </table>
                     </div>
@@ -92,27 +92,34 @@
                         <span class="text-danger"> Records Not Found! </span>
                       </div>
                     </div>
-                    <div
-                      style="display: none"
-                      class="mt-4 mb-4 centre-align"
-                      v-if="isLoaded"
-                    >
-                      <button class="btn btn-success btn-sm">
-                        Share on WhatsApp
-                      </button>
+                    <div class="mt-4 mb-4 centre-align" v-if="isLoaded">
                       <a
-                        v-tooltip.top="'Download Pending Cases'"
-                        class="btn btn-info btn-sm left-margin"
-                        :href="fir_reader_result_pdf_download_url"
-                        download=""
-                        ><i class="fa fa-download"></i> Download PDF</a
+                        target="_blank"
+                        href="https://wa.me/+923015011568"
+                        data-action="share/whatsapp/share"
+                        class="btn btn-success btn-sm"
                       >
-
-                      <button class="btn btn-danger btn-sm left-margin">
-                        Contact Us
+                        Share on WhatsApp
+                      </a>
+                      <button
+                        :disabled="sectionSearchResults.length == 0"
+                        @click="downloadFirReaderResult()"
+                        v-tooltip.top="'Download Search Result'"
+                        class="btn btn-info btn-sm left-margin"
+                        type="button"
+                        download=""
+                      >
+                        <i class="fa fa-download"></i> Download PDF
                       </button>
+
+                      <a
+                        href="#contact"
+                        class="btn btn-danger btn-sm left-margin"
+                      >
+                        Contact Us
+                      </a>
                     </div>
-                    <div v-if="!isLoaded" class="col-md-12">
+                    <div v-if="!isLoaded" class="col-md-12 mt-2">
                       <p class="alert alert-warning">Loading....</p>
                     </div>
                   </div>
@@ -198,6 +205,42 @@ export default {
     console.log("filterSections: ", this.filterSections);
   },
   methods: {
+    downloadFirReaderResult() {
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      let url = this.base_url + "/api/download_fir_reader_result_pdf";
+      axios
+        .post(
+          url,
+          {
+            filterSections: this.filterSections,
+            sectionData: this.sectionData,
+          },
+          { headers }
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            // link.setAttribute("download", "test.pdf");
+            document.body.appendChild(link);
+            link.click();
+          }
+          this.$notify({
+            type: "success",
+            title: "File Downloaded SuccessFully",
+          });
+        })
+        .catch((error) => {
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
+        });
+    },
     getSectionSearchResult() {
       this.isLoaded = false;
       var headers = {

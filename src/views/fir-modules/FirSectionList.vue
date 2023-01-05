@@ -14,23 +14,63 @@
       <section id="services" class="services section-bg mt-3">
         <div class="container" data-aos="fade-up">
           <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <Transition name="fade">
+                <form class="row gy-2 gx-3 align-items-center mb-2">
+                  <div class="col-lg-3 col-md-3 col-sm-6">
+                    <input
+                      type="text"
+                      v-model="filters.section"
+                      class="form-control"
+                      placeholder="Section"
+                      aria-describedby="Title"
+                    />
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-6">
+                    <input
+                      type="text"
+                      v-model="filters.title"
+                      class="form-control"
+                      placeholder="Title/Offences"
+                      aria-describedby="Title"
+                    />
+                  </div>
+
+                  <div class="col-lg-3 col-md-3 col-sm-12">
+                    <Dropdown
+                      class="p-inputtext-sm"
+                      v-model="filters.statute_id"
+                      :options="statutes"
+                      optionLabel="title"
+                      optionValue="id"
+                      placeholder="Select a Statute"
+                      :filter="true"
+                      appendTo="self"
+                      filterPlaceholder="Find by Title"
+                    />
+                  </div>
+                  <div class="col-lg-1 col-md-1 col-sm-12">
+                    <button
+                      type="button"
+                      class="btn btn-danger btn-sm"
+                      @click="reset()"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </form>
+              </Transition>
+            </div>
+            <hr />
             <div class="table-responsive">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <table class="table table-hover" v-if="isLoaded">
                   <thead>
                     <th>Section</th>
                     <th>Offences</th>
-                    <th>
-                      Whether the police may arrest without warrant or not
-                    </th>
-                    <th>
-                      Whether a warrant or a summon shall ordinarily be issued
-                      in the first instance.
-                    </th>
-                    <th>Whether bailable or not</th>
-                    <th>Punishment</th>
-                    <th>By what Court triable</th>
-                    <th>Defination</th>
+                    <th>Statute</th>
+                    <th>Created By</th>
+                    <th>Created At</th>
                     <th width="10%">Actions</th>
                   </thead>
                   <tbody>
@@ -41,14 +81,19 @@
                       <td>
                         {{ fir_section.fir_no }}
                       </td>
-                      <td>{{ fir_section.title }}</td>
-                      <td>{{ fir_section.arrest_info }}</td>
-                      <td>{{ fir_section.warrent_info }}</td>
-                      <td>{{ fir_section.bailable_info }}</td>
-                      <td>{{ fir_section.punishment_info }}</td>
-                      <td></td>
-                      <td>{{ fir_section.defination }}</td>
-
+                      <td v-tooltip.top="fir_section.title">
+                        {{ fir_section.title.substring(0, 50)
+                        }}{{ fir_section.title.length > 50 ? "..." : "" }}
+                      </td>
+                      <td>
+                        {{
+                          fir_section.statute ? fir_section.statute.title : ""
+                        }}
+                      </td>
+                      <td>
+                        {{ fir_section.user ? fir_section.user.name : "" }}
+                      </td>
+                      <td>{{ fir_section.created_at }}</td>
                       <td width="">
                         <router-link
                           class="btn btn-sm btn-success action-btn"
@@ -58,9 +103,7 @@
                           }"
                           href="javascript:void"
                           style="margin-left: 2px"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="top"
-                          title="Edit"
+                          v-tooltip.top="'Edit'"
                         >
                           Edit
                         </router-link>
@@ -72,9 +115,7 @@
                           "
                           href="javascript:void"
                           style="margin-left: 2px"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="top"
-                          title="Delete"
+                          v-tooltip.top="'Delete'"
                         >
                           Delete
                           <!-- <i class="fa fa-trash-o"></i> -->
@@ -114,6 +155,7 @@ export default {
 
   data() {
     return {
+      filters: {},
       base_url: process.env.VUE_APP_SERVICE_URL,
       page_title: "Fir Sections",
       fir_sections: [],
@@ -124,14 +166,36 @@ export default {
       header_button: true,
       header_button_text: "New Fir Section",
       isLoaded: false,
+      statutes: [],
     };
   },
 
   created() {
-    this.getPetitionTypes();
+    this.getFirSection();
+    this.getStatuses();
   },
   methods: {
-    getPetitionTypes() {
+    getStatuses() {
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+      let url = this.base_url + "/api/get_statutes";
+      axios
+        .get(url, { headers })
+        .then((response) => {
+          this.statutes = response.data.statutes;
+          console.log(this.statutes);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$notify({
+            type: "error",
+            title: "Something went wrong!",
+            text: error.response.data.message,
+          });
+        });
+    },
+    getFirSection() {
       this.isLoaded = false;
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
@@ -139,6 +203,7 @@ export default {
       axios
         .get(this.base_url + "/api/fir_sections", {
           headers,
+          params: this.filters,
         })
         .then((response) => {
           this.fir_sections = response.data.fir_sections;
@@ -198,11 +263,28 @@ export default {
         },
       });
     },
+    reset() {
+      this.filters = {};
+    },
   },
   mounted() {
     document.getElementById("header");
     document.title = "Fir Sections";
     console.log("Fir Sections List Component Mounted");
+  },
+  watch: {
+    filters: {
+      deep: true,
+      handler() {
+        if (!this.awaitingSearch) {
+          setTimeout(() => {
+            this.getFirSection();
+            this.awaitingSearch = false;
+          }, 3500); // 1 sec delay
+        }
+        this.awaitingSearch = true;
+      },
+    },
   },
 };
 </script>

@@ -60,17 +60,7 @@
               >Reviews</a
             >
           </li>
-          <li v-show="!this.user">
-            <router-link
-              :class="
-                this.$route.name == 'fir_reader'
-                  ? 'active nav-link'
-                  : 'nav-link'
-              "
-              to="/fir-reader"
-              >Fir Reader</router-link
-            >
-          </li>
+
           <li v-show="!this.user">
             <a
               :class="
@@ -92,6 +82,17 @@
               "
               to="/dashboard"
               >Dashboard</router-link
+            >
+          </li>
+          <li>
+            <router-link
+              :class="
+                this.$route.name == 'fir_reader'
+                  ? 'active nav-link'
+                  : 'nav-link'
+              "
+              to="/fir-reader"
+              >Fir Reader</router-link
             >
           </li>
           <li v-if="this.user && this.user.is_client">

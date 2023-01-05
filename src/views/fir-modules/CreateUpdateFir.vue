@@ -34,7 +34,7 @@
                 id="title"
                 v-if="v$.sectionData.title.$error"
                 class="errorMessage"
-                >{{ v$.sectionData.title.maxLength.$message }}</span
+                >Title field is required</span
               >
             </div>
           </div>
@@ -46,8 +46,17 @@
                 v-model="sectionData.fir_no"
                 type="text"
                 class="form-control"
-                id=""
+                @blur="v$.sectionData.fir_no.$touch"
+                v-bind:class="{
+                  'error-boarder': v$.sectionData.fir_no.$error,
+                }"
               />
+              <span
+                id="fir_no"
+                v-if="v$.sectionData.fir_no.$error"
+                class="errorMessage"
+                >Fir No field is required</span
+              >
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
               <label for="">Defination</label>
@@ -57,7 +66,8 @@
                 type="text"
                 class="form-control"
                 id=""
-                @blur="v$.sectionData.defination.$touch"
+              />
+              <!-- @blur="v$.sectionData.defination.$touch"
                 v-bind:class="{
                   'error-boarder': v$.sectionData.defination.$error,
                 }"
@@ -67,7 +77,7 @@
                 v-if="v$.sectionData.defination.$error"
                 class="errorMessage"
                 >{{ v$.sectionData.defination.maxLength.$message }}</span
-              >
+              > -->
             </div>
           </div>
 
@@ -90,7 +100,8 @@
                 type="text"
                 class="form-control"
                 id=""
-                @blur="v$.sectionData.arrest_info.$touch"
+              />
+              <!-- @blur="v$.sectionData.arrest_info.$touch"
                 v-bind:class="{
                   'error-boarder': v$.sectionData.arrest_info.$error,
                 }"
@@ -100,7 +111,7 @@
                 v-if="v$.sectionData.arrest_info.$error"
                 class="errorMessage"
                 >{{ v$.sectionData.arrest_info.maxLength.$message }}</span
-              >
+              > -->
             </div>
           </div>
           <div class="form-group row">
@@ -112,7 +123,8 @@
                 type="text"
                 class="form-control"
                 id=""
-                @blur="v$.sectionData.warrent_info.$touch"
+              />
+              <!-- @blur="v$.sectionData.warrent_info.$touch"
                 v-bind:class="{
                   'error-boarder': v$.sectionData.warrent_info.$error,
                 }"
@@ -122,7 +134,7 @@
                 v-if="v$.sectionData.warrent_info.$error"
                 class="errorMessage"
                 >{{ v$.sectionData.warrent_info.maxLength.$message }}</span
-              >
+              > -->
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
               <label for="">Bailable Info </label>
@@ -132,7 +144,8 @@
                 type="text"
                 class="form-control"
                 id=""
-                @blur="v$.sectionData.bailable_info.$touch"
+              />
+              <!-- @blur="v$.sectionData.bailable_info.$touch"
                 v-bind:class="{
                   'error-boarder': v$.sectionData.bailable_info.$error,
                 }"
@@ -142,7 +155,7 @@
                 v-if="v$.sectionData.bailable_info.$error"
                 class="errorMessage"
                 >{{ v$.sectionData.bailable_info.maxLength.$message }}</span
-              >
+              > -->
             </div>
           </div>
           <div class="form-group row">
@@ -154,7 +167,8 @@
                 type="text"
                 class="form-control"
                 id=""
-                @blur="v$.sectionData.compoundable_info.$touch"
+              />
+              <!-- @blur="v$.sectionData.compoundable_info.$touch"
                 v-bind:class="{
                   'error-boarder': v$.sectionData.compoundable_info.$error,
                 }"
@@ -164,7 +178,7 @@
                 v-if="v$.sectionData.compoundable_info.$error"
                 class="errorMessage"
                 >{{ v$.sectionData.compoundable_info.maxLength.$message }}</span
-              >
+              > -->
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
               <label for="">Punishment Info </label>
@@ -174,7 +188,8 @@
                 type="text"
                 class="form-control"
                 id=""
-                @blur="v$.sectionData.punishment_info.$touch"
+              />
+              <!-- @blur="v$.sectionData.punishment_info.$touch"
                 v-bind:class="{
                   'error-boarder': v$.sectionData.punishment_info.$error,
                 }"
@@ -184,7 +199,7 @@
                 v-if="v$.sectionData.punishment_info.$error"
                 class="errorMessage"
                 >{{ v$.sectionData.punishment_info.maxLength.$message }}</span
-              >
+              > -->
             </div>
           </div>
           <div
@@ -261,49 +276,50 @@ export default {
     return {
       sectionData: {
         title: {
-          maxLength: helpers.withMessage(
-            "Title is required & must not be greater than 190 characters.",
-            maxLength(190)
-          ),
+          // maxLength: helpers.withMessage(
+          //   "Title is required & must not be greater than 190 characters.",
+          //   maxLength(190)
+          // ),
           required,
         },
+        fir_no: { required },
 
-        arrest_info: {
-          maxLength: helpers.withMessage(
-            "The arrest info must not be greater than 190 characters.",
-            maxLength(190)
-          ),
-        },
-        warrent_info: {
-          maxLength: helpers.withMessage(
-            "The warrent info must not be greater than 190 characters.",
-            maxLength(190)
-          ),
-        },
-        bailable_info: {
-          maxLength: helpers.withMessage(
-            "The bailable info must not be greater than 190 characters.",
-            maxLength(190)
-          ),
-        },
-        compoundable_info: {
-          maxLength: helpers.withMessage(
-            "The compoundable info must not be greater than 190 characters.",
-            maxLength(190)
-          ),
-        },
-        punishment_info: {
-          maxLength: helpers.withMessage(
-            "The punishment info must not be greater than 190 characters.",
-            maxLength(190)
-          ),
-        },
-        defination: {
-          maxLength: helpers.withMessage(
-            "The Defination must not be greater than 190 characters.",
-            maxLength(190)
-          ),
-        },
+        // arrest_info: {
+        //   maxLength: helpers.withMessage(
+        //     "The arrest info must not be greater than 190 characters.",
+        //     maxLength(190)
+        //   ),
+        // },
+        // warrent_info: {
+        //   maxLength: helpers.withMessage(
+        //     "The warrent info must not be greater than 190 characters.",
+        //     maxLength(190)
+        //   ),
+        // },
+        // bailable_info: {
+        //   maxLength: helpers.withMessage(
+        //     "The bailable info must not be greater than 190 characters.",
+        //     maxLength(190)
+        //   ),
+        // },
+        // compoundable_info: {
+        //   maxLength: helpers.withMessage(
+        //     "The compoundable info must not be greater than 190 characters.",
+        //     maxLength(190)
+        //   ),
+        // },
+        // punishment_info: {
+        //   maxLength: helpers.withMessage(
+        //     "The punishment info must not be greater than 190 characters.",
+        //     maxLength(190)
+        //   ),
+        // },
+        // defination: {
+        //   maxLength: helpers.withMessage(
+        //     "The Defination must not be greater than 190 characters.",
+        //     maxLength(190)
+        //   ),
+        // },
       },
     };
   },

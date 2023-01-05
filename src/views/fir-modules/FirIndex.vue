@@ -16,13 +16,12 @@
                   <b>OFFENCES ATTRACTED</b>
                 </h4>
                 <div class="container-fluid mt-3">
-                  <form class="row mb-2">
+                  <form class="row mb-2" @submit.prevent="submitForm($event)">
                     <div class="card" id="card">
                       <div class="form-group row mt-4">
-                        <label for="" class="col-sm-2 col-form-label"
-                          >Police Station</label
-                        >
-                        <div class="col-sm-8">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                          <label for="">Police Station</label>
+
                           <input
                             v-model="sectionData.police_station"
                             type="text"
@@ -33,10 +32,9 @@
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="" class="col-sm-2 col-form-label"
-                          >FIR No.</label
-                        >
-                        <div class="col-sm-4">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                          <label for="">FIR No.</label>
+
                           <input
                             v-model="sectionData.fir_no"
                             type="text"
@@ -45,11 +43,9 @@
                             placeholder="636"
                           />
                         </div>
-                        <label for="" class="col-sm-1 col-form-label">of</label>
-                        <label for="" class="col-sm-2 col-form-label"
-                          >YEAR</label
-                        >
-                        <div class="col-sm-3">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                          <label for="">YEAR</label>
+
                           <input
                             v-model="sectionData.year"
                             id="year"
@@ -70,7 +66,7 @@
                           <label for="">Section</label>
 
                           <input
-                            v-on:keyup.enter="searchFir()"
+                            required
                             class="form-control form-control-sm"
                             type="text"
                             v-model="filterSections[filterSectionIndex].section"
@@ -113,9 +109,7 @@
                       </div>
                     </div>
                     <div id="add_more"></div>
-                  </form>
-                  <div class="row mb-4">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
                       <button
                         style="width: 100%"
                         type="button"
@@ -128,15 +122,13 @@
 
                       <button
                         style="width: 100%"
-                        type="button"
                         class="btn btn-success btn-sm mr-md-2 mt-2"
-                        @click="searchFir()"
                         v-tooltip.top="'Click to Search'"
                       >
                         <i class="fa fa-search" aria-hidden="true"></i> Go
                       </button>
                     </div>
-                  </div>
+                  </form>
                 </div>
               </div>
             </Transition>
@@ -210,7 +202,7 @@ export default {
   },
 
   methods: {
-    searchFir() {
+    submitForm: function (event) {
       localStorage.setItem(
         "filterSections",
         JSON.stringify(this.filterSections)
