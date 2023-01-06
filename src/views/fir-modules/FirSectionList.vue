@@ -93,7 +93,9 @@
                       <td>
                         {{ fir_section.user ? fir_section.user.name : "" }}
                       </td>
-                      <td>{{ fir_section.created_at }}</td>
+                      <td>
+                        {{ formateDate(fir_section.created_at) }}
+                      </td>
                       <td width="">
                         <router-link
                           class="btn btn-sm btn-success action-btn"
@@ -147,6 +149,7 @@
 <script>
 import axios from "axios";
 import PageHeader from "../shared/PageHeader";
+import moment from "moment";
 
 export default {
   components: {
@@ -175,6 +178,11 @@ export default {
     this.getStatuses();
   },
   methods: {
+    formateDate(date) {
+      if (date) {
+        return moment(String(date)).format("DD/MM/YYYY"); //for  time hh:mm
+      }
+    },
     getStatuses() {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),

@@ -19,7 +19,7 @@
               />
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
-              <label for="">Title </label>
+              <label for="">Title<span class="text-danger">*</span></label>
               <input
                 v-model="sectionData.title"
                 type="text"
@@ -41,7 +41,7 @@
 
           <div class="form-group row">
             <div class="col-lg-4 col-md-6 col-sm-12">
-              <label for="">FIR No </label>
+              <label for="">Section<span class="text-danger">*</span></label>
               <input
                 v-model="sectionData.fir_no"
                 type="text"
@@ -55,13 +55,13 @@
                 id="fir_no"
                 v-if="v$.sectionData.fir_no.$error"
                 class="errorMessage"
-                >FIR No field is required</span
+                >Section field is required</span
               >
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
               <label for="">Defination</label>
               <textarea
-                rows="1"
+                rows="2"
                 v-model="sectionData.defination"
                 type="text"
                 class="form-control"
@@ -85,7 +85,7 @@
             <div class="col-lg-4 col-md-6 col-sm-12">
               <label for="">Link</label>
               <textarea
-                rows="1"
+                rows="2"
                 v-model="sectionData.link"
                 type="text"
                 class="form-control"
@@ -95,7 +95,7 @@
             <div class="col-lg-4 col-md-6 col-sm-12">
               <label for="">Arrest Info </label>
               <textarea
-                rows="1"
+                rows="2"
                 v-model="sectionData.arrest_info"
                 type="text"
                 class="form-control"
@@ -118,7 +118,7 @@
             <div class="col-lg-4 col-md-6 col-sm-12">
               <label for="">Warrent Info </label>
               <textarea
-                rows="1"
+                rows="2"
                 v-model="sectionData.warrent_info"
                 type="text"
                 class="form-control"
@@ -139,7 +139,7 @@
             <div class="col-lg-4 col-md-6 col-sm-12">
               <label for="">Bailable Info </label>
               <textarea
-                rows="1"
+                rows="2"
                 v-model="sectionData.bailable_info"
                 type="text"
                 class="form-control"
@@ -162,7 +162,7 @@
             <div class="col-lg-4 col-md-6 col-sm-12">
               <label for="">Compoundable Info </label>
               <textarea
-                rows="1"
+                rows="2"
                 v-model="sectionData.compoundable_info"
                 type="text"
                 class="form-control"
@@ -183,7 +183,7 @@
             <div class="col-lg-4 col-md-6 col-sm-12">
               <label for="">Punishment Info </label>
               <textarea
-                rows="1"
+                rows="2"
                 v-model="sectionData.punishment_info"
                 type="text"
                 class="form-control"
