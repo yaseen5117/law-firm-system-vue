@@ -63,7 +63,7 @@
                 aria-selected="false"
                 @click="FirSections()"
               >
-                Fir Sections
+                FIR Sections
               </button>
             </div>
           </div>
