@@ -2,7 +2,7 @@
   <BlockUI :blocked="!isLoaded" :fullScreen="true">
     <main id="main">
       <page-header
-        :title="'Fir Reader | Search Results'"
+        :title="'FIR Reader | Search Results'"
         :isNotHeading="false"
         :hideBreadCrumbs="true"
       />
@@ -67,7 +67,7 @@
                                 <b>{{ sectionSearchResult.police_station }}</b>
                               </td>
                               <td colspan="3">
-                                Fir No:
+                                FIR No:
                                 <b>{{ sectionSearchResult.fir_no }}</b> of Year:
                                 <b>{{ sectionSearchResult.year }}</b>
                               </td>
@@ -202,8 +202,11 @@ export default {
     this.getSectionSearchResult();
   },
   mounted() {
+    document.getElementById("header");
+    document.title = "FIR Reader | Search Results";
     console.log("filterSections: ", this.filterSections);
   },
+
   methods: {
     downloadFirReaderResult() {
       var headers = {

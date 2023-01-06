@@ -41,7 +41,7 @@
 
           <div class="form-group row">
             <div class="col-lg-4 col-md-6 col-sm-12">
-              <label for=""> Fir No </label>
+              <label for="">FIR No </label>
               <input
                 v-model="sectionData.fir_no"
                 type="text"
@@ -55,7 +55,7 @@
                 id="fir_no"
                 v-if="v$.sectionData.fir_no.$error"
                 class="errorMessage"
-                >Fir No field is required</span
+                >FIR No field is required</span
               >
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
@@ -262,8 +262,8 @@ export default {
     return {
       saving: false,
       page_title: this.$route.params.fir_section_id
-        ? "Edit Fir Section"
-        : "Add New Fir Section",
+        ? "Edit FIR Section"
+        : "Add New FIR Section",
       button_title: this.$route.params.fir_section_id ? "Update" : "Save",
       base_url: process.env.VUE_APP_SERVICE_URL,
       sectionData: {},

@@ -198,7 +198,7 @@ export default {
     this.getStatuses();
   },
   mounted() {
-    document.title = "Fir Section";
+    document.title = "FIR Section";
   },
 
   methods: {

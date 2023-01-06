@@ -157,14 +157,14 @@ export default {
     return {
       filters: {},
       base_url: process.env.VUE_APP_SERVICE_URL,
-      page_title: "Fir Sections",
+      page_title: "FIR Sections",
       fir_sections: [],
       saving: false,
       route_obj: {
         name: "create-fir-section",
       },
       header_button: true,
-      header_button_text: "New Fir Section",
+      header_button_text: "New FIR Section",
       isLoaded: false,
       statutes: [],
     };
@@ -269,8 +269,8 @@ export default {
   },
   mounted() {
     document.getElementById("header");
-    document.title = "Fir Sections";
-    console.log("Fir Sections List Component Mounted");
+    document.title = "FIR Sections List";
+    console.log("FIR Sections List Component Mounted");
   },
   watch: {
     filters: {
