@@ -92,7 +92,7 @@
                   : 'nav-link'
               "
               to="/fir-reader"
-              >Fir Reader</router-link
+              >FIR Reader</router-link
             >
           </li>
           <li v-if="this.user && this.user.is_client">
