@@ -66,11 +66,29 @@
                           <label for="">Section</label>
 
                           <input
-                            required
                             class="form-control form-control-sm"
                             type="text"
                             v-model="filterSections[filterSectionIndex].section"
                           />
+                          <!-- @blur="v$.filterSections[filterSectionIndex]"
+                            v-bind:class="{
+                              'error-boarder':
+                                v$.filterSections.$each.$response.$errors[
+                                  filterSectionIndex
+                                ].section,
+                            }"
+                          />
+                          <span
+                            id="defination"
+                            v-if="
+                              v$.filterSections.$each.$response.$errors[
+                                filterSectionIndex
+                              ].section
+                            "
+                            class="errorMessage"
+                            >Section field is required</span
+                          > 
+                          <pre>{{ v$.filterSections.$each }}</pre> -->
                         </div>
 
                         <div class="col-lg-6 col-md-6 col-sm-12 mb-2">
@@ -148,7 +166,7 @@
                     <b>
                       Reference:
                       <a
-                        href="https://www.ma-law.org.pk/pdflaw/Limitation%20%20Act%20-%201908.pdf"
+                        href="assets/pdf/Code_of_criminal_procedure_1898.pdf"
                         target="_blank"
                         >Code_of_criminal_procedure_1898
                       </a></b
@@ -169,12 +187,19 @@
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
 import FirHeading from "./FirHeading.vue";
+import useVuelidate from "@vuelidate/core";
+import { required, helpers } from "@vuelidate/validators";
+
 export default {
   components: {
     PageHeader,
     FirHeading,
   },
-
+  setup() {
+    return {
+      v$: useVuelidate(),
+    };
+  },
   data() {
     return {
       sectionData: { police_station: "", fir_no: "", year: "" },
@@ -194,6 +219,17 @@ export default {
       year: null,
     };
   },
+  validations() {
+    return {
+      filterSections: {
+        $each: helpers.forEach({
+          section: {
+            required,
+          },
+        }),
+      },
+    };
+  },
   created() {
     this.getStatuses();
   },
@@ -203,14 +239,19 @@ export default {
 
   methods: {
     submitForm: function (event) {
-      localStorage.setItem(
-        "filterSections",
-        JSON.stringify(this.filterSections)
-      );
-      localStorage.setItem("sectionData", JSON.stringify(this.sectionData));
-      this.$router.push({
-        name: "fir_reader_result",
-      });
+      //console.log("Validation: ", this.v$);
+      // this.v$.$validate();
+      //!this.v$.$error
+      if (true) {
+        localStorage.setItem(
+          "filterSections",
+          JSON.stringify(this.filterSections)
+        );
+        localStorage.setItem("sectionData", JSON.stringify(this.sectionData));
+        this.$router.push({
+          name: "fir_reader_result",
+        });
+      }
     },
     getStatuses() {
       var headers = {

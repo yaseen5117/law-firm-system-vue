@@ -41,46 +41,33 @@
                             <th scope="col">Defination</th>
                           </tr>
                         </thead>
-                        <tbody
-                          v-for="sectionSearchResult in sectionSearchResults"
-                          :key="sectionSearchResult.id"
-                        >
-                          <template
-                            v-for="singleSectionResult in sectionSearchResult.data"
+                        <tbody>
+                          <tr
+                            v-for="singleSectionResult in sectionSearchResults"
                             :key="singleSectionResult.id"
                           >
-                            <tr>
-                              <td scope="row">
-                                {{ singleSectionResult.fir_no }}
-                              </td>
-                              <td>{{ singleSectionResult.title }}</td>
-                              <td>{{ singleSectionResult.arrest_info }}</td>
-                              <td>{{ singleSectionResult.warrent_info }}</td>
-                              <td>{{ singleSectionResult.bailable_info }}</td>
-                              <td>{{ singleSectionResult.punishment_info }}</td>
-                              <td></td>
-                              <td>{{ singleSectionResult.defination }}</td>
-                            </tr>
-                            <tr>
-                              <td colspan="5">
-                                Police Station:
-                                <b>{{ sectionSearchResult.police_station }}</b>
-                              </td>
-                              <td colspan="3">
-                                FIR No:
-                                <b>{{ sectionSearchResult.fir_no }}</b> of Year:
-                                <b>{{ sectionSearchResult.year }}</b>
-                              </td>
-                            </tr>
-                          </template>
-                          <!-- <tr
-                            v-if="sectionSearchResult.data.length == 0"
-                            class="text-center"
-                          >
-                            <td colspan="8" class="text-danger">
-                              Records Not Found!
+                            <td scope="row">
+                              {{ singleSectionResult.fir_no }}
                             </td>
-                          </tr> -->
+                            <td>{{ singleSectionResult.title }}</td>
+                            <td>{{ singleSectionResult.arrest_info }}</td>
+                            <td>{{ singleSectionResult.warrent_info }}</td>
+                            <td>{{ singleSectionResult.bailable_info }}</td>
+                            <td>{{ singleSectionResult.punishment_info }}</td>
+                            <td>{{ singleSectionResult.court_triable }}</td>
+                            <td>{{ singleSectionResult.defination }}</td>
+                          </tr>
+                          <tr>
+                            <td colspan="5">
+                              Police Station:
+                              <b>{{ search_item.police_station }}</b>
+                            </td>
+                            <td colspan="3">
+                              FIR No:
+                              <b>{{ search_item.fir_no }}</b> of Year:
+                              <b>{{ search_item.year }}</b>
+                            </td>
+                          </tr>
                         </tbody>
                       </table>
                     </div>
@@ -123,6 +110,24 @@
                       <p class="alert alert-warning">Loading....</p>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="container-fluid">
+                        <router-link
+                          class="btn btn-sm btn-secondary mb-3 mt-3"
+                          :to="{
+                            name: 'fir_reader',
+                          }"
+                          href="javascript:void"
+                          style="margin-left: 2px"
+                          v-tooltip.top="'Go To Previous Page'"
+                        >
+                          <i class="fa fa-arrow-left"></i>
+                          Back
+                        </router-link>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-lg-3 col-md-12 col-sm-12">
@@ -133,43 +138,22 @@
                   <div class="row">
                     <div class="col-12">
                       <div
-                        v-for="sectionSearchResult in sectionSearchResults"
-                        :key="sectionSearchResult.id"
+                        v-for="singleSectionResult in sectionSearchResults"
+                        :key="singleSectionResult.id"
                       >
-                        <div
-                          v-for="singleSectionResult in sectionSearchResult.data"
-                          :key="singleSectionResult.id"
-                        >
-                          <iframe
-                            v-if="singleSectionResult.link"
-                            height="300"
-                            :src="singleSectionResult.link"
-                            title="YouTube video player"
-                            frameborder="0"
-                            allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen
-                          ></iframe>
-                        </div>
+                        <iframe
+                          v-if="singleSectionResult.link"
+                          height="300"
+                          :src="singleSectionResult.link"
+                          title="YouTube video player"
+                          frameborder="0"
+                          allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowfullscreen
+                        ></iframe>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-12">
-                <router-link
-                  class="btn btn-sm btn-secondary mb-3 mt-3"
-                  :to="{
-                    name: 'fir_reader',
-                  }"
-                  href="javascript:void"
-                  style="margin-left: 2px"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="Edit"
-                >
-                  <i class="fa fa-arrow-left"></i>
-                  Back
-                </router-link>
               </div>
             </div>
           </div>
@@ -194,6 +178,7 @@ export default {
       filterSections: JSON.parse(localStorage.getItem("filterSections")),
       sectionData: JSON.parse(localStorage.getItem("sectionData")),
       sectionSearchResults: [],
+      search_item: {},
       isLoaded: false,
       fir_reader_result_pdf_download_url: null,
     };
@@ -263,6 +248,7 @@ export default {
           this.sectionSearchResults = response.data.sectionSearchResults;
           this.fir_reader_result_pdf_download_url =
             response.data.fir_reader_result_pdf_download_url;
+          this.search_item = response.data.search_item;
           this.isLoaded = true;
           console.log("Returning data: ", this.sectionSearchResults);
           //   localStorage.removeItem("filterSections");

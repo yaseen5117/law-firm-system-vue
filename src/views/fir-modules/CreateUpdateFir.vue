@@ -202,6 +202,29 @@
               > -->
             </div>
           </div>
+          <div class="form-group row">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+              <label for="">Court Triable</label>
+              <textarea
+                rows="2"
+                v-model="sectionData.court_triable"
+                type="text"
+                class="form-control"
+                id=""
+              />
+              <!-- @blur="v$.sectionData.court_triable.$touch"
+                v-bind:class="{
+                  'error-boarder': v$.sectionData.court_triable.$error,
+                }"
+              />
+              <span
+                id="court_triable"
+                v-if="v$.sectionData.court_triable.$error"
+                class="errorMessage"
+                >{{ v$.sectionData.court_triable.maxLength.$message }}</span
+              > -->
+            </div>
+          </div>
           <div
             v-for="validation_error in validation_errors"
             :key="validation_error.id"
