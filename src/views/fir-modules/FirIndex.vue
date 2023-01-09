@@ -69,26 +69,16 @@
                             class="form-control form-control-sm"
                             type="text"
                             v-model="filterSections[filterSectionIndex].section"
+                            :id="'section' + filterSectionIndex"
+                            @focus="errorClassAddOrRemove(filterSectionIndex)"
                           />
-                          <!-- @blur="v$.filterSections[filterSectionIndex]"
-                            v-bind:class="{
-                              'error-boarder':
-                                v$.filterSections.$each.$response.$errors[
-                                  filterSectionIndex
-                                ].section,
-                            }"
-                          />
-                          <span
-                            id="defination"
-                            v-if="
-                              v$.filterSections.$each.$response.$errors[
-                                filterSectionIndex
-                              ].section
-                            "
+                          <label
+                            style="display: none"
                             class="errorMessage"
-                            >Section field is required</span
-                          > 
-                          <pre>{{ v$.filterSections.$each }}</pre> -->
+                            :id="filterSectionIndex"
+                            for=""
+                            >Section field is required</label
+                          >
                         </div>
 
                         <div class="col-lg-6 col-md-6 col-sm-12 mb-2">
@@ -222,6 +212,7 @@ export default {
   validations() {
     return {
       filterSections: {
+        required,
         $each: helpers.forEach({
           section: {
             required,
@@ -238,11 +229,14 @@ export default {
   },
 
   methods: {
+    //removing errors from sections input
+    errorClassAddOrRemove(index) {
+      document.getElementById(index).style.display = "none";
+      var v = document.getElementById("section" + index);
+      v.className = "form-control form-control-sm";
+    },
     submitForm: function (event) {
-      //console.log("Validation: ", this.v$);
-      // this.v$.$validate();
-      //!this.v$.$error
-      if (true) {
+      if (this.SectionInputValidation()) {
         localStorage.setItem(
           "filterSections",
           JSON.stringify(this.filterSections)
@@ -252,6 +246,21 @@ export default {
           name: "fir_reader_result",
         });
       }
+    },
+    SectionInputValidation() {
+      var isValid = true;
+      this.filterSections.forEach(function (singeFilterSection, i) {
+        if (!singeFilterSection.section) {
+          document.getElementById(i).style.display = "block";
+          var v = document.getElementById("section" + i);
+          console.log("NAme::::", v);
+          v.className = "form-control form-control-sm error";
+          //document.getElementsByName(i).classList.add("error-boarder");
+          //console.log("element: ", element);
+          isValid = false;
+        }
+      });
+      return isValid;
     },
     getStatuses() {
       var headers = {
@@ -308,5 +317,8 @@ export default {
   font-size: 20px;
   color: red;
   cursor: pointer;
+}
+.error {
+  border: 1px solid red;
 }
 </style>
