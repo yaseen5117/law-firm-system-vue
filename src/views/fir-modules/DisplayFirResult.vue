@@ -196,6 +196,7 @@ export default {
     downloadFirReaderResult() {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        responseType: "blob",
       };
       let url = this.base_url + "/api/download_fir_reader_result_pdf";
       axios
