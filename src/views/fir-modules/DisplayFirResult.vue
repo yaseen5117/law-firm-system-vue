@@ -42,20 +42,35 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr
-                            v-for="singleSectionResult in sectionSearchResults"
-                            :key="singleSectionResult.id"
+                          <template
+                            v-for="sectionResults in sectionSearchResults"
+                            :key="sectionResults.id"
                           >
-                            <td scope="row">
-                              {{ singleSectionResult.fir_no }}
+                            <tr
+                              v-for="singleSectionResult in sectionResults"
+                              :key="singleSectionResult.id"
+                            >
+                              <td scope="row">
+                                {{ singleSectionResult.fir_no }}
+                              </td>
+                              <td>{{ singleSectionResult.title }}</td>
+                              <td>{{ singleSectionResult.arrest_info }}</td>
+                              <td>{{ singleSectionResult.warrent_info }}</td>
+                              <td>{{ singleSectionResult.bailable_info }}</td>
+                              <td>{{ singleSectionResult.punishment_info }}</td>
+                              <td>{{ singleSectionResult.court_triable }}</td>
+                              <td>{{ singleSectionResult.defination }}</td>
+                            </tr>
+                          </template>
+                          <tr
+                            v-if="noResultFound && isLoaded"
+                            class="text-center"
+                          >
+                            <td colspan="8">
+                              <span class="text-danger">
+                                Records Not Found!
+                              </span>
                             </td>
-                            <td>{{ singleSectionResult.title }}</td>
-                            <td>{{ singleSectionResult.arrest_info }}</td>
-                            <td>{{ singleSectionResult.warrent_info }}</td>
-                            <td>{{ singleSectionResult.bailable_info }}</td>
-                            <td>{{ singleSectionResult.punishment_info }}</td>
-                            <td>{{ singleSectionResult.court_triable }}</td>
-                            <td>{{ singleSectionResult.defination }}</td>
                           </tr>
                           <tr>
                             <td colspan="5">
@@ -71,14 +86,11 @@
                         </tbody>
                       </table>
                     </div>
-                    <div>
-                      <div
-                        v-if="sectionSearchResults.length == 0 && isLoaded"
-                        class="text-center"
-                      >
+                    <!-- <div>
+                      <div v-if="noResultFound && isLoaded" class="text-center">
                         <span class="text-danger"> Records Not Found! </span>
                       </div>
-                    </div>
+                    </div> -->
                     <div class="mt-4 mb-4 centre-align" v-if="isLoaded">
                       <a
                         target="_blank"
@@ -89,7 +101,7 @@
                         Share on WhatsApp
                       </a>
                       <button
-                        :disabled="sectionSearchResults.length == 0"
+                        :disabled="noResultFound"
                         @click="downloadFirReaderResult()"
                         v-tooltip.top="'Download Search Result'"
                         class="btn btn-info btn-sm left-margin"
@@ -138,18 +150,23 @@
                   <div class="row">
                     <div class="col-12">
                       <div
-                        v-for="singleSectionResult in sectionSearchResults"
-                        :key="singleSectionResult.id"
+                        v-for="sectionResults in sectionSearchResults"
+                        :key="sectionResults.id"
                       >
-                        <iframe
-                          v-if="singleSectionResult.link"
-                          height="300"
-                          :src="singleSectionResult.link"
-                          title="YouTube video player"
-                          frameborder="0"
-                          allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowfullscreen
-                        ></iframe>
+                        <div
+                          v-for="singleSectionResult in sectionResults"
+                          :key="singleSectionResult.id"
+                        >
+                          <iframe
+                            v-if="singleSectionResult.link"
+                            height="300"
+                            :src="singleSectionResult.link"
+                            title="YouTube video player"
+                            frameborder="0"
+                            allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                          ></iframe>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -174,6 +191,7 @@ export default {
   },
   data() {
     return {
+      noResultFound: null,
       base_url: process.env.VUE_APP_SERVICE_URL,
       filterSections: JSON.parse(localStorage.getItem("filterSections")),
       sectionData: JSON.parse(localStorage.getItem("sectionData")),
@@ -250,6 +268,9 @@ export default {
           this.fir_reader_result_pdf_download_url =
             response.data.fir_reader_result_pdf_download_url;
           this.search_item = response.data.search_item;
+          console.log("Front END: ", this.noResultFound);
+          this.noResultFound = response.data.noResultFound;
+          console.log("BAck END: ", response.data.noResultFound);
           this.isLoaded = true;
           console.log("Returning data: ", this.sectionSearchResults);
           //   localStorage.removeItem("filterSections");

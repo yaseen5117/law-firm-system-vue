@@ -97,6 +97,14 @@
                         {{ formateDate(fir_section.created_at) }}
                       </td>
                       <td width="">
+                        <button
+                          class="btn btn-sm btn-primary action-btn"
+                          type="button"
+                          @click="showSectionDetailModal(fir_section)"
+                          v-tooltip.top="'View Detail'"
+                        >
+                          View Detail
+                        </button>
                         <router-link
                           class="btn btn-sm btn-success action-btn"
                           :to="{
@@ -141,6 +149,11 @@
         </div>
       </section>
       <!-- End Services Section -->
+      <single-section-detail-modal
+        :sectionDetail="sectionDetail"
+        :showSectionDetailModal="sectionDetailModal"
+        @close-modal="closeSectionDetailModal"
+      />
     </main>
     <!-- End #main -->
   </BlockUI>
@@ -150,14 +163,18 @@
 import axios from "axios";
 import PageHeader from "../shared/PageHeader";
 import moment from "moment";
+import SingleSectionDetailModal from "./SingleSectionDetailModal.vue";
 
 export default {
   components: {
     PageHeader,
+    SingleSectionDetailModal,
   },
 
   data() {
     return {
+      sectionDetailModal: false,
+      sectionDetail: {},
       filters: {},
       base_url: process.env.VUE_APP_SERVICE_URL,
       page_title: "FIR Sections",
@@ -178,6 +195,13 @@ export default {
     this.getStatuses();
   },
   methods: {
+    showSectionDetailModal(fir_section) {
+      this.sectionDetailModal = true;
+      this.sectionDetail = fir_section;
+    },
+    closeSectionDetailModal(fir_section) {
+      this.sectionDetailModal = false;
+    },
     formateDate(date) {
       if (date) {
         return moment(String(date)).format("DD/MM/YYYY"); //for  time hh:mm
