@@ -477,10 +477,10 @@
                 <i class="fa fa-list-alt"></i>
               </div>
               <h4>
-                <router-link to="/fir-sections">FIR Sections</router-link>
+                <router-link to="/fir-sections">FIR Reader</router-link>
               </h4>
               <p>
-                Contains all Details of FIR Sections. Click to Open all Details.
+                Contains all Details of FIR Reader. Click to Open all Details.
               </p>
             </div>
           </div>
