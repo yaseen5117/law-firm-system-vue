@@ -660,6 +660,16 @@ section {
   fill: #ffa76e;
 }
 
+.services .fir-section-box i {
+  color: #604d6e;
+}
+.services .fir-section-box:hover .icon i {
+  color: #f4e3fa;
+}
+.services .fir-section-box:hover .icon path {
+  fill: #454244;
+}
+
 .services .iconbox-dark-red i {
   color: #3d0a07;
 }
