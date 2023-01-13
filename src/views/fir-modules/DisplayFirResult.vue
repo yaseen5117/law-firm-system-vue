@@ -43,8 +43,10 @@
                         </thead>
                         <tbody>
                           <template
-                            v-for="sectionResults in sectionSearchResults"
-                            :key="sectionResults.id"
+                            v-for="(
+                              sectionResults, baseIndex
+                            ) in sectionSearchResults"
+                            :key="baseIndex"
                           >
                             <tr
                               v-for="singleSectionResult in sectionResults"
@@ -268,9 +270,9 @@ export default {
           this.fir_reader_result_pdf_download_url =
             response.data.fir_reader_result_pdf_download_url;
           this.search_item = response.data.search_item;
-          console.log("Front END: ", this.noResultFound);
+
           this.noResultFound = response.data.noResultFound;
-          console.log("BAck END: ", response.data.noResultFound);
+
           this.isLoaded = true;
           console.log("Returning data: ", this.sectionSearchResults);
           //   localStorage.removeItem("filterSections");
