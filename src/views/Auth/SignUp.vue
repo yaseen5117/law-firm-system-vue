@@ -198,6 +198,7 @@ export default {
         { name: "PARTNER" },
         { name: "ASSOCIATE" },
         { name: "PARALEGAL" },
+        { name: "STUDENT" },
         { name: "CLIENT" },
       ],
     };

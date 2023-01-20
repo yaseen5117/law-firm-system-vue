@@ -97,6 +97,7 @@
                       </button>
 
                       <button
+                        v-if="!this.user.is_student"
                         type="button"
                         class="btn btn-warning btn-sm mr-md-2"
                         style="margin-left: 2px"
@@ -110,6 +111,7 @@
                         {{ filters.archived ? "Active Cases" : "Archived" }}
                       </button>
                       <button
+                        v-if="!this.user.is_student"
                         type="button"
                         style="margin-left: 2px"
                         class="btn btn-primary btn-sm mr-md-2 mobile-margin-top"
@@ -346,6 +348,7 @@
                               >Alert</router-link
                             > -->
                             <button
+                              v-if="this.user.is_admin"
                               @click="
                                 toggleArchiveStatus(petition, petitionIndex)
                               "

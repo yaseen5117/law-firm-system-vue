@@ -12,7 +12,10 @@
       <div class="container" v-if="this.user">
         <div class="row gy-4">
           <div
-            v-if="this.user.is_admin || this.user.is_lawyer"
+            v-if="
+              this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            "
+            :style="this.user.is_student ? 'pointer-events:none' : ''"
             @click="gotoLink('petitions-calendar')"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="100"
@@ -75,7 +78,10 @@
 
           <div
             @click="gotoLink('opinions')"
-            v-if="this.user.is_admin || this.user.is_lawyer"
+            v-if="
+              this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            "
+            :style="this.user.is_student ? 'pointer-events:none' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
           >
             <div class="icon-box iconbox-pink border">
@@ -113,7 +119,9 @@
 
           <div
             @click="gotoLink('contract-and-agreement')"
-            v-if="this.user.is_admin || this.user.is_lawyer"
+            v-if="
+              this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            "
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="100"
           >
@@ -154,7 +162,9 @@
           <!-- pleading link -->
           <div
             @click="gotoLink('sample-pleading')"
-            v-if="this.user.is_admin || this.user.is_lawyer"
+            v-if="
+              this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            "
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="200"
           >
@@ -188,7 +198,9 @@
 
           <div
             @click="gotoLink('petition-general-case-law')"
-            v-if="this.user.is_admin || this.user.is_lawyer"
+            v-if="
+              this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            "
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="200"
           >
@@ -226,7 +238,8 @@
 
           <div
             @click="gotoLink('invoices')"
-            v-if="this.user"
+            v-if="this.user.is_admin || this.user.is_student"
+            :style="this.user.is_student ? 'pointer-events:none' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
           >
             <div class="icon-box iconbox-teal border">
@@ -254,7 +267,10 @@
           </div>
 
           <div
-            v-if="this.user.is_admin || this.user.is_lawyer"
+            v-if="
+              this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            "
+            :style="this.user.is_student ? 'pointer-events:none' : ''"
             class="col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="100"
           >
@@ -288,7 +304,10 @@
 
           <div
             @click="gotoLink('links')"
-            v-if="this.user.is_admin || this.user.is_lawyer"
+            v-if="
+              this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            "
+            :style="this.user.is_student ? 'pointer-events:none' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="200"
           >
@@ -320,7 +339,10 @@
           <!-- New Tabs Added -->
           <div
             @click="gotoLink('limitation-calculator')"
-            v-if="this.user.is_admin || this.user.is_lawyer"
+            v-if="
+              this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            "
+            :style="this.user.is_student ? 'pointer-events:none' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="200"
           >
@@ -355,7 +377,10 @@
 
           <div
             @click="gotoLink('#transaction-calculator')"
-            v-if="this.user.is_admin || this.user.is_lawyer"
+            v-if="
+              this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            "
+            :style="this.user.is_student ? 'pointer-events:none' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="200"
           >
@@ -390,7 +415,10 @@
 
           <div
             @click="gotoLink('#service-rules-library')"
-            v-if="this.user.is_admin || this.user.is_lawyer"
+            v-if="
+              this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            "
+            :style="this.user.is_student ? 'pointer-events:none' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="200"
           >
@@ -422,7 +450,10 @@
           </div>
 
           <div
-            v-if="this.user.is_admin || this.user.is_lawyer"
+            v-if="
+              this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            "
+            :style="this.user.is_student ? 'pointer-events:none' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="200"
           >
