@@ -544,10 +544,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .disabled-dashboard-menu{
   pointer-events:none; 
-  opacity: 40%;
+  opacity: 50%;
   cursor: no-drop !important;
 }
 </style>
