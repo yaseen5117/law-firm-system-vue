@@ -15,7 +15,7 @@
             v-if="
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
-            :style="this.user.is_student ? 'pointer-events:none' : ''"
+            :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
             @click="gotoLink('petitions-calendar')"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="100"
@@ -81,7 +81,7 @@
             v-if="
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
-            :style="this.user.is_student ? 'pointer-events:none' : ''"
+            :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
           >
             <div class="icon-box iconbox-pink border">
@@ -239,7 +239,7 @@
           <div
             @click="gotoLink('invoices')"
             v-if="this.user.is_admin || this.user.is_student"
-            :style="this.user.is_student ? 'pointer-events:none' : ''"
+            :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
           >
             <div class="icon-box iconbox-teal border">
@@ -270,7 +270,7 @@
             v-if="
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
-            :style="this.user.is_student ? 'pointer-events:none' : ''"
+            :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
             class="col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="100"
           >
@@ -307,7 +307,7 @@
             v-if="
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
-            :style="this.user.is_student ? 'pointer-events:none' : ''"
+            :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="200"
           >
@@ -342,7 +342,7 @@
             v-if="
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
-            :style="this.user.is_student ? 'pointer-events:none' : ''"
+            :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="200"
           >
@@ -380,7 +380,7 @@
             v-if="
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
-            :style="this.user.is_student ? 'pointer-events:none' : ''"
+            :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="200"
           >
@@ -418,7 +418,7 @@
             v-if="
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
-            :style="this.user.is_student ? 'pointer-events:none' : ''"
+            :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="200"
           >
@@ -453,7 +453,7 @@
             v-if="
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
-            :style="this.user.is_student ? 'pointer-events:none' : ''"
+            :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="200"
           >
@@ -544,4 +544,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.disabled-dashboard-menu{
+  pointer-events:none; 
+  opacity: 40%;
+  cursor: no-drop !important;
+}
+</style>
