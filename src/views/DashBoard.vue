@@ -547,7 +547,7 @@ export default {
 <style>
 .disabled-dashboard-menu{
   pointer-events:none; 
-  opacity: 50%;
+  opacity: 0.4;
   cursor: no-drop !important;
 }
 </style>
