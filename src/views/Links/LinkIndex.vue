@@ -24,7 +24,9 @@
                         <th>Url</th>
                         <th>Description</th>
                         <th>Display Order</th>
-                        <th class="text-end">Actions</th>
+                        <th class="text-end" v-if="this.user.is_admin">
+                          Actions
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -40,7 +42,7 @@
                         </td>
                         <td>{{ link.description }}</td>
                         <td>{{ link.display_order }}</td>
-                        <td class="text-end">
+                        <td class="text-end" v-if="this.user.is_admin">
                           <router-link
                             class="btn btn-sm btn-success action-btn"
                             :to="{
@@ -94,8 +96,10 @@ import PageHeader from "../shared/PageHeader.vue";
 import Editor from "primevue/editor";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import { mapState } from "vuex";
 
 export default {
+  computed: mapState(["user"]),
   components: {
     PageHeader,
     Editor,

@@ -29,6 +29,14 @@
             >
               {{ createMeetingBtnText }}
             </button>
+            <router-link
+              v-if="isStatute"
+              type="button"
+              class="btn btn-success btn-sm mr-left"
+              to="statutes"
+            >
+              Add/Edit Statutes
+            </router-link>
           </h4>
 
           <template v-if="!hideBreadCrumbs">
@@ -110,6 +118,7 @@ export default {
     "createMeetingBtnText",
     "showLCLink",
     "isNotHeading",
+    "isStatute",
   ],
   data() {
     return {
@@ -148,4 +157,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.mr-left {
+  margin-left: 1px;
+}
+</style>

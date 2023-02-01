@@ -6,7 +6,7 @@
         <form @submit.prevent="submitForm($event)">
           <div class="form-group row">
             <div class="col-lg-4 col-md-6 col-sm-12">
-              <label for=""> Statute </label>
+              <label for=""> Statute<span class="text-danger">*</span></label>
               <Dropdown
                 v-model="sectionData.statute_id"
                 :options="statutes"
@@ -16,7 +16,14 @@
                 :filter="true"
                 appendTo="self"
                 filterPlaceholder="Find by Title"
+                @blur="v$.sectionData.statute_id.$touch"
+                v-bind:class="{
+                  'error-boarder': v$.sectionData.statute_id.$error,
+                }"
               />
+              <span v-if="v$.sectionData.statute_id.$error" class="errorMessage"
+                >Statute field is required</span
+              >
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
               <label for="">Title<span class="text-danger">*</span></label>
@@ -305,6 +312,7 @@ export default {
           // ),
           required,
         },
+        statute_id: { required },
         fir_no: { required },
 
         // arrest_info: {
@@ -359,7 +367,7 @@ export default {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
-      let url = this.base_url + "/api/get_statutes";
+      let url = this.base_url + "/api/statutes";
       axios
         .get(url, { headers })
         .then((response) => {

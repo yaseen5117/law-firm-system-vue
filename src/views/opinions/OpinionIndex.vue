@@ -86,7 +86,7 @@
                     <th>Reference No.</th>
                     <th>Subject</th>
                     <th>Date Of Issuance</th>
-                    <th width="10%">Actions</th>
+                    <th width="10%" v-if="this.user.is_admin">Actions</th>
                   </thead>
                   <tbody>
                     <tr
@@ -146,7 +146,7 @@
                           opinion.issuance_date
                         }}</span>
                       </td>
-                      <td width="15%">
+                      <td width="15%" v-if="this.user.is_admin">
                         <a
                           class="btn btn-sm btn-primary action-btn"
                           v-show="!opinion.editMode"
@@ -205,7 +205,7 @@
                         </a>
                       </td>
                     </tr>
-                    <tr>
+                    <tr v-if="this.user.is_admin">
                       <td>
                         <Dropdown
                           v-model="new_opinion.client_id"
@@ -273,10 +273,11 @@ import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
 import NavComponents from "../Cases/NavComponents.vue";
 import useVuelidate from "@vuelidate/core";
+import { mapState } from "vuex";
 
 export default {
   components: { PageHeader, NavComponents },
-
+  computed: mapState(["user"]),
   data() {
     return {
       page_title: "Opinions",

@@ -16,7 +16,11 @@
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
             :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
-            @click="gotoLink('petitions-calendar')"
+            v-on="
+              this.user.is_student
+                ? { click: () => studentModal() }
+                : { click: () => gotoLink('petitions-calendar') }
+            "
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="100"
           >
@@ -38,7 +42,14 @@
                 <i class="bx bx-calendar"></i>
               </div>
               <h4>
-                <router-link to="petitions-calendar">Calendar</router-link>
+                <a
+                  v-on="
+                    this.user.is_student
+                      ? { click: () => studentModal() }
+                      : { click: () => gotoLink('petitions-calendar') }
+                  "
+                  >Calendar</a
+                >
               </h4>
               <p>
                 Contains all Details of Calender. Click to Open all Details.
@@ -77,7 +88,11 @@
           </div>
 
           <div
-            @click="gotoLink('opinions')"
+            v-on="
+              this.user.is_student
+                ? { click: () => studentModal() }
+                : { click: () => gotoLink('opinions') }
+            "
             v-if="
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
@@ -102,14 +117,15 @@
                 <i class="bx bx-tachometer"></i>
               </div>
               <h4>
-                <router-link
-                  class="nav-link"
-                  :to="{
-                    name: 'opinions',
-                  }"
+                <a
+                  v-on="
+                    this.user.is_student
+                      ? { click: () => studentModal() }
+                      : { click: () => gotoLink('opinions') }
+                  "
                 >
                   Opinions
-                </router-link>
+                </a>
               </h4>
               <p>
                 Contains all Details of Opinions. Click to Open all Details.
@@ -237,7 +253,11 @@
           </div>
 
           <div
-            @click="gotoLink('invoices')"
+            v-on="
+              this.user.is_student
+                ? { click: () => studentModal() }
+                : { click: () => gotoLink('invoices') }
+            "
             v-if="this.user.is_admin || this.user.is_student"
             :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
@@ -259,7 +279,16 @@
                 </svg>
                 <i class="fa fa-money"></i>
               </div>
-              <h4><router-link to="invoices">Accounts</router-link></h4>
+              <h4>
+                <a
+                  v-on="
+                    this.user.is_student
+                      ? { click: () => studentModal() }
+                      : { click: () => gotoLink('invoices') }
+                  "
+                  >Accounts</a
+                >
+              </h4>
               <p>
                 Contains all Details of Accounts. Click to Open all Details.
               </p>
@@ -275,7 +304,11 @@
             data-aos-delay="100"
           >
             <div
-              @click="gotoLink('online-meeting')"
+              v-on="
+                this.user.is_student
+                  ? { click: () => studentModal() }
+                  : { click: () => gotoLink('online-meeting') }
+              "
               class="icon-box iconbox-blue border cursor-pointer"
             >
               <div class="icon">
@@ -294,7 +327,16 @@
                 </svg>
                 <i class="fa fa-users"></i>
               </div>
-              <h4><router-link to="online-meeting">Video Call</router-link></h4>
+              <h4>
+                <a
+                  v-on="
+                    this.user.is_student
+                      ? { click: () => studentModal() }
+                      : { click: () => gotoLink('online-meeting') }
+                  "
+                  >Video Call</a
+                >
+              </h4>
               <p>
                 Contains all Details of Client Consultation. Click to Open all
                 Details.
@@ -303,7 +345,11 @@
           </div>
 
           <div
-            @click="gotoLink('links')"
+            v-on="
+              this.user.is_student
+                ? { click: () => studentModal() }
+                : { click: () => gotoLink('links') }
+            "
             v-if="
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
@@ -329,7 +375,16 @@
 
                 <i class="fa fa-link"></i>
               </div>
-              <h4><router-link to="links">Links</router-link></h4>
+              <h4>
+                <a
+                  v-on="
+                    this.user.is_student
+                      ? { click: () => studentModal() }
+                      : { click: () => gotoLink('links') }
+                  "
+                  >Links</a
+                >
+              </h4>
               <p>
                 Contains all Details of Links section. Click to Open all
                 Details.
@@ -338,7 +393,11 @@
           </div>
           <!-- New Tabs Added -->
           <div
-            @click="gotoLink('limitation-calculator')"
+            v-on="
+              this.user.is_student
+                ? { click: () => studentModal() }
+                : { click: () => gotoLink('limitation-calculator') }
+            "
             v-if="
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
@@ -365,9 +424,15 @@
                 <i class="fa fa-calculator"></i>
               </div>
               <h4>
-                <router-link to="limitation-calculator">
+                <a
+                  v-on="
+                    this.user.is_student
+                      ? { click: () => studentModal() }
+                      : { click: () => gotoLink('limitation-calculator') }
+                  "
+                >
                   Limitation Calculator
-                </router-link>
+                </a>
               </h4>
               <p>
                 A tool to help you calculate the deadline for filing your case.
@@ -376,7 +441,11 @@
           </div>
 
           <div
-            @click="gotoLink('#transaction-calculator')"
+            v-on="
+              this.user.is_student
+                ? { click: () => studentModal() }
+                : { click: () => gotoLink('#transaction-calculator') }
+            "
             v-if="
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
@@ -402,8 +471,13 @@
                 <i class="fa fa-calculator"></i>
               </div>
               <h4>
-                <router-link to="#transaction-calculator"
-                  >Transaction Calculator (Coming Soon!)</router-link
+                <a
+                  v-on="
+                    this.user.is_student
+                      ? { click: () => studentModal() }
+                      : { click: () => gotoLink('#transaction-calculator') }
+                  "
+                  >Transaction Calculator (Coming Soon!)</a
                 >
               </h4>
               <p>
@@ -414,7 +488,11 @@
           </div>
 
           <div
-            @click="gotoLink('#service-rules-library')"
+            v-on="
+              this.user.is_student
+                ? { click: () => studentModal() }
+                : { click: () => gotoLink('#service-rules-library') }
+            "
             v-if="
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
@@ -441,8 +519,13 @@
                 <i class="fa fa-book"></i>
               </div>
               <h4>
-                <router-link to="#service-rules-library"
-                  >Service Rules Library (Coming Soon!)</router-link
+                <a
+                  v-on="
+                    this.user.is_student
+                      ? { click: () => studentModal() }
+                      : { click: () => gotoLink('#service-rules-library') }
+                  "
+                  >Service Rules Library (Coming Soon!)</a
                 >
               </h4>
               <p>An encyclopedia of Service Rules.</p>
@@ -452,6 +535,11 @@
           <div
             v-if="
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            "
+            v-on="
+              this.user.is_student
+                ? { click: () => studentModal() }
+                : { click: () => gotoLink('#') }
             "
             :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
@@ -474,7 +562,16 @@
                 </svg>
                 <i class="bx bx-file"></i>
               </div>
-              <h4><router-link to="#">Others</router-link></h4>
+              <h4>
+                <a
+                  v-on="
+                    this.user.is_student
+                      ? { click: () => studentModal() }
+                      : { click: () => gotoLink('#') }
+                  "
+                  >Others</a
+                >
+              </h4>
               <p>
                 Contains all Details of Others sections. Click to Open all
                 Details.
@@ -482,9 +579,16 @@
             </div>
           </div>
           <div
-            @click="gotoLink('fir-sections')"
+            v-on="
+              this.user.is_student
+                ? { click: () => studentModal() }
+                : { click: () => gotoLink('fir-sections') }
+            "
+            :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
             v-if="
-              (this.user.is_admin || this.user.is_lawyer) &&
+              (this.user.is_admin ||
+                this.user.is_lawyer ||
+                this.user.is_student) &&
               this.user.company_id == 1
             "
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
@@ -508,7 +612,14 @@
                 <i class="fa fa-list-alt"></i>
               </div>
               <h4>
-                <router-link to="/fir-sections">FIR Reader</router-link>
+                <a
+                  v-on="
+                    this.user.is_student
+                      ? { click: () => studentModal() }
+                      : { click: () => gotoLink('fir-sections') }
+                  "
+                  >FIR Reader</a
+                >
               </h4>
               <p>
                 Contains all Details of FIR Reader. Click to Open all Details.
@@ -521,6 +632,23 @@
     <!-- End Services Section -->
     <!-- End Services Section -->
   </main>
+  <Dialog
+    :dismissableMask="true"
+    :modal="true"
+    v-model:visible="displaymodal"
+    :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+    :style="{ width: '60vw' }"
+  >
+    <template #header>
+      <h4><i class="fa fa-ban fa-2xl forbidden-icon" /> Forbidden</h4>
+    </template>
+    <div class="confirmation-content">
+      <span class="forbidden-text"
+        >This module is not available in the Student Version. Please contact us
+        if you wish to access this module.</span
+      >
+    </div></Dialog
+  >
   <!-- End #main -->
 </template>
 
@@ -532,9 +660,17 @@ import { mapState } from "vuex";
 export default {
   name: "DashBoard",
   computed: mapState(["user", "globalGeneralSetting"]),
+  data() {
+    return {
+      displaymodal: false,
+    };
+  },
   methods: {
     gotoLink(path) {
       this.$router.push({ path: path });
+    },
+    studentModal() {
+      this.displaymodal = true;
     },
   },
   mounted() {
@@ -544,10 +680,15 @@ export default {
 };
 </script>
 
-<style>
-.disabled-dashboard-menu{
-  pointer-events:none; 
-  opacity: 0.4;
-  cursor: no-drop !important;
+<style scoped>
+.forbidden-icon {
+  color: red;
+}
+.forbidden-text {
+  font-size: 17px;
+}
+.disabled-dashboard-menu {
+  opacity: 0.6;
+  cursor: pointer;
 }
 </style>

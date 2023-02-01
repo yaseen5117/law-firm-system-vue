@@ -9,6 +9,7 @@
         :route_object="route_obj"
         :header_button="header_button"
         :header_button_text="header_button_text"
+        :isStatute="true"
       />
       <!-- ======= Services Section ======= -->
       <section id="services" class="services section-bg mt-3">
@@ -106,6 +107,7 @@
                           View Detail
                         </button>
                         <router-link
+                          v-if="this.user.is_admin"
                           class="btn btn-sm btn-success action-btn"
                           :to="{
                             name: 'edit-fir-section',
@@ -119,6 +121,7 @@
                         </router-link>
 
                         <a
+                          v-if="this.user.is_admin"
                           class="btn btn-sm btn-danger action-btn"
                           @click="
                             deleteFirSection($event, fir_section.id, row_index)
@@ -165,7 +168,10 @@ import PageHeader from "../shared/PageHeader";
 import moment from "moment";
 import SingleSectionDetailModal from "./SingleSectionDetailModal.vue";
 
+import { mapState } from "vuex";
+
 export default {
+  computed: mapState(["user"]),
   components: {
     PageHeader,
     SingleSectionDetailModal,
@@ -211,7 +217,7 @@ export default {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
-      let url = this.base_url + "/api/get_statutes";
+      let url = this.base_url + "/api/statutes";
       axios
         .get(url, { headers })
         .then((response) => {

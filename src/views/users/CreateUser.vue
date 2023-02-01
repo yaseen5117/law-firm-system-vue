@@ -10,7 +10,7 @@
               <div class="form-group">
                 <label>Company <span style="color: red">*</span></label>
                 <Dropdown
-                  v-model="user.company_id"
+                  v-model="updatedOrNewUser.company_id"
                   :options="companies"
                   class="text-capitalize"
                   optionLabel="name"
@@ -20,11 +20,13 @@
                   appendTo="self"
                   filterPlaceholder="Find by Company Name"
                   v-bind:class="{
-                    'error-boarder': v$.user.company_id.$error,
+                    'error-boarder': v$.updatedOrNewUser.company_id.$error,
                   }"
-                  @blur="v$.user.company_id.$touch"
+                  @blur="v$.updatedOrNewUser.company_id.$touch"
                 />
-                <span v-if="v$.user.company_id.$error" class="errorMessage"
+                <span
+                  v-if="v$.updatedOrNewUser.company_id.$error"
+                  class="errorMessage"
                   >Company field is required.</span
                 >
               </div>
@@ -39,13 +41,15 @@
                     <input
                       autofocus
                       class="form-control"
-                      v-model="user.name"
+                      v-model="updatedOrNewUser.name"
                       v-bind:class="{
-                        'error-boarder': v$.user.name.$error,
+                        'error-boarder': v$.updatedOrNewUser.name.$error,
                       }"
-                      @blur="v$.user.name.$touch"
+                      @blur="v$.updatedOrNewUser.name.$touch"
                     />
-                    <span v-if="v$.user.name.$error" class="errorMessage"
+                    <span
+                      v-if="v$.updatedOrNewUser.name.$error"
+                      class="errorMessage"
                       >Name field is required.</span
                     >
                   </div>
@@ -54,7 +58,7 @@
                     <InputMask
                       type="text"
                       class="form-control"
-                      v-model="user.cnic"
+                      v-model="updatedOrNewUser.cnic"
                       mask="99999-9999999-9"
                     />
                   </div>
@@ -64,14 +68,16 @@
                     <input
                       type="email"
                       class="form-control"
-                      v-model="user.email"
+                      v-model="updatedOrNewUser.email"
                       v-bind:class="{
-                        'error-boarder': v$.user.email.$error,
+                        'error-boarder': v$.updatedOrNewUser.email.$error,
                         'is-invalid': error_email,
                       }"
-                      @blur="v$.user.email.$touch"
+                      @blur="v$.updatedOrNewUser.email.$touch"
                     />
-                    <span v-if="v$.user.email.$error" class="errorMessage"
+                    <span
+                      v-if="v$.updatedOrNewUser.email.$error"
+                      class="errorMessage"
                       >Email field is required.</span
                     >
                     <small class="text-danger">{{ error_email }} </small>
@@ -81,7 +87,7 @@
                     <InputMask
                       class="form-control"
                       mask="9999-9999999"
-                      v-model="user.phone"
+                      v-model="updatedOrNewUser.phone"
                     />
                   </div>
                 </div>
@@ -90,21 +96,23 @@
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label
-                      >Password<span v-show="!user.id" style="color: red"
+                      >Password<span
+                        v-show="!updatedOrNewUser.id"
+                        style="color: red"
                         >*</span
                       ></label
                     >
                     <input
                       type="text"
                       class="form-control"
-                      v-model="user.password"
+                      v-model="updatedOrNewUser.password"
                     />
                     <small class="text-danger">{{ error_password }} </small>
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label
                       >Confirm Password<span
-                        v-show="!user.id"
+                        v-show="!updatedOrNewUser.id"
                         style="color: red"
                         >*</span
                       ></label
@@ -112,14 +120,15 @@
                     <input
                       type="text"
                       v-bind:class="{
-                        'error-boarder': v$.user.confirm_password.$error,
+                        'error-boarder':
+                          v$.updatedOrNewUser.confirm_password.$error,
                       }"
-                      @blur="v$.user.confirm_password.$touch"
+                      @blur="v$.updatedOrNewUser.confirm_password.$touch"
                       class="form-control"
-                      v-model="user.confirm_password"
+                      v-model="updatedOrNewUser.confirm_password"
                     />
                     <span
-                      v-if="v$.user.confirm_password.$error"
+                      v-if="v$.updatedOrNewUser.confirm_password.$error"
                       class="errorMessage"
                       >Password and Confirm Password should be same.</span
                     >
@@ -128,13 +137,11 @@
               </div>
               <div class="form-group">
                 <div class="row">
-                  <div
-                    class="col-lg-6 col-md-6 col-sm-12"
-                    v-if="!user.is_client"
-                  >
+                  <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Role <span style="color: red">*</span></label>
                     <Dropdown
-                      v-model="user.role_id"
+                      :disabled="!this.user.is_admin"
+                      v-model="updatedOrNewUser.role_id"
                       :options="roles"
                       class="text-capitalize"
                       optionLabel="name"
@@ -144,18 +151,23 @@
                       appendTo="self"
                       filterPlaceholder="Find by Role Title"
                       v-bind:class="{
-                        'error-boarder': v$.user.role_id.$error,
+                        'error-boarder': v$.updatedOrNewUser.role_id.$error,
                       }"
-                      @blur="v$.user.role_id.$touch"
+                      @blur="v$.updatedOrNewUser.role_id.$touch"
                     />
-                    <span v-if="v$.user.role_id.$error" class="errorMessage"
+                    <span
+                      v-if="v$.updatedOrNewUser.role_id.$error"
+                      class="errorMessage"
                       >Role field is required.</span
                     >
                   </div>
 
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Company Name</label>
-                    <input class="form-control" v-model="user.company_name" />
+                    <input
+                      class="form-control"
+                      v-model="updatedOrNewUser.company_name"
+                    />
                   </div>
                 </div>
               </div>
@@ -164,7 +176,10 @@
                 <div class="row">
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <label>Address</label>
-                    <input class="form-control" v-model="user.address" />
+                    <input
+                      class="form-control"
+                      v-model="updatedOrNewUser.address"
+                    />
                   </div>
                 </div>
               </div>
@@ -179,17 +194,26 @@
                   </div>  -->
                   <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>City</label>
-                    <input class="form-control" v-model="user.city" />
+                    <input
+                      class="form-control"
+                      v-model="updatedOrNewUser.city"
+                    />
                   </div>
 
                   <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Province</label>
-                    <input class="form-control" v-model="user.province" />
+                    <input
+                      class="form-control"
+                      v-model="updatedOrNewUser.province"
+                    />
                   </div>
 
                   <div class="col-lg-4 col-md-4 col-sm-12">
                     <label>Zip</label>
-                    <input class="form-control" v-model="user.zip" />
+                    <input
+                      class="form-control"
+                      v-model="updatedOrNewUser.zip"
+                    />
                   </div>
                 </div>
               </div>
@@ -221,13 +245,13 @@
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-12" v-show="profileImg">
                     <img
-                      v-if="user && user.attachment"
+                      v-if="updatedOrNewUser && updatedOrNewUser.attachment"
                       :src="
                         this.base_url +
                         '/storage/attachments/user/' +
-                        user.id +
+                        updatedOrNewUser.id +
                         '/' +
-                        user.attachment.file_name
+                        updatedOrNewUser.attachment.file_name
                       "
                       alt="avatar"
                       style="width: 75px; height: 70px"
@@ -242,7 +266,7 @@
                       class="form-group"
                       v-for="(
                         contact_person, contact_person_index
-                      ) in user.contact_persons"
+                      ) in updatedOrNewUser.contact_persons"
                       :key="contact_person"
                     >
                       <div class="row">
@@ -293,7 +317,7 @@
                               @click="
                                 removeContactPerson(
                                   $event,
-                                  user.contact_persons,
+                                  updatedOrNewUser.contact_persons,
                                   contact_person_index,
                                   contact_person.id
                                 )
@@ -320,20 +344,28 @@
                     </button> -->
                     <p
                       style="font-weight: bold; font-size: 14px; color: green"
-                      v-if="user && user.id && user.is_approved > 0"
+                      v-if="
+                        updatedOrNewUser &&
+                        updatedOrNewUser.id &&
+                        updatedOrNewUser.is_approved > 0
+                      "
                     >
                       (User approved at:
                       <span style="font-size: 15px">{{
-                        user.approved_at
+                        updatedOrNewUser.approved_at
                       }}</span>
                       by
                       <span style="font-size: 15px">{{
-                        user.approve_by.name
+                        updatedOrNewUser.approve_by.name
                       }}</span
                       >)
                     </p>
                     <ToggleButton
-                      v-if="user && user.id"
+                      v-if="
+                        updatedOrNewUser &&
+                        updatedOrNewUser.id &&
+                        this.user.is_admin
+                      "
                       v-tooltip.top="
                         blockOrApproved
                           ? 'Click To Approve this User'
@@ -351,7 +383,9 @@
                       "
                       class="w-full sm:w-10rem"
                       aria-label="do you confirm"
-                      @change="blockOrApprove(user, !blockOrApproved)"
+                      @change="
+                        blockOrApprove(updatedOrNewUser, !blockOrApproved)
+                      "
                     />
                   </div>
                 </div>
@@ -359,7 +393,7 @@
             </div>
             <div class="form-group">
               <label>
-                <input type="checkbox" v-model="user.send_email" />
+                <input type="checkbox" v-model="updatedOrNewUser.send_email" />
                 Send Details with Email</label
               >
             </div>
@@ -383,7 +417,10 @@ import useVuelidate from "@vuelidate/core";
 import { required, email, helpers, sameAs } from "@vuelidate/validators";
 import ToggleButton from "primevue/togglebutton";
 
+import { mapState } from "vuex";
+
 export default {
+  computed: mapState(["user"]),
   components: { PageHeader, ToggleButton },
   setup() {
     return {
@@ -397,7 +434,7 @@ export default {
         : "Add New User",
       btnTitle: this.$route.params.edit_user_id ? "Update" : "Save",
       base_url: process.env.VUE_APP_SERVICE_URL,
-      user: {
+      updatedOrNewUser: {
         password: this.$route.params.edit_user_id
           ? ""
           : this.generatePassword(),
@@ -423,11 +460,11 @@ export default {
   },
   validations() {
     return {
-      user: {
+      updatedOrNewUser: {
         name: { required },
         email: { required, email },
         confirm_password: {
-          sameAs: sameAs(this.user.password),
+          sameAs: sameAs(this.updatedOrNewUser.password),
         },
         contact_persons: [],
         role_id: { required },
@@ -443,16 +480,16 @@ export default {
     }
   },
   updated() {
-    document.title = this.user.name
-      ? this.user.name + " | " + this.page_title
+    document.title = this.updatedOrNewUser.name
+      ? this.updatedOrNewUser.name + " | " + this.page_title
       : this.page_title;
   },
   mounted() {
     document.getElementById("header");
   },
   methods: {
-    blockOrApprove(user, param) {
-      user.is_approved = param;
+    blockOrApprove(updatedOrNewUser, param) {
+      updatedOrNewUser.is_approved = param;
       this.fromApproveBlockBtn = false;
       this.submitForm();
     },
@@ -525,7 +562,7 @@ export default {
         email: "",
         phone: "",
       };
-      this.user.contact_persons.push(contact_person_single);
+      this.updatedOrNewUser.contact_persons.push(contact_person_single);
     },
     onChange(e) {
       this.files = e.target.files;
@@ -558,7 +595,7 @@ export default {
         };
 
         axios
-          .post(this.base_url + "/api/users", this.user, {
+          .post(this.base_url + "/api/users", this.updatedOrNewUser, {
             headers,
           })
           .then(
@@ -641,10 +678,12 @@ export default {
         axios
           .get(url, { headers })
           .then((response) => {
-            this.user = response.data.user;
-            this.user.role_id = response.data.user.roles[0].id;
+            this.updatedOrNewUser = response.data.user;
+            this.updatedOrNewUser.role_id = response.data.user.roles[0].id;
             (this.blockOrApproved =
-              this.user && this.user.is_approved ? false : true),
+              this.updatedOrNewUser && this.updatedOrNewUser.is_approved
+                ? false
+                : true),
               // this.previewImage =
               //   "localhost:8000/storage/attachments/user/" +
               //   response.data.user.id +
@@ -690,7 +729,7 @@ export default {
         .get(url, { headers })
         .then((response) => {
           this.companies = response.data.companies;
-          this.user.company_id = parseInt(this.company_id);
+          this.updatedOrNewUser.company_id = parseInt(this.company_id);
         })
         .catch((error) => {
           console.log(error);

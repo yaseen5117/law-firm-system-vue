@@ -149,7 +149,10 @@
                     >
                       <div class="pending_case_tag">
                         <span
-                          v-show="!petition.pendingTagEditMode"
+                          v-show="
+                            !petition.pendingTagEditMode &&
+                            !this.user.is_student
+                          "
                           @click="
                             petition.pendingTagEditMode = true;
                             this.pending_tag = petition.pending_tag;
@@ -161,7 +164,10 @@
 
                         <i
                           v-if="!petition.pending_tag"
-                          v-show="!petition.pendingTagEditMode"
+                          v-show="
+                            !petition.pendingTagEditMode &&
+                            !this.user.is_student
+                          "
                           @click="
                             petition.pendingTagEditMode = true;
                             this.pending_tag = null;

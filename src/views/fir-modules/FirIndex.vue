@@ -266,7 +266,7 @@ export default {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
-      let url = this.base_url + "/api/get_statutes";
+      let url = this.base_url + "/api/statutes";
       axios
         .get(url, { headers })
         .then((response) => {

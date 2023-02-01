@@ -95,7 +95,7 @@
               >FIR Reader</router-link
             >
           </li>
-          <li v-if="this.user && this.user.is_client">
+          <li v-if="this.user && (this.user.is_client || this.user.is_student)">
             <router-link
               class="nav-link"
               :to="{

@@ -254,7 +254,7 @@
               <table class="table pricing_table">
                 <tr>
                   <td></td>
-                  <td class="pricing_table_header_col">Free</td>
+                  <!-- <td class="pricing_table_header_col">Free</td> -->
                   <td class="pricing_table_header_col">Student</td>
                   <td class="pricing_table_header_col">Individual Lawyer</td>
                   <td class="pricing_table_header_col">
@@ -266,7 +266,7 @@
                   <td class="text-start" style="padding-left: 20px">
                     {{ plan.feature_name }}
                   </td>
-                  <td v-html="plan.free_plan"></td>
+                  <!-- <td v-html="plan.free_plan"></td> -->
                   <td v-html="plan.student_plan"></td>
                   <td v-html="plan.individual_plan"></td>
                   <td v-html="plan.lawfirm_plan"></td>

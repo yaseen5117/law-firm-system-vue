@@ -80,6 +80,7 @@ import FirIndex from "../views/fir-modules/FirIndex";
 import CreateUpdateFir from "../views/fir-modules/CreateUpdateFir";
 import FirSectionList from "../views/fir-modules/FirSectionList";
 import DisplayFirResult from "../views/fir-modules/DisplayFirResult";
+import StatuteIndex from "../views/fir-modules/StatuteIndex";
 
 const routes = [
   {
@@ -750,7 +751,14 @@ const routes = [
       auth: true,
     },
   },
-
+  {
+    path: "/statutes",
+    name: "statutes",
+    component: StatuteIndex,
+    meta: {
+      auth: true,
+    },
+  },
   //FIR Routes END
 ];
 
