@@ -645,7 +645,8 @@
     <div class="confirmation-content">
       <span class="forbidden-text"
         >This module is not available in the Student Version. Please contact us
-        if you wish to access this module.</span
+        at {{ this.globalGeneralSetting.site_phone }} if you wish to
+        access this module.</span
       >
     </div></Dialog
   >

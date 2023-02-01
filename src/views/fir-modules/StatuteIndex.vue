@@ -7,6 +7,32 @@
       <section id="services" class="services section-bg mt-3">
         <div class="container" data-aos="fade-up">
           <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <Transition name="fade">
+                <form class="row gy-2 gx-3 align-items-center mb-2">
+                  <div class="col-lg-3 col-md-3 col-sm-6">
+                    <input
+                      type="text"
+                      v-model="filters.title"
+                      class="form-control form-control-sm"
+                      placeholder="Title"
+                      aria-describedby="Title"
+                    />
+                  </div>
+
+                  <div class="col-lg-1 col-md-1 col-sm-12">
+                    <button
+                      type="button"
+                      class="btn btn-danger btn-sm"
+                      @click="reset()"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </form>
+              </Transition>
+            </div>
+            <hr />
             <div class="table-responsive">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <table class="table table-hover">
@@ -194,7 +220,7 @@ export default {
       };
       let url = this.base_url + "/api/statutes";
       axios
-        .get(url, { headers })
+        .get(url, { headers, params: this.filters })
         .then((response) => {
           this.isLoaded = true;
           this.statutes = response.data.statutes;
@@ -228,7 +254,7 @@ export default {
                   title: "Success",
                   text: "Saved Successfully!",
                 });
-                this.statutes.push(this.new_statute);
+                this.getStatutes();
                 this.saving = false;
                 this.new_statute = {};
                 setTimeout(() => {

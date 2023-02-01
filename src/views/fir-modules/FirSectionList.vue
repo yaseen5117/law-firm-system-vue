@@ -20,6 +20,7 @@
                 <form class="row gy-2 gx-3 align-items-center mb-2">
                   <div class="col-lg-3 col-md-3 col-sm-6">
                     <input
+                      v-on:keyup.enter="getFirSection()"
                       type="text"
                       v-model="filters.section"
                       class="form-control"
@@ -29,6 +30,7 @@
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-6">
                     <input
+                      v-on:keyup.enter="getFirSection()"
                       type="text"
                       v-model="filters.title"
                       class="form-control"
@@ -39,6 +41,7 @@
 
                   <div class="col-lg-3 col-md-3 col-sm-12">
                     <Dropdown
+                      @change="getFirSection()"
                       class="p-inputtext-sm"
                       v-model="filters.statute_id"
                       :options="statutes"
@@ -50,7 +53,14 @@
                       filterPlaceholder="Find by Title"
                     />
                   </div>
-                  <div class="col-lg-1 col-md-1 col-sm-12">
+                  <div class="col-lg-2 col-md-2 col-sm-12">
+                    <button
+                      type="button"
+                      class="btn btn-success btn-sm mr-right"
+                      @click="getFirSection()"
+                    >
+                      Search
+                    </button>
                     <button
                       type="button"
                       class="btn btn-danger btn-sm"
@@ -146,6 +156,38 @@
                 <div v-if="!isLoaded" class="col-md-12">
                   <p class="alert alert-warning">Loading....</p>
                 </div>
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <p
+                        v-show="
+                          isLoaded && fir_section_pagination_info.total > 0
+                        "
+                      >
+                        <small
+                          >Showing from
+                          {{ fir_section_pagination_info.from }} to
+                          {{ fir_section_pagination_info.to }} of
+                          {{ fir_section_pagination_info.total }}</small
+                        >
+                      </p>
+                    </div>
+                    <div class="col-md-6">
+                      <Paginator
+                        v-show="
+                          isLoaded && fir_section_pagination_info.total > 0
+                        "
+                        v-model:first="fir_section_pagination_info.from"
+                        v-model:rows="fir_section_pagination_info.per_page"
+                        :totalRecords="fir_section_pagination_info.total"
+                        @page="onPage($event)"
+                      ></Paginator>
+                    </div>
+                    <div class="col-md-12">
+                      <!-- loader here -->
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -193,6 +235,7 @@ export default {
       header_button_text: "New FIR Section",
       isLoaded: false,
       statutes: [],
+      fir_section_pagination_info: Array,
     };
   },
 
@@ -201,6 +244,12 @@ export default {
     this.getStatuses();
   },
   methods: {
+    onPage(event) {
+      var new_page_no = event.page + 1; //adding 1 because event.page returns index of page # clicked.
+
+      this.filters.page = new_page_no;
+      this.getFirSection();
+    },
     showSectionDetailModal(fir_section) {
       this.sectionDetailModal = true;
       this.sectionDetail = fir_section;
@@ -244,7 +293,8 @@ export default {
           params: this.filters,
         })
         .then((response) => {
-          this.fir_sections = response.data.fir_sections;
+          this.fir_sections = response.data.fir_sections.data;
+          this.fir_section_pagination_info = response.data.fir_sections;
           this.isLoaded = true;
         })
         .catch((error) => {
@@ -303,6 +353,7 @@ export default {
     },
     reset() {
       this.filters = {};
+      this.getFirSection();
     },
   },
   mounted() {
@@ -310,21 +361,25 @@ export default {
     document.title = "FIR Sections List";
     console.log("FIR Sections List Component Mounted");
   },
-  watch: {
-    filters: {
-      deep: true,
-      handler() {
-        if (!this.awaitingSearch) {
-          setTimeout(() => {
-            this.getFirSection();
-            this.awaitingSearch = false;
-          }, 3500); // 1 sec delay
-        }
-        this.awaitingSearch = true;
-      },
-    },
-  },
+  // watch: {
+  //   filters: {
+  //     deep: true,
+  //     handler() {
+  //       if (!this.awaitingSearch) {
+  //         setTimeout(() => {
+  //           this.getFirSection();
+  //           this.awaitingSearch = false;
+  //         }, 0);
+  //       }
+  //       this.awaitingSearch = true;
+  //     },
+  //   },
+  // },
 };
 </script>
 
-<style></style>
+<style scoped>
+.mr-right {
+  margin-right: 2px;
+}
+</style>
