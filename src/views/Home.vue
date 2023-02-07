@@ -63,7 +63,7 @@
             data-aos="zoom-in"
             data-aos-delay="150"
           >
-            <img src="assets/img/about-us.jpg" class="img-fluid" alt="" />
+            <img src="assets/img/aboutus.jpg" class="img-fluid" alt="" />
           </div>
           <div
             class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content"
