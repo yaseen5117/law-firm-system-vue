@@ -347,16 +347,21 @@
                       v-if="
                         updatedOrNewUser &&
                         updatedOrNewUser.id &&
-                        updatedOrNewUser.is_approved > 0
+                        updatedOrNewUser.is_approved > 0 &&
+                        updatedOrNewUser.approved_at
                       "
                     >
                       (User approved at:
                       <span style="font-size: 15px">{{
                         updatedOrNewUser.approved_at
+                          ? updatedOrNewUser.approved_at
+                          : ""
                       }}</span>
                       by
                       <span style="font-size: 15px">{{
-                        updatedOrNewUser.approve_by.name
+                        updatedOrNewUser.approve_by
+                          ? updatedOrNewUser.approve_by.name
+                          : ""
                       }}</span
                       >)
                     </p>
@@ -679,6 +684,7 @@ export default {
           .get(url, { headers })
           .then((response) => {
             this.updatedOrNewUser = response.data.user;
+            console.log("USER: ", this.updatedOrNewUser);
             this.updatedOrNewUser.role_id = response.data.user.roles[0].id;
             (this.blockOrApproved =
               this.updatedOrNewUser && this.updatedOrNewUser.is_approved
