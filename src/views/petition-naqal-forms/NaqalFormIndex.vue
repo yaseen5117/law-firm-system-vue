@@ -38,7 +38,7 @@
             </button>
 
             <router-link
-              v-if="this.user.is_admin"
+              v-if="this.user.is_admin || this.user.is_lawyer"
               class="btn btn-primary btn-sm"
               :to="{
                 name: 'petition-naqal-forms-save',
@@ -58,7 +58,7 @@
                   >{{ NaqalFormActive.naqal_form_date }}
                   <router-link
                     v-tooltip.top="'Edit'"
-                    v-if="this.user.is_admin"
+                    v-if="this.user.is_admin || this.user.is_lawyer"
                     class="btn btn-success btn-sm action-btn"
                     :to="{
                       name: 'petition-naqal-forms-edit',
@@ -71,7 +71,7 @@
                     Edit
                   </router-link>
                   <a
-                    v-if="this.user.is_admin"
+                    v-if="this.user.is_admin || this.user.is_lawyer"
                     class="btn btn-danger btn-sm action-btn"
                     style="margin-left: 2px"
                     @click="deletePetitionNaqalForm($event, NaqalFormActive.id)"
@@ -81,7 +81,7 @@
                   </a>
                 </p>
                 <file-upload
-                  v-if="this.user.is_admin"
+                  v-if="this.user.is_admin || this.user.is_lawyer"
                   @afterUpload="getNaqalForm"
                   type="App\Models\PetitionNaqalForm"
                   :attachmentable_id="NaqalFormActive.id"

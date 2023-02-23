@@ -38,7 +38,7 @@
             </button>
 
             <button
-              v-if="this.user.is_admin"
+              v-if="this.user.is_admin || this.user.is_lawyer"
               v-show="!showImgCard"
               @click="showImgCard = true"
               class="btn btn-success btn-sm mb-2"
@@ -56,11 +56,11 @@
             </button>
 
             <button
-              v-if="this.user.is_admin"
+              v-if="this.user.is_admin || this.user.is_lawyer"
               v-show="!editView"
               @click="
                 editView = true;
-                horizontalView: true;
+                horizontalView= true;
               "
               style="margin-right: 2px"
               class="btn btn-primary btn-sm mb-2"
@@ -71,7 +71,7 @@
               v-show="editView"
               @click="
                 editView = false;
-                horizontalView: false;
+                horizontalView= false;
               "
               style="margin-right: 2px"
               class="btn btn-success btn-sm mb-2"
@@ -515,6 +515,7 @@ export default {
                   text: "Updated Successfully!",
                 });
                 attachmentToUpdate.editMode = false;
+                this.getPetitionReplyDetails();
               }
             },
             (error) => {

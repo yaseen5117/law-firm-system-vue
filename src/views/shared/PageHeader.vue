@@ -7,7 +7,7 @@
           <h4 v-if="title && !isNotHeading">
             {{ title }}
             <router-link
-              v-if="header_button && this.user.is_admin"
+              v-if="header_button && (this.user.is_admin || this.user.is_lawyer)"
               class="btn btn-primary btn-sm"
               :to="route_object"
               >{{ header_button_text }}</router-link

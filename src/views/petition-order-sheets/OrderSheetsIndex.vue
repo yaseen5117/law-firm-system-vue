@@ -38,7 +38,7 @@
             </button>
 
             <router-link
-              v-if="this.user.is_admin"
+              v-if="this.user.is_admin || this.user.is_lawyer"
               style="margin-right: 2px"
               class="btn btn-primary btn-sm mobile-margin-top"
               :to="{
@@ -50,7 +50,7 @@
             </router-link>
             <router-link
               style="margin-right: 2px"
-              v-if="this.user.is_admin && orderSheetsActive"
+              v-if="(this.user.is_admin || this.user.is_lawyer) && orderSheetsActive"
               class="btn btn-success btn-sm mobile-margin-top"
               :to="{
                 name: 'petition-order-sheets-edit',

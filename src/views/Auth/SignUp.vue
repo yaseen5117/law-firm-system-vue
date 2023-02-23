@@ -22,24 +22,36 @@
                       }"
                       @blur="v$.user.name.$touch"
                     />
-                    <span v-if="v$.user.name.$error" class="errorMessage"
+                    <span
+                      v-if="v$.user.name.$error"
+                      class="errorMessage error-font-size"
                       >Name field is required.</span
                     >
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label>CNIC<span style="color: red">*</span></label>
-                    <InputMask
-                      class="form-control"
-                      v-model="user.cnic"
-                      mask="99999-9999999-9"
-                      placeholder="xxxxx-xxxxxxx-x"
+                    <label>Status <span style="color: red">*</span></label>
+                    <select
+                      class="form-control text-capitalize"
+                      v-model="user.role_name"
+                      @blur="v$.user.role_name.$touch"
                       v-bind:class="{
-                        'error-boarder': v$.user.cnic.$error,
+                        'error-boarder': v$.user.role_name.$error,
                       }"
-                      @blur="v$.user.cnic.$touch"
-                    />
-                    <span v-if="v$.user.cnic.$error" class="errorMessage"
-                      >CNIC field is required.</span
+                    >
+                      <option value="">--Select--</option>
+
+                      <option
+                        v-for="role in roles"
+                        :key="role.name"
+                        :value="role.name"
+                      >
+                        {{ role.name }}
+                      </option>
+                    </select>
+                    <span
+                      v-if="v$.user.role_name.$error"
+                      class="errorMessage error-font-size"
+                      >Role field is required.</span
                     >
                   </div>
                 </div>
@@ -61,10 +73,16 @@
                       }"
                       @blur="v$.user.email.$touch"
                     />
-                    <span v-if="v$.user.email.$error" class="errorMessage"
+                    <span
+                      v-if="v$.user.email.$error"
+                      class="errorMessage error-font-size"
                       >Email field is required.</span
                     >
-                    <small class="text-danger">{{ error_email }} </small>
+                    <small
+                      v-if="!v$.user.email.$error"
+                      class="text-danger error-font-size"
+                      >{{ error_email }}
+                    </small>
                   </div>
                   <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Phone</label>
@@ -90,7 +108,9 @@
                       class="form-control"
                       v-model="user.password"
                     />
-                    <span v-if="v$.user.password.$error" class="errorMessage"
+                    <span
+                      v-if="v$.user.password.$error"
+                      class="errorMessage error-font-size"
                       >Password field is required.</span
                     >
                   </div>
@@ -110,36 +130,8 @@
                     />
                     <span
                       v-if="v$.user.confirm_password.$error"
-                      class="errorMessage"
+                      class="errorMessage error-font-size"
                       >Password and Confirm Password should be same.</span
-                    >
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label>Status <span style="color: red">*</span></label>
-                    <select
-                      class="form-control text-capitalize"
-                      v-model="user.role_name"
-                      @blur="v$.user.role_name.$touch"
-                      v-bind:class="{
-                        'error-boarder': v$.user.role_name.$error,
-                      }"
-                    >
-                      <option value="">--Select--</option>
-
-                      <option
-                        v-for="role in roles"
-                        :key="role.name"
-                        :value="role.name"
-                      >
-                        {{ role.name }}
-                      </option>
-                    </select>
-                    <span v-if="v$.user.role_name.$error" class="errorMessage"
-                      >Role field is required.</span
                     >
                   </div>
                 </div>
@@ -163,13 +155,7 @@
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
 import useVuelidate from "@vuelidate/core";
-import {
-  required,
-  email,
-  sameAs,
-  minLength,
-  helpers,
-} from "@vuelidate/validators";
+import { required, email, sameAs } from "@vuelidate/validators";
 
 export default {
   components: { PageHeader },
@@ -188,7 +174,6 @@ export default {
         password: "",
         confirm_password: "",
         phone: "",
-        cnic: "",
         role_name: "",
       },
       msgAfterSignUp: "",
@@ -212,7 +197,6 @@ export default {
         confirm_password: {
           sameAs: sameAs(this.user.password),
         },
-        cnic: { required },
         role_name: { required },
       },
     };
@@ -231,6 +215,7 @@ export default {
       if (!this.v$.$error) {
         event.preventDefault();
         this.saving = true;
+        this.error_email = "";
 
         axios.post(this.base_url + "/api/signup", this.user).then(
           (response) => {
@@ -267,4 +252,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.error-font-size {
+  font-size: 13px;
+}
+</style>

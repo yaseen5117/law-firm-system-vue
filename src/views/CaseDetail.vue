@@ -22,11 +22,11 @@
                     @click="confirmToDelete($event)"
                     class="btn btn-sm btn-grey action-btn right_margin"
                     v-if="
-                      (petition &&
+                      petition &&
                         petition.pending_tag &&
                         pendingTag &&
-                        this.user.is_admin) ||
-                      this.user.is_lawyer
+                        (this.user.is_admin ||
+                      this.user.is_lawyer)
                     "
                     v-tooltip.top="'Click To Change/Remove'"
                   >
@@ -35,11 +35,10 @@
 
                   <button
                     v-if="
-                      (!insertPendingTag &&
+                      !insertPendingTag &&
                         !petition.pending_tag &&
-                        this.user.is_admin &&
-                        this.user.is_admin) ||
-                      this.user.is_lawyer
+                        (this.user.is_admin ||
+                        this.user.is_lawyer)
                     "
                     @click="openInsertField"
                     class="btn btn-sm btn-success action-btn right_margin"
@@ -49,8 +48,8 @@
                   <button
                     class="btn"
                     v-if="
-                      (insertPendingTag && this.user.is_admin) ||
-                      this.user.is_lawyer
+                      insertPendingTag && (this.user.is_admin ||
+                      this.user.is_lawyer)
                     "
                   >
                     <div class="p-inputgroup">
@@ -75,7 +74,7 @@
                     </div>
                   </button>
                   <router-link
-                    v-if="this.user.is_admin"
+                    v-if="this.user.is_admin || this.user.is_lawyer"
                     class="btn btn-primary action-btn right_margin"
                     :to="{
                       name: 'edit-petition',
@@ -113,7 +112,7 @@
                   <th>Date</th>
                   <th>Annexure</th>
                   <th>Page</th>
-                  <th v-if="this.user.is_admin" width="10%">Actions</th>
+                  <th v-if="this.user.is_admin || this.user.is_lawyer" width="10%">Actions</th>
                 </thead>
                 <tbody>
                   <tr
@@ -183,7 +182,7 @@
                         petition_detail.page_info
                       }}</span>
                     </td>
-                    <td width="15%" v-if="this.user.is_admin">
+                    <td width="15%" v-if="this.user.is_admin || this.user.is_lawyer">
                       <a
                         class="btn btn-sm btn-primary action-btn left_margin"
                         v-show="!petition_detail.editMode"
@@ -234,7 +233,7 @@
                       </a>
                     </td>
                   </tr>
-                  <tr v-if="this.user.is_admin">
+                  <tr v-if="this.user.is_admin || this.user.is_lawyer">
                     <td></td>
                     <td>
                       <AutoComplete

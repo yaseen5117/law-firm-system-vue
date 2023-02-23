@@ -38,7 +38,7 @@
             </button>
 
             <router-link
-              v-if="this.user.is_admin"
+              v-if="this.user.is_admin || this.user.is_lawyer"
               class="btn btn-primary btn-sm"
               :to="{
                 name: 'petition-talbana-save',
@@ -57,7 +57,7 @@
                   >{{ TalbanaActive.talbana_date }}
                   <router-link
                     v-tooltip.top="'Edit'"
-                    v-if="this.user.is_admin"
+                    v-if="this.user.is_admin || this.user.is_lawyer"
                     class="btn btn-success btn-sm action-btn"
                     :to="{
                       name: 'petition-talbana-edit',
@@ -70,7 +70,7 @@
                     Edit
                   </router-link>
                   <a
-                    v-if="this.user.is_admin"
+                    v-if="this.user.is_admin || this.user.is_lawyer"
                     class="btn btn-danger btn-sm action-btn"
                     style="margin-left: 2px"
                     @click="deletePetitionTalbana($event, TalbanaActive.id)"
@@ -80,7 +80,7 @@
                   </a>
                 </p>
                 <file-upload
-                  v-if="this.user.is_admin"
+                  v-if="this.user.is_admin || this.user.is_lawyer"
                   @afterUpload="getTalbana"
                   type="App\Models\PetitionTalbana"
                   :attachmentable_id="TalbanaActive.id"

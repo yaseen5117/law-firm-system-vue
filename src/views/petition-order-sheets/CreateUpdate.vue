@@ -10,7 +10,7 @@
                 <div class="row">
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <file-upload
-                      v-if="this.user.is_admin"
+                      v-if="this.user.is_admin || this.user.is_lawyer"
                       @afterUpload="getEditableOrderSheet"
                       @disableOrderSheetBtn="saving = true"
                       type="App\Models\PetitonOrderSheet"

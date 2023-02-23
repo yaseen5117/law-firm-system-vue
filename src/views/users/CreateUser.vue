@@ -26,7 +26,7 @@
                 />
                 <span
                   v-if="v$.updatedOrNewUser.company_id.$error"
-                  class="errorMessage"
+                  class="errorMessage error-font-size"
                   >Company field is required.</span
                 >
               </div>
@@ -49,7 +49,7 @@
                     />
                     <span
                       v-if="v$.updatedOrNewUser.name.$error"
-                      class="errorMessage"
+                      class="errorMessage error-font-size"
                       >Name field is required.</span
                     >
                   </div>
@@ -77,10 +77,14 @@
                     />
                     <span
                       v-if="v$.updatedOrNewUser.email.$error"
-                      class="errorMessage"
+                      class="errorMessage error-font-size"
                       >Email field is required.</span
                     >
-                    <small class="text-danger">{{ error_email }} </small>
+                    <small
+                      v-if="!v$.updatedOrNewUser.email.$error"
+                      class="text-danger error-font-size"
+                      >{{ error_email }}
+                    </small>
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Phone</label>
@@ -106,8 +110,18 @@
                       type="text"
                       class="form-control"
                       v-model="updatedOrNewUser.password"
+                      @blur="v$.updatedOrNewUser.password.$touch"
                     />
-                    <small class="text-danger">{{ error_password }} </small>
+                    <span
+                      v-if="v$.updatedOrNewUser.password.$error"
+                      class="errorMessage error-font-size"
+                      >Password field is required.</span
+                    >
+                    <small
+                      v-if="!v$.updatedOrNewUser.password.$error"
+                      class="text-danger"
+                      >{{ error_password }}
+                    </small>
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label
@@ -129,7 +143,7 @@
                     />
                     <span
                       v-if="v$.updatedOrNewUser.confirm_password.$error"
-                      class="errorMessage"
+                      class="errorMessage error-font-size"
                       >Password and Confirm Password should be same.</span
                     >
                   </div>
@@ -157,7 +171,7 @@
                     />
                     <span
                       v-if="v$.updatedOrNewUser.role_id.$error"
-                      class="errorMessage"
+                      class="errorMessage error-font-size"
                       >Role field is required.</span
                     >
                   </div>
@@ -464,13 +478,28 @@ export default {
     };
   },
   validations() {
+    var confirmPassword;
+    var Password;
+    if (this.$route.params.edit_user_id) {
+      Password = {};
+      confirmPassword = {
+        sameAs: sameAs(this.updatedOrNewUser.password),
+      };
+    } else {
+      Password = {
+        required,
+      };
+      confirmPassword = {
+        required,
+        sameAs: sameAs(this.updatedOrNewUser.password),
+      };
+    }
     return {
       updatedOrNewUser: {
         name: { required },
         email: { required, email },
-        confirm_password: {
-          sameAs: sameAs(this.updatedOrNewUser.password),
-        },
+        password: Password,
+        confirm_password: confirmPassword,
         contact_persons: [],
         role_id: { required },
         company_id: this.$route.params.company_id ? { required } : "",
@@ -593,6 +622,7 @@ export default {
       if (!this.v$.$error) {
         event.preventDefault();
         this.error_email = "";
+        this.error_password = "";
         this.contact_person_email_error = "";
         this.saving = true;
         var headers = {
@@ -763,5 +793,8 @@ export default {
 }
 .pi-ban:before {
   color: white;
+}
+.error-font-size {
+  font-size: 13px;
 }
 </style>

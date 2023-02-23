@@ -15,9 +15,9 @@
                   <th>Date</th>
                   <th>Annexure</th>
                   <th>Page</th>
-                  <th width="10%" v-if="this.user.is_admin">Actions</th>
+                  <th width="10%" v-if="this.user.is_admin || this.user.is_lawyer">Actions</th>
                   <th
-                    v-if="this.user.is_admin"
+                    v-if="this.user.is_admin || this.user.is_lawyer"
                     :class="ShowOnOralArgument ? '' : 'display'"
                   >
                     Image Upload
@@ -91,7 +91,7 @@
                         index_data_single.page_info
                       }}</span>
                     </td>
-                    <td width="15%" v-if="this.user.is_admin">
+                    <td width="15%" v-if="this.user.is_admin || this.user.is_lawyer">
                       <a
                         class="btn btn-sm btn-primary action-btn"
                         v-show="!index_data_single.editMode"
@@ -146,7 +146,7 @@
                       </a>
                     </td>
                     <td
-                      v-if="this.user.is_admin"
+                      v-if="this.user.is_admin || this.user.is_lawyer"
                       :class="ShowOnOralArgument ? '' : 'display'"
                     >
                       <file-upload
@@ -159,7 +159,7 @@
                       />
                     </td>
                   </tr>
-                  <tr v-if="this.user.is_admin">
+                  <tr v-if="this.user.is_admin || this.user.is_lawyer">
                     <td>
                       <input
                         class="form-control"

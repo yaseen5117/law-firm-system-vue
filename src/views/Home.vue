@@ -41,7 +41,7 @@
           <iframe
             width="560"
             height="315"
-            src="https://www.youtube-nocookie.com/embed/z3gch7kq7RM?autoplay=1&mute=1"
+            src="https://www.youtube-nocookie.com/embed/z3gch7kq7RM?autoplay=1&loop=1&mute=1"
             title="YouTube video player"
             frameborder="0"
             allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

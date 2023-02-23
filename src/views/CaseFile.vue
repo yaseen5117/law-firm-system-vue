@@ -106,7 +106,7 @@
                             ? 'Show Active Cases'
                             : 'Show Archived Cases'
                         "
-                        @click="filters.archived = !filters.archived"
+                        @click="filters.archived = !filters.archived;searchPetition()"
                       >
                         {{ filters.archived ? "Active Cases" : "Archived" }}
                       </button>
@@ -332,7 +332,7 @@
                               >View
                             </router-link>
                             <router-link
-                              v-if="this.user.is_admin"
+                              v-if="this.user.is_admin || this.user.is_lawyer"
                               style="margin-right: 2px"
                               :to="{
                                 name: 'edit-petition',
@@ -354,7 +354,7 @@
                               >Alert</router-link
                             > -->
                             <button
-                              v-if="this.user.is_admin"
+                              v-if="this.user.is_admin || this.user.is_lawyer"
                               @click="
                                 toggleArchiveStatus(petition, petitionIndex)
                               "
@@ -369,7 +369,7 @@
                               {{ !petition.archived ? "Archive" : "Unarchive" }}
                             </button>
                             <button
-                              v-if="this.user.is_admin"
+                              v-if="this.user.is_admin || this.user.is_lawyer"
                               @click="
                                 deletePetition(
                                   $event,

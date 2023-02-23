@@ -13,7 +13,7 @@
                 <thead>
                   <th>Title</th>
 
-                  <th width="10%" v-if="this.user.is_admin">Actions</th>
+                  <th width="10%" v-if="this.user.is_admin || this.user.is_lawyer">Actions</th>
                 </thead>
                 <tbody>
                   <tr
@@ -47,7 +47,7 @@
                       </router-link>
                     </td>
 
-                    <td width="15%" v-if="this.user.is_admin">
+                    <td width="15%" v-if="this.user.is_admin || this.user.is_lawyer">
                       <a
                         class="btn btn-sm btn-primary action-btn"
                         v-show="!petition_reply_parent.editMode"
@@ -102,7 +102,7 @@
                       </a>
                     </td>
                   </tr>
-                  <tr v-if="this.user.is_admin">
+                  <tr v-if="this.user.is_admin || this.user.is_lawyer">
                     <td>
                       <input
                         class="form-control"

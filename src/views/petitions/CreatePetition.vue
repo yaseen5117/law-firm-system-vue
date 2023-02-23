@@ -83,6 +83,7 @@
                   <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Lawyer</label>
                     <Multiselect
+                    :disabled="this.user.is_lawyer"
                       placeholder="--Select--"
                       class="text-capitalize"
                       mode="tags"
@@ -253,7 +254,7 @@
         </div>
       </div>
     </section>
-  </main>
+  </main> 
   <!-- End #main -->
 </template>
 
@@ -263,12 +264,14 @@ import PageHeader from "../shared/PageHeader.vue";
 import useVuelidate from "@vuelidate/core";
 import { required, email, helpers } from "@vuelidate/validators";
 import Multiselect from "@vueform/multiselect";
+import { mapState } from "vuex";
 
 export default {
   components: {
     PageHeader,
     Multiselect,
   },
+  computed: mapState(["user"]),
   setup() {
     return {
       v$: useVuelidate(),
@@ -321,11 +324,16 @@ export default {
     }
     this.getPetition();
     this.getLawyers();
+    
+    
   },
   updated() {
     document.title = this.petition
       ? this.petition.case_no + " | " + this.page_title
       : this.page_title;
+      if(this.user.is_lawyer){
+        this.petition.lawyer_ids = [this.user.id];
+      }
   },
   mounted() {
     document.getElementById("header");
@@ -420,7 +428,7 @@ export default {
         .get(url, { headers })
         .then((response) => {
           this.lawyers = response.data.lawyers;
-          console.log(this.lawyers);
+          console.log(this.lawyers);           
         })
         .catch((error) => {
           console.log(error);

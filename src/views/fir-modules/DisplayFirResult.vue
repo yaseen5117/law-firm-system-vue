@@ -38,7 +38,7 @@
                             <th scope="col">Whether bailable or not</th>
                             <th scope="col">Punishment</th>
                             <th scope="col">By what Court triable</th>
-                            <th scope="col">Defination</th>
+                            <th scope="col">Definition</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -114,6 +114,7 @@
                       </button>
 
                       <a
+                        v-if="!this.user"
                         href="#contact"
                         class="btn btn-danger btn-sm left-margin"
                       >
@@ -186,7 +187,10 @@
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
 import FirHeading from "./FirHeading.vue";
+import { mapState } from "vuex";
+
 export default {
+  computed: mapState(["user"]),
   components: {
     PageHeader,
     FirHeading,

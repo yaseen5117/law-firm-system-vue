@@ -38,7 +38,7 @@
             </button>
 
             <button
-              v-if="this.user.is_admin"
+              v-if="this.user.is_admin || this.user.is_lawyer"
               v-show="!showImgCard"
               @click="showImgCard = true"
               class="btn btn-success btn-sm mb-2"
@@ -47,7 +47,7 @@
               Upload New Image
             </button>
             <button
-              v-if="this.user.is_admin"
+              v-if="this.user.is_admin || this.user.is_lawyer"
               v-show="showImgCard"
               @click="showImgCard = false"
               class="btn btn-primary btn-sm mb-2"
@@ -57,11 +57,11 @@
             </button>
 
             <button
-              v-if="this.user.is_admin"
+              v-if="this.user.is_admin || this.user.is_lawyer"
               v-show="!editView"
               @click="
                 editView = true;
-                horizontalView: true;
+                horizontalView= true;
               "
               style="margin-right: 2px"
               class="btn btn-primary btn-sm mb-2"
@@ -69,11 +69,11 @@
               Edit
             </button>
             <button
-              v-if="this.user.is_admin"
+              v-if="this.user.is_admin || this.user.is_lawyer"
               v-show="editView"
               @click="
                 editView = false;
-                horizontalView: false;
+                horizontalView= false;
               "
               style="margin-right: 2px"
               class="btn btn-success btn-sm mb-2"
@@ -193,7 +193,7 @@
                 <div class="table-responsive">
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <button
-                      v-if="showDeleteBtn && this.user.is_admin"
+                      v-if="showDeleteBtn && (this.user.is_admin || this.user.is_lawyer)"
                       class="btn btn-sm btn-danger"
                       data-bs-toggle="tooltip"
                       data-bs-placement="top"
@@ -208,7 +208,7 @@
                           v-if="petition_index_details.attachments.length > 0"
                         >
                           <input
-                            v-if="this.user.is_admin"
+                            v-if="this.user.is_admin || this.user.is_lawyer"
                             class="margin-left-checkbox"
                             type="checkbox"
                             v-model="selectedAllToDelete"
@@ -284,7 +284,7 @@
                               >{{ attachment.display_order }}
                             </span>
                           </td>
-                          <td width="15%" v-if="this.user.is_admin">
+                          <td width="15%" v-if="this.user.is_admin || this.user.is_lawyer">
                             <a
                               class="btn btn-sm btn-primary action-btn"
                               v-show="!attachment.editMode"
@@ -528,6 +528,7 @@ export default {
                   text: "Updated Successfully!",
                 });
                 attachmentToUpdate.editMode = false;
+                this.getCaseDetails();
               }
             },
             (error) => {
