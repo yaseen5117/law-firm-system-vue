@@ -16,7 +16,7 @@
           <li v-show="!this.user">
             <router-link
               :class="
-                !this.$route.name && this.$route.hash == ''
+                this.$route.name == 'Home' && this.$route.hash == ''
                   ? 'active nav-link'
                   : 'nav-link'
               "
