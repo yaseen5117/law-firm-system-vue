@@ -256,7 +256,7 @@
                   <tr style="    background: #8f3a30;color: #f3be32;">
                     <th></th>
                     <!-- <td class="pricing_table_header_col">Free</td> -->
-                    <th class="">Student</th>
+                    <th class="">Law School Plan</th>
                     <th class="">Individual Lawyer</th>
                     <th class="">
                       Law Firm OR In-house Legal Department
@@ -608,9 +608,9 @@ export default {
           id: 0,
           feature_name: "",
           free_plan: "",
-          student_plan: '<a href="#quote">Get a Quote</a>',
-          individual_plan: '<a href="#quote">Get a Quote</a>',
-          lawfirm_plan: '<a href="#quote">Get a Quote</a>',
+          student_plan: '<a href="#contact">Get a Quote</a>',
+          individual_plan: '<a href="#contact">Get a Quote</a>',
+          lawfirm_plan: '<a href="#contact">Get a Quote</a>',
         },
         {
           id: 1,
