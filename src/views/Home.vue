@@ -41,11 +41,11 @@
           <iframe
             width="560"
             height="315"
-            src="https://www.youtube-nocookie.com/embed/z3gch7kq7RM?autoplay=1&loop=1&mute=1"
+            src="https://www.youtube-nocookie.com/embed/z3gch7kq7RM?version=3&autoplay=1&loop=1&mute=1&showinfo=0&playlist=z3gch7kq7RM"
             title="YouTube video player"
             frameborder="0"
-            allow="autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
+            allow="autoplay;;"
+            
           ></iframe>
         </div>
       </div>
@@ -298,57 +298,7 @@
             <div class="carousel-item active">
               <div class="container">
                 <div class="row">
-                  <div class="col-lg-4">
-                    <img
-                      class="rounded-circle shadow-1-strong mb-4 text-center"
-                      src="assets/img/testimonials/ashir_new.jpeg"
-                      alt="avatar"
-                      style="object-fit: cover; width: 150px; height: 150px"
-                    />
-                    <h5 class="mb-3">Aashir Khan</h5>
-                    <p>&nbsp;</p>
-                    <p class="text-muted">
-                      <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                      <span v-show="showMoreOrLessTestimonial1">
-                        I recently started practicing law in Pakistan. As a
-                        graduate of University of London, understanding
-                        Pakistani legal system and practices has been my biggest
-                        challenge. This is...
-                        <span
-                          v-if="showMoreOrLessTestimonial1"
-                          style="cursor: pointer; color: blue"
-                          @click="
-                            showMoreOrLessTestimonial1 =
-                              !showMoreOrLessTestimonial1
-                          "
-                        >
-                          Show More
-                        </span>
-                      </span>
-                      <span v-show="!showMoreOrLessTestimonial1">
-                        I recently started practicing law in Pakistan. As a
-                        graduate of University of London, understanding
-                        Pakistani legal system and practices has been my biggest
-                        challenge. This is where “ELawFirm" has really helped
-                        me. The law firm I interned at was using ELawFirm. I was
-                        a able to see all case files ahead of meetings, use
-                        sample contracts and pleadings for drafting. As far my
-                        learning experience goes, this technology has given me a
-                        lot edger over my peers in the profession.</span
-                      >
-                      <span
-                        v-if="!showMoreOrLessTestimonial1"
-                        style="cursor: pointer; color: blue"
-                        @click="
-                          showMoreOrLessTestimonial1 =
-                            !showMoreOrLessTestimonial1
-                        "
-                      >
-                        Show Less
-                      </span>
-                      <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                    </p>
-                  </div>
+                  
 
                   <div class="col-lg-4 d-none d-lg-block">
                     <img
@@ -402,6 +352,8 @@
                     </p>
                   </div>
 
+                  
+
                   <div class="col-lg-4 d-none d-lg-block">
                     <img
                       class="rounded-circle shadow-1-strong mb-4"
@@ -418,6 +370,57 @@
                       ELawFirm is a fascinating Law & Tech tool. It's probably
                       the most useful IT solution to have come up in Pakistan
                       after PakistanLawSite. Definitely worth a try.
+                      <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                    </p>
+                  </div>
+                  <div class="col-lg-4">
+                    <img
+                      class="rounded-circle shadow-1-strong mb-4 text-center"
+                      src="assets/img/testimonials/ashir_new.jpeg"
+                      alt="avatar"
+                      style="object-fit: cover; width: 150px; height: 150px"
+                    />
+                    <h5 class="mb-3">Aashir Khan</h5>
+                    <p>&nbsp;</p>
+                    <p class="text-muted">
+                      <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                      <span v-show="showMoreOrLessTestimonial1">
+                        I recently started practicing law in Pakistan. As a
+                        graduate of University of London, understanding
+                        Pakistani legal system and practices has been my biggest
+                        challenge. This is...
+                        <span
+                          v-if="showMoreOrLessTestimonial1"
+                          style="cursor: pointer; color: blue"
+                          @click="
+                            showMoreOrLessTestimonial1 =
+                              !showMoreOrLessTestimonial1
+                          "
+                        >
+                          Show More
+                        </span>
+                      </span>
+                      <span v-show="!showMoreOrLessTestimonial1">
+                        I recently started practicing law in Pakistan. As a
+                        graduate of University of London, understanding
+                        Pakistani legal system and practices has been my biggest
+                        challenge. This is where “ELawFirm" has really helped
+                        me. The law firm I interned at was using ELawFirm. I was
+                        a able to see all case files ahead of meetings, use
+                        sample contracts and pleadings for drafting. As far my
+                        learning experience goes, this technology has given me a
+                        lot edger over my peers in the profession.</span
+                      >
+                      <span
+                        v-if="!showMoreOrLessTestimonial1"
+                        style="cursor: pointer; color: blue"
+                        @click="
+                          showMoreOrLessTestimonial1 =
+                            !showMoreOrLessTestimonial1
+                        "
+                      >
+                        Show Less
+                      </span>
                       <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                     </p>
                   </div>
