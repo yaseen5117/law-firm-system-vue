@@ -241,7 +241,7 @@
       <div class="container" data-aos="fade-up">
         <div class="section-title" id="pricing_plans">
           <h2>Pricing</h2>
-          <p>Choose Plan according to your needs.</p>
+          <!-- <p>Choose Plan according to your needs.</p> -->
         </div>
 
         <div class="row">
@@ -250,19 +250,22 @@
             data-aos="fade-up"
             data-aos-delay="100"
           >
-            <div class="box">
-              <table class="table pricing_table">
-                <tr>
-                  <td></td>
-                  <!-- <td class="pricing_table_header_col">Free</td> -->
-                  <td class="pricing_table_header_col">Student</td>
-                  <td class="pricing_table_header_col">Individual Lawyer</td>
-                  <td class="pricing_table_header_col">
-                    Law Firm OR In-house Legal Department
-                  </td>
-                </tr>
+            <div class="">
+              <table class="table table-striped">
+                <thead>
+                  <tr style="    background: #8f3a30;color: #f3be32;">
+                    <th></th>
+                    <!-- <td class="pricing_table_header_col">Free</td> -->
+                    <th class="">Law School Plan</th>
+                    <th class="">Individual Lawyer</th>
+                    <th class="">
+                      Law Firm OR In-house Legal Department
+                    </th>
+                  </tr>
+                </thead>
 
-                <tr v-for="plan in this.plans_n_features" :key="plan.id">
+                <tbody>
+                  <tr v-for="plan in this.plans_n_features" :key="plan.id">
                   <td class="text-start" style="padding-left: 20px">
                     <strong>{{ plan.feature_name }}</strong>
                   </td>
@@ -271,6 +274,7 @@
                   <td v-html="plan.individual_plan"></td>
                   <td v-html="plan.lawfirm_plan"></td>
                 </tr>
+                </tbody>
               </table>
             </div>
           </div>
@@ -604,9 +608,9 @@ export default {
           id: 0,
           feature_name: "",
           free_plan: "",
-          student_plan: '<a href="#quote">Get a Quote</a>',
-          individual_plan: '<a href="#quote">Get a Quote</a>',
-          lawfirm_plan: '<a href="#quote">Get a Quote</a>',
+          student_plan: '<a href="#contact">Get a Quote</a>',
+          individual_plan: '<a href="#contact">Get a Quote</a>',
+          lawfirm_plan: '<a href="#contact">Get a Quote</a>',
         },
         {
           id: 1,
