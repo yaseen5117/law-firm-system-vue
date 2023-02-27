@@ -214,7 +214,7 @@
               </p> -->
             </div>
             <div class="icon-box mt-5" data-aos="fade-up" data-aos-delay="400">
-              <i class="fa fa-handshake-o"></i>
+              <i class="fa fa-file"></i>
               <h4>Sample Contracts</h4>
               <!-- <p>
                 Use our Invoice-generator to generate professional invoices and
@@ -264,7 +264,7 @@
 
                 <tr v-for="plan in this.plans_n_features" :key="plan.id">
                   <td class="text-start" style="padding-left: 20px">
-                    {{ plan.feature_name }}
+                    <strong>{{ plan.feature_name }}</strong>
                   </td>
                   <!-- <td v-html="plan.free_plan"></td> -->
                   <td v-html="plan.student_plan"></td>

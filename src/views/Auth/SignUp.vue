@@ -4,9 +4,7 @@
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="row">
-          <div class="alert alert-success" v-if="msgAfterSignUp" role="alert">
-            {{ msgAfterSignUp }}
-          </div>
+          
           
           <div class="col-md-8 offset-md-2 card mt-3 p-3">
             <form @submit.prevent="submitForm($event)">
@@ -141,6 +139,9 @@
                 <button :disabled="saving" class="btn auth-btn mt-2">
                   Sign Up
                 </button>
+                <Dialog modal="true" header="Thank you for signing up!" position="topright" v-model:visible="successPopup">
+                  <p>{{ msgAfterSignUp }}</p>
+                </Dialog>
               </div>
             </form>
           </div>
@@ -154,11 +155,12 @@
 <script>
 import axios from "axios";
 import PageHeader from "../shared/PageHeader.vue";
+import Dialog from 'primevue/dialog';
 import useVuelidate from "@vuelidate/core";
 import { required, email, sameAs } from "@vuelidate/validators";
 
 export default {
-  components: { PageHeader },
+  components: { PageHeader,Dialog },
   setup() {
     return {
       v$: useVuelidate(),
@@ -166,6 +168,7 @@ export default {
   },
   data() {
     return {
+      successPopup: false,
       page_title: "Sign Up For Using ELawFirm",
       base_url: process.env.VUE_APP_SERVICE_URL,
       user: {
@@ -205,7 +208,7 @@ export default {
   created() {},
   mounted() {
     document.getElementById("header");
-    document.title = "SignUp";
+    document.title = "Sign Up";
   },
   methods: {
     onChange(e) {
@@ -232,7 +235,8 @@ export default {
                 this.v$.$reset();
               }, 0);
               this.msgAfterSignUp =
-                "Account created successfully. After admin verification you can login into your account. Thanks.";
+                "You will receive an email with your login details. Our Admins will approve your account soon then you can login in to ElawFirm.";
+                this.successPopup=true;
             }
             console.log(response);
           },
