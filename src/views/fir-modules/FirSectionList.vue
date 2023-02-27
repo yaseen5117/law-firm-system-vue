@@ -4,8 +4,8 @@
     <main id="main" class="margintop85">
       <page-header
         :title="page_title"
-        :hideBreadCrumbs="true"
-        :showInvoices="false"
+        :showFirReader="true"
+        :hideCaseFiles="true"
         :route_object="route_obj"
         :header_button="header_button"
         :header_button_text="header_button_text"

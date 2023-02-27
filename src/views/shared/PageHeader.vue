@@ -7,7 +7,9 @@
           <h4 v-if="title && !isNotHeading">
             {{ title }}
             <router-link
-              v-if="header_button && (this.user.is_admin || this.user.is_lawyer)"
+              v-if="
+                header_button && (this.user.is_admin || this.user.is_lawyer)
+              "
               class="btn btn-primary btn-sm"
               :to="route_object"
               >{{ header_button_text }}</router-link
@@ -42,6 +44,9 @@
           <template v-if="!hideBreadCrumbs">
             <ol style="font-size: 12px">
               <li><router-link to="/dashboard">Home</router-link></li>
+              <li v-if="showFirReader">
+                <router-link to="/fir-sections">FIR Reader</router-link>
+              </li>
               <li v-if="showInvoices">
                 <router-link to="/invoices">Invoices</router-link>
               </li>
@@ -119,6 +124,7 @@ export default {
     "showLCLink",
     "isNotHeading",
     "isStatute",
+    "showFirReader",
   ],
   data() {
     return {

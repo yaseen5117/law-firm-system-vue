@@ -81,6 +81,7 @@ import CreateUpdateFir from "../views/fir-modules/CreateUpdateFir";
 import FirSectionList from "../views/fir-modules/FirSectionList";
 import DisplayFirResult from "../views/fir-modules/DisplayFirResult";
 import StatuteIndex from "../views/fir-modules/StatuteIndex";
+import AboutELawFirm from "../views/pages/AboutELawFirm";
 
 const routes = [
   {
@@ -760,6 +761,13 @@ const routes = [
     },
   },
   //FIR Routes END
+
+  //About ElawFirm
+  {
+    path: "/about-elawfirm",
+    name: "about-elawfirm",
+    component: AboutELawFirm,
+  },
 ];
 
 const router = createRouter({

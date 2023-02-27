@@ -45,7 +45,6 @@
             title="YouTube video player"
             frameborder="0"
             allow="autoplay;;"
-            
           ></iframe>
         </div>
       </div>
@@ -88,12 +87,9 @@
                 constantly updating it.
               </li>
             </ul>
-            <a
-              href="javascript:void(0)"
-              @click="scrollIntoView('main_features')"
-              class="read-more"
+            <router-link to="about-elawfirm" class="read-more"
               >Read More <i class="bi bi-long-arrow-right"></i
-            ></a>
+            ></router-link>
           </div>
         </div>
       </div>
@@ -253,27 +249,25 @@
             <div class="">
               <table class="table table-striped">
                 <thead>
-                  <tr style="    background: #8f3a30;color: #f3be32;">
+                  <tr style="background: #8f3a30; color: #f3be32">
                     <th></th>
                     <!-- <td class="pricing_table_header_col">Free</td> -->
                     <th class="">Law School Plan</th>
                     <th class="">Individual Lawyer</th>
-                    <th class="">
-                      Law Firm OR In-house Legal Department
-                    </th>
+                    <th class="">Law Firm OR In-house Legal Department</th>
                   </tr>
                 </thead>
 
                 <tbody>
                   <tr v-for="plan in this.plans_n_features" :key="plan.id">
-                  <td class="text-start" style="padding-left: 20px">
-                    <strong>{{ plan.feature_name }}</strong>
-                  </td>
-                  <!-- <td v-html="plan.free_plan"></td> -->
-                  <td v-html="plan.student_plan"></td>
-                  <td v-html="plan.individual_plan"></td>
-                  <td v-html="plan.lawfirm_plan"></td>
-                </tr>
+                    <td class="text-start" style="padding-left: 20px">
+                      <strong>{{ plan.feature_name }}</strong>
+                    </td>
+                    <!-- <td v-html="plan.free_plan"></td> -->
+                    <td v-html="plan.student_plan"></td>
+                    <td v-html="plan.individual_plan"></td>
+                    <td v-html="plan.lawfirm_plan"></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -302,8 +296,6 @@
             <div class="carousel-item active">
               <div class="container">
                 <div class="row">
-                  
-
                   <div class="col-lg-4 d-none d-lg-block">
                     <img
                       class="rounded-circle shadow-1-strong mb-4"
@@ -356,8 +348,6 @@
                     </p>
                   </div>
 
-                  
-
                   <div class="col-lg-4 d-none d-lg-block">
                     <img
                       class="rounded-circle shadow-1-strong mb-4"
@@ -380,7 +370,7 @@
                   <div class="col-lg-4">
                     <img
                       class="rounded-circle shadow-1-strong mb-4 text-center"
-                      src="assets/img/testimonials/ashir_new.jpeg"
+                      src="assets/img/testimonials/ashir.jpeg"
                       alt="avatar"
                       style="object-fit: cover; width: 150px; height: 150px"
                     />
