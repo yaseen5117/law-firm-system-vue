@@ -37,7 +37,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Name<span style="color: red">*</span></label>
+                    <label>Name <span style="color: red">*</span></label>
                     <input
                       autofocus
                       class="form-control"
@@ -64,7 +64,7 @@
                   </div>
 
                   <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Email<span style="color: red">*</span></label>
+                    <label>Email <span style="color: red">*</span></label>
                     <input
                       type="email"
                       class="form-control"
@@ -100,9 +100,8 @@
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label
-                      >Password<span
-                        v-show="!updatedOrNewUser.id"
-                        style="color: red"
+                      >Password
+                      <span v-show="!updatedOrNewUser.id" style="color: red"
                         >*</span
                       ></label
                     >
@@ -125,9 +124,8 @@
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label
-                      >Confirm Password<span
-                        v-show="!updatedOrNewUser.id"
-                        style="color: red"
+                      >Confirm Password
+                      <span v-show="!updatedOrNewUser.id" style="color: red"
                         >*</span
                       ></label
                     >

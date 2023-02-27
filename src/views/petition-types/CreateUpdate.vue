@@ -8,7 +8,7 @@
             <form @submit.prevent="submitForm($event)">
               <div class="form-group row">
                 <div class="col-lg-4 col-md-4 col-sm-12">
-                  <label for=""> Title<span style="color: red">*</span></label>
+                  <label for="">Title <span style="color: red">*</span></label>
                   <input
                     autofocus
                     v-model="petitionTypeData.title"

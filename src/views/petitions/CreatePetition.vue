@@ -9,7 +9,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label>Case No.<span style="color: red">*</span></label>
+                    <label>Case No. <span style="color: red">*</span></label>
                     <input
                       class="form-control"
                       v-model="petition.case_no"

@@ -6,7 +6,7 @@
         <form @submit.prevent="submitForm($event)">
           <div class="form-group row">
             <div class="col-lg-4 col-md-6 col-sm-12">
-              <label for=""> Statute<span class="text-danger">*</span></label>
+              <label for=""> Statute <span class="text-danger">*</span></label>
               <Dropdown
                 v-model="sectionData.statute_id"
                 :options="statutes"
@@ -26,7 +26,7 @@
               >
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
-              <label for="">Title<span class="text-danger">*</span></label>
+              <label for="">Title <span class="text-danger">*</span></label>
               <input
                 v-model="sectionData.title"
                 type="text"
@@ -48,7 +48,7 @@
 
           <div class="form-group row">
             <div class="col-lg-4 col-md-6 col-sm-12">
-              <label for="">Section<span class="text-danger">*</span></label>
+              <label for="">Section <span class="text-danger">*</span></label>
               <input
                 v-model="sectionData.fir_no"
                 type="text"

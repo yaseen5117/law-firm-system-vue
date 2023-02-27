@@ -8,7 +8,9 @@
             <form @submit.prevent="submitForm($event)">
               <div class="form-group row">
                 <div class="col-sm-12">
-                  <label for=""> Title<span style="color: red">*</span> </label>
+                  <label for="">
+                    Title <span style="color: red">*</span>
+                  </label>
                   <input
                     autofocus
                     v-model="linkData.title"
@@ -28,7 +30,7 @@
               <div class="form-group row">
                 <div class="col-sm-12">
                   <label for="">
-                    URL<span style="color: red">*</span>
+                    URL <span style="color: red">*</span>
                     <span style="font-size: 12px; color: red"
                       >(Note: Sample URL:
                       https://en.wikipedia.org/wiki/Main_Page)</span

@@ -12,7 +12,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-4 col-md-4 col-sm-12">
-                    <label>Title<span style="color: red">*</span></label>
+                    <label>Title <span style="color: red">*</span></label>
                     <input
                       autofocus
                       class="form-control"
