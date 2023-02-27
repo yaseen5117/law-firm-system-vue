@@ -7,7 +7,7 @@
           <div class="alert alert-success" v-if="msgAfterSignUp" role="alert">
             {{ msgAfterSignUp }}
           </div>
-          
+
           <div class="col-md-8 offset-md-2 card mt-3 p-3">
             <form @submit.prevent="submitForm($event)">
               <div class="form-group">
@@ -22,9 +22,7 @@
                       }"
                       @blur="v$.user.name.$touch"
                     />
-                    <span
-                      v-if="v$.user.name.$error"
-                      class="errorMessage error-font-size"
+                    <span v-if="v$.user.name.$error" class="errorMessage"
                       >Name field is required.</span
                     >
                   </div>
@@ -48,9 +46,7 @@
                         {{ role.name }}
                       </option>
                     </select>
-                    <span
-                      v-if="v$.user.role_name.$error"
-                      class="errorMessage error-font-size"
+                    <span v-if="v$.user.role_name.$error" class="errorMessage"
                       >Status field is required.</span
                     >
                   </div>
@@ -60,9 +56,13 @@
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label
-                      >Email <span v-tooltip="'Email of Client or his/her Lawyer'" class="badge rounded-pill bg-dark">?</span> <span style="color: red"
-                        >*</span
-                      ></label
+                      >Email
+                      <span
+                        v-tooltip="'Email of Client or his/her Lawyer'"
+                        class="badge rounded-pill bg-dark"
+                        >?</span
+                      >
+                      <span style="color: red">*</span></label
                     >
                     <input
                       type="email"
@@ -73,14 +73,10 @@
                       }"
                       @blur="v$.user.email.$touch"
                     />
-                    <span
-                      v-if="v$.user.email.$error"
-                      class="errorMessage error-font-size"
+                    <span v-if="v$.user.email.$error" class="errorMessage"
                       >Email field is required.</span
                     >
-                    <small
-                      v-if="!v$.user.email.$error"
-                      class="text-danger error-font-size"
+                    <small v-if="!v$.user.email.$error" class="errorMessage"
                       >{{ error_email }}
                     </small>
                   </div>
@@ -108,9 +104,7 @@
                       class="form-control"
                       v-model="user.password"
                     />
-                    <span
-                      v-if="v$.user.password.$error"
-                      class="errorMessage error-font-size"
+                    <span v-if="v$.user.password.$error" class="errorMessage"
                       >Password field is required.</span
                     >
                   </div>
@@ -130,7 +124,7 @@
                     />
                     <span
                       v-if="v$.user.confirm_password.$error"
-                      class="errorMessage error-font-size"
+                      class="errorMessage"
                       >Password and Confirm Password should be same.</span
                     >
                   </div>

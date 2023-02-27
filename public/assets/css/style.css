@@ -1699,6 +1699,7 @@ section {
 }
 .errorMessage {
   color: red;
+  font-size: 13px;
 }
 .error-boarder {
   border: 1px solid red !important;
