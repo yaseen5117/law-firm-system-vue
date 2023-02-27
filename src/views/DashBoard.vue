@@ -48,11 +48,12 @@
                       ? { click: () => studentModal() }
                       : { click: () => gotoLink('petitions-calendar') }
                   "
-                  >Calendar</a
+                  >Court Calendar</a
                 >
               </h4>
               <p>
-                Contains all Details of Calender. Click to Open all Details.
+                Mark dates of hearing. Review tomorrow's cases. Get hearing
+                alerts.
               </p>
             </div>
           </div>
@@ -82,12 +83,13 @@
               </div>
               <h4><router-link to="petitions">Case Files</router-link></h4>
               <p>
-                Contains all Details of Case files. Click to Open all Details.
+                View all your Case Files online. Keep records updated. And
+                upload new ones.
               </p>
             </div>
           </div>
 
-          <div
+          <!-- <div
             v-on="
               this.user.is_student
                 ? { click: () => studentModal() }
@@ -131,7 +133,7 @@
                 Contains all Details of Opinions. Click to Open all Details.
               </p>
             </div>
-          </div>
+          </div> -->
 
           <div
             @click="gotoLink('contract-and-agreement')"
@@ -168,10 +170,7 @@
                   Sample Contracts
                 </router-link>
               </h4>
-              <p>
-                Contains all Details of Sample Contracts. Click to Open all
-                Details.
-              </p>
+              <p>Library of draft contracts. You can also add your own!</p>
             </div>
           </div>
 
@@ -205,10 +204,7 @@
               <h4>
                 <router-link to="sample-pleading">Sample Pleadings</router-link>
               </h4>
-              <p>
-                Contains all Details of Pleadings section. Click to Open all
-                Details.
-              </p>
+              <p>Library of draft pleadings. You can also add your own!</p>
             </div>
           </div>
 
@@ -242,13 +238,220 @@
                   :to="{
                     name: 'petition-general-case-law',
                   }"
-                  >Frequently Asked Legal Propositions</router-link
+                  >Frequently Asked Legal Questions</router-link
+                >
+              </h4>
+              <p>Some frequently asked questions.</p>
+            </div>
+          </div>
+
+          <div
+            @click="gotoLink('#')"
+            v-if="
+              this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            "
+            class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
+            data-aos-delay="200"
+          >
+            <div class="icon-box iconbox-secret border">
+              <div class="icon">
+                <svg
+                  width="100"
+                  height="100"
+                  viewBox="0 0 600 600"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke="none"
+                    stroke-width="0"
+                    fill="#f5f5f5"
+                    d="M300,532.3542879108572C369.38199826031484,532.3153073249985,429.10787420159085,491.63046689027357,474.5244479745417,439.17860296908856C522.8885846962883,383.3225815378663,569.1668002868075,314.3205725914397,550.7432151929288,242.7694973846089C532.6665558377875,172.5657663291529,456.2379748765914,142.6223662098291,390.3689995646985,112.34683881706744C326.66090330228417,83.06452184765237,258.84405631176094,53.51806209861945,193.32584062364296,78.48882559362697C121.61183558270385,105.82097193414197,62.805066853699245,167.19869350419734,48.57481801355237,242.6138429142374C34.843463184063346,315.3850353017275,76.69343916112496,383.4422959591041,125.22947124332185,439.3748458443577C170.7312796277747,491.8107796887764,230.57421082200815,532.3932930995766,300,532.3542879108572"
+                  ></path>
+                </svg>
+                <i class="fa fa-user-secret"></i>
+              </div>
+              <h4>
+                <router-link to="#">Criminal Law Guru</router-link>
+              </h4>
+              <p>Fastest way to research Pakistani criminal law. Try it!</p>
+            </div>
+          </div>
+
+          <div
+            v-on="
+              this.user.is_student
+                ? { click: () => studentModal() }
+                : { click: () => gotoLink('limitation-calculator') }
+            "
+            v-if="
+              this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            "
+            :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
+            class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
+            data-aos-delay="200"
+          >
+            <div class="icon-box iconbox-dark-red border">
+              <div class="icon">
+                <svg
+                  width="100"
+                  height="100"
+                  viewBox="0 0 600 600"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke="none"
+                    stroke-width="0"
+                    fill="#f5f5f5"
+                    d="M300,582.0697525312426C382.5290701553225,586.8405444964366,449.9789794690241,525.3245884688669,502.5850820975895,461.55621195738473C556.606425686781,396.0723002908107,615.8543463187945,314.28637112970534,586.6730223649479,234.56875336149918C558.9533121215079,158.8439757836574,454.9685369536778,164.00468322053177,381.49747125262974,130.76875717737553C312.15926192815925,99.40240125094834,248.97055460311594,18.661163978235184,179.8680185752513,50.54337015887873C110.5421016452524,82.52863877960104,119.82277516462835,180.83849132639028,109.12597500060166,256.43424936330496C100.08760227029461,320.3096726198365,92.17705696193138,384.0621239912766,124.79988738764834,439.7174275375508C164.83382741302287,508.01625554203684,220.96474134820875,577.5009287672846,300,582.0697525312426"
+                  ></path>
+                </svg>
+
+                <i class="fa fa-calculator"></i>
+              </div>
+              <h4>
+                <a
+                  v-on="
+                    this.user.is_student
+                      ? { click: () => studentModal() }
+                      : { click: () => gotoLink('limitation-calculator') }
+                  "
+                >
+                  Limitation Calculator
+                </a>
+              </h4>
+              <p>
+                Calculate the last date of filling for various categories of
+                cases. A taste of the world of AI lawyering.
+              </p>
+            </div>
+          </div>
+
+          <div
+            @click="gotoLink('#')"
+            v-if="
+              this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            "
+            class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
+            data-aos-delay="200"
+          >
+            <div class="icon-box iconbox-secret border">
+              <div class="icon">
+                <svg
+                  width="100"
+                  height="100"
+                  viewBox="0 0 600 600"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke="none"
+                    stroke-width="0"
+                    fill="#f5f5f5"
+                    d="M300,532.3542879108572C369.38199826031484,532.3153073249985,429.10787420159085,491.63046689027357,474.5244479745417,439.17860296908856C522.8885846962883,383.3225815378663,569.1668002868075,314.3205725914397,550.7432151929288,242.7694973846089C532.6665558377875,172.5657663291529,456.2379748765914,142.6223662098291,390.3689995646985,112.34683881706744C326.66090330228417,83.06452184765237,258.84405631176094,53.51806209861945,193.32584062364296,78.48882559362697C121.61183558270385,105.82097193414197,62.805066853699245,167.19869350419734,48.57481801355237,242.6138429142374C34.843463184063346,315.3850353017275,76.69343916112496,383.4422959591041,125.22947124332185,439.3748458443577C170.7312796277747,491.8107796887764,230.57421082200815,532.3932930995766,300,532.3542879108572"
+                  ></path>
+                </svg>
+                <i class="fa fa-gavel"></i>
+              </div>
+              <h4>
+                <router-link to="#"
+                  >Corporate Law Guru (coming soon!)</router-link
                 >
               </h4>
               <p>
-                Contains all Details of Frequently Asked Legal Propositions.
-                Click to Open all Details.
+                Step-by-step guide for getting corporate registrations, drafting
+                corporate documents and archiving them.
               </p>
+            </div>
+          </div>
+
+          <div
+            v-on="
+              this.user.is_student
+                ? { click: () => studentModal() }
+                : { click: () => gotoLink('#transaction-calculator') }
+            "
+            v-if="
+              this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            "
+            :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
+            class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
+            data-aos-delay="200"
+          >
+            <div class="icon-box iconbox-grey border">
+              <div class="icon">
+                <svg
+                  width="100"
+                  height="100"
+                  viewBox="0 0 600 600"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke="none"
+                    stroke-width="0"
+                    fill="#f5f5f5"
+                    d="M300,582.0697525312426C382.5290701553225,586.8405444964366,449.9789794690241,525.3245884688669,502.5850820975895,461.55621195738473C556.606425686781,396.0723002908107,615.8543463187945,314.28637112970534,586.6730223649479,234.56875336149918C558.9533121215079,158.8439757836574,454.9685369536778,164.00468322053177,381.49747125262974,130.76875717737553C312.15926192815925,99.40240125094834,248.97055460311594,18.661163978235184,179.8680185752513,50.54337015887873C110.5421016452524,82.52863877960104,119.82277516462835,180.83849132639028,109.12597500060166,256.43424936330496C100.08760227029461,320.3096726198365,92.17705696193138,384.0621239912766,124.79988738764834,439.7174275375508C164.83382741302287,508.01625554203684,220.96474134820875,577.5009287672846,300,582.0697525312426"
+                  ></path>
+                </svg>
+                <i class="fa fa-calculator"></i>
+              </div>
+              <h4>
+                <a
+                  v-on="
+                    this.user.is_student
+                      ? { click: () => studentModal() }
+                      : { click: () => gotoLink('#transaction-calculator') }
+                  "
+                  >Transaction Calculator (coming soon!)</a
+                >
+              </h4>
+              <p>
+                Calculate the stamp duty and registration fee payable on various
+                kinds of business transaction.
+              </p>
+            </div>
+          </div>
+
+          <div
+            v-on="
+              this.user.is_student
+                ? { click: () => studentModal() }
+                : { click: () => gotoLink('#service-rules-library') }
+            "
+            v-if="
+              this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            "
+            :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
+            class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
+            data-aos-delay="200"
+          >
+            <div class="icon-box iconbox-service-rules border">
+              <div class="icon">
+                <svg
+                  width="100"
+                  height="100"
+                  viewBox="0 0 600 600"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke="none"
+                    stroke-width="0"
+                    fill="#f5f5f5"
+                    d="M300,582.0697525312426C382.5290701553225,586.8405444964366,449.9789794690241,525.3245884688669,502.5850820975895,461.55621195738473C556.606425686781,396.0723002908107,615.8543463187945,314.28637112970534,586.6730223649479,234.56875336149918C558.9533121215079,158.8439757836574,454.9685369536778,164.00468322053177,381.49747125262974,130.76875717737553C312.15926192815925,99.40240125094834,248.97055460311594,18.661163978235184,179.8680185752513,50.54337015887873C110.5421016452524,82.52863877960104,119.82277516462835,180.83849132639028,109.12597500060166,256.43424936330496C100.08760227029461,320.3096726198365,92.17705696193138,384.0621239912766,124.79988738764834,439.7174275375508C164.83382741302287,508.01625554203684,220.96474134820875,577.5009287672846,300,582.0697525312426"
+                  ></path>
+                </svg>
+
+                <i class="fa fa-book"></i>
+              </div>
+              <h4>
+                <a
+                  v-on="
+                    this.user.is_student
+                      ? { click: () => studentModal() }
+                      : { click: () => gotoLink('#service-rules-library') }
+                  "
+                  >Service Rules Library (coming soon!)</a
+                >
+              </h4>
+              <p>An encyclopedia of service rules.</p>
             </div>
           </div>
 
@@ -286,16 +489,14 @@
                       ? { click: () => studentModal() }
                       : { click: () => gotoLink('invoices') }
                   "
-                  >Accounts</a
+                  >Accounts (coming soon!)</a
                 >
               </h4>
-              <p>
-                Contains all Details of Accounts. Click to Open all Details.
-              </p>
+              <p>Generate invoices and keep track of them.</p>
             </div>
           </div>
 
-          <div
+          <!-- <div
             v-if="
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
@@ -342,7 +543,7 @@
                 Details.
               </p>
             </div>
-          </div>
+          </div> -->
 
           <div
             v-on="
@@ -382,30 +583,31 @@
                       ? { click: () => studentModal() }
                       : { click: () => gotoLink('links') }
                   "
-                  >Links</a
+                  >Useful Links</a
                 >
               </h4>
-              <p>
-                Contains all Details of Links section. Click to Open all
-                Details.
-              </p>
+              <p>Some other handy Law and Tech tools available online</p>
             </div>
           </div>
           <!-- New Tabs Added -->
+
           <div
             v-on="
               this.user.is_student
                 ? { click: () => studentModal() }
-                : { click: () => gotoLink('limitation-calculator') }
-            "
-            v-if="
-              this.user.is_admin || this.user.is_lawyer || this.user.is_student
+                : { click: () => gotoLink('fir-sections') }
             "
             :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
+            v-if="
+              (this.user.is_admin ||
+                this.user.is_lawyer ||
+                this.user.is_student) &&
+              this.user.company_id == 1
+            "
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
             data-aos-delay="200"
           >
-            <div class="icon-box iconbox-dark-red border">
+            <div class="icon-box fir-section-box border">
               <div class="icon">
                 <svg
                   width="100"
@@ -420,115 +622,21 @@
                     d="M300,582.0697525312426C382.5290701553225,586.8405444964366,449.9789794690241,525.3245884688669,502.5850820975895,461.55621195738473C556.606425686781,396.0723002908107,615.8543463187945,314.28637112970534,586.6730223649479,234.56875336149918C558.9533121215079,158.8439757836574,454.9685369536778,164.00468322053177,381.49747125262974,130.76875717737553C312.15926192815925,99.40240125094834,248.97055460311594,18.661163978235184,179.8680185752513,50.54337015887873C110.5421016452524,82.52863877960104,119.82277516462835,180.83849132639028,109.12597500060166,256.43424936330496C100.08760227029461,320.3096726198365,92.17705696193138,384.0621239912766,124.79988738764834,439.7174275375508C164.83382741302287,508.01625554203684,220.96474134820875,577.5009287672846,300,582.0697525312426"
                   ></path>
                 </svg>
-
-                <i class="fa fa-calculator"></i>
+                <i class="fa fa-list-alt"></i>
               </div>
               <h4>
                 <a
                   v-on="
                     this.user.is_student
                       ? { click: () => studentModal() }
-                      : { click: () => gotoLink('limitation-calculator') }
+                      : { click: () => gotoLink('fir-sections') }
                   "
-                >
-                  Limitation Calculator
-                </a>
-              </h4>
-              <p>
-                A tool to help you calculate the deadline for filing your case.
-              </p>
-            </div>
-          </div>
-
-          <div
-            v-on="
-              this.user.is_student
-                ? { click: () => studentModal() }
-                : { click: () => gotoLink('#transaction-calculator') }
-            "
-            v-if="
-              this.user.is_admin || this.user.is_lawyer || this.user.is_student
-            "
-            :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
-            class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
-            data-aos-delay="200"
-          >
-            <div class="icon-box iconbox-grey border">
-              <div class="icon">
-                <svg
-                  width="100"
-                  height="100"
-                  viewBox="0 0 600 600"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke="none"
-                    stroke-width="0"
-                    fill="#f5f5f5"
-                    d="M300,582.0697525312426C382.5290701553225,586.8405444964366,449.9789794690241,525.3245884688669,502.5850820975895,461.55621195738473C556.606425686781,396.0723002908107,615.8543463187945,314.28637112970534,586.6730223649479,234.56875336149918C558.9533121215079,158.8439757836574,454.9685369536778,164.00468322053177,381.49747125262974,130.76875717737553C312.15926192815925,99.40240125094834,248.97055460311594,18.661163978235184,179.8680185752513,50.54337015887873C110.5421016452524,82.52863877960104,119.82277516462835,180.83849132639028,109.12597500060166,256.43424936330496C100.08760227029461,320.3096726198365,92.17705696193138,384.0621239912766,124.79988738764834,439.7174275375508C164.83382741302287,508.01625554203684,220.96474134820875,577.5009287672846,300,582.0697525312426"
-                  ></path>
-                </svg>
-                <i class="fa fa-calculator"></i>
-              </div>
-              <h4>
-                <a
-                  v-on="
-                    this.user.is_student
-                      ? { click: () => studentModal() }
-                      : { click: () => gotoLink('#transaction-calculator') }
-                  "
-                  >Transaction Calculator (Coming Soon!)</a
+                  >FIR Reader</a
                 >
               </h4>
               <p>
-                A tool help you calculate the Stamp Duty, Registration Fee and
-                other taxes applicable on the sale and purchase of land.
+                Contains all Details of FIR Reader. Click to Open all Details.
               </p>
-            </div>
-          </div>
-
-          <div
-            v-on="
-              this.user.is_student
-                ? { click: () => studentModal() }
-                : { click: () => gotoLink('#service-rules-library') }
-            "
-            v-if="
-              this.user.is_admin || this.user.is_lawyer || this.user.is_student
-            "
-            :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
-            class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
-            data-aos-delay="200"
-          >
-            <div class="icon-box iconbox-service-rules border">
-              <div class="icon">
-                <svg
-                  width="100"
-                  height="100"
-                  viewBox="0 0 600 600"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke="none"
-                    stroke-width="0"
-                    fill="#f5f5f5"
-                    d="M300,582.0697525312426C382.5290701553225,586.8405444964366,449.9789794690241,525.3245884688669,502.5850820975895,461.55621195738473C556.606425686781,396.0723002908107,615.8543463187945,314.28637112970534,586.6730223649479,234.56875336149918C558.9533121215079,158.8439757836574,454.9685369536778,164.00468322053177,381.49747125262974,130.76875717737553C312.15926192815925,99.40240125094834,248.97055460311594,18.661163978235184,179.8680185752513,50.54337015887873C110.5421016452524,82.52863877960104,119.82277516462835,180.83849132639028,109.12597500060166,256.43424936330496C100.08760227029461,320.3096726198365,92.17705696193138,384.0621239912766,124.79988738764834,439.7174275375508C164.83382741302287,508.01625554203684,220.96474134820875,577.5009287672846,300,582.0697525312426"
-                  ></path>
-                </svg>
-
-                <i class="fa fa-book"></i>
-              </div>
-              <h4>
-                <a
-                  v-on="
-                    this.user.is_student
-                      ? { click: () => studentModal() }
-                      : { click: () => gotoLink('#service-rules-library') }
-                  "
-                  >Service Rules Library (Coming Soon!)</a
-                >
-              </h4>
-              <p>An encyclopedia of Service Rules.</p>
             </div>
           </div>
 
@@ -575,54 +683,6 @@
               <p>
                 Contains all Details of Others sections. Click to Open all
                 Details.
-              </p>
-            </div>
-          </div>
-          <div
-            v-on="
-              this.user.is_student
-                ? { click: () => studentModal() }
-                : { click: () => gotoLink('fir-sections') }
-            "
-            :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
-            v-if="
-              (this.user.is_admin ||
-                this.user.is_lawyer ||
-                this.user.is_student) &&
-              this.user.company_id == 1
-            "
-            class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
-            data-aos-delay="200"
-          >
-            <div class="icon-box fir-section-box border">
-              <div class="icon">
-                <svg
-                  width="100"
-                  height="100"
-                  viewBox="0 0 600 600"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke="none"
-                    stroke-width="0"
-                    fill="#f5f5f5"
-                    d="M300,582.0697525312426C382.5290701553225,586.8405444964366,449.9789794690241,525.3245884688669,502.5850820975895,461.55621195738473C556.606425686781,396.0723002908107,615.8543463187945,314.28637112970534,586.6730223649479,234.56875336149918C558.9533121215079,158.8439757836574,454.9685369536778,164.00468322053177,381.49747125262974,130.76875717737553C312.15926192815925,99.40240125094834,248.97055460311594,18.661163978235184,179.8680185752513,50.54337015887873C110.5421016452524,82.52863877960104,119.82277516462835,180.83849132639028,109.12597500060166,256.43424936330496C100.08760227029461,320.3096726198365,92.17705696193138,384.0621239912766,124.79988738764834,439.7174275375508C164.83382741302287,508.01625554203684,220.96474134820875,577.5009287672846,300,582.0697525312426"
-                  ></path>
-                </svg>
-                <i class="fa fa-list-alt"></i>
-              </div>
-              <h4>
-                <a
-                  v-on="
-                    this.user.is_student
-                      ? { click: () => studentModal() }
-                      : { click: () => gotoLink('fir-sections') }
-                  "
-                  >FIR Reader</a
-                >
-              </h4>
-              <p>
-                Contains all Details of FIR Reader. Click to Open all Details.
               </p>
             </div>
           </div>
