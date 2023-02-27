@@ -7,13 +7,13 @@
           <div class="alert alert-success" v-if="msgAfterSignUp" role="alert">
             {{ msgAfterSignUp }}
           </div>
-          <div class="col-md-4 col-lg-4"></div>
-          <div class="col-md-12 col-lg-12 col-sm-12">
+          
+          <div class="col-md-8 offset-md-2 card mt-3 p-3">
             <form @submit.prevent="submitForm($event)">
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-12">
-                    <label>Name<span style="color: red">*</span></label>
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <label>Name <span style="color: red">*</span></label>
                     <input
                       class="form-control"
                       v-model="user.name"
@@ -28,7 +28,7 @@
                       >Name field is required.</span
                     >
                   </div>
-                  <div class="col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Status <span style="color: red">*</span></label>
                     <select
                       class="form-control text-capitalize"
@@ -51,16 +51,16 @@
                     <span
                       v-if="v$.user.role_name.$error"
                       class="errorMessage error-font-size"
-                      >Role field is required.</span
+                      >Status field is required.</span
                     >
                   </div>
                 </div>
               </div>
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
                     <label
-                      >Email of Client or his/her Lawyer<span style="color: red"
+                      >Email <span v-tooltip="'Email of Client or his/her Lawyer'" class="badge rounded-pill bg-dark">?</span> <span style="color: red"
                         >*</span
                       ></label
                     >
@@ -84,7 +84,7 @@
                       >{{ error_email }}
                     </small>
                   </div>
-                  <div class="col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Phone</label>
                     <InputMask
                       class="form-control"
@@ -97,8 +97,8 @@
               </div>
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-3 col-md-3 col-sm-12 mt-2">
-                    <label>Password<span style="color: red">*</span></label>
+                  <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+                    <label>Password <span style="color: red">*</span></label>
                     <input
                       type="password"
                       v-bind:class="{
@@ -115,9 +115,9 @@
                     >
                   </div>
 
-                  <div class="col-lg-3 col-md-3 col-sm-12 mt-2">
+                  <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
                     <label
-                      >Confirm Password<span style="color: red">*</span></label
+                      >Confirm Password <span style="color: red">*</span></label
                     >
                     <input
                       type="password"
@@ -166,7 +166,7 @@ export default {
   },
   data() {
     return {
-      page_title: "Register your Account",
+      page_title: "Sign Up For Using ELawFirm",
       base_url: process.env.VUE_APP_SERVICE_URL,
       user: {
         name: "",
@@ -195,6 +195,7 @@ export default {
         email: { required, email },
         password: { required },
         confirm_password: {
+          required,
           sameAs: sameAs(this.user.password),
         },
         role_name: { required },

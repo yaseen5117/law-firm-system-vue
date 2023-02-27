@@ -1,7 +1,7 @@
 <template>
   <main id="main">
     <page-header
-      :title="'Welcome Back'"
+      :title="'Welcome Back | Login To Start Your Session'"
       :petition="null"
       :hideBreadCrumbs="true"
     />
@@ -9,8 +9,8 @@
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div
-            class="col-lg-3 col-md-4 col-sm-12 card"
-            style="background-color: rgb(203 203 203 / 12%); padding-top: 10px"
+            class="col-md-4 offset-md-4 card mt-3 p-3"
+            style=""
           >
             <form
               @submit.prevent="submitForm($event)"
@@ -19,16 +19,6 @@
             >
               <div class="col-md-12 col-sm-12">
                 <label>Email</label>
-                <!-- <input
-                  v-model="email"
-                  type="text"
-                  name="email"
-                  class="form-control"
-                  placeholder="Enter your email"
-                />
-                <span v-if="v$.email.$error" class="errorMessage"
-                  >Email is Required.</span
-                > -->
                 <InputText
                   style="width: 100%"
                   placeholder="Enter your email"
@@ -42,16 +32,6 @@
               </div>
               <div class="col-md-12 col-sm-12">
                 <label>Password</label>
-                <!-- <input
-                  v-model="password"
-                  type="password"
-                  name="password"
-                  class="form-control"
-                  placeholder="Enter your password"
-                />
-                <span v-if="v$.password.$error" class="errorMessage"
-                  >Password is Required.</span
-                > -->
                 <Password
                   style="width: 100%"
                   :inputStyle="'width: 100%'"
@@ -81,37 +61,18 @@
                   Login
                 </button>
               </div>
-              <div class="col-md-12 col-sm-12">
-                <a href="https://api.elawfirmpk.com/password/reset">
+              <div class="col-md-12 col-sm-12 text-center">
+                <a class="badge rounded-pill bg-success" style="margin-right:2px" href="https://api.elawfirmpk.com/password/reset">
                   Forgot Password?
                 </a>
 
-                <router-link class="d-block" to="/sign-up"
-                  >Register your account</router-link
+                <router-link class="badge rounded-pill bg-primary" to="/sign-up"
+                  >Don't have account? Sign up here!</router-link
                 >
               </div>
             </form>
           </div>
-          <div
-            class="offset-md-1 offset-lg-1 col-lg-5 col-md-4 col-sm-12 mt-on-mobile"
-          >
-            <span v-html="this.globalGeneralSetting.login_page_content"></span>
-          </div>
-          <div class="col-lg-2 col-md-2 col-sm-12">
-            <Image
-              v-if="globalGeneralSetting.site_file_name"
-              :src="
-                this.base_url +
-                '/storage/attachments/settings' +
-                '/' +
-                setting_id +
-                '/' +
-                globalGeneralSetting.site_file_name
-              "
-              alt="Site Image"
-              width="250"
-            />
-          </div>
+          
         </div>
       </div>
     </section>
@@ -197,8 +158,15 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .errorMessage {
   color: red;
+}
+
+.badge{
+  font-size: 11px !important;
+}
+.badge:hover{
+  color: white;
 }
 </style>
