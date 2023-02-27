@@ -3,9 +3,10 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
       <h1 class="logo">
-        <router-link to="/">{{
+        <router-link to="/">ELAWFIRM</router-link>
+        <!-- {{
           this.globalGeneralSetting.site_name
-        }}</router-link>
+        }} -->
       </h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
@@ -22,15 +23,6 @@
               @click="scrollIntoView('hero')"
               to="/"
               >Home</router-link
-            >
-          </li>
-          <li v-show="!this.user">
-            <a
-              :class="
-                this.$route.hash == '#about' ? 'active nav-link' : 'nav-link'
-              "
-              href="#about"
-              >About Us</a
             >
           </li>
           <li v-show="!this.user">
@@ -54,14 +46,23 @@
           <li v-show="!this.user">
             <a
               :class="
+                this.$route.hash == '#about' ? 'active nav-link' : 'nav-link'
+              "
+              href="#about"
+              >About Us</a
+            >
+          </li>
+          <!-- <li v-show="!this.user">
+            <a
+              :class="
                 this.$route.hash == '#reviews' ? 'active nav-link' : 'nav-link'
               "
               href="#reviews"
               >Reviews</a
             >
-          </li>
+          </li> -->
 
-          <li v-show="!this.user">
+          <!-- <li v-show="!this.user">
             <a
               :class="
                 this.$route.hash == '#contact' ? 'active nav-link' : 'nav-link'
@@ -69,7 +70,7 @@
               href="#contact"
               >Contact Us</a
             >
-          </li>
+          </li> -->
           <li v-if="this.user && this.user.id">
             <router-link class="nav-link" to="/dashboard"
               >Welcome {{ this.user.name }}!</router-link
@@ -84,7 +85,7 @@
               >Dashboard</router-link
             >
           </li>
-          <li>
+          <!-- <li>
             <router-link
               :class="
                 this.$route.name == 'fir_reader'
@@ -94,7 +95,7 @@
               to="/fir-reader"
               >FIR Reader</router-link
             >
-          </li>
+          </li> -->
           <li
             v-if="
               this.user &&
@@ -115,22 +116,21 @@
           <li v-show="!this.user">
             <router-link
               :class="
-                this.$route.name == 'Login' ? 'active nav-link' : 'nav-link'
-              "
-              to="/login"
-              >Login</router-link
-            >
-          </li>
-          <li v-show="!this.user">
-            <router-link
-              :class="
                 this.$route.name == 'SignUp' ? 'active nav-link' : 'nav-link'
               "
               to="/sign-up"
               >Sign Up</router-link
             >
           </li>
-
+          <li v-show="!this.user">
+            <router-link
+              :class="
+                this.$route.name == 'Login' ? 'active nav-link' : 'nav-link'
+              "
+              to="/login"
+              >Login</router-link
+            >
+          </li>
           <!-- <li><a class="nav-link scrollto" href="#">Link-1</a></li>
           <li><a class="nav-link scrollto" href="#">Link-2</a></li>           -->
           <li v-show="this.user && this.user.is_admin" class="dropdown">

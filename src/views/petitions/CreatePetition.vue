@@ -83,7 +83,7 @@
                   <div class="col-lg-3 col-md-3 col-sm-12">
                     <label>Lawyer</label>
                     <Multiselect
-                    :disabled="this.user.is_lawyer"
+                      :disabled="this.user.is_lawyer"
                       placeholder="--Select--"
                       class="text-capitalize"
                       mode="tags"
@@ -254,7 +254,7 @@
         </div>
       </div>
     </section>
-  </main> 
+  </main>
   <!-- End #main -->
 </template>
 
@@ -284,7 +284,7 @@ export default {
       btnTitle: this.$route.params.id ? "Update" : "Save",
       base_url: process.env.VUE_APP_SERVICE_URL,
       petition: {
-        year: 2022,
+        year: new Date().getFullYear(),
 
         petitioners: [
           {
@@ -324,16 +324,14 @@ export default {
     }
     this.getPetition();
     this.getLawyers();
-    
-    
   },
   updated() {
     document.title = this.petition
       ? this.petition.case_no + " | " + this.page_title
       : this.page_title;
-      if(this.user.is_lawyer){
-        this.petition.lawyer_ids = [this.user.id];
-      }
+    if (this.user.is_lawyer) {
+      this.petition.lawyer_ids = [this.user.id];
+    }
   },
   mounted() {
     document.getElementById("header");
@@ -428,7 +426,7 @@ export default {
         .get(url, { headers })
         .then((response) => {
           this.lawyers = response.data.lawyers;
-          console.log(this.lawyers);           
+          console.log(this.lawyers);
         })
         .catch((error) => {
           console.log(error);

@@ -122,7 +122,7 @@
                       <th>Role</th>
                       <th>Email</th>
                       <th width="15%">Status</th>
-
+                      <th width="15%">Registered at</th>
                       <th width="20%">Actions</th>
                     </thead>
                     <tbody>
@@ -158,6 +158,11 @@
                             {{
                               user.is_approved ? "Approved" : "Pending Approval"
                             }}
+                          </p>
+                        </td>
+                        <td>
+                          <p>
+                            {{ formateDate(user.created_at) }}
                           </p>
                         </td>
                         <td width="15%">
@@ -269,6 +274,7 @@
 
 <script>
 import axios from "axios";
+import moment from "moment";
 
 import PageHeader from "../shared/PageHeader.vue";
 export default {
@@ -314,6 +320,11 @@ export default {
     this.getUsers();
   },
   methods: {
+    formateDate(date) {
+      if (date) {
+        return moment(String(date)).format("DD/MM/YYYY"); //for  time hh:mm
+      }
+    },
     isApprovedToggle(user, param) {
       user.is_approved = param;
       this.editUser(user);

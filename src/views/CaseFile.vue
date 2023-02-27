@@ -106,7 +106,10 @@
                             ? 'Show Active Cases'
                             : 'Show Archived Cases'
                         "
-                        @click="filters.archived = !filters.archived;searchPetition()"
+                        @click="
+                          filters.archived = !filters.archived;
+                          searchPetition();
+                        "
                       >
                         {{ filters.archived ? "Active Cases" : "Archived" }}
                       </button>
@@ -114,23 +117,24 @@
                         v-if="!this.user.is_student"
                         type="button"
                         style="margin-left: 2px"
-                        class="btn btn-primary btn-sm mr-md-2 mobile-margin-top"
+                        class="btn btn-primary btn-sm mr-md-2 mobile-margin-top tablet-margin-top"
                         @click="openPrintPendingCasesModal()"
                       >
                         Print Pending Cases
                       </button>
                     </div>
-                    <div class="col-lg-2 col-md-2 col-sm-12 mt-1">
-                      <div class="field-checkbox">
+                    <div class="col-lg-2 col-md-3 col-sm-12 mt-1">
+                      <label style="margin-left: 5px">
                         <Checkbox
                           inputClass="p-checkbox p-checkbox-box"
                           v-model="filters.pending_tag"
                           :binary="true"
                         />
-                        <label style="margin-left: 5px"
-                          >Pending Cases Only</label
-                        >
-                      </div>
+                        Pending Cases Only</label
+                      >
+                      <!-- <div class="field-checkbox">
+                        
+                      </div> -->
                     </div>
                   </form>
                 </Transition>
@@ -726,6 +730,11 @@ export default {
   i {
     font-size: 20px;
     margin-right: 12px;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .tablet-margin-top {
+    margin-top: 2px;
   }
 }
 .margin_left {
