@@ -1893,7 +1893,7 @@ label {
 
 .pricing_table_header_col {
   background: #8f3a30;
-  border-radius: 6px;
+  /* border-radius: 6px; */
   color: #f3be32;
   font-size: 16px;
   font-weight: 600;
