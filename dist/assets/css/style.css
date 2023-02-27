@@ -747,6 +747,17 @@ section {
 .services .iconbox-redish:hover .icon path {
   fill: rgb(143 58 48);
 }
+
+.services .iconbox-secret i {
+  color: rgb(126, 95, 200);
+}
+.services .iconbox-secret:hover .icon i {
+  color: #fff;
+}
+.services .iconbox-secret:hover .icon path {
+  fill: rgb(126, 95, 200);
+}
+
 .services .iconbox-pink i {
   color: #e80368;
 }
@@ -1688,6 +1699,7 @@ section {
 }
 .errorMessage {
   color: red;
+  font-size: 13px;
 }
 .error-boarder {
   border: 1px solid red !important;
@@ -1882,7 +1894,7 @@ label {
 
 .pricing_table_header_col {
   background: #8f3a30;
-  border-radius: 6px;
+  /* border-radius: 6px; */
   color: #f3be32;
   font-size: 16px;
   font-weight: 600;
