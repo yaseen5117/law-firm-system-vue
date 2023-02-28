@@ -157,65 +157,112 @@
             class="col-lg-5 order-2 order-lg-1 d-flex flex-column align-items-lg-center"
           >
             <div
-              class="icon-box mt-5 mt-lg-0"
+              class="icon-box mt-lg-0 mt-3"
               data-aos="fade-up"
               data-aos-delay="100"
             >
-              <i class="bx bx-receipt"></i>
-              <h4>Case File View</h4>
-              <p>
-                You can view all your case files online - and from anywhere.
-              </p>
-            </div>
-            <div class="icon-box mt-5" data-aos="fade-up" data-aos-delay="200">
-              <i class="bx bx-cube-alt"></i>
+              <i class="bx bx-calendar"></i>
               <h4>Court Calendar</h4>
-              <p>Keep track of all the dates of hearing.</p>
-            </div>
-            <div class="icon-box mt-5" data-aos="fade-up" data-aos-delay="300">
-              <i class="bx bx-images"></i>
-              <h4>Case Law Library</h4>
-              <p>Organize and store all the case law which you read daily.</p>
-            </div>
-            <div class="icon-box mt-5" data-aos="fade-up" data-aos-delay="400">
-              <i class="bx bx-shield"></i>
-              <h4>Auto-invoicing</h4>
               <p>
-                Use our Invoice-generator to generate professional invoices and
-                keep a track of your firm's finances.
+                Mark dates of hearing. Review tomorrow's cases. Get hearing
+                alerts.
               </p>
+            </div>
+            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="200">
+              <i class="bx bx-receipt"></i>
+              <h4>Case Files</h4>
+              <p>
+                View all your Case Files online. Keep records updated. And
+                upload new ones.
+              </p>
+            </div>
+
+            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
+              <i class="bx bx-file"></i>
+              <h4>Sample Contracts</h4>
+              <p>Library of draft contracts. You can also add your own!</p>
+            </div>
+
+            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
+              <i class="bx bx-book"></i>
+              <h4>Sample Pleadings</h4>
+              <p>Library of draft pleadings. You can also add your own!</p>
+            </div>
+            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
+              <i class="fa fa-question-circle"></i>
+              <h4>Frequently Asked Legal Questions</h4>
+              <p>Some frequently asked questions.</p>
+            </div>
+            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
+              <i class="fa fa-legal"></i>
+              <h4>Criminal Law Guru</h4>
+              <p>Fastest way to research Pakistani criminal law. Try it!</p>
             </div>
           </div>
           <div
             class="col-lg-5 order-2 order-lg-1 d-flex flex-column align-items-lg-center"
           >
             <div
-              class="icon-box mt-5 mt-lg-0"
+              class="icon-box mt-3 mt-lg-0"
               data-aos="fade-up"
               data-aos-delay="100"
             >
-              <i class="fa fa-book"></i>
-              <h4>Frequently Asked Legal Propositions</h4>
-              <!-- <p>
-                You can view all your case files online - and from anywhere.
-              </p> -->
+              <i class="bx bx-calculator"></i>
+              <h4>Limitation Calculator</h4>
+              <p>
+                Calculate the last date of filling for various categories of
+                cases. A taste of the world of AI lawyering.
+              </p>
             </div>
 
-            <div class="icon-box mt-5" data-aos="fade-up" data-aos-delay="400">
-              <i class="fa fa-tasks"></i>
-              <h4>Sample Pleadings</h4>
-              <!-- <p>
-                Use our Invoice-generator to generate professional invoices and
-                keep a track of your firm's finances.
-              </p> -->
+            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
+              <i class="fa fa-legal"></i>
+              <h4>Corporate Law Guru - coming soon!</h4>
+              <p>
+                Step-by-step guide for getting corporate registrations, drafting
+                corporate documents and archiving them.
+              </p>
             </div>
-            <div class="icon-box mt-5" data-aos="fade-up" data-aos-delay="400">
-              <i class="fa fa-file"></i>
-              <h4>Sample Contracts</h4>
-              <!-- <p>
+
+            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
+              <i class="bx bx-calculator"></i>
+              <h4>Transaction Calculator - coming soon!</h4>
+              <p>
+                Calculate the stamp duty and registration fee payable on various
+                kinds of business transaction.
+              </p>
+            </div>
+
+            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
+              <i class="fa fa-gavel"></i>
+              <h4>Service Rules Library - coming soon!</h4>
+              <p>An encyclopedia of service rules.</p>
+            </div>
+
+            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
+              <i class="bx bx-book"></i>
+              <h4>Accounts - coming soon!</h4>
+              <p>Generate invoices and keep track of them.</p>
+            </div>
+
+            <!-- <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="300">
+              <i class="bx bx-images"></i>
+              <h4>Case Law Library</h4>
+              <p>Organize and store all the case law which you read daily.</p>
+            </div>
+            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
+              <i class="bx bx-shield"></i>
+              <h4>Auto-invoicing</h4>
+              <p>
                 Use our Invoice-generator to generate professional invoices and
                 keep a track of your firm's finances.
-              </p> -->
+              </p>
+            </div> -->
+
+            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
+              <i class="bx bx-link"></i>
+              <h4>Useful Links</h4>
+              <p>Some other handy Law and Tech tools available online</p>
             </div>
           </div>
           <div
