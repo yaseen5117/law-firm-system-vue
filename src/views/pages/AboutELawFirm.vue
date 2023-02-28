@@ -6,7 +6,7 @@
       :hideBreadCrumbs="true"
     /> -->
     <section id="services" class="services section-bg">
-      <div class="container" data-aos="fade-up">
+      <div class="container">
         <div class="row">
           <div class="col-lg-8 col-md-8 col-sm-12">
             <span v-html="this.globalGeneralSetting.login_page_content"></span>
@@ -39,7 +39,6 @@ import { mapState } from "vuex";
 import Image from "primevue/image";
 
 export default {
-  name: "Login",
   components: { PageHeader, Image },
   computed: mapState(["globalGeneralSetting"]),
   data() {
@@ -50,6 +49,7 @@ export default {
   },
   mounted() {
     document.title = "About ELawFrim";
+    window.scrollTo(0, 0);
   },
   methods: {},
 };
