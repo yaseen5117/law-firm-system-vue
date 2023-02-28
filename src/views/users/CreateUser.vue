@@ -650,6 +650,7 @@ export default {
               console.log(response);
             },
             (error) => {
+              this.blockOrApproved = true;
               this.saving = false;
               if (error.response.data.validation_error) {
                 this.error_email =
