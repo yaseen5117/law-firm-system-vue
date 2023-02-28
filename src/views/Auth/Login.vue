@@ -1,6 +1,7 @@
 <template>
   <main id="main">
     <page-header
+    :centerHeading="true"
       :title="'Welcome Back | Login To Start Your Session'"
       :petition="null"
       :hideBreadCrumbs="true"
@@ -9,7 +10,7 @@
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div
-            class="col-md-4 offset-md-4 card mt-3 p-3"
+            class="col-md-4 offset-md-4 card mt-5 p-3"
             style=""
           >
             <form
@@ -56,19 +57,25 @@
                   >
                 </div>
               </div>
-              <div class="col-md-12 col-sm-12">
-                <button :disabled="saving" type="submit" class="btn auth-btn">
-                  Login
-                </button>
-              </div>
               <div class="col-md-12 col-sm-12 text-center">
-                <a class="badge rounded-pill bg-success" style="margin-right:2px" href="https://api.elawfirmpk.com/password/reset">
+                
+                <div class="row">
+                  <div class="col-md-4 offset-md-4">
+                    <div class="d-grid ">
+                      <button :disabled="saving" type="submit" class="btn auth-btn btn-block">
+                        Login
+                      </button>
+                    </div>
+                    
+                  </div>
+                </div>
+                <a class="" style="font-size: 14px; text-decoration: underline;" href="https://api.elawfirmpk.com/password/reset">
                   Forgot Password?
                 </a>
+              </div>
+              <div class="col-md-12 col-sm-12 text-center">
+                
 
-                <router-link class="badge rounded-pill bg-primary" to="/sign-up"
-                  >Don't have account? Sign up here!</router-link
-                >
               </div>
             </form>
           </div>

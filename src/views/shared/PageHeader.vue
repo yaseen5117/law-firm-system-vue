@@ -2,7 +2,7 @@
   <Transition name="slide-fade">
     <section id="breadcrumbs" class="breadcrumbs" v-if="!hide">
       <div class="container">
-        <div class="d-flex justify-content-between align-items-center">
+        <div  :class="centerHeading?'text-center':'d-flex justify-content-between align-items-center'">
           <span v-if="isNotHeading">{{ title }}</span>
           <h4 v-if="title && !isNotHeading">
             {{ title }}
@@ -129,6 +129,7 @@ export default {
     "isStatute",
     "showFirReader",
     "showUsers",
+    "centerHeading",
   ],
   data() {
     return {

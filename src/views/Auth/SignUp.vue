@@ -1,10 +1,15 @@
 <template>
   <main id="main">
-    <page-header :title="page_title" :petition="null" :hideBreadCrumbs="true" />
+    <page-header
+      :centerHeading="true"
+      :title="page_title"
+      :petition="null"
+      :hideBreadCrumbs="true"
+    />
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="row">
-          <div class="col-md-8 offset-md-2 card mt-3 p-3">
+          <div class="col-md-8 offset-md-2 card mt-5 p-3">
             <form @submit.prevent="submitForm($event)">
               <div class="form-group">
                 <div class="row">
@@ -131,10 +136,23 @@
                 </div>
               </div>
 
-              <div class="form-group">
-                <button :disabled="saving" class="btn auth-btn mt-2">
-                  Sign Up
-                </button>
+              <div class="form-group text-center">
+                <div class="row">
+                  <div class="col-md-2 offset-md-5">
+                    <div class="d-grid gap-3">
+                      <button
+                        :disabled="saving"
+                        class="btn btn-block auth-btn mt-2"
+                      >
+                        Sign Up
+                      </button>
+                      <router-link style="font-size: 14px; text-decoration: underline;" to="about-elawfirm" class="read-more"
+              >What is ELawFirm?
+            </router-link>
+                      
+                    </div>
+                  </div>
+                </div>
                 <Dialog
                   modal="true"
                   header="Thank you for signing up!"
@@ -236,7 +254,7 @@ export default {
                 this.v$.$reset();
               }, 0);
               this.msgAfterSignUp =
-                "You will receive an email with your login details. Our Admins will approve your account soon then you can login in to ElawFirm.";
+                "You will receive an email with your login details. Once your account is approved by the Admin, you'll be able to login to ELawFirm.";
               this.successPopup = true;
             }
             console.log(response);
