@@ -194,7 +194,7 @@
               <p>Some frequently asked questions.</p>
             </div>
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
-              <i class="fa fa-legal"></i>
+              <i class="bx bx-file-find"></i>
               <h4>Criminal Law Guru</h4>
               <p>Fastest way to research Pakistani criminal law. Try it!</p>
             </div>
@@ -216,7 +216,7 @@
             </div>
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
-              <i class="fa fa-legal"></i>
+              <i class="bx bx-shield-x"></i>
               <h4>Corporate Law Guru - coming soon!</h4>
               <p>
                 Step-by-step guide for getting corporate registrations, drafting
@@ -234,7 +234,7 @@
             </div>
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
-              <i class="fa fa-gavel"></i>
+              <i class="fa fa-wrench"></i>
               <h4>Service Rules Library - coming soon!</h4>
               <p>An encyclopedia of service rules.</p>
             </div>
