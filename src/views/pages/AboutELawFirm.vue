@@ -13,6 +13,7 @@
           </div>
           <div class="col-lg-4 col-md-4 col-sm-12">
             <Image
+              :imageClass="'img-fluid'"
               v-if="globalGeneralSetting.site_file_name"
               :src="
                 this.base_url +
@@ -23,7 +24,6 @@
                 globalGeneralSetting.site_file_name
               "
               alt="Site Image"
-              width="250"
             />
           </div>
         </div>
