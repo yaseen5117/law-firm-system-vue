@@ -47,6 +47,9 @@
               <li v-if="showFirReader">
                 <router-link to="/fir-sections">FIR Reader</router-link>
               </li>
+              <li v-if="showUsers">
+                <router-link to="/users">Users</router-link>
+              </li>
               <li v-if="showInvoices">
                 <router-link to="/invoices">Invoices</router-link>
               </li>
@@ -125,6 +128,7 @@ export default {
     "isNotHeading",
     "isStatute",
     "showFirReader",
+    "showUsers",
   ],
   data() {
     return {

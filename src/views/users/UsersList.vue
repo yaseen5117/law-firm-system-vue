@@ -9,6 +9,8 @@
     <main id="main">
       <page-header
         title="Users"
+        :showUsers="true"
+        :hideCaseFiles="true"
         :route_object="route_obj"
         :header_button="header_button"
         :header_button_text="header_button_text"
