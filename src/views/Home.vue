@@ -191,7 +191,7 @@
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
               <i class="fa fa-question-circle"></i>
               <h4>Frequently Asked Legal Questions</h4>
-              <p>Some frequently asked questions.</p>
+              <p>Some frequently asked questions answered by law experts.</p>
             </div>
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
               <i class="bx bx-file-find"></i>
