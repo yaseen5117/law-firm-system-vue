@@ -11,6 +11,7 @@
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Name <span style="color: red">*</span></label>
                     <input
+                      placeholder="Enter your full name"
                       class="form-control"
                       v-model="user.name"
                       v-bind:class="{
@@ -53,14 +54,15 @@
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label
                       >Email
-                      <span
+                      <!-- <span
                         v-tooltip="'Email of Client or his/her Lawyer'"
                         class="badge rounded-pill bg-dark"
                         >?</span
-                      >
+                      > -->
                       <span style="color: red">*</span></label
                     >
                     <input
+                      placeholder="Email of Client or his/her Lawyer"
                       type="email"
                       class="form-control"
                       v-model="user.email"
@@ -92,6 +94,7 @@
                   <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
                     <label>Password <span style="color: red">*</span></label>
                     <input
+                      placeholder="Enter your password"
                       type="password"
                       v-bind:class="{
                         'error-boarder': v$.user.password.$error,
@@ -110,6 +113,7 @@
                       >Confirm Password <span style="color: red">*</span></label
                     >
                     <input
+                      placeholder="Re-Enter your password"
                       type="password"
                       v-bind:class="{
                         'error-boarder': v$.user.confirm_password.$error,

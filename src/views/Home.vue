@@ -249,7 +249,9 @@
             <div class="">
               <table class="table table-striped">
                 <thead>
-                  <tr style="background: #8f3a30; color: #f3be32">
+                  <tr
+                    style="background: #8f3a30; color: #f3be32; font-size: 14px"
+                  >
                     <th></th>
                     <!-- <td class="pricing_table_header_col">Free</td> -->
                     <th class="">Law School Plan</th>
@@ -259,7 +261,11 @@
                 </thead>
 
                 <tbody>
-                  <tr v-for="plan in this.plans_n_features" :key="plan.id">
+                  <tr
+                    v-for="plan in this.plans_n_features"
+                    :key="plan.id"
+                    style="font-size: 13px"
+                  >
                     <td class="text-start" style="padding-left: 20px">
                       <strong>{{ plan.feature_name }}</strong>
                     </td>
