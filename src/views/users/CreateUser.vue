@@ -1,7 +1,12 @@
 <template>
   <ConfirmPopup />
   <main id="main">
-    <page-header :title="page_title" :petition="null" />
+    <page-header
+      :title="page_title"
+      :showUsers="true"
+      :hideCaseFiles="true"
+      :petition="null"
+    />
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <form @submit.prevent="submitForm($event)">
