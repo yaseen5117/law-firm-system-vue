@@ -146,12 +146,14 @@
                       >
                         Sign Up
                       </button>
-                      <router-link style="font-size: 14px; text-decoration: underline;" to="about-elawfirm" class="read-more"
-              >What is ELawFirm?
-            </router-link>
+                      
                       
                     </div>
+                    
                   </div>
+                  <router-link style="font-size: 14px; text-decoration: underline;" to="about-elawfirm" class="read-more mt-2"
+              >What is ELawFirm?
+            </router-link>
                 </div>
                 <Dialog
                   modal="true"
