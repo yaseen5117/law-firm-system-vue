@@ -162,7 +162,7 @@
               data-aos-delay="100"
             >
               <i class="bx bx-calendar"></i>
-              <h4>Court Calendar</h4>
+              <h4 @click="showFeatureRestrictedPopup()" >Court Calendar {{ featureRestrictedDialog }}</h4>
               <p>
                 Mark dates of hearing. Review tomorrow's cases. Get hearing
                 alerts.
@@ -179,13 +179,25 @@
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
               <i class="bx bx-file"></i>
-              <h4>Sample Contracts</h4>
+              <h4><router-link :to="{
+                name:'preview-html',
+                params: {
+                  page_type:'contract-and-agreement',
+                  page_slug:'partnership-agreement',
+                }
+              }" >Sample Contracts</router-link></h4>
               <p>Library of draft contracts. You can also add your own!</p>
             </div>
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
               <i class="bx bx-book"></i>
-              <h4>Sample Pleadings</h4>
+              <h4><router-link :to="{
+                name:'preview-html',
+                params: {
+                  page_type:'sample-pleading',
+                  page_slug:'writ-petition',
+                }
+              }" >Sample Pleadings</router-link></h4>
               <p>Library of draft pleadings. You can also add your own!</p>
             </div>
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
@@ -195,7 +207,11 @@
             </div>
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
               <i class="bx bx-file-find"></i>
-              <h4>Criminal Law Guru</h4>
+              <h4><router-link :to="{
+                name:'fir_reader',
+                params: {
+                }
+              }" >Criminal Law Guru</router-link></h4>
               <p>Fastest way to research Pakistani criminal law. Try it!</p>
             </div>
           </div>
@@ -294,14 +310,13 @@
             data-aos-delay="100"
           >
             <div class="">
-              <table class="table table-striped">
+              <table class="table table-bordered table-striped">
                 <thead>
                   <tr class="pricing-th-text">
-                    <th></th>
-                    <!-- <td class="pricing_table_header_col">Free</td> -->
-                    <th class="">Law School Plan</th>
-                    <th class="">Individual Lawyer</th>
-                    <th class="">Law Firm OR In-house Legal Department</th>
+                    <th class="text-center">Features</th>
+                    <th class="text-center">Law School Plan</th>
+                    <th class="text-center">Individual Lawyer</th>
+                    <th class="text-center">Law Firm OR In-house Legal Department</th>
                   </tr>
                 </thead>
 
@@ -315,9 +330,9 @@
                       <strong>{{ plan.feature_name }}</strong>
                     </td>
                     <!-- <td v-html="plan.free_plan"></td> -->
-                    <td v-html="plan.student_plan"></td>
-                    <td v-html="plan.individual_plan"></td>
-                    <td v-html="plan.lawfirm_plan"></td>
+                    <td class="text-center" v-html="plan.student_plan"></td>
+                    <td class="text-center"  v-html="plan.individual_plan"></td>
+                    <td class="text-center"  v-html="plan.lawfirm_plan"></td>
                   </tr>
                 </tbody>
               </table>
@@ -633,11 +648,23 @@
     <!-- End Contact Section -->
   </main>
   <!-- End #main -->
+
+  <Dialog
+                  modal="true"
+                  header="Login to see this page"
+                  position="center"
+                  closable="true"
+                  v-model:visible="featureRestrictedDialog"
+                >
+                  <p>This feature is available after login in to system.</p>
+                </Dialog>
+
 </template>
 
 <script>
 // @ is an alias to /src
 //import CaseDetail from "./CaseDetail.vue";
+import Dialog from "primevue/dialog";
 import axios from "axios";
 import { mapState } from "vuex";
 import useVuelidate from "@vuelidate/core";
@@ -645,7 +672,7 @@ import { required, email } from "@vuelidate/validators";
 
 export default {
   name: "Home",
-  components: {},
+  components: {Dialog},
   computed: mapState(["user", "globalGeneralSetting"]),
   setup() {
     return {
@@ -654,6 +681,7 @@ export default {
   },
   data() {
     return {
+      featureRestrictedDialog: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
       saving: false,
       contact_request: {
@@ -799,6 +827,9 @@ export default {
     });
   },
   methods: {
+    showFeatureRestrictedPopup(){
+      this.featureRestrictedDialog = true;
+    },
     scrollIntoView(id) {
       const yOffset = -200;
       const element = document.getElementById(id);
@@ -847,6 +878,13 @@ export default {
 </script>
 
 <style scoped>
+.icon-box h4{
+  cursor: pointer;
+}
+.icon-box h4 a{
+  color: #444444!important
+}
+
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
   iframe {
