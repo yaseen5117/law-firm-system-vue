@@ -296,9 +296,7 @@
             <div class="">
               <table class="table table-striped">
                 <thead>
-                  <tr
-                    style="background: #8f3a30; color: #f3be32; font-size: 14px"
-                  >
+                  <tr class="pricing-th-text">
                     <th></th>
                     <!-- <td class="pricing_table_header_col">Free</td> -->
                     <th class="">Law School Plan</th>
@@ -311,7 +309,7 @@
                   <tr
                     v-for="plan in this.plans_n_features"
                     :key="plan.id"
-                    style="font-size: 13px"
+                    class="pricing-td-text"
                   >
                     <td class="text-start" style="padding-left: 20px">
                       <strong>{{ plan.feature_name }}</strong>
@@ -525,6 +523,24 @@
 
         <div class="row" id="quote">
           <div class="col-lg-6">
+            <a
+              href="https://www.linkedin.com/in/elawfirm-bringing-law-and-tech-together-50b67523b/"
+              target="_blank"
+            >
+              <i class="fa fa-linkedin-square linkedin-icon icon-font"></i>
+            </a>
+            <a
+              href="https://www.facebook.com/profile.php?id=100081095452021"
+              target="_blank"
+            >
+              <i class="fa fa-facebook-square facebook-icon icon-font"></i
+            ></a>
+            <a href="https://twitter.com/@E_Lawfirm" target="_blank">
+              <i class="fa fa-twitter-square twitter-icon icon-font"></i
+            ></a>
+            <a href="#" target="_blank">
+              <i class="fa fa-instagram instagram-icon icon-font"></i
+            ></a>
             <!-- <iframe
               width="560"
               height="315"
@@ -836,5 +852,32 @@ export default {
   iframe {
     width: 100%;
   }
+}
+.pricing-td-text {
+  font-size: 13px;
+  border: 1px solid #bebcbc;
+}
+.pricing-th-text {
+  background: #8f3a30;
+  color: #f3be32;
+  font-size: 14px;
+}
+.icon-font {
+  font-size: 30px;
+}
+.linkedin-icon {
+  color: #0a66c2;
+}
+.facebook-icon {
+  color: #3b5998;
+  margin-left: 10px;
+}
+.twitter-icon {
+  color: #00acee;
+  margin-left: 10px;
+}
+.instagram-icon {
+  color: rgb(214, 41, 118);
+  margin-left: 10px;
 }
 </style>

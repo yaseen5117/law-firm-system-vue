@@ -28,6 +28,15 @@
           <li v-show="!this.user">
             <a
               :class="
+                this.$route.hash == '#about' ? 'active nav-link' : 'nav-link'
+              "
+              href="#about"
+              >About Us</a
+            >
+          </li>
+          <li v-show="!this.user">
+            <a
+              :class="
                 this.$route.hash == '#features' ? 'active nav-link' : 'nav-link'
               "
               href="#features"
@@ -41,15 +50,6 @@
               "
               href="#pricing"
               >Pricing</a
-            >
-          </li>
-          <li v-show="!this.user">
-            <a
-              :class="
-                this.$route.hash == '#about' ? 'active nav-link' : 'nav-link'
-              "
-              href="#about"
-              >About Us</a
             >
           </li>
           <!-- <li v-show="!this.user">

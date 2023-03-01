@@ -1,7 +1,7 @@
 <template>
   <main id="main">
     <page-header
-    :centerHeading="true"
+      :centerHeading="true"
       :title="'Welcome Back | Login To Start Your Session'"
       :petition="null"
       :hideBreadCrumbs="true"
@@ -9,10 +9,7 @@
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
         <div class="row">
-          <div
-            class="col-md-4 offset-md-4 card mt-5 p-3"
-            style=""
-          >
+          <div class="col-md-4 offset-md-4 card mt-5 p-3" style="">
             <form
               @submit.prevent="submitForm($event)"
               class="row g-3"
@@ -26,6 +23,10 @@
                   name="email"
                   type="text"
                   v-model="email"
+                  v-bind:class="{
+                    'error-boarder': v$.email.$error,
+                  }"
+                  @blur="v$.email.$touch"
                 />
                 <span v-if="v$.email.$error" class="errorMessage"
                   >Email is Required.</span
@@ -40,6 +41,10 @@
                   :feedback="false"
                   toggleMask
                   placeholder="Enter your password"
+                  v-bind:class="{
+                    'error-boarder': v$.password.$error,
+                  }"
+                  @blur="v$.password.$touch"
                 ></Password>
                 <span v-if="v$.password.$error" class="errorMessage"
                   >Password is Required.</span
@@ -58,28 +63,30 @@
                 </div>
               </div>
               <div class="col-md-12 col-sm-12 text-center">
-                
                 <div class="row">
                   <div class="col-md-4 offset-md-4">
-                    <div class="d-grid ">
-                      <button :disabled="saving" type="submit" class="btn auth-btn btn-block">
+                    <div class="d-grid">
+                      <button
+                        :disabled="saving"
+                        type="submit"
+                        class="btn auth-btn btn-block"
+                      >
                         Login
                       </button>
                     </div>
-                    
                   </div>
                 </div>
-                <a class="" style="font-size: 14px; text-decoration: underline;" href="https://api.elawfirmpk.com/password/reset">
+                <a
+                  class=""
+                  style="font-size: 14px; text-decoration: underline"
+                  href="https://api.elawfirmpk.com/password/reset"
+                >
                   Forgot Password?
                 </a>
               </div>
-              <div class="col-md-12 col-sm-12 text-center">
-                
-
-              </div>
+              <div class="col-md-12 col-sm-12 text-center"></div>
             </form>
           </div>
-          
         </div>
       </div>
     </section>
@@ -170,10 +177,10 @@ export default {
   color: red;
 }
 
-.badge{
+.badge {
   font-size: 11px !important;
 }
-.badge:hover{
+.badge:hover {
   color: white;
 }
 </style>
