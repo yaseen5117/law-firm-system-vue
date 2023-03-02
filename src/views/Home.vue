@@ -6,7 +6,7 @@
         <div
           class="col-xl-5 col-lg-6 pt-3 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center"
         >
-          <h1>Welcome to <br />{{ this.globalGeneralSetting.site_name }}</h1>
+          <h1>Welcome to <br />ELAWFIRM</h1>
           <!-- <h2>We are team of talented designers making websites with Bootstrap</h2> -->
           <div v-if="!this.user">
             <router-link
@@ -162,7 +162,7 @@
               data-aos-delay="100"
             >
               <i class="bx bx-calendar"></i>
-              <h4 @click="showFeatureRestrictedPopup()" >Court Calendar {{ featureRestrictedDialog }}</h4>
+              <h4 @click="showFeatureRestrictedPopup()">Court Calendar</h4>
               <p>
                 Mark dates of hearing. Review tomorrow's cases. Get hearing
                 alerts.
@@ -179,25 +179,35 @@
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
               <i class="bx bx-file"></i>
-              <h4><router-link :to="{
-                name:'preview-html',
-                params: {
-                  page_type:'contract-and-agreement',
-                  page_slug:'partnership-agreement',
-                }
-              }" >Sample Contracts</router-link></h4>
+              <h4>
+                <router-link
+                  :to="{
+                    name: 'preview-html',
+                    params: {
+                      page_type: 'contract-and-agreement',
+                      page_slug: 'partnership-agreement',
+                    },
+                  }"
+                  >Sample Contracts</router-link
+                >
+              </h4>
               <p>Library of draft contracts. You can also add your own!</p>
             </div>
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
               <i class="bx bx-book"></i>
-              <h4><router-link :to="{
-                name:'preview-html',
-                params: {
-                  page_type:'sample-pleading',
-                  page_slug:'writ-petition',
-                }
-              }" >Sample Pleadings</router-link></h4>
+              <h4>
+                <router-link
+                  :to="{
+                    name: 'preview-html',
+                    params: {
+                      page_type: 'sample-pleading',
+                      page_slug: 'writ-petition',
+                    },
+                  }"
+                  >Sample Pleadings</router-link
+                >
+              </h4>
               <p>Library of draft pleadings. You can also add your own!</p>
             </div>
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
@@ -207,11 +217,15 @@
             </div>
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
               <i class="bx bx-file-find"></i>
-              <h4><router-link :to="{
-                name:'fir_reader',
-                params: {
-                }
-              }" >Criminal Law Guru</router-link></h4>
+              <h4>
+                <router-link
+                  :to="{
+                    name: 'fir_reader',
+                    params: {},
+                  }"
+                  >Criminal Law Guru</router-link
+                >
+              </h4>
               <p>Fastest way to research Pakistani criminal law. Try it!</p>
             </div>
           </div>
@@ -316,7 +330,9 @@
                     <th class="text-center">Features</th>
                     <th class="text-center">Law School Plan</th>
                     <th class="text-center">Individual Lawyer</th>
-                    <th class="text-center">Law Firm OR In-house Legal Department</th>
+                    <th class="text-center">
+                      Law Firm OR In-house Legal Department
+                    </th>
                   </tr>
                 </thead>
 
@@ -331,8 +347,8 @@
                     </td>
                     <!-- <td v-html="plan.free_plan"></td> -->
                     <td class="text-center" v-html="plan.student_plan"></td>
-                    <td class="text-center"  v-html="plan.individual_plan"></td>
-                    <td class="text-center"  v-html="plan.lawfirm_plan"></td>
+                    <td class="text-center" v-html="plan.individual_plan"></td>
+                    <td class="text-center" v-html="plan.lawfirm_plan"></td>
                   </tr>
                 </tbody>
               </table>
@@ -650,15 +666,46 @@
   <!-- End #main -->
 
   <Dialog
-                  modal="true"
-                  header="Login to see this page"
-                  position="center"
-                  closable="true"
-                  v-model:visible="featureRestrictedDialog"
-                >
-                  <p>This feature is available after login in to system.</p>
-                </Dialog>
-
+    :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
+    :style="{ width: '50vw' }"
+    modal="true"
+    header="Are You a Member?"
+    position="center"
+    closable="true"
+    v-model:visible="featureRestrictedDialog"
+  >
+    <div class="row">
+      <div class="col-12">
+        <p>Login or Signup for an account to access.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="d-grid">
+          <router-link
+            class="btn auth-btn btn-block"
+            :to="{
+              name: 'Login',
+            }"
+          >
+            Login
+          </router-link>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="d-grid">
+          <router-link
+            class="btn btn-block auth-btn"
+            :to="{
+              name: 'SignUp',
+            }"
+          >
+            Sign Up
+          </router-link>
+        </div>
+      </div>
+    </div>
+  </Dialog>
 </template>
 
 <script>
@@ -672,7 +719,7 @@ import { required, email } from "@vuelidate/validators";
 
 export default {
   name: "Home",
-  components: {Dialog},
+  components: { Dialog },
   computed: mapState(["user", "globalGeneralSetting"]),
   setup() {
     return {
@@ -827,7 +874,7 @@ export default {
     });
   },
   methods: {
-    showFeatureRestrictedPopup(){
+    showFeatureRestrictedPopup() {
       this.featureRestrictedDialog = true;
     },
     scrollIntoView(id) {
@@ -878,11 +925,14 @@ export default {
 </script>
 
 <style scoped>
-.icon-box h4{
+.icon-box h4 {
   cursor: pointer;
 }
-.icon-box h4 a{
-  color: #444444!important
+.icon-box h4 a {
+  color: #444444 !important;
+}
+.icon-box h4:hover {
+  text-decoration: underline;
 }
 
 @media only screen and (max-width: 768px) {
