@@ -6,7 +6,7 @@
         <div
           class="col-xl-5 col-lg-6 pt-3 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center"
         >
-          <h1>Welcome to <br />{{ this.globalGeneralSetting.site_name }}</h1>
+          <h1>Welcome to <br />ELAWFIRM</h1>
           <!-- <h2>We are team of talented designers making websites with Bootstrap</h2> -->
           <div v-if="!this.user">
             <router-link
@@ -162,7 +162,7 @@
               data-aos-delay="100"
             >
               <i class="bx bx-calendar"></i>
-              <h4>Court Calendar</h4>
+              <h4 @click="showFeatureRestrictedPopup()">Court Calendar</h4>
               <p>
                 Mark dates of hearing. Review tomorrow's cases. Get hearing
                 alerts.
@@ -170,7 +170,7 @@
             </div>
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="200">
               <i class="bx bx-receipt"></i>
-              <h4>Case Files</h4>
+              <h4 @click="showFeatureRestrictedPopup()" >Case Files</h4>
               <p>
                 View all your Case Files online. Keep records updated. And
                 upload new ones.
@@ -179,13 +179,35 @@
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
               <i class="bx bx-file"></i>
-              <h4>Sample Contracts</h4>
+              <h4>
+                <router-link
+                  :to="{
+                    name: 'preview-html',
+                    params: {
+                      page_type: 'contract-and-agreement',
+                      page_slug: 'partnership-agreement',
+                    },
+                  }"
+                  >Sample Contracts</router-link
+                >
+              </h4>
               <p>Library of draft contracts. You can also add your own!</p>
             </div>
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
               <i class="bx bx-book"></i>
-              <h4>Sample Pleadings</h4>
+              <h4>
+                <router-link
+                  :to="{
+                    name: 'preview-html',
+                    params: {
+                      page_type: 'sample-pleading',
+                      page_slug: 'writ-petition',
+                    },
+                  }"
+                  >Sample Pleadings</router-link
+                >
+              </h4>
               <p>Library of draft pleadings. You can also add your own!</p>
             </div>
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
@@ -195,7 +217,15 @@
             </div>
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
               <i class="bx bx-file-find"></i>
-              <h4>Criminal Law Guru</h4>
+              <h4>
+                <router-link
+                  :to="{
+                    name: 'fir_reader',
+                    params: {},
+                  }"
+                  >Criminal Law Guru</router-link
+                >
+              </h4>
               <p>Fastest way to research Pakistani criminal law. Try it!</p>
             </div>
           </div>
@@ -208,7 +238,7 @@
               data-aos-delay="100"
             >
               <i class="bx bx-calculator"></i>
-              <h4>Limitation Calculator</h4>
+              <h4 @click="showFeatureRestrictedPopup()" >Limitation Calculator</h4>
               <p>
                 Calculate the last date of filling for various categories of
                 cases. A taste of the world of AI lawyering.
@@ -217,7 +247,7 @@
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
               <i class="bx bx-shield-x"></i>
-              <h4>Corporate Law Guru - coming soon!</h4>
+              <h4 @click="showFeatureRestrictedPopup()" >Corporate Law Guru - coming soon!</h4>
               <p>
                 Step-by-step guide for getting corporate registrations, drafting
                 corporate documents and archiving them.
@@ -226,7 +256,7 @@
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
               <i class="bx bx-calculator"></i>
-              <h4>Transaction Calculator - coming soon!</h4>
+              <h4 @click="showFeatureRestrictedPopup()" >Transaction Calculator - coming soon!</h4>
               <p>
                 Calculate the stamp duty and registration fee payable on various
                 kinds of business transaction.
@@ -235,13 +265,13 @@
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
               <i class="fa fa-wrench"></i>
-              <h4>Service Rules Library - coming soon!</h4>
+              <h4 @click="showFeatureRestrictedPopup()" >Service Rules Library - coming soon!</h4>
               <p>An encyclopedia of service rules.</p>
             </div>
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
               <i class="bx bx-book"></i>
-              <h4>Accounts - coming soon!</h4>
+              <h4 @click="showFeatureRestrictedPopup()" >Accounts - coming soon!</h4>
               <p>Generate invoices and keep track of them.</p>
             </div>
 
@@ -261,7 +291,7 @@
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
               <i class="bx bx-link"></i>
-              <h4>Useful Links</h4>
+              <h4  @click="showFeatureRestrictedPopup()" >Useful Links</h4>
               <p>Some other handy Law and Tech tools available online</p>
             </div>
           </div>
@@ -294,14 +324,15 @@
             data-aos-delay="100"
           >
             <div class="">
-              <table class="table table-striped">
+              <table class="table table-bordered table-striped">
                 <thead>
                   <tr class="pricing-th-text">
-                    <th></th>
-                    <!-- <td class="pricing_table_header_col">Free</td> -->
-                    <th class="">Law School Plan</th>
-                    <th class="">Individual Lawyer</th>
-                    <th class="">Law Firm OR In-house Legal Department</th>
+                    <th class="text-center">Features</th>
+                    <th class="text-center">Law School Plan</th>
+                    <th class="text-center">Individual Lawyer</th>
+                    <th class="text-center">
+                      Law Firm OR In-house Legal Department
+                    </th>
                   </tr>
                 </thead>
 
@@ -315,9 +346,9 @@
                       <strong>{{ plan.feature_name }}</strong>
                     </td>
                     <!-- <td v-html="plan.free_plan"></td> -->
-                    <td v-html="plan.student_plan"></td>
-                    <td v-html="plan.individual_plan"></td>
-                    <td v-html="plan.lawfirm_plan"></td>
+                    <td class="text-center" v-html="plan.student_plan"></td>
+                    <td class="text-center" v-html="plan.individual_plan"></td>
+                    <td class="text-center" v-html="plan.lawfirm_plan"></td>
                   </tr>
                 </tbody>
               </table>
@@ -764,11 +795,55 @@
     <!-- End Contact Section -->
   </main>
   <!-- End #main -->
+
+  <Dialog
+    :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
+    :style="{ width: '50vw' }"
+    dismissableMask="true"
+    modal="true"
+    header="Are You a Member?"
+    position="center"
+    closable="true"
+    v-model:visible="featureRestrictedDialog"
+  >
+    <div class="row">
+      <div class="col-12">
+        <p>Login or Signup for an account to access.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="d-grid">
+          <router-link
+            class="btn auth-btn btn-block"
+            :to="{
+              name: 'Login',
+            }"
+          >
+            Login
+          </router-link>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="d-grid">
+          <router-link
+            class="btn btn-block auth-btn"
+            :to="{
+              name: 'SignUp',
+            }"
+          >
+            Sign Up
+          </router-link>
+        </div>
+      </div>
+    </div>
+  </Dialog>
 </template>
 
 <script>
 // @ is an alias to /src
 //import CaseDetail from "./CaseDetail.vue";
+import Dialog from "primevue/dialog";
 import axios from "axios";
 import { mapState } from "vuex";
 import useVuelidate from "@vuelidate/core";
@@ -776,7 +851,7 @@ import { required, email } from "@vuelidate/validators";
 
 export default {
   name: "Home",
-  components: {},
+  components: { Dialog },
   computed: mapState(["user", "globalGeneralSetting"]),
   setup() {
     return {
@@ -785,6 +860,7 @@ export default {
   },
   data() {
     return {
+      featureRestrictedDialog: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
       saving: false,
       contact_request: {
@@ -930,6 +1006,9 @@ export default {
     });
   },
   methods: {
+    showFeatureRestrictedPopup() {
+      this.featureRestrictedDialog = true;
+    },
     scrollIntoView(id) {
       const yOffset = -200;
       const element = document.getElementById(id);
@@ -978,6 +1057,16 @@ export default {
 </script>
 
 <style scoped>
+.icon-box h4 {
+  cursor: pointer;
+}
+.icon-box h4 a {
+  color: #444444 !important;
+}
+.icon-box h4:hover {
+  text-decoration: underline;
+}
+
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
   iframe {
