@@ -170,7 +170,7 @@
             </div>
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="200">
               <i class="bx bx-receipt"></i>
-              <h4>Case Files</h4>
+              <h4 @click="showFeatureRestrictedPopup()" >Case Files</h4>
               <p>
                 View all your Case Files online. Keep records updated. And
                 upload new ones.
@@ -238,7 +238,7 @@
               data-aos-delay="100"
             >
               <i class="bx bx-calculator"></i>
-              <h4>Limitation Calculator</h4>
+              <h4 @click="showFeatureRestrictedPopup()" >Limitation Calculator</h4>
               <p>
                 Calculate the last date of filling for various categories of
                 cases. A taste of the world of AI lawyering.
@@ -247,7 +247,7 @@
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
               <i class="bx bx-shield-x"></i>
-              <h4>Corporate Law Guru - coming soon!</h4>
+              <h4 @click="showFeatureRestrictedPopup()" >Corporate Law Guru - coming soon!</h4>
               <p>
                 Step-by-step guide for getting corporate registrations, drafting
                 corporate documents and archiving them.
@@ -256,7 +256,7 @@
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
               <i class="bx bx-calculator"></i>
-              <h4>Transaction Calculator - coming soon!</h4>
+              <h4 @click="showFeatureRestrictedPopup()" >Transaction Calculator - coming soon!</h4>
               <p>
                 Calculate the stamp duty and registration fee payable on various
                 kinds of business transaction.
@@ -265,13 +265,13 @@
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
               <i class="fa fa-wrench"></i>
-              <h4>Service Rules Library - coming soon!</h4>
+              <h4 @click="showFeatureRestrictedPopup()" >Service Rules Library - coming soon!</h4>
               <p>An encyclopedia of service rules.</p>
             </div>
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
               <i class="bx bx-book"></i>
-              <h4>Accounts - coming soon!</h4>
+              <h4 @click="showFeatureRestrictedPopup()" >Accounts - coming soon!</h4>
               <p>Generate invoices and keep track of them.</p>
             </div>
 
@@ -291,7 +291,7 @@
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
               <i class="bx bx-link"></i>
-              <h4>Useful Links</h4>
+              <h4  @click="showFeatureRestrictedPopup()" >Useful Links</h4>
               <p>Some other handy Law and Tech tools available online</p>
             </div>
           </div>
@@ -668,6 +668,7 @@
   <Dialog
     :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
     :style="{ width: '50vw' }"
+    dismissableMask="true"
     modal="true"
     header="Are You a Member?"
     position="center"
