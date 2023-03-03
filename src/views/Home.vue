@@ -470,6 +470,7 @@
 // @ is an alias to /src
 //import CaseDetail from "./CaseDetail.vue";
 import jsonOfReviews from "./../store/reviews.json";
+import jsonOfFeatures from "./../store/features.json";
 import Dialog from "primevue/dialog";
 import axios from "axios";
 import { mapState } from "vuex";
@@ -641,8 +642,11 @@ export default {
   },
   methods: {
     getReviews(){
-      console.log("jsonOfReviews",jsonOfReviews);
+
       this.reviewJsonData = jsonOfReviews;
+    },
+    getFeatures(){
+      this.featureJsonData = jsonOfFeatures;
     },
     showFeatureRestrictedPopup() {
       this.featureRestrictedDialog = true;
