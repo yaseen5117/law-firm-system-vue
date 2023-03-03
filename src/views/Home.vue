@@ -151,161 +151,30 @@
           <h2>Features</h2>
           <p>Our Main Features are:</p>
         </div>
-
         <div class="row">
           <div
             class="col-lg-5 order-2 order-lg-1 d-flex flex-column align-items-lg-center"
           >
-            <div
-              class="icon-box mt-lg-0 mt-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
+            <template
+              v-for="(singleFeature, rowIndex) in featureJsonData"
+              :key="rowIndex.id"
             >
-              <i class="bx bx-calendar"></i>
-              <h4 @click="showFeatureRestrictedPopup()">Court Calendar</h4>
-              <p>
-                Mark dates of hearing. Review tomorrow's cases. Get hearing
-                alerts.
-              </p>
-            </div>
-            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="200">
-              <i class="bx bx-receipt"></i>
-              <h4 @click="showFeatureRestrictedPopup()">Case Files</h4>
-              <p>
-                View all your Case Files online. Keep records updated. And
-                upload new ones.
-              </p>
-            </div>
-
-            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
-              <i class="bx bx-file"></i>
-              <h4>
-                <router-link
-                  :to="{
-                    name: 'preview-html',
-                    params: {
-                      page_type: 'contract-and-agreement',
-                      page_slug: 'partnership-agreement',
-                    },
-                  }"
-                  >Sample Contracts</router-link
-                >
-              </h4>
-              <p>Library of draft contracts. You can also add your own!</p>
-            </div>
-
-            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
-              <i class="bx bx-book"></i>
-              <h4>
-                <router-link
-                  :to="{
-                    name: 'preview-html',
-                    params: {
-                      page_type: 'sample-pleading',
-                      page_slug: 'writ-petition',
-                    },
-                  }"
-                  >Sample Pleadings</router-link
-                >
-              </h4>
-              <p>Library of draft pleadings. You can also add your own!</p>
-            </div>
-            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
-              <i class="fa fa-question-circle"></i>
-              <h4>Frequently Asked Legal Questions</h4>
-              <p>Some frequently asked questions answered by law experts.</p>
-            </div>
-            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
-              <i class="bx bx-file-find"></i>
-              <h4>
-                <router-link
-                  :to="{
-                    name: 'fir_reader',
-                    params: {},
-                  }"
-                  >Criminal Law Guru</router-link
-                >
-              </h4>
-              <p>Fastest way to research Pakistani criminal law. Try it!</p>
-            </div>
+              <template v-if="singleFeature.id < 7">
+                <feature :singleFeature="singleFeature" :rowIndex="rowIndex" />
+              </template>
+            </template>
           </div>
           <div
             class="col-lg-5 order-2 order-lg-1 d-flex flex-column align-items-lg-center"
           >
-            <div
-              class="icon-box mt-3 mt-lg-0"
-              data-aos="fade-up"
-              data-aos-delay="100"
+            <template
+              v-for="(singleFeature, rowIndex) in featureJsonData"
+              :key="singleFeature.id"
             >
-              <i class="bx bx-calculator"></i>
-              <h4>
-                <router-link to="limitation-calculator"
-                  >Limitation Calculator</router-link
-                >
-              </h4>
-              <p>
-                Calculate the last date of filling for various categories of
-                cases. A taste of the world of AI lawyering.
-              </p>
-            </div>
-
-            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
-              <i class="bx bx-shield-x"></i>
-              <h4 @click="showFeatureRestrictedPopup()">
-                Corporate Law Guru - coming soon!
-              </h4>
-              <p>
-                Step-by-step guide for getting corporate registrations, drafting
-                corporate documents and archiving them.
-              </p>
-            </div>
-
-            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
-              <i class="bx bx-calculator"></i>
-              <h4 @click="showFeatureRestrictedPopup()">
-                Transaction Calculator - coming soon!
-              </h4>
-              <p>
-                Calculate the stamp duty and registration fee payable on various
-                kinds of business transaction.
-              </p>
-            </div>
-
-            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
-              <i class="fa fa-wrench"></i>
-              <h4 @click="showFeatureRestrictedPopup()">
-                Service Rules Library - coming soon!
-              </h4>
-              <p>An encyclopedia of service rules.</p>
-            </div>
-
-            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
-              <i class="bx bx-book"></i>
-              <h4 @click="showFeatureRestrictedPopup()">
-                Accounts - coming soon!
-              </h4>
-              <p>Generate invoices and keep track of them.</p>
-            </div>
-
-            <!-- <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="300">
-              <i class="bx bx-images"></i>
-              <h4>Case Law Library</h4>
-              <p>Organize and store all the case law which you read daily.</p>
-            </div>
-            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
-              <i class="bx bx-shield"></i>
-              <h4>Auto-invoicing</h4>
-              <p>
-                Use our Invoice-generator to generate professional invoices and
-                keep a track of your firm's finances.
-              </p>
-            </div> -->
-
-            <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
-              <i class="bx bx-link"></i>
-              <h4 @click="showFeatureRestrictedPopup()">Useful Links</h4>
-              <p>Some other handy Law and Tech tools available online</p>
-            </div>
+              <template v-if="singleFeature.id > 6">
+                <feature :singleFeature="singleFeature" :rowIndex="rowIndex" />
+              </template>
+            </template>
           </div>
           <div
             class="image col-lg-2 order-1 order-lg-2"
@@ -383,273 +252,18 @@
           data-aos-delay="100"
         >
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p class="text-muted">
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  <span v-show="showMoreOrLessTestimonial2">
-                    ELawFirm is a wonderful addition to the emerging Law and
-                    Tech industry. It can help make in-house legal departments
-                    more organized and efficient. If...
-                    <span
-                      v-if="showMoreOrLessTestimonial2"
-                      style="cursor: pointer; color: blue"
-                      @click="
-                        showMoreOrLessTestimonial2 = !showMoreOrLessTestimonial2
-                      "
-                    >
-                      Show More
-                    </span>
-                  </span>
-                  <span v-show="!showMoreOrLessTestimonial2">
-                    ELawFirm is a wonderful addition to the emerging Law and
-                    Tech industry. It can help make in-house legal departments
-                    more organized and efficient. If adopted by courts, it could
-                    actually add the accessibility and transparency which is
-                    needed to bolster public confidence in the legal
-                    system.</span
-                  >
-                  <span
-                    v-if="!showMoreOrLessTestimonial2"
-                    style="cursor: pointer; color: blue"
-                    @click="
-                      showMoreOrLessTestimonial2 = !showMoreOrLessTestimonial2
-                    "
-                  >
-                    Show Less
-                  </span>
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img
-                  src="assets/img/testimonials/profile-icon.png"
-                  class="testimonial-img rounded-circle shadow-1-strong text-center"
-                  alt=""
-                />
-                <h3>Syed Umair Javed</h3>
-                <h4>Registrar, Competition Commission of Pakistan</h4>
-              </div>
+            <div
+              v-for="(singleReview, rowIndex) in reviewJsonData"
+              :key="rowIndex"
+              class="swiper-slide"
+            >
+              <Review :singleReview="singleReview" />
             </div>
-            <!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p class="text-muted">
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  ELawFirm is a fascinating Law & Tech tool. It's probably the
-                  most useful IT solution to have come up in Pakistan after
-                  PakistanLawSite. Definitely worth a try.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img
-                  src="assets/img/testimonials/waleed.png"
-                  class="testimonial-img"
-                  alt=""
-                />
-                <h3>Advocate Waleed Usman</h3>
-                <h4>Senior In-house Counsel</h4>
-              </div>
-            </div>
-            <!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p class="text-muted">
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  <span v-show="showMoreOrLessTestimonial1">
-                    I recently started practicing law in Pakistan. As a graduate
-                    of University of London, understanding Pakistani legal
-                    system and practices has been my biggest challenge. This
-                    is...
-                    <span
-                      v-if="showMoreOrLessTestimonial1"
-                      style="cursor: pointer; color: blue"
-                      @click="
-                        showMoreOrLessTestimonial1 = !showMoreOrLessTestimonial1
-                      "
-                    >
-                      Show More
-                    </span>
-                  </span>
-                  <span v-show="!showMoreOrLessTestimonial1">
-                    I recently started practicing law in Pakistan. As a graduate
-                    of University of London, understanding Pakistani legal
-                    system and practices has been my biggest challenge. This is
-                    where “ELawFirm" has really helped me. The law firm I
-                    interned at was using ELawFirm. I was a able to see all case
-                    files ahead of meetings, use sample contracts and pleadings
-                    for drafting. As far my learning experience goes, this
-                    technology has given me a lot edger over my peers in the
-                    profession.</span
-                  >
-                  <span
-                    v-if="!showMoreOrLessTestimonial1"
-                    style="cursor: pointer; color: blue"
-                    @click="
-                      showMoreOrLessTestimonial1 = !showMoreOrLessTestimonial1
-                    "
-                  >
-                    Show Less
-                  </span>
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img
-                  src="assets/img/testimonials/ashir.jpeg"
-                  class="testimonial-img"
-                  alt=""
-                />
-                <h3>Aashir Khan</h3>
-                <h4></h4>
-              </div>
-            </div>
-            <!-- End testimonial item -->
 
             <!-- End testimonial item -->
           </div>
           <div class="swiper-pagination"></div>
         </div>
-
-        <!-- Carousel wrapper -->
-        <!-- <div
-          id="carouselMultiItemExample"
-          class="carousel slide carousel-dark text-center"
-          data-mdb-ride="carousel"
-        >
-          Controls 
-          Inner 
-          <div class="carousel-inner py-4">
-          Single item
-            <div class="carousel-item active">
-              <div class="container">
-                <div class="row">
-                  <div class="col-lg-4 d-none d-lg-block">
-                    <img
-                      class="rounded-circle shadow-1-strong mb-4"
-                      src="assets/img/testimonials/profile-icon.png"
-                      alt="avatar"
-                      style="width: 150px; height: 150px"
-                    />
-
-                    <h5 class="mb-3">Syed Umair Javed</h5>
-                    <p style="font-size: 13px; font-weight: bold">
-                      Registrar, Competition Commission of Pakistan
-                    </p>
-                 <p class="text-muted">
-                      <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                      <span v-show="showMoreOrLessTestimonial2">
-                        ELawFirm is a wonderful addition to the emerging Law and
-                        Tech industry. It can help make in-house legal
-                        departments more organized and efficient. If adopted by
-                        courts, it could actually add...
-                        <span
-                          v-if="showMoreOrLessTestimonial2"
-                          style="cursor: pointer; color: blue"
-                          @click="
-                            showMoreOrLessTestimonial2 =
-                              !showMoreOrLessTestimonial2
-                          "
-                        >
-                          Show More
-                        </span>
-                      </span>
-                      <span v-show="!showMoreOrLessTestimonial2">
-                        ELawFirm is a wonderful addition to the emerging Law and
-                        Tech industry. It can help make in-house legal
-                        departments more organized and efficient. If adopted by
-                        courts, it could actually add the accessibility and
-                        transparency which is needed to bolster public
-                        confidence in the legal system.</span
-                      >
-                      <span
-                        v-if="!showMoreOrLessTestimonial2"
-                        style="cursor: pointer; color: blue"
-                        @click="
-                          showMoreOrLessTestimonial2 =
-                            !showMoreOrLessTestimonial2
-                        "
-                      >
-                        Show Less
-                      </span>
-                      <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                    </p> 
-                  </div>
-
-             <div class="col-lg-4 d-none d-lg-block">
-                    <img
-                      class="rounded-circle shadow-1-strong mb-4"
-                      src="assets/img/testimonials/waleed.png"
-                      alt="avatar"
-                      style="width: 150px; height: 150px"
-                    />
-                    <h5 class="mb-3">Advocate Waleed Usman</h5>
-                    <p style="font-size: 13px; font-weight: bold">
-                      Senior In-house Counsel
-                    </p>
-                    <p class="text-muted">
-                      <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                      ELawFirm is a fascinating Law & Tech tool. It's probably
-                      the most useful IT solution to have come up in Pakistan
-                      after PakistanLawSite. Definitely worth a try.
-                      <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                    </p>
-                  </div> 
-                  <div class="col-lg-4">
-                    <img
-                      class="rounded-circle shadow-1-strong mb-4 text-center"
-                      src="assets/img/testimonials/ashir.jpeg"
-                      alt="avatar"
-                      style="object-fit: cover; width: 150px; height: 150px"
-                    />
-                    <h5 class="mb-3">Aashir Khan</h5>
-                    <p>&nbsp;</p>
-                    <p class="text-muted">
-                      <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                      <span v-show="showMoreOrLessTestimonial1">
-                        I recently started practicing law in Pakistan. As a
-                        graduate of University of London, understanding
-                        Pakistani legal system and practices has been my biggest
-                        challenge. This is...
-                        <span
-                          v-if="showMoreOrLessTestimonial1"
-                          style="cursor: pointer; color: blue"
-                          @click="
-                            showMoreOrLessTestimonial1 =
-                              !showMoreOrLessTestimonial1
-                          "
-                        >
-                          Show More
-                        </span>
-                      </span>
-                      <span v-show="!showMoreOrLessTestimonial1">
-                        I recently started practicing law in Pakistan. As a
-                        graduate of University of London, understanding
-                        Pakistani legal system and practices has been my biggest
-                        challenge. This is where “ELawFirm" has really helped
-                        me. The law firm I interned at was using ELawFirm. I was
-                        a able to see all case files ahead of meetings, use
-                        sample contracts and pleadings for drafting. As far my
-                        learning experience goes, this technology has given me a
-                        lot edger over my peers in the profession.</span
-                      >
-                      <span
-                        v-if="!showMoreOrLessTestimonial1"
-                        style="cursor: pointer; color: blue"
-                        @click="
-                          showMoreOrLessTestimonial1 =
-                            !showMoreOrLessTestimonial1
-                        "
-                      >
-                        Show Less
-                      </span>
-                      <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                    </p> 
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          Inner
-        </div> -->
-        <!-- Carousel wrapper -->
       </div>
     </section>
     <!-- End Testimonials Section -->
@@ -860,10 +474,12 @@ import axios from "axios";
 import { mapState } from "vuex";
 import useVuelidate from "@vuelidate/core";
 import { required, email } from "@vuelidate/validators";
+import Feature from "./../components/Feature.vue";
+import Review from "./../components/Review.vue";
 
 export default {
   name: "Home",
-  components: { Dialog },
+  components: { Dialog, Feature, Review },
   computed: mapState(["user", "globalGeneralSetting"]),
   setup() {
     return {
@@ -973,6 +589,8 @@ export default {
       ],
       showMoreOrLessTestimonial1: true,
       showMoreOrLessTestimonial2: true,
+      featureJsonData: [],
+      reviewJsonData: [],
     };
   },
   validations() {
@@ -983,6 +601,15 @@ export default {
         message: { required },
       },
     };
+  },
+  created() {
+    //reading features json file from json folder
+    let featurejsonfile = require("./../../dist/json/features.json");
+    this.featureJsonData = featurejsonfile;
+
+    //reading reviews json file from json folder
+    let reviewjsonfile = require("./../../dist/json/reviews.json");
+    this.reviewJsonData = reviewjsonfile;
   },
 
   mounted() {
