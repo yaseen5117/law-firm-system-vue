@@ -160,7 +160,7 @@
               :key="rowIndex.id"
             >
               <template v-if="singleFeature.id < 7">
-                <feature :singleFeature="singleFeature" :rowIndex="rowIndex" />
+                <Feature :singleFeature="singleFeature" :rowIndex="rowIndex" />
               </template>
             </template>
           </div>
@@ -172,7 +172,7 @@
               :key="singleFeature.id"
             >
               <template v-if="singleFeature.id > 6">
-                <feature :singleFeature="singleFeature" :rowIndex="rowIndex" />
+                <Feature :singleFeature="singleFeature" :rowIndex="rowIndex" />
               </template>
             </template>
           </div>
@@ -604,6 +604,9 @@ export default {
   },
   created() {
     //reading features json file from json folder
+    fetch("./../../dist/json/features.json")
+      .then((response) => response.json())
+      .then((json) => console.log(json));
     let featurejsonfile = require("./../../dist/json/features.json");
     this.featureJsonData = featurejsonfile;
 
