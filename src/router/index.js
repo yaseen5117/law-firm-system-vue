@@ -684,9 +684,9 @@ const routes = [
     path: "/limitation-calculator",
     name: "limitation-calculator",
     component: LimitationCalculator,
-    meta: {
-      auth: true,
-    },
+    // meta: {
+    //   auth: true,
+    // },
   },
   //Case Questions
   {

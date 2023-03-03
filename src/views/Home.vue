@@ -170,7 +170,7 @@
             </div>
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="200">
               <i class="bx bx-receipt"></i>
-              <h4 @click="showFeatureRestrictedPopup()" >Case Files</h4>
+              <h4 @click="showFeatureRestrictedPopup()">Case Files</h4>
               <p>
                 View all your Case Files online. Keep records updated. And
                 upload new ones.
@@ -238,7 +238,11 @@
               data-aos-delay="100"
             >
               <i class="bx bx-calculator"></i>
-              <h4 @click="showFeatureRestrictedPopup()" >Limitation Calculator</h4>
+              <h4>
+                <router-link to="limitation-calculator"
+                  >Limitation Calculator</router-link
+                >
+              </h4>
               <p>
                 Calculate the last date of filling for various categories of
                 cases. A taste of the world of AI lawyering.
@@ -247,7 +251,9 @@
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
               <i class="bx bx-shield-x"></i>
-              <h4 @click="showFeatureRestrictedPopup()" >Corporate Law Guru - coming soon!</h4>
+              <h4 @click="showFeatureRestrictedPopup()">
+                Corporate Law Guru - coming soon!
+              </h4>
               <p>
                 Step-by-step guide for getting corporate registrations, drafting
                 corporate documents and archiving them.
@@ -256,7 +262,9 @@
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
               <i class="bx bx-calculator"></i>
-              <h4 @click="showFeatureRestrictedPopup()" >Transaction Calculator - coming soon!</h4>
+              <h4 @click="showFeatureRestrictedPopup()">
+                Transaction Calculator - coming soon!
+              </h4>
               <p>
                 Calculate the stamp duty and registration fee payable on various
                 kinds of business transaction.
@@ -265,13 +273,17 @@
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="400">
               <i class="fa fa-wrench"></i>
-              <h4 @click="showFeatureRestrictedPopup()" >Service Rules Library - coming soon!</h4>
+              <h4 @click="showFeatureRestrictedPopup()">
+                Service Rules Library - coming soon!
+              </h4>
               <p>An encyclopedia of service rules.</p>
             </div>
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
               <i class="bx bx-book"></i>
-              <h4 @click="showFeatureRestrictedPopup()" >Accounts - coming soon!</h4>
+              <h4 @click="showFeatureRestrictedPopup()">
+                Accounts - coming soon!
+              </h4>
               <p>Generate invoices and keep track of them.</p>
             </div>
 
@@ -291,7 +303,7 @@
 
             <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
               <i class="bx bx-link"></i>
-              <h4  @click="showFeatureRestrictedPopup()" >Useful Links</h4>
+              <h4 @click="showFeatureRestrictedPopup()">Useful Links</h4>
               <p>Some other handy Law and Tech tools available online</p>
             </div>
           </div>
@@ -365,16 +377,147 @@
         <div class="section-title">
           <h2>Reviews</h2>
         </div>
-        <!-- Carousel wrapper -->
         <div
+          class="testimonials-slider swiper"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p class="text-muted">
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  <span v-show="showMoreOrLessTestimonial2">
+                    ELawFirm is a wonderful addition to the emerging Law and
+                    Tech industry. It can help make in-house legal departments
+                    more organized and efficient. If...
+                    <span
+                      v-if="showMoreOrLessTestimonial2"
+                      style="cursor: pointer; color: blue"
+                      @click="
+                        showMoreOrLessTestimonial2 = !showMoreOrLessTestimonial2
+                      "
+                    >
+                      Show More
+                    </span>
+                  </span>
+                  <span v-show="!showMoreOrLessTestimonial2">
+                    ELawFirm is a wonderful addition to the emerging Law and
+                    Tech industry. It can help make in-house legal departments
+                    more organized and efficient. If adopted by courts, it could
+                    actually add the accessibility and transparency which is
+                    needed to bolster public confidence in the legal
+                    system.</span
+                  >
+                  <span
+                    v-if="!showMoreOrLessTestimonial2"
+                    style="cursor: pointer; color: blue"
+                    @click="
+                      showMoreOrLessTestimonial2 = !showMoreOrLessTestimonial2
+                    "
+                  >
+                    Show Less
+                  </span>
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+                <img
+                  src="assets/img/testimonials/profile-icon.png"
+                  class="testimonial-img rounded-circle shadow-1-strong text-center"
+                  alt=""
+                />
+                <h3>Syed Umair Javed</h3>
+                <h4>Registrar, Competition Commission of Pakistan</h4>
+              </div>
+            </div>
+            <!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p class="text-muted">
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  ELawFirm is a fascinating Law & Tech tool. It's probably the
+                  most useful IT solution to have come up in Pakistan after
+                  PakistanLawSite. Definitely worth a try.
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+                <img
+                  src="assets/img/testimonials/waleed.png"
+                  class="testimonial-img"
+                  alt=""
+                />
+                <h3>Advocate Waleed Usman</h3>
+                <h4>Senior In-house Counsel</h4>
+              </div>
+            </div>
+            <!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p class="text-muted">
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  <span v-show="showMoreOrLessTestimonial1">
+                    I recently started practicing law in Pakistan. As a graduate
+                    of University of London, understanding Pakistani legal
+                    system and practices has been my biggest challenge. This
+                    is...
+                    <span
+                      v-if="showMoreOrLessTestimonial1"
+                      style="cursor: pointer; color: blue"
+                      @click="
+                        showMoreOrLessTestimonial1 = !showMoreOrLessTestimonial1
+                      "
+                    >
+                      Show More
+                    </span>
+                  </span>
+                  <span v-show="!showMoreOrLessTestimonial1">
+                    I recently started practicing law in Pakistan. As a graduate
+                    of University of London, understanding Pakistani legal
+                    system and practices has been my biggest challenge. This is
+                    where “ELawFirm" has really helped me. The law firm I
+                    interned at was using ELawFirm. I was a able to see all case
+                    files ahead of meetings, use sample contracts and pleadings
+                    for drafting. As far my learning experience goes, this
+                    technology has given me a lot edger over my peers in the
+                    profession.</span
+                  >
+                  <span
+                    v-if="!showMoreOrLessTestimonial1"
+                    style="cursor: pointer; color: blue"
+                    @click="
+                      showMoreOrLessTestimonial1 = !showMoreOrLessTestimonial1
+                    "
+                  >
+                    Show Less
+                  </span>
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+                <img
+                  src="assets/img/testimonials/ashir.jpeg"
+                  class="testimonial-img"
+                  alt=""
+                />
+                <h3>Aashir Khan</h3>
+                <h4></h4>
+              </div>
+            </div>
+            <!-- End testimonial item -->
+
+            <!-- End testimonial item -->
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+        <!-- Carousel wrapper -->
+        <!-- <div
           id="carouselMultiItemExample"
           class="carousel slide carousel-dark text-center"
           data-mdb-ride="carousel"
         >
-          <!-- Controls -->
-          <!-- Inner -->
+          Controls 
+          Inner 
           <div class="carousel-inner py-4">
-            <!-- Single item -->
+          Single item
             <div class="carousel-item active">
               <div class="container">
                 <div class="row">
@@ -390,7 +533,7 @@
                     <p style="font-size: 13px; font-weight: bold">
                       Registrar, Competition Commission of Pakistan
                     </p>
-                    <p class="text-muted">
+                 <p class="text-muted">
                       <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                       <span v-show="showMoreOrLessTestimonial2">
                         ELawFirm is a wonderful addition to the emerging Law and
@@ -427,10 +570,10 @@
                         Show Less
                       </span>
                       <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                    </p>
+                    </p> 
                   </div>
 
-                  <div class="col-lg-4 d-none d-lg-block">
+             <div class="col-lg-4 d-none d-lg-block">
                     <img
                       class="rounded-circle shadow-1-strong mb-4"
                       src="assets/img/testimonials/waleed.png"
@@ -448,7 +591,7 @@
                       after PakistanLawSite. Definitely worth a try.
                       <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                     </p>
-                  </div>
+                  </div> 
                   <div class="col-lg-4">
                     <img
                       class="rounded-circle shadow-1-strong mb-4 text-center"
@@ -498,14 +641,14 @@
                         Show Less
                       </span>
                       <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                    </p>
+                    </p> 
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- Inner -->
-        </div>
+          Inner
+        </div> -->
         <!-- Carousel wrapper -->
       </div>
     </section>

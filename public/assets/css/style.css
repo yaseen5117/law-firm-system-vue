@@ -832,8 +832,9 @@ section {
   min-height: 320px;
 }
 .testimonials .testimonial-item .testimonial-img {
+  object-fit: cover;
   width: 90px;
-  height: 85px;
+  height: 90px;
   border-radius: 50%;
   margin: -40px 0 0 40px;
   position: relative;
