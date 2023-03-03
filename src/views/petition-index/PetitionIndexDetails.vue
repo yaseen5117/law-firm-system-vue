@@ -17,80 +17,102 @@
       <div class="container mt-2" data-aos="fade-up">
         <div class="row mb-2">
           <div class="col-12">
-            <!-- v-if="!removePageHeader" -->
-            <button
-              v-if="removePageHeader"
-              @click="pageHeader()"
-              class="btn btn-success btn-sm mb-2"
-              style="margin-right: 2px"
-              for="flexSwitchCheckDefault"
-            >
-              <i class="fa fa-eye"></i> Show Header
-            </button>
-            <button
-              v-if="!removePageHeader"
-              @click="pageHeader()"
-              class="btn btn-success btn-sm mb-2"
-              style="margin-right: 2px"
-              for="flexSwitchCheckDefault"
-            >
-              <i class="fa fa-eye-slash"></i> Hide Header
-            </button>
+            <div class="row">
+              <div class="col-5">
+                <!-- v-if="!removePageHeader" -->
+                <button
+                  v-if="removePageHeader"
+                  @click="pageHeader()"
+                  class="btn btn-success btn-sm mb-2 action-btn"
+                  style="margin-right: 2px"
+                  for="flexSwitchCheckDefault"
+                >
+                  <i class="fa fa-eye"></i> Show Header
+                </button>
+                <button
+                  v-if="!removePageHeader"
+                  @click="pageHeader()"
+                  class="btn btn-success btn-sm mb-2 action-btn"
+                  style="margin-right: 2px"
+                  for="flexSwitchCheckDefault"
+                >
+                  <i class="fa fa-eye-slash"></i> Hide Header
+                </button>
 
-            <button
-              v-if="this.user.is_admin || this.user.is_lawyer"
-              v-show="!showImgCard"
-              @click="showImgCard = true"
-              class="btn btn-success btn-sm mb-2"
-              style="margin-right: 2px"
-            >
-              Upload New Image
-            </button>
-            <button
-              v-if="this.user.is_admin || this.user.is_lawyer"
-              v-show="showImgCard"
-              @click="showImgCard = false"
-              class="btn btn-primary btn-sm mb-2"
-              style="margin-right: 2px"
-            >
-              Cancel Upload
-            </button>
+                <button
+                  v-if="this.user.is_admin || this.user.is_lawyer"
+                  v-show="!showImgCard"
+                  @click="showImgCard = true"
+                  class="btn btn-success btn-sm mb-2 action-btn"
+                  style="margin-right: 2px"
+                >
+                  Upload New Image
+                </button>
+                <button
+                  v-if="this.user.is_admin || this.user.is_lawyer"
+                  v-show="showImgCard"
+                  @click="showImgCard = false"
+                  class="btn btn-primary btn-sm mb-2 action-btn"
+                  style="margin-right: 2px"
+                >
+                  Cancel Upload
+                </button>
 
-            <button
-              v-if="this.user.is_admin || this.user.is_lawyer"
-              v-show="!editView"
-              @click="
-                editView = true;
-                horizontalView= true;
-              "
-              style="margin-right: 2px"
-              class="btn btn-primary btn-sm mb-2"
-            >
-              Edit
-            </button>
-            <button
-              v-if="this.user.is_admin || this.user.is_lawyer"
-              v-show="editView"
-              @click="
-                editView = false;
-                horizontalView= false;
-              "
-              style="margin-right: 2px"
-              class="btn btn-success btn-sm mb-2"
-            >
-              Cancel
-            </button>
-            <span style="margin-left: 10px" class="text-primary"
-              ><small
-                >({{
-                  this.petition
-                    ? this.petition.petition_standard_title +
-                      " | " +
-                      this.petition_index_details.document_description
-                    : ""
-                }})</small
-              ></span
-            >
+                <button
+                  v-if="this.user.is_admin || this.user.is_lawyer"
+                  v-show="!editView"
+                  @click="
+                    editView = true;
+                    horizontalView = true;
+                  "
+                  style="margin-right: 2px"
+                  class="btn btn-primary btn-sm mb-2 action-btn"
+                >
+                  Edit
+                </button>
+                <button
+                  v-if="this.user.is_admin || this.user.is_lawyer"
+                  v-show="editView"
+                  @click="
+                    editView = false;
+                    horizontalView = false;
+                  "
+                  style="margin-right: 2px"
+                  class="btn btn-success btn-sm mb-2 action-btn"
+                >
+                  Cancel
+                </button>
+              </div>
+              <div class="col-7">
+                <section class="sub-breadcrumbs">
+                  <div class="">
+                    <ol style="font-size: 12px">
+                      <li><router-link to="/dashboard">Home</router-link></li>
+                      <li>
+                        <router-link to="/petitions">Petitions</router-link>
+                      </li>
+                      <li>
+                        <router-link
+                          :to="{
+                            name: 'case-detail',
+                            params: {
+                              id: petition.id,
+                            },
+                          }"
+                          >{{
+                            this.petition
+                              ? this.petition.petition_standard_title +
+                                " | " +
+                                this.petition_index_details.document_description
+                              : ""
+                          }}</router-link
+                        >
+                      </li>
+                    </ol>
+                  </div>
+                </section>
+              </div>
+            </div>
           </div>
           <div class="col-lg-12 col-md-12 col-sm-12" v-show="showImgCard">
             <file-upload
@@ -193,7 +215,10 @@
                 <div class="table-responsive">
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <button
-                      v-if="showDeleteBtn && (this.user.is_admin || this.user.is_lawyer)"
+                      v-if="
+                        showDeleteBtn &&
+                        (this.user.is_admin || this.user.is_lawyer)
+                      "
                       class="btn btn-sm btn-danger"
                       data-bs-toggle="tooltip"
                       data-bs-placement="top"
@@ -284,7 +309,10 @@
                               >{{ attachment.display_order }}
                             </span>
                           </td>
-                          <td width="15%" v-if="this.user.is_admin || this.user.is_lawyer">
+                          <td
+                            width="15%"
+                            v-if="this.user.is_admin || this.user.is_lawyer"
+                          >
                             <a
                               class="btn btn-sm btn-primary action-btn"
                               v-show="!attachment.editMode"
