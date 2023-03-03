@@ -422,48 +422,7 @@
   </main>
   <!-- End #main -->
 
-  <Dialog
-    :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
-    :style="{ width: '50vw' }"
-    dismissableMask="true"
-    modal="true"
-    header="Are You a Member?"
-    position="center"
-    closable="true"
-    v-model:visible="featureRestrictedDialog"
-  >
-    <div class="row">
-      <div class="col-12">
-        <p>Login or Signup for an account to access.</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-6">
-        <div class="d-grid">
-          <router-link
-            class="btn auth-btn btn-block"
-            :to="{
-              name: 'Login',
-            }"
-          >
-            Login
-          </router-link>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="d-grid">
-          <router-link
-            class="btn btn-block auth-btn"
-            :to="{
-              name: 'SignUp',
-            }"
-          >
-            Sign Up
-          </router-link>
-        </div>
-      </div>
-    </div>
-  </Dialog>
+
 </template>
 
 <script>
@@ -471,7 +430,7 @@
 //import CaseDetail from "./CaseDetail.vue";
 import jsonOfReviews from "./../store/reviews.json";
 import jsonOfFeatures from "./../store/features.json";
-import Dialog from "primevue/dialog";
+
 import axios from "axios";
 import { mapState } from "vuex";
 import useVuelidate from "@vuelidate/core";
@@ -481,7 +440,7 @@ import Review from "./../components/Review.vue";
 
 export default {
   name: "Home",
-  components: { Dialog, Feature, Review },
+  components: {  Feature, Review },
   computed: mapState(["user", "globalGeneralSetting"]),
   setup() {
     return {
@@ -606,6 +565,7 @@ export default {
   },
   created() {
     this.getReviews();
+    this.getFeatures();
   },
 
   mounted() {
@@ -648,9 +608,7 @@ export default {
     getFeatures(){
       this.featureJsonData = jsonOfFeatures;
     },
-    showFeatureRestrictedPopup() {
-      this.featureRestrictedDialog = true;
-    },
+   
     scrollIntoView(id) {
       const yOffset = -200;
       const element = document.getElementById(id);
