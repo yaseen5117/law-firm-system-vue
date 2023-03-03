@@ -1,20 +1,23 @@
-[{
-		"id": 1,
-		"name": "Advocate Waleed Usman",
-		"designation": "Senior In-house Counsel",
-		"review": " ELawFirm is a fascinating Law &amp; Tech tool. It's probably the most useful IT solution to have come up in Pakistan after PakistanLawSite. Definitely worth a try."
-	},
-	{
-		"id": 2,
-		"name": "Aashir Khan",
-		"designation": "Senior In-house Counsel",
-		"review": " ELawFirm is a wonderful addition to the emerging Law and Tech industry. It can help make in-house legal departments more organized and efficient. If adopted by courts, it could actually add the accessibility and transparency which is needed to bolster public confidence in the legal system."
-	},
-	{
-		"id": 3,
-		"name": "Syed Umair Javed",
-		"designation": "Registrar, Competition Commission of Pakistan",
-		"review": " I recently started practicing law in Pakistan. As a graduate of University of London, understanding Pakistani legal system and practices has been my biggest challenge. This is where ELawFirm has really helped me. The law firm I interned at was using ELawFirm. I was a able to see all case files ahead of meetings, use sample contracts and pleadings for drafting. As far my learning experience goes, this technology has given me a lot edger over my peers in the profession."
-	}
-
+[
+  {
+    "id": 1,
+    "name": "Advocate Waleed Usman",
+    "designation": "Senior In-house Counsel",
+    "review": " ELawFirm is a fascinating Law &amp; Tech tool. It's probably the most useful IT solution to have come up in Pakistan after PakistanLawSite. Definitely worth a try.",
+    "image_src": "assets/img/testimonials/waleed.png"
+  },
+  {
+    "id": 2,
+    "name": "Aashir Khan",
+    "designation": "Senior In-house Counsel",
+    "review": " ELawFirm is a wonderful addition to the emerging Law and Tech industry. It can help make in-house legal departments more organized and efficient. If adopted by courts, it could actually add the accessibility and transparency which is needed to bolster public confidence in the legal system.",
+    "image_src": "assets/img/testimonials/ashir.jpeg"
+  },
+  {
+    "id": 3,
+    "name": "Syed Umair Javed",
+    "designation": "Registrar, Competition Commission of Pakistan",
+    "review": " I recently started practicing law in Pakistan. As a graduate of University of London, understanding Pakistani legal system and practices has been my biggest challenge. This is where ELawFirm has really helped me. The law firm I interned at was using ELawFirm. I was a able to see all case files ahead of meetings, use sample contracts and pleadings for drafting. As far my learning experience goes, this technology has given me a lot edger over my peers in the profession.",
+    "image_src": "assets/img/testimonials/profile-icon.png"
+  }
 ]
