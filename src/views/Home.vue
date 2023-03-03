@@ -469,6 +469,7 @@
 <script>
 // @ is an alias to /src
 //import CaseDetail from "./CaseDetail.vue";
+import jsonOfReviews from "./../store/reviews.json";
 import Dialog from "primevue/dialog";
 import axios from "axios";
 import { mapState } from "vuex";
@@ -603,16 +604,7 @@ export default {
     };
   },
   created() {
-    //reading features json file from json folder
-    fetch("./../../dist/json/features.json")
-      .then((response) => response.json())
-      .then((json) => console.log(json));
-    let featurejsonfile = require("./../../dist/json/features.json");
-    this.featureJsonData = featurejsonfile;
-
-    //reading reviews json file from json folder
-    let reviewjsonfile = require("./../../dist/json/reviews.json");
-    this.reviewJsonData = reviewjsonfile;
+    this.getReviews();
   },
 
   mounted() {
@@ -648,6 +640,10 @@ export default {
     });
   },
   methods: {
+    getReviews(){
+      console.log("jsonOfReviews",jsonOfReviews);
+      this.reviewJsonData = jsonOfReviews;
+    },
     showFeatureRestrictedPopup() {
       this.featureRestrictedDialog = true;
     },
