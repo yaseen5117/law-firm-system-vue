@@ -204,7 +204,7 @@
             data-aos="fade-up"
             data-aos-delay="100"
           >
-            <div class="">
+            <div class="table-responsive">
               <table class="table table-bordered table-striped">
                 <thead>
                   <tr class="pricing-th-text">

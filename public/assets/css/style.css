@@ -1412,6 +1412,57 @@ section {
   }
 }
 
+
+/*--------------------------------------------------------------
+# Sub Breadcrumbs
+--------------------------------------------------------------*/
+.sub-breadcrumbs{
+  padding: 0px;
+  min-height: auto;
+  margin-top: 0px;
+}
+@media (max-width: 992px) {
+  .sub-breadcrumbs {
+    margin-top: 56px;
+  }
+}
+.breadcrumbs,.sub-breadcrumbs h2 {
+  font-size: 24px;
+  font-weight: 300;
+}
+.sub-breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  font-size: 14px;
+  margin: 0;
+}
+.sub-breadcrumbs ol li + li {
+  padding-left: 10px;
+}
+.sub-breadcrumbs ol li + li::before {
+  display: inline-block;
+  padding-right: 10px;
+  color: #3c6387;
+  content: "/";
+}
+@media (max-width: 768px) {
+  .sub-breadcrumbs {
+    margin-top: 65px;
+  }
+
+  .sub-breadcrumbs .d-flex {
+    display: block !important;
+  }
+  .sub-breadcrumbs ol {
+    display: block;
+  }
+  .sub-breadcrumbs ol li {
+    display: inline-block;
+  }
+}
+
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
