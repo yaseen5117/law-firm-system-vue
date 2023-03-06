@@ -3,74 +3,86 @@
     "id": "1",
     "heading": "Court Calendar",
     "body_text": "Mark dates of hearing. Review tomorrow's cases. Get hearing alerts.",
-    "icon": "bx bx-calendar"
+    "icon": "bx bx-calendar",
+    "url": ""
   },
   {
     "id": "2",
     "heading": "Case Files",
     "body_text": "View all your Case Files online. Keep records updated. And upload new ones.",
-    "icon": "bx bx-receipt"
+    "icon": "bx bx-receipt",
+    "url": ""
   },
   {
     "id": "3",
     "heading": "Sample Contracts",
     "body_text": "Library of draft contracts. You can also add your own!",
-    "icon": "bx bx-file"
+    "icon": "bx bx-file",
+    "url": "/preview/contract-and-agreement/partnership-agreement"
   },
   {
     "id": "4",
     "heading": "Sample Pleadings",
     "body_text": "Library of draft pleadings. You can also add your own!",
-    "icon": "bx bx-book"
+    "icon": "bx bx-book",
+    "url": "/preview/sample-pleading/writ-petition"
   },
 
   {
     "id": "5",
     "heading": "Frequently Asked Legal Questions",
     "body_text": "Some frequently asked questions answered by law experts.",
-    "icon": "fa fa-question-circle"
+    "icon": "fa fa-question-circle",
+    "url": ""
   },
   {
     "id": "6",
     "heading": "Criminal Law Guru",
     "body_text": "Fastest way to research Pakistani criminal law. Try it!",
-    "icon": "bx bx-file-find"
+    "icon": "bx bx-file-find",
+    "url": "fir-reader"
   },
 
   {
     "id": "7",
     "heading": "Limitation Calculator",
     "body_text": "Calculate the last date of filling for various categories of cases. A taste of the world of AI lawyering.",
-    "icon": "bx bx-calculator"
+    "icon": "bx bx-calculator",
+    "url": "limitation-calculator"
   },
   {
     "id": "8",
     "heading": "Corporate Law Guru - coming soon!",
     "body_text": "Step-by-step guide for getting corporate registrations, drafting corporate documents and archiving them.",
-    "icon": "bx bx-shield-x"
+    "icon": "bx bx-shield-x",
+    "url": ""
   },
   {
     "id": "9",
     "heading": "Transaction Calculator - coming soon!",
     "body_text": "Calculate the stamp duty and registration fee payable on various kinds of business transaction.",
-    "icon": "bx bx-calculator"
+    "icon": "bx bx-calculator",
+    "url": ""
   },
   {
     "id": "10",
     "heading": "Service Rules Library - coming soon!",
     "body_text": "An encyclopedia of service rules.",
-    "icon": "fa fa-wrench"
+    "icon": "fa fa-wrench",
+    "url": ""
   },
   {
     "id": "11",
     "heading": "Accounts - coming soon!",
     "body_text": "Generate invoices and keep track of them.",
-    "icon": "bx bx-book"
+    "icon": "bx bx-book",
+    "url": ""
   },
   {
     "id": "12",
     "heading": "Useful Links",
     "body_text": "Some other handy Law and Tech tools available online",
-    "icon": "bx bx-link"
+    "icon": "bx bx-link",
+    "url": ""
   }
 ]

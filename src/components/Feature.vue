@@ -1,7 +1,9 @@
 <template>
   <div class="icon-box mt-3" data-aos="fade-up" data-aos-delay="100">
     <i :class="singleFeature.icon"></i>
-    <h4 @click="showFeatureRestrictedPopup()">{{ singleFeature.heading }}</h4>
+    <h4 @click="showFeatureRestrictedPopup(singleFeature.url)">
+      {{ singleFeature.heading }}
+    </h4>
     <p>{{ singleFeature.body_text }}</p>
   </div>
   <Dialog
@@ -60,11 +62,25 @@ export default {
     };
   },
   methods: {
-    showFeatureRestrictedPopup() {
-      this.featureRestrictedDialog = true;
+    showFeatureRestrictedPopup(url) {
+      if (url) {
+        this.$router.push({ path: url });
+      } else {
+        this.featureRestrictedDialog = true;
+      }
     },
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+.icon-box h4 {
+  cursor: pointer;
+}
+.icon-box h4 a {
+  color: #444444 !important;
+}
+.icon-box h4:hover {
+  text-decoration: underline;
+}
+</style>

@@ -657,15 +657,6 @@ export default {
 </script>
 
 <style scoped>
-.icon-box h4 {
-  cursor: pointer;
-}
-.icon-box h4 a {
-  color: #444444 !important;
-}
-.icon-box h4:hover {
-  text-decoration: underline;
-}
 
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */
