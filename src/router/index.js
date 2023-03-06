@@ -82,6 +82,7 @@ import FirSectionList from "../views/fir-modules/FirSectionList";
 import DisplayFirResult from "../views/fir-modules/DisplayFirResult";
 import StatuteIndex from "../views/fir-modules/StatuteIndex";
 import AboutELawFirm from "../views/pages/AboutELawFirm";
+import NotFound from "../views/errors/NotFound";
 
 const routes = [
   {
@@ -767,6 +768,15 @@ const routes = [
     path: "/about-elawfirm",
     name: "about-elawfirm",
     component: AboutELawFirm,
+  },
+  {
+    path: "/404",
+    name: "not-found",
+    component: NotFound,
+  },
+  {
+    path: "/:catchAll(.*)",
+    redirect: "404",
   },
 ];
 
