@@ -83,4 +83,7 @@ export default {
 .icon-box h4:hover {
   text-decoration: underline;
 }
+.p-overflow-hidden {
+  overflow: auto !important;
+}
 </style>

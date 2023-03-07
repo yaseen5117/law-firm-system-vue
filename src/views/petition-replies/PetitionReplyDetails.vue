@@ -16,12 +16,12 @@
     >
       <div class="container mt-2" data-aos="fade-up">
         <div class="row mb-4">
-          <div class="col-12">
+          <div class="col-5">
             <!-- v-if="!removePageHeader" -->
             <button
               v-if="removePageHeader"
               @click="pageHeader()"
-              class="btn btn-success btn-sm mb-2"
+              class="btn btn-success btn-sm mb-2 action-btn"
               style="margin-right: 2px"
               for="flexSwitchCheckDefault"
             >
@@ -30,7 +30,7 @@
             <button
               v-if="!removePageHeader"
               @click="pageHeader()"
-              class="btn btn-success btn-sm mb-2"
+              class="btn btn-success btn-sm mb-2 action-btn"
               style="margin-right: 2px"
               for="flexSwitchCheckDefault"
             >
@@ -41,7 +41,7 @@
               v-if="this.user.is_admin || this.user.is_lawyer"
               v-show="!showImgCard"
               @click="showImgCard = true"
-              class="btn btn-success btn-sm mb-2"
+              class="btn btn-success btn-sm mb-2 action-btn"
               style="margin-right: 2px"
             >
               Upload New Image
@@ -49,7 +49,7 @@
             <button
               v-show="showImgCard"
               @click="showImgCard = false"
-              class="btn btn-primary btn-sm mb-2"
+              class="btn btn-primary btn-sm mb-2 action-btn"
               style="margin-right: 2px"
             >
               Cancel Upload
@@ -60,10 +60,10 @@
               v-show="!editView"
               @click="
                 editView = true;
-                horizontalView= true;
+                horizontalView = true;
               "
               style="margin-right: 2px"
-              class="btn btn-primary btn-sm mb-2"
+              class="btn btn-primary btn-sm mb-2 action-btn"
             >
               Edit
             </button>
@@ -71,18 +71,38 @@
               v-show="editView"
               @click="
                 editView = false;
-                horizontalView= false;
+                horizontalView = false;
               "
               style="margin-right: 2px"
-              class="btn btn-success btn-sm mb-2"
+              class="btn btn-success btn-sm mb-2 action-btn"
             >
               Cancel
             </button>
-            <span style="margin-left: 10px" class="text-primary"
-              ><small
-                >({{ petition_reply_details.document_description }})</small
-              ></span
-            >
+          </div>
+          <div class="col-7">
+            <section class="sub-breadcrumbs">
+              <div class="">
+                <ol style="font-size: 12px">
+                  <li><router-link to="/dashboard">Home</router-link></li>
+                  <li>
+                    <router-link to="/petitions">Petitions</router-link>
+                  </li>
+                  <li>
+                    <router-link
+                      :to="{
+                        name: 'petition-reply-details',
+                        params: {
+                          id: petition_reply_details.id,
+                        },
+                      }"
+                      ><span>{{
+                        petition_reply_details.document_description
+                      }}</span>
+                    </router-link>
+                  </li>
+                </ol>
+              </div>
+            </section>
           </div>
           <div class="col-lg-12 col-md-12 col-sm-12" v-show="showImgCard">
             <file-upload
@@ -161,7 +181,7 @@
                   <div class="col-lg-12 col-md-12 col-sm-12">
                     <button
                       v-if="showDeleteBtn"
-                      class="btn btn-sm btn-danger"
+                      class="btn btn-sm btn-danger action-btn"
                       data-bs-toggle="tooltip"
                       data-bs-placement="top"
                       title="Delete"

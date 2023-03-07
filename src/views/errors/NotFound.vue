@@ -12,7 +12,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+  mounted() {
+    document.title = "Page Not Found!";
+  },
+};
 </script>
 
 <style>
