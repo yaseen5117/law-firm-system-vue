@@ -315,19 +315,19 @@
               href="https://www.linkedin.com/in/elawfirm-bringing-law-and-tech-together-50b67523b/"
               target="_blank"
             >
-              <i class="fab fa-linkedin-square linkedin-icon icon-font"></i>
+              <i class="fa fa-linkedin-square linkedin-icon icon-font"></i>
             </a>
             <a
               href="https://www.facebook.com/profile.php?id=100081095452021"
               target="_blank"
             >
-              <i class="fab fa-facebook-square facebook-icon icon-font"></i
+              <i class="fa fa-facebook-square facebook-icon icon-font"></i
             ></a>
             <a href="https://twitter.com/@E_Lawfirm" target="_blank">
-              <i class="fab fa-twitter-square twitter-icon icon-font"></i
+              <i class="fa fa-twitter-square twitter-icon icon-font"></i
             ></a>
             <a href="#" target="_blank">
-              <i class="fab fa-instagram-square instagram-icon icon-font"></i
+              <i class="fa fa-instagram-square instagram-icon icon-font"></i
             ></a>
             <!-- <iframe
               width="560"
