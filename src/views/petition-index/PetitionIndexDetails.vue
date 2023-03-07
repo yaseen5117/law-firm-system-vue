@@ -84,7 +84,13 @@
                 </button>
               </div>
               <div class="col-7">
-                <section class="sub-breadcrumbs">
+                <BreadCrumb
+                  :moduleDetail="petition_index_details"
+                  :isPetitionDetail="true"
+                  :petition="petition"
+                  pathName="case-detail"
+                />
+                <!-- <section class="sub-breadcrumbs">
                   <div class="">
                     <ol style="font-size: 12px">
                       <li><router-link to="/dashboard">Home</router-link></li>
@@ -110,7 +116,7 @@
                       </li>
                     </ol>
                   </div>
-                </section>
+                </section> -->
               </div>
             </div>
           </div>
@@ -405,6 +411,7 @@ import PageNumberSideBar from "../shared/PageNumberLeftSideBar.vue";
 import AnnexureRightSideBar from "../shared/AnnexureRightSideBar.vue";
 import { mapState } from "vuex";
 import NotFoundMessage from "../shared/NotFoundMessage.vue";
+import BreadCrumb from "../../components/BreadCrumb.vue";
 
 export default {
   components: {
@@ -418,6 +425,7 @@ export default {
     PageNumberSideBar,
     AnnexureRightSideBar,
     NotFoundMessage,
+    BreadCrumb,
   },
   computed: mapState(["user"]),
   data() {

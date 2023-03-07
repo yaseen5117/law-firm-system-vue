@@ -16,12 +16,12 @@
       <nav-components activeNavPill="order_sheet" :petition_id="petition_id" />
       <div class="container mt-2" data-aos="fade-up">
         <div class="row mb-4">
-          <div class="col-12">
+          <div class="col-5">
             <!-- v-if="!removePageHeader" -->
             <button
               v-if="removePageHeader"
               @click="pageHeader()"
-              class="btn btn-success btn-sm mobile-margin-top"
+              class="btn btn-success btn-sm mobile-margin-top action-btn"
               style="margin-right: 2px"
               for="flexSwitchCheckDefault"
             >
@@ -30,7 +30,7 @@
             <button
               v-if="!removePageHeader"
               @click="pageHeader()"
-              class="btn btn-success btn-sm mobile-margin-top"
+              class="btn btn-success btn-sm mobile-margin-top action-btn"
               style="margin-right: 2px"
               for="flexSwitchCheckDefault"
             >
@@ -40,7 +40,7 @@
             <router-link
               v-if="this.user.is_admin || this.user.is_lawyer"
               style="margin-right: 2px"
-              class="btn btn-primary btn-sm mobile-margin-top"
+              class="btn btn-primary btn-sm mobile-margin-top action-btn"
               :to="{
                 name: 'petition-order-sheets-save',
                 params: { petition_id: petition_id },
@@ -50,8 +50,10 @@
             </router-link>
             <router-link
               style="margin-right: 2px"
-              v-if="(this.user.is_admin || this.user.is_lawyer) && orderSheetsActive"
-              class="btn btn-success btn-sm mobile-margin-top"
+              v-if="
+                (this.user.is_admin || this.user.is_lawyer) && orderSheetsActive
+              "
+              class="btn btn-success btn-sm mobile-margin-top action-btn"
               :to="{
                 name: 'petition-order-sheets-edit',
                 params: {
@@ -65,22 +67,27 @@
             </router-link>
             <a
               v-if="this.user.is_admin && orderSheetsActive"
-              class="btn btn-danger btn-sm mobile-margin-top"
+              class="btn btn-danger btn-sm mobile-margin-top action-btn"
               @click="deletePetitionOrderSheet($event, orderSheetsActive.id)"
               v-tooltip.top="'Delete'"
             >
               Delete
             </a>
             <a
-              class="btn btn-grey btn-sm mobile-margin-top"
+              class="btn btn-grey btn-sm mobile-margin-top action-btn"
               style="margin-left: 2px"
               v-tooltip.top="'Print Order Sheets'"
               @click="printOrderSheets()"
               ><i class="fa fa-print"></i> Print</a
             >
-            
-            
-
+          </div>
+          <div class="col-7">
+            <BreadCrumb
+              :moduleDetail="orderSheetsActive"
+              :isPetitionOrderSheet="true"
+              :petition="petition"
+              pathName="petition-order-sheets-index"
+            />
           </div>
           <div>
             <div class="mt-4" v-if="orderSheetsActive">
@@ -223,6 +230,7 @@ import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
 import { mapState } from "vuex";
 import NotFoundMessage from "../shared/NotFoundMessage.vue";
+import BreadCrumb from "../../components/BreadCrumb.vue";
 
 export default {
   computed: mapState(["user"]),
@@ -235,6 +243,7 @@ export default {
     FileUpload,
     NavComponents,
     NotFoundMessage,
+    BreadCrumb,
   },
   data() {
     return {
@@ -264,7 +273,7 @@ export default {
     document.getElementById("header").style.display = "none";
   },
   updated() {
-    if (this.orderSheetsActive) {
+    if (this.orderSheetsActive && this.orderSheetsActive.order_sheet_types) {
       document.title =
         this.orderSheetsActive.order_sheet_types.title + " | Order Sheet";
     } else {
