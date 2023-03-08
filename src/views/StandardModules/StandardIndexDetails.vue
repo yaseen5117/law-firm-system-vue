@@ -16,12 +16,12 @@
     >
       <div class="container mt-2" data-aos="fade-up">
         <div class="row mb-2">
-          <div class="col-12">
+          <div class="col-5">
             <!-- v-if="!removePageHeader" -->
             <button
               v-if="removePageHeader"
               @click="pageHeader()"
-              class="btn btn-success btn-sm mb-2"
+              class="btn btn-success btn-sm mb-2 action-btn"
               style="margin-right: 2px"
               for="flexSwitchCheckDefault"
             >
@@ -30,7 +30,7 @@
             <button
               v-if="!removePageHeader"
               @click="pageHeader()"
-              class="btn btn-success btn-sm mb-2"
+              class="btn btn-success btn-sm mb-2 action-btn"
               style="margin-right: 2px"
               for="flexSwitchCheckDefault"
             >
@@ -41,7 +41,7 @@
               v-if="this.user.is_admin || this.user.is_lawyer"
               v-show="!showImgCard"
               @click="showImgCard = true"
-              class="btn btn-success btn-sm mb-2"
+              class="btn btn-success btn-sm mb-2 action-btn"
               style="margin-right: 2px"
             >
               Upload New Image
@@ -49,7 +49,7 @@
             <button
               v-show="showImgCard"
               @click="showImgCard = false"
-              class="btn btn-primary btn-sm mb-2"
+              class="btn btn-primary btn-sm mb-2 action-btn"
               style="margin-right: 2px"
             >
               Cancel Upload
@@ -63,7 +63,7 @@
                 horizontalView = true;
               "
               style="margin-right: 2px"
-              class="btn btn-primary btn-sm mb-2"
+              class="btn btn-primary btn-sm mb-2 action-btn"
             >
               Edit
             </button>
@@ -74,15 +74,18 @@
                 horizontalView = false;
               "
               style="margin-right: 2px"
-              class="btn btn-success btn-sm mb-2"
+              class="btn btn-success btn-sm mb-2 action-btn"
             >
               Cancel
             </button>
-            <span style="margin-left: 10px" class="text-primary"
-              ><small
-                >({{ index_detail_data.document_description }})</small
-              ></span
-            >
+          </div>
+          <div class="col-7">
+            <BreadCrumb
+              :moduleDetail="index_detail_data"
+              :isStandardIndexDetail="true"
+              :petition="petition"
+              pathName="standard-index"
+            />
           </div>
           <div class="col-lg-12 col-md-12 col-sm-12" v-show="showImgCard">
             <file-upload
@@ -97,7 +100,12 @@
           <div class="col-12">
             <div v-show="!horizontalView && !editView">
               <not-found-message :index_details="index_detail_data" />
-              <div v-if="index_detail_data.attachments.length > 0">
+              <div
+                v-if="
+                  index_detail_data.attachments &&
+                  index_detail_data.attachments.length > 0
+                "
+              >
                 <div
                   class="row mb-2 text-center"
                   :id="'image-container-' + (index_attachment + 1)"
@@ -167,7 +175,7 @@
                         showDeleteBtn &&
                         (this.user.is_admin || this.user.is_lawyer)
                       "
-                      class="btn btn-sm btn-danger"
+                      class="btn btn-sm btn-danger action-btn"
                       data-bs-toggle="tooltip"
                       data-bs-placement="top"
                       title="Delete"
@@ -177,7 +185,12 @@
                     </button>
                     <table class="table table-bordered">
                       <thead>
-                        <th v-if="index_detail_data.attachments.length > 0">
+                        <th
+                          v-if="
+                            index_detail_data.attachments &&
+                            index_detail_data.attachments.length > 0
+                          "
+                        >
                           <input
                             v-if="this.user.is_admin || this.user.is_lawyer"
                             class="margin-left-checkbox"
@@ -377,6 +390,7 @@ import PageNumberSideBar from "../shared/PageNumberLeftSideBar.vue";
 import StandardAnnexureRightSideBar from "../shared/StandardAnnexureRightSideBar.vue";
 import { mapState } from "vuex";
 import NotFoundMessage from "../shared/NotFoundMessage.vue";
+import BreadCrumb from "../../components/BreadCrumb.vue";
 
 export default {
   components: {
@@ -390,6 +404,7 @@ export default {
     PageNumberSideBar,
     StandardAnnexureRightSideBar,
     NotFoundMessage,
+    BreadCrumb,
   },
   computed: mapState(["user"]),
   data() {

@@ -225,7 +225,7 @@
                         showDeleteBtn &&
                         (this.user.is_admin || this.user.is_lawyer)
                       "
-                      class="btn btn-sm btn-danger"
+                      class="btn btn-sm btn-danger action-btn"
                       data-bs-toggle="tooltip"
                       data-bs-placement="top"
                       title="Delete"

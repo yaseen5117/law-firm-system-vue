@@ -62,6 +62,68 @@
                 : ""
             }}</router-link
           >
+          <router-link
+            v-if="isStandardIndexDetail"
+            :to="{
+              name: pathName,
+              params: {
+                petition_id: petition.id,
+                module_type: module_type,
+              },
+            }"
+            >{{
+              petition
+                ? petition.petition_standard_title +
+                  " | " +
+                  moduleDetail.document_description
+                : ""
+            }}</router-link
+          >
+          <router-link
+            v-if="isPetitionNaqalForm"
+            :to="{
+              name: pathName,
+              params: {
+                petition_id: petition.id,
+                naqal_form_id: moduleDetail.id,
+              },
+            }"
+            >{{
+              petition
+                ? petition.petition_standard_title + " | " + moduleDetail.title
+                : ""
+            }}</router-link
+          >
+          <router-link
+            v-if="isPetitionTalbana"
+            :to="{
+              name: pathName,
+              params: {
+                petition_id: petition.id,
+                talbana_id: moduleDetail.id,
+              },
+            }"
+            >{{
+              petition
+                ? petition.petition_standard_title + " | " + moduleDetail.title
+                : ""
+            }}</router-link
+          >
+          <router-link
+            v-if="isPetitionSynopsis"
+            :to="{
+              name: pathName,
+              params: {
+                petition_id: petition.id,
+                synopsis_id: moduleDetail.id,
+              },
+            }"
+            >{{
+              petition
+                ? petition.petition_standard_title + " | " + moduleDetail.title
+                : ""
+            }}</router-link
+          >
         </li>
       </ol>
     </div>
@@ -75,11 +137,17 @@ export default {
     "isPetitionDetail",
     "isPetitionReplyDetail",
     "isPetitionOrderSheet",
+    "isStandardIndexDetail",
+    "isPetitionNaqalForm",
+    "isPetitionTalbana",
+    "isPetitionSynopsis",
     "petition",
     "pathName",
   ],
   data() {
-    return {};
+    return {
+      module_type: this.$route.params.module_type,
+    };
   },
   methods: {},
 };

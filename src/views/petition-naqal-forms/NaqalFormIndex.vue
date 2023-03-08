@@ -16,12 +16,12 @@
       <nav-components activeNavPill="naqal_forms" :petition_id="petition.id" />
       <div class="container mt-2" data-aos="fade-up">
         <div class="row">
-          <div class="col-12 mb-1">
+          <div class="col-5 mb-1">
             <!-- v-if="!removePageHeader" -->
             <button
               v-if="removePageHeader"
               @click="pageHeader()"
-              class="btn btn-success btn-sm"
+              class="btn btn-success btn-sm action-btn"
               style="margin-right: 2px"
               for="flexSwitchCheckDefault"
             >
@@ -30,7 +30,7 @@
             <button
               v-if="!removePageHeader"
               @click="pageHeader()"
-              class="btn btn-success btn-sm"
+              class="btn btn-success btn-sm action-btn"
               style="margin-right: 2px"
               for="flexSwitchCheckDefault"
             >
@@ -39,7 +39,7 @@
 
             <router-link
               v-if="this.user.is_admin || this.user.is_lawyer"
-              class="btn btn-primary btn-sm"
+              class="btn btn-primary btn-sm action-btn"
               :to="{
                 name: 'petition-naqal-forms-save',
                 params: { petition_id: petition.id },
@@ -47,7 +47,16 @@
             >
               Add New Naqal Form
             </router-link>
-
+          </div>
+          <div class="col-7">
+            <BreadCrumb
+              :moduleDetail="NaqalFormActive"
+              :isPetitionNaqalForm="true"
+              :petition="petition"
+              pathName="petition-naqal-forms-index"
+            />
+          </div>
+          <div class="col-12">
             <div class="mt-4" v-if="NaqalFormActive">
               <div class="mb-4">
                 <p>
@@ -89,7 +98,12 @@
                 />
               </div>
               <not-found-message :index_details="NaqalFormActive" />
-              <div v-if="NaqalFormActive.attachments.length > 0">
+              <div
+                v-if="
+                  NaqalFormActive.attachments &&
+                  NaqalFormActive.attachments.length > 0
+                "
+              >
                 <div
                   class="row mb-2 text-center"
                   :id="'image-container-' + attachment.id"
@@ -191,6 +205,7 @@ import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
 import { mapState } from "vuex";
 import NotFoundMessage from "../shared/NotFoundMessage.vue";
+import BreadCrumb from "../../components/BreadCrumb.vue";
 
 export default {
   components: {
@@ -202,6 +217,7 @@ export default {
     FileUpload,
     NavComponents,
     NotFoundMessage,
+    BreadCrumb,
   },
   computed: mapState(["user"]),
   data() {
@@ -303,8 +319,8 @@ export default {
         )
         .then((response) => {
           this.NaqalFormActive = response.data.record;
-          consol.log("success");
-          consol.log(this.NaqalFormActive);
+          console.log("success");
+          console.log(this.NaqalFormActive);
         })
         .catch((error) => {
           console.log(error);

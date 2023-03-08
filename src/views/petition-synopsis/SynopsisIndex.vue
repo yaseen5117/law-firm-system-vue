@@ -19,12 +19,12 @@
       />
       <div class="container mt-2" data-aos="fade-up">
         <div class="row">
-          <div class="col-12">
+          <div class="col-5">
             <!-- v-if="!removePageHeader" -->
             <button
               v-if="removePageHeader"
               @click="pageHeader()"
-              class="btn btn-success btn-sm"
+              class="btn btn-success btn-sm action-btn"
               style="margin-right: 2px"
               for="flexSwitchCheckDefault"
             >
@@ -33,7 +33,7 @@
             <button
               v-if="!removePageHeader"
               @click="pageHeader()"
-              class="btn btn-success btn-sm"
+              class="btn btn-success btn-sm action-btn"
               style="margin-right: 2px"
               for="flexSwitchCheckDefault"
             >
@@ -42,7 +42,7 @@
 
             <router-link
               v-if="this.user.is_admin || this.user.is_lawyer"
-              class="btn btn-primary btn-sm"
+              class="btn btn-primary btn-sm action-btn"
               :to="{
                 name: 'petition-synopsis-save',
                 params: { petition_id: petition.id },
@@ -50,7 +50,16 @@
             >
               Add New Synopsis
             </router-link>
-
+          </div>
+          <div class="col-7">
+            <BreadCrumb
+              :moduleDetail="SynopsisActive"
+              :isPetitionSynopsis="true"
+              :petition="petition"
+              pathName="petition-synopsis-index"
+            />
+          </div>
+          <div class="col-12">
             <div class="mt-4" v-if="SynopsisActive">
               <div class="mb-4">
                 <p>
@@ -93,7 +102,12 @@
                 />
               </div>
               <not-found-message :index_details="SynopsisActive" />
-              <div v-if="SynopsisActive.attachments.length > 0">
+              <div
+                v-if="
+                  SynopsisActive.attachments &&
+                  SynopsisActive.attachments.length > 0
+                "
+              >
                 <div
                   class="row mb-2 text-center"
                   :id="'image-container-' + attachment.id"
@@ -193,6 +207,7 @@ import PageHeader from "../shared/PageHeader.vue";
 import FileUpload from "../petition-index/FileUpload.vue";
 import { mapState } from "vuex";
 import NotFoundMessage from "../shared/NotFoundMessage.vue";
+import BreadCrumb from "../../components/BreadCrumb.vue";
 
 export default {
   components: {
@@ -204,6 +219,7 @@ export default {
     FileUpload,
     NavComponents,
     NotFoundMessage,
+    BreadCrumb,
   },
   computed: mapState(["user"]),
   data() {
