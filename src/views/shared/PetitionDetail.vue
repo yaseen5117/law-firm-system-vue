@@ -7,8 +7,11 @@
   </h6>
   <p>
     <strong v-tooltip.top="petition.type ? petition.type.title : ''">{{
-      petition.petition_standard_title
+      petition ? petition.type_abrivation + " " : ""
     }}</strong>
+    <strong>{{ petition.case_no + "/" + petition.year }}</strong>
+    <br />
+    <strong>{{ petition.title }}</strong>
   </p>
   <p class="line_height">{{ petition.petitioner_names }}</p>
   <p>VERSUS</p>
