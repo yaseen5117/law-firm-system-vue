@@ -16,7 +16,10 @@
       <nav-components activeNavPill="order_sheet" :petition_id="petition_id" />
       <div class="container mt-2" data-aos="fade-up">
         <div class="row mb-4">
-          <div class="col-5">
+          <div id="heading" style="display: none">
+            <h1>HEading</h1>
+          </div>
+          <div class="col-lg-5 col-md-5 col-sm-12">
             <!-- v-if="!removePageHeader" -->
             <button
               v-if="removePageHeader"
@@ -78,10 +81,18 @@
               style="margin-left: 2px"
               v-tooltip.top="'Print Order Sheets'"
               @click="printOrderSheets()"
-              ><i class="fa fa-print"></i> Print</a
+              ><i class="fa fa-print"></i>Print</a
+            >
+            <a
+              v-if="orderSheetsActive"
+              class="btn btn-grey btn-sm mobile-margin-top action-btn"
+              style="margin-left: 2px"
+              v-tooltip.top="'Print Current Order Sheets'"
+              @click="printCurrentOrderSheet(orderSheetsActive, petition)"
+              ><i class="fa fa-print"></i>Print List</a
             >
           </div>
-          <div class="col-7">
+          <div class="col-lg-7 col-md-7 col-sm-12">
             <BreadCrumb
               :moduleDetail="orderSheetsActive"
               :isPetitionOrderSheet="true"
@@ -89,7 +100,7 @@
               pathName="petition-order-sheets-index"
             />
           </div>
-          <div>
+          <div id="current-order-sheet-attachment">
             <div class="mt-4" v-if="orderSheetsActive">
               <not-found-message :index_details="orderSheetsActive" />
               <div
@@ -470,6 +481,27 @@ export default {
         name: "print-order-sheets",
       });
       window.open(routeData.href, "_blank");
+    },
+    printCurrentOrderSheet(OrderSheet, petition) {
+      var printContents = document.getElementById(
+        "current-order-sheet-attachment"
+      ).innerHTML;
+      var petitionDetail =
+        "<div class='text-center mt-3'><h4>" +
+        petition.petition_standard_title +
+        "</h4><h5>";
+      var orderSheetType = OrderSheet.order_sheet_types
+        ? OrderSheet.order_sheet_types.title + "  |  "
+        : " ";
+      var orderSheetDate = OrderSheet.order_sheet_date
+        ? OrderSheet.order_sheet_date + "</h5></div>"
+        : "</h5></div>";
+
+      printContents =
+        petitionDetail + orderSheetType + orderSheetDate + printContents;
+
+      document.body.innerHTML = printContents;
+      window.print();
     },
   },
 };

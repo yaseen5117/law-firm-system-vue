@@ -63,7 +63,7 @@
             }}</router-link
           >
           <router-link
-            v-if="isStandardIndexDetail"
+            v-if="isStandardIndexDetail && moduleDetail"
             :to="{
               name: pathName,
               params: {
@@ -80,7 +80,7 @@
             }}</router-link
           >
           <router-link
-            v-if="isPetitionNaqalForm"
+            v-if="isPetitionNaqalForm && moduleDetail"
             :to="{
               name: pathName,
               params: {
@@ -95,7 +95,7 @@
             }}</router-link
           >
           <router-link
-            v-if="isPetitionTalbana"
+            v-if="isPetitionTalbana && moduleDetail"
             :to="{
               name: pathName,
               params: {
@@ -110,7 +110,7 @@
             }}</router-link
           >
           <router-link
-            v-if="isPetitionSynopsis"
+            v-if="isPetitionSynopsis && moduleDetail"
             :to="{
               name: pathName,
               params: {

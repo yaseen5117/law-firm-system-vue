@@ -1412,11 +1412,10 @@ section {
   }
 }
 
-
 /*--------------------------------------------------------------
 # Sub Breadcrumbs
 --------------------------------------------------------------*/
-.sub-breadcrumbs{
+.sub-breadcrumbs {
   padding: 0px;
   min-height: auto;
   margin-top: 0px;
@@ -1426,7 +1425,8 @@ section {
     margin-top: 56px;
   }
 }
-.breadcrumbs,.sub-breadcrumbs h2 {
+.breadcrumbs,
+.sub-breadcrumbs h2 {
   font-size: 24px;
   font-weight: 300;
 }
@@ -1985,4 +1985,7 @@ label {
 
 .p-datepicker {
   z-index: 1000;
+}
+.dropdown-item.active {
+  background-color: rgb(143 58 48);
 }
