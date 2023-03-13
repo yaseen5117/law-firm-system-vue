@@ -49,7 +49,7 @@
                 params: { petition_id: petition_id },
               }"
             >
-              Add New Order Sheet
+              New Order Sheet
             </router-link>
             <router-link
               style="margin-right: 2px"
@@ -79,7 +79,7 @@
             <a
               class="btn btn-grey btn-sm mobile-margin-top action-btn"
               style="margin-left: 2px"
-              v-tooltip.top="'Print Order Sheets'"
+              v-tooltip.top="'Print All Order Sheets'"
               @click="printOrderSheets()"
               ><i class="fa fa-print"></i>Print</a
             >
@@ -87,7 +87,7 @@
               v-if="orderSheetsActive"
               class="btn btn-grey btn-sm mobile-margin-top action-btn"
               style="margin-left: 2px"
-              v-tooltip.top="'Print Current Order Sheets'"
+              v-tooltip.top="'Print Current Order Sheet'"
               @click="printCurrentOrderSheet(orderSheetsActive, petition)"
               ><i class="fa fa-print"></i>Print List</a
             >
