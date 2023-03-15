@@ -234,12 +234,7 @@ export default {
         )
         .then((response) => {
           if (response.status == 200) {
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement("a");
-            link.href = url;
-            // link.setAttribute("download", "test.pdf");
-            document.body.appendChild(link);
-            link.click();
+            window.open(response.data.file_path, "_blank");
           }
           this.$notify({
             type: "success",
