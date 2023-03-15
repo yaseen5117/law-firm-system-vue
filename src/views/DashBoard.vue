@@ -681,12 +681,10 @@
                       ? { click: () => studentModal() }
                       : { click: () => gotoLink('fir-reader') }
                   "
-                  >FIR Reader (Public View)</a
+                  >Criminal Law Guru</a
                 >
               </h4>
-              <p>
-                Contains all Details of FIR Reader. Click to Open all Details.
-              </p>
+              <p>Fastest way to research Pakistani criminal law. Try it!</p>
             </div>
           </div>
 
