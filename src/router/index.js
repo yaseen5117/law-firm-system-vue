@@ -793,8 +793,13 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.auth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
+    var redirectTo = "";
+    if (to.params && to.params.id) {
+      redirectTo = "?redirect=" + to.path;
+    }
+    console.log("redirectTo: ", redirectTo);
     if (!isloggedin) {
-      next({ name: "Login" });
+      next("/login" + redirectTo);
     } else {
       next(); // go to wherever I'm going
     }

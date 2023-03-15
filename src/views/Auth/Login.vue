@@ -152,7 +152,12 @@ export default {
               });
               localStorage.setItem("lfms_user", response.data.token);
               this.$store.dispatch("authUser");
-              this.$router.push({ path: "/dashboard" });
+              const redirect = this.$route.query.redirect;
+              if (redirect) {
+                this.$router.push(redirect);
+              } else {
+                this.$router.push("/dashboard");
+              }
             }
             console.log(response);
           },
