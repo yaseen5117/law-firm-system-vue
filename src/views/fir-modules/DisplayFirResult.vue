@@ -234,9 +234,11 @@ export default {
         )
         .then((response) => {
           if (response.status == 200) {
+            //var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement("a");
             link.href = response.data.file_path;
-            link.download = "file.pdf";
+            link.setAttribute("download", "FIR_Search_Results.pdf");
+
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
