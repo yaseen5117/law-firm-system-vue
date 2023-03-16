@@ -150,7 +150,7 @@
             <div class="card mb-4" id="card">
               <div class="container-fluid">
                 <div class="mt-5">
-                  <h4>Need : <b> Legal Help</b></h4>
+                  <h4>Need Legal Help?</h4>
                   <button class="btn btn-danger">Contact Us</button>
                   <p style="vertical-align: bottom; padding-top: 25px">
                     <b>
