@@ -234,7 +234,13 @@ export default {
         )
         .then((response) => {
           if (response.status == 200) {
-            window.open(response.data.file_path, "_blank");
+            const link = document.createElement("a");
+            link.href = response.data.file_path;
+            link.download = "file.pdf";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            //window.open(response.data.file_path, "_blank");
           }
           this.$notify({
             type: "success",
