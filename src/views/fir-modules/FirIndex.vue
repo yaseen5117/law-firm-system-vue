@@ -151,7 +151,8 @@
               <div class="container-fluid">
                 <div class="mt-5">
                   <h4>Need Legal Help?</h4>
-                  <button class="btn btn-danger">Contact Us</button>
+                  <a class="btn btn-danger" href="#about">About Us</a>
+
                   <p style="vertical-align: bottom; padding-top: 25px">
                     <b>
                       Reference:
