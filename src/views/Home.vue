@@ -310,24 +310,24 @@
         </div>
 
         <div class="row" id="quote">
-          <div class="col-lg-6">
+          <div class="col-lg-6 margin-bottom-for-icons">
             <a
               href="https://www.linkedin.com/in/elawfirm-bringing-law-and-tech-together-50b67523b/"
               target="_blank"
             >
-              <i class="fa fa-linkedin-square linkedin-icon icon-font"></i>
+              <i class="fa fa-linkedin linkedin-icon icon-font"></i>
             </a>
             <a
               href="https://www.facebook.com/profile.php?id=100081095452021"
               target="_blank"
             >
-              <i class="fa fa-facebook-square facebook-icon icon-font"></i
+              <i class="fa fa-facebook facebook-icon icon-font"></i
             ></a>
             <a href="https://twitter.com/@E_Lawfirm" target="_blank">
-              <i class="fa fa-twitter-square twitter-icon icon-font"></i
+              <i class="fa fa-twitter twitter-icon icon-font"></i
             ></a>
             <a href="#" target="_blank">
-              <i class="fa fa-instagram-square instagram-icon icon-font"></i
+              <i class="fa fa-instagram instagram-icon icon-font"></i
             ></a>
             <!-- <iframe
               width="560"
@@ -659,6 +659,9 @@ export default {
   iframe {
     width: 100%;
   }
+  .margin-bottom-for-icons {
+    margin-bottom: 8px;
+  }
 }
 .pricing-td-text {
   font-size: 13px;
@@ -673,18 +676,30 @@ export default {
   font-size: 30px;
 }
 .linkedin-icon {
-  color: #0a66c2;
+  color: #ffffff;
+  background: #0a66c2;
+  padding: 4px 6px 4px 6px;
+  border-radius: 50%;
 }
 .facebook-icon {
-  color: #3b5998;
+  color: #ffffff;
   margin-left: 10px;
+  background: #3b5998;
+  padding: 4px 11px 4px 11px;
+  border-radius: 50%;
 }
 .twitter-icon {
-  color: #00acee;
+  color: #ffffff;
   margin-left: 10px;
+  background: #00acee;
+  padding: 4px 6px 4px 6px;
+  border-radius: 50%;
 }
 .instagram-icon {
-  color: rgb(214, 41, 118);
+  color: rgb(255, 255, 255);
   margin-left: 10px;
+  background: rgb(214, 41, 118);
+  padding: 4px 6px 4px 6px;
+  border-radius: 50%;
 }
 </style>
