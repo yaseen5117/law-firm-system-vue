@@ -86,7 +86,7 @@
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Phone</label>
                     <InputMask
-                      class="form-control"
+                      class="form-control form-control-sm"
                       v-model="user.phone"
                       mask="9999-9999999"
                       placeholder="0300-1234567"
@@ -96,7 +96,7 @@
               </div>
               <div class="form-group">
                 <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
                     <label>Password <span style="color: red">*</span></label>
                     <input
                       placeholder="Enter your password"
@@ -113,7 +113,7 @@
                     >
                   </div>
 
-                  <div class="col-lg-6 col-md-6 col-sm-12 mt-2">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
                     <label
                       >Confirm Password <span style="color: red">*</span></label
                     >
@@ -146,14 +146,14 @@
                       >
                         Sign Up
                       </button>
-                      
-                      
                     </div>
-                    
                   </div>
-                  <router-link style="font-size: 14px; text-decoration: underline;" to="about-elawfirm" class="read-more mt-2"
-              >What is ELawFirm?
-            </router-link>
+                  <router-link
+                    style="font-size: 14px; text-decoration: underline"
+                    to="about-elawfirm"
+                    class="read-more mt-2"
+                    >What is ELawFirm?
+                  </router-link>
                 </div>
                 <Dialog
                   modal="true"
@@ -259,11 +259,12 @@ export default {
                 "You will receive an email with your login details. Once your account is approved by the Admin, you'll be able to login to ELawFirm.";
               this.successPopup = true;
             }
+            this.saving = false;
             console.log(response);
           },
           (error) => {
-            this.error_email = error.response.data.validation_error.email[0];
             this.saving = false;
+            this.error_email = error.response.data.validation_error.email[0];
             console.log(error.response.data);
             this.$notify({
               type: "error",

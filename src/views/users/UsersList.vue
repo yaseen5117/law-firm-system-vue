@@ -29,6 +29,7 @@
                   >
                     <div class="col-lg-3 col-md-3 col-sm-6">
                       <input
+                        v-on:keyup.enter="searchUser()"
                         type="text"
                         id="name"
                         v-model="filters.name"
@@ -40,6 +41,7 @@
 
                     <div class="col-lg-3 col-md-3 col-sm-6">
                       <input
+                        v-on:keyup.enter="searchUser()"
                         placeholder="Email"
                         v-model="filters.email"
                         type="email"
@@ -48,8 +50,9 @@
                         aria-describedby="Email"
                       />
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-2 col-md-2 col-sm-12">
                       <select
+                        @change="searchUser()"
                         class="form-select form-select-sm"
                         aria-describedby="Role"
                         v-model="filters.role_id"
@@ -67,6 +70,7 @@
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12">
                       <select
+                        @change="searchUser()"
                         class="form-select form-select-sm"
                         aria-describedby="Role"
                         v-model="filters.is_approved"
@@ -81,7 +85,14 @@
                         </option>
                       </select>
                     </div>
-                    <div class="col-lg-1 col-md-1 col-sm-12">
+                    <div class="col-lg-2 col-md-2 col-sm-12">
+                      <button
+                        type="button"
+                        class="btn btn-success btn-sm mr"
+                        @click="searchUser()"
+                      >
+                        Search
+                      </button>
                       <button
                         type="button"
                         class="btn btn-danger btn-sm"
@@ -169,6 +180,9 @@
                         </td>
                         <td width="15%">
                           <button
+                            v-tooltip.top="
+                              user.is_approved ? 'Block' : 'Approve'
+                            "
                             :class="
                               user.is_approved ? 'btn-warning' : 'btn-success'
                             "
@@ -322,14 +336,53 @@ export default {
     this.getUsers();
   },
   methods: {
+    searchUser() {
+      this.getUsers();
+    },
     formateDate(date) {
       if (date) {
         return moment(String(date)).format("DD/MM/YYYY"); //for  time hh:mm
       }
     },
     isApprovedToggle(user, param) {
-      user.is_approved = param;
-      this.editUser(user);
+      if (true) {
+        user.is_approved = param;
+
+        var headers = {
+          Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+        };
+
+        axios
+          .post(
+            this.base_url + "/api/approve_or_block",
+            { user: user },
+            {
+              headers,
+            }
+          )
+          .then(
+            (response) => {
+              if (response.status === 200) {
+                console.log("DAta: ", response.data);
+                this.$notify({
+                  type: "success",
+                  title: "Success",
+                  text: response.data
+                    ? response.data.message
+                    : "Saved Successfully!",
+                });
+              }
+            },
+            (error) => {
+              console.log(error.response.data);
+              this.$notify({
+                type: "error",
+                title: "Something went wrong!",
+                text: error.response.data.message,
+              });
+            }
+          );
+      }
     },
     onPage(event) {
       this.isLoaded = false;
@@ -443,12 +496,11 @@ export default {
       });
     },
     reset() {
-      this.isLoaded = false;
       this.filters = {
         role_id: "",
         is_approved: 2,
       };
-      this.isLoaded = true;
+      this.getUsers();
     },
   },
   mounted() {
@@ -456,21 +508,25 @@ export default {
     document.getElementById("header");
     document.title = "Users";
   },
-  watch: {
-    filters: {
-      deep: true,
-      handler() {
-        if (!this.awaitingSearch) {
-          setTimeout(() => {
-            this.getUsers();
-            this.awaitingSearch = false;
-          }, 4000); // 1 sec delay
-        }
-        this.awaitingSearch = true;
-      },
-    },
-  },
+  // watch: {
+  //   filters: {
+  //     deep: true,
+  //     handler() {
+  //       if (!this.awaitingSearch) {
+  //         setTimeout(() => {
+  //           this.getUsers();
+  //           this.awaitingSearch = false;
+  //         }, 4000); // 1 sec delay
+  //       }
+  //       this.awaitingSearch = true;
+  //     },
+  //   },
+  // },
 };
 </script>
 
-<style></style>
+<style scoped>
+.mr {
+  margin-right: 1px;
+}
+</style>
