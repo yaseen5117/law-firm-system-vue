@@ -130,7 +130,7 @@
                   <table class="table table-hover" v-if="isLoaded">
                     <thead>
                       <th>Name</th>
-                      <th>Role</th>
+                      <!-- <th>Role</th> -->
                       <th>Email</th>
                       <!-- <th width="15%">Status</th> -->
                       <th width="15%">Registered at</th>
@@ -148,24 +148,32 @@
                           <span v-show="!user.editMode">{{ user.name }} </span>
                           <span
                             style="margin-left: 2px"
+                            class="badge rounded-pill bg-primary text-capitalize"
+                            v-for="role in user.roles"
+                            :key="role"
+                          >
+                            {{ role.name }}
+                          </span>
+                          <span
+                            style="margin-left: 2px"
                             :class="
                               user.is_approved
                                 ? 'badge rounded-pill bg-success'
-                                : 'badge rounded-pill bg-primary'
+                                : 'badge rounded-pill bg-secondary'
                             "
                             >{{
                               user.is_approved ? "Approved" : "Pending Approval"
                             }}</span
                           >
                         </td>
-                        <td>
+                        <!-- <td>
                           <span
                             class="text-capitalize"
                             v-for="role in user.roles"
                             :key="role"
                             >{{ role.name }}
                           </span>
-                        </td>
+                        </td> -->
                         <td>
                           <input
                             v-show="user.editMode"
@@ -537,5 +545,14 @@ export default {
 <style scoped>
 .mr {
   margin-right: 1px;
+}
+th {
+  font-size: 13px;
+}
+td {
+  font-size: 13px;
+}
+.text-capitalize {
+  text-transform: uppercase !important;
 }
 </style>
