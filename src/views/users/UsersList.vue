@@ -52,7 +52,6 @@
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12">
                       <select
-                        @change="searchUser()"
                         class="form-select form-select-sm"
                         aria-describedby="Role"
                         v-model="filters.role_id"
@@ -70,7 +69,6 @@
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12">
                       <select
-                        @change="searchUser()"
                         class="form-select form-select-sm"
                         aria-describedby="Role"
                         v-model="filters.is_approved"
@@ -134,7 +132,7 @@
                       <th>Name</th>
                       <th>Role</th>
                       <th>Email</th>
-                      <th width="15%">Status</th>
+                      <!-- <th width="15%">Status</th> -->
                       <th width="15%">Registered at</th>
                       <th width="20%">Actions</th>
                     </thead>
@@ -148,6 +146,17 @@
                             v-on:keyup.enter="editUser(user)"
                           />
                           <span v-show="!user.editMode">{{ user.name }} </span>
+                          <span
+                            style="margin-left: 2px"
+                            :class="
+                              user.is_approved
+                                ? 'badge rounded-pill bg-success'
+                                : 'badge rounded-pill bg-primary'
+                            "
+                            >{{
+                              user.is_approved ? "Approved" : "Pending Approval"
+                            }}</span
+                          >
                         </td>
                         <td>
                           <span
@@ -166,13 +175,13 @@
                           />
                           <span v-show="!user.editMode">{{ user.email }} </span>
                         </td>
-                        <td>
+                        <!-- <td>
                           <p :class="user.is_approved ? '' : ''" class="">
                             {{
                               user.is_approved ? "Approved" : "Pending Approval"
                             }}
                           </p>
-                        </td>
+                        </td> -->
                         <td>
                           <p>
                             {{ formateDate(user.created_at) }}
