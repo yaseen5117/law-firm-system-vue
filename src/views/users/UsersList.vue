@@ -552,7 +552,4 @@ th {
 td {
   font-size: 13px;
 }
-.text-capitalize {
-  text-transform: uppercase !important;
-}
 </style>
