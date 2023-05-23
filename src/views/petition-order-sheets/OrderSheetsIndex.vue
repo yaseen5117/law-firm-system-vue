@@ -509,11 +509,11 @@ export default {
 
 <style>
 .p-side-bar-ordersheet {
-  width: 130px !important;
+  width: 165px !important;
 }
 @media only screen and (max-width: 600px) {
   .mobile-margin-top {
     margin-top: 2px;
   }
-}
+} 
 </style>
