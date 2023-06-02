@@ -4,7 +4,8 @@
     <div class="case_file">
       <main id="main">
         <page-header
-          title="Case Files"
+          :title="header_title"
+          :archive_tag="archive_tag"
           :route_object="route_obj"
           :header_button="header_button"
           :header_button_text="header_button_text"
@@ -123,7 +124,7 @@
                         Print Pending Cases
                       </button>
                     </div>
-                    <div class="col-lg-2 col-md-3 col-sm-12 mt-1">
+                    <div class="col-lg-6 col-md-6 col-sm-12 mt-1">
                       <label style="margin-left: 5px">
                         <Checkbox
                           inputClass="p-checkbox p-checkbox-box"
@@ -406,7 +407,9 @@
                   <div class="col-md-3">
                     <p v-show="isLoaded && petitions_pagination_info.total > 0">
                       <small
-                        >Showing from {{ petitions_pagination_info.from }} to
+                        >Showing
+                        {{ filters.archived ? "Archived Cases" : "" }} from
+                        {{ petitions_pagination_info.from }} to
                         {{ petitions_pagination_info.to }} of
                         {{ petitions_pagination_info.total }}</small
                       >
@@ -460,6 +463,7 @@ export default {
   name: "CaseFile",
   data() {
     return {
+      header_title: "Case Files",
       route_obj: {
         name: "create-petition",
       },
@@ -479,7 +483,12 @@ export default {
       pending_tag: "",
       showPendingCasePrintModal: false,
       resetDuration: false,
+      archive_tag: "",
     };
+  },
+  updated() {
+    this.archive_tag = this.filters.archived ? "(Archived) " : "";
+
   },
   created() {
     this.getCourts();

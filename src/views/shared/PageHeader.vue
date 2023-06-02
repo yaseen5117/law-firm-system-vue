@@ -6,6 +6,7 @@
           <span v-if="isNotHeading">{{ title }}</span>
           <h4 v-if="title && !isNotHeading">
             {{ title }}
+            <span class="archive_tag">{{ archive_tag }}</span>
             <router-link
               v-if="
                 header_button && (this.user.is_admin || this.user.is_lawyer)
@@ -130,6 +131,7 @@ export default {
     "showFirReader",
     "showUsers",
     "centerHeading",
+    "archive_tag",
   ],
   data() {
     return {
@@ -171,5 +173,9 @@ export default {
 <style scoped>
 .mr-left {
   margin-left: 1px;
+}
+.archive_tag{
+  font-size: 14px !important;
+  font-weight: bold;
 }
 </style>
