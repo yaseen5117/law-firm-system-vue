@@ -17,10 +17,13 @@
     </p>
     <form>
       <div class="row">
-        <div class="col-6">
-          input
+        <div class="col-12">
+          <FileUpload name="demo[]" url="./upload.php" @upload="onAdvancedUpload($event)" :multiple="true" accept="image/*" :maxFileSize="1000000" maxFileSize="2">
+    <template #empty>
+        <p>Drag and drop files to here to upload.</p>
+    </template>
+</FileUpload>
         </div>
-        <div class="col-6"></div>
       </div>
     </form>
 
