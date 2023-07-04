@@ -6,6 +6,25 @@
       style="margin-top: 100px"
       class="services section-bg"
     >
+
+<Dialog v-model:visible="modalRequireUserDocs" modal header="Documents Required!" :style="{ width: '50vw' }" :breakpoints="{ '960px': '75vw', '641px': '100vw' }"  >
+    <p>
+        <strong>Please upload following document to start using the system.</strong>
+        <ul class="mt-3">
+          <li>CNIC</li>
+          <li>Agreement Form</li>
+        </ul>
+    </p>
+    <form>
+      <div class="row">
+        <div class="col-6">
+          input
+        </div>
+        <div class="col-6"></div>
+      </div>
+    </form>
+
+</Dialog>
       <div class="container" v-if="!this.user">
         <p class="text-danger text-center">Authenticating...</p>
       </div>
@@ -849,13 +868,18 @@
 // @ is an alias to /src
 //import CaseDetail from "./CaseDetail.vue";
 import { mapState } from "vuex";
+import FileUpload from 'primevue/fileupload';
 
 export default {
+  components: {
+    FileUpload
+  },
   name: "DashBoard",
   computed: mapState(["user", "globalGeneralSetting"]),
   data() {
     return {
       displaymodal: false,
+      modalRequireUserDocs: true,
     };
   },
   methods: {
