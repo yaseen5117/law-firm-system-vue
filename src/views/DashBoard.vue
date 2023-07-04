@@ -882,7 +882,7 @@ export default {
   data() {
     return {
       displaymodal: false,
-      modalRequireUserDocs: true,
+      modalRequireUserDocs: false,
     };
   },
   methods: {
