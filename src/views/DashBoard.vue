@@ -159,7 +159,7 @@
 
           <div
             @click="gotoLink('contract-and-agreement')"
-            v-if="
+            v-if="(user.company_id==1) && 
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
@@ -199,7 +199,7 @@
           <!-- pleading link -->
           <div
             @click="gotoLink('sample-pleading')"
-            v-if="
+            v-if="(user.company_id==1) && 
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
@@ -273,7 +273,8 @@
                 ? { click: () => studentModal() }
                 : { click: () => gotoLink('limitation-calculator') }
             "
-            v-if="
+            v-if="(user.company_id==1) && 
+              
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
             :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
@@ -318,7 +319,8 @@
 
           <div
             @click="gotoLink('#')"
-            v-if="
+            v-if="(user.company_id==1) && 
+              
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
@@ -359,7 +361,8 @@
                 ? { click: () => studentModal() }
                 : { click: () => gotoLink('#transaction-calculator') }
             "
-            v-if="
+            v-if="(user.company_id==1) && 
+              
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
             :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
@@ -406,7 +409,8 @@
                 ? { click: () => studentModal() }
                 : { click: () => gotoLink('#service-rules-library') }
             "
-            v-if="
+            v-if="(user.company_id==1) && 
+              
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
             :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
@@ -451,7 +455,8 @@
                 ? { click: () => studentModal() }
                 : { click: () => gotoLink('invoices') }
             "
-            v-if="this.user.is_admin || this.user.is_student"
+            v-if="(user.company_id==1) && 
+              this.user.is_admin || this.user.is_student"
             :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch"
           >
@@ -541,7 +546,7 @@
                 ? { click: () => studentModal() }
                 : { click: () => gotoLink('links') }
             "
-            v-if="
+            v-if=" (user.company_id==1) && 
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
             :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
@@ -795,7 +800,7 @@
           </div>
 
           <div
-            v-if="
+            v-if="(user.company_id==1) && 
               this.user.is_admin || this.user.is_lawyer || this.user.is_student
             "
             v-on="
