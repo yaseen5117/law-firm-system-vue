@@ -7,27 +7,6 @@
       class="services section-bg"
     >
 
-<Dialog v-model:visible="modalRequireUserDocs" modal header="Documents Required!" :style="{ width: '50vw' }" :breakpoints="{ '960px': '75vw', '641px': '100vw' }"  >
-    <p>
-        <strong>Please upload following document to start using the system.</strong>
-        <ul class="mt-3">
-          <li>CNIC</li>
-          <li>Agreement Form</li>
-        </ul>
-    </p>
-    <form>
-      <div class="row">
-        <div class="col-12">
-          <FileUpload name="demo[]" url="./upload.php" @upload="onAdvancedUpload($event)" :multiple="true" accept="image/*" :maxFileSize="1000000" maxFileSize="2">
-    <template #empty>
-        <p>Drag and drop files to here to upload.</p>
-    </template>
-</FileUpload>
-        </div>
-      </div>
-    </form>
-
-</Dialog>
       <div class="container" v-if="!this.user">
         <p class="text-danger text-center">Authenticating...</p>
       </div>
@@ -867,9 +846,32 @@
         at {{ this.globalGeneralSetting.site_phone }} if you wish to
         access this module.</span
       >
+      
     </div></Dialog
   >
   <!-- End #main -->
+
+  <Dialog  v-model:visible="modalRequireUserDocs" modal header="Documents Required!" :style="{ width: '50vw' }" :breakpoints="{ '960px': '75vw', '641px': '100vw' }"  :closable="false" >
+    <p>
+        <strong class="text-danger">Please upload following document to start using the system. If you already uploaded the documents than please wait. Our Admin will review and approve your documents soon.</strong>
+        <ul class="mt-3">
+          <li>CNIC</li>
+          <li>Agreement Form</li>
+        </ul>
+    </p>
+    <form>
+      <div class="row">
+        <div class="col-12">
+          <FileUpload name="demo[]" :url="this.base_url + '/attachments/upload_user_required_docs'" @error="fileUploadError($event)"  @upload="onAdvancedUpload($event)" :multiple="true" accept="image/*" :maxFileSize="1000000" maxFileSize="2">
+    <template #empty>
+        <p>Drag and drop files to here to upload.</p>
+    </template>
+</FileUpload>
+        </div>
+      </div>
+    </form>
+
+</Dialog>
 </template>
 
 <script>
@@ -888,9 +890,13 @@ export default {
     return {
       displaymodal: false,
       modalRequireUserDocs: false,
+      base_url: process.env.VUE_APP_SERVICE_URL,
     };
   },
   methods: {
+    fileUploadError(event) {
+      alert("fileupload error");
+    },
     gotoLink(path) {
       if (path == "fir-reader") {
         let routeData = this.$router.resolve({
@@ -909,9 +915,13 @@ export default {
     },
   },
   mounted() {
+    
     document.getElementById("header");
     document.title = "Dashboard";
   },
+  updated(){
+    this.modalRequireUserDocs = !this.user.is_admin && this.user.documents_required;
+  }
 };
 </script>
 

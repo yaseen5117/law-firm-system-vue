@@ -249,166 +249,203 @@
                       ref="fileInput"
                       @input="pickFile"
                     />
-                  </div>
-                  <div
-                    class="col-lg-3 col-md-3 col-sm-12"
-                    v-show="previewImage"
-                  >
-                    <div
-                      class="imagePreviewWrapper"
-                      :style="{ 'background-image': `url(${previewImage})` }"
-                      @click="selectImage"
-                    ></div>
-                  </div>
-                  <div class="col-lg-3 col-md-3 col-sm-12" v-show="profileImg">
-                    <img
-                      v-if="updatedOrNewUser && updatedOrNewUser.attachment"
-                      :src="
-                        this.base_url +
-                        '/storage/attachments/user/' +
-                        updatedOrNewUser.id +
-                        '/' +
-                        updatedOrNewUser.attachment.file_name
-                      "
-                      alt="avatar"
-                      style="width: 75px; height: 70px"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="row mt-2">
-                  <div class="col-md-12">
-                    <div
-                      class="form-group"
-                      v-for="(
-                        contact_person, contact_person_index
-                      ) in updatedOrNewUser.contact_persons"
-                      :key="contact_person"
-                    >
-                      <div class="row">
-                        <div class="col-md-4">
-                          <label for="">Name</label>
-                          <input
-                            autofocus
-                            type="text"
-                            class="form-control"
-                            v-model="contact_person.name"
-                          />
+                    <div class="" v-show="previewImage">
+                      <div
+                        class="imagePreviewWrapper"
+                        :style="{ 'background-image': `url(${previewImage})` }"
+                        @click="selectImage"
+                      ></div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="row mt-2">
+                        <div class="col-md-12">
+                          <div
+                            class="form-group"
+                            v-for="(
+                              contact_person, contact_person_index
+                            ) in updatedOrNewUser.contact_persons"
+                            :key="contact_person"
+                          >
+                            <div class="row">
+                              <div class="col-md-4">
+                                <label for="">Name</label>
+                                <input
+                                  autofocus
+                                  type="text"
+                                  class="form-control"
+                                  v-model="contact_person.name"
+                                />
+                              </div>
+                              <div class="col-md-4">
+                                <label for="">Email</label>
+                                <input
+                                  v-model="contact_person.email"
+                                  type="text"
+                                  :class="
+                                    contact_person_email_error
+                                      ? 'form-control is-invalid'
+                                      : 'form-control'
+                                  "
+                                />
+                                <small class="text-danger"
+                                  >{{ contact_person_email_error }}
+                                </small>
+                              </div>
+                              <div class="col-md-4">
+                                <label for="">Phone</label>
+                                <div class="input-group">
+                                  <InputMask
+                                    class="form-control"
+                                    mask="9999-9999999"
+                                    v-model="contact_person.phone"
+                                  />
+                                  <button
+                                    type="button"
+                                    class="btn-danger"
+                                    @click="
+                                      removeContactPerson(
+                                        $event,
+                                        updatedOrNewUser.contact_persons,
+                                        contact_person_index,
+                                        contact_person.id
+                                      )
+                                    "
+                                    v-tooltip.top="'Remove'"
+                                    :disabled="saving"
+                                  >
+                                    <span class="fa fa-minus"></span>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <button type="button" @click="addContactPerson()">
+                            <span class="fa fa-plus"></span> Add Contact Person
+                          </button>
                         </div>
-                        <div class="col-md-4">
-                          <label for="">Email</label>
-                          <input
-                            v-model="contact_person.email"
-                            type="text"
-                            :class="
-                              contact_person_email_error
-                                ? 'form-control is-invalid'
-                                : 'form-control'
+                        <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
+                          <ToggleButton
+                            v-if="
+                              updatedOrNewUser &&
+                              updatedOrNewUser.id &&
+                              this.user.is_admin
+                            "
+                            v-tooltip.top="
+                              blockOrApproved
+                                ? 'Click To Approve this User'
+                                : 'Click To Block this User'
+                            "
+                            v-model="blockOrApproved"
+                            onLabel="Approve this User"
+                            offLabel="Block this User"
+                            onIcon="pi pi-check"
+                            offIcon="pi pi-ban"
+                            :style="
+                              blockOrApproved
+                                ? 'background-color: green; color: white'
+                                : 'background-color: red; color: white'
+                            "
+                            class="w-full sm:w-10rem"
+                            aria-label="do you confirm"
+                            @change="
+                              blockOrApprove(updatedOrNewUser, !blockOrApproved)
                             "
                           />
-                          <small class="text-danger"
-                            >{{ contact_person_email_error }}
-                          </small>
-                        </div>
-                        <!-- <div class="col-md-3">
-                          <label for="">CNIC</label>
-                          <InputMask
-                            type="text"
-                            class="form-control"
-                            v-model="contact_person.cnic"
-                            mask="99999-9999999-9"
+
+                          <ToggleButton
+                            v-if="
+                              updatedOrNewUser &&
+                              updatedOrNewUser.id &&
+                              this.user.is_admin
+                            "
+                            v-tooltip.top="
+                              updatedOrNewUser.documents_required
+                                ? 'Click to Approve Documents'
+                                : 'Click to Reject Documents'
+                            "
+                            v-model="updatedOrNewUser.documents_required"
+                            onLabel="Approve Documents"
+                            offLabel="Reject Documents"
+                            onIcon="pi pi-check"
+                            offIcon="pi pi-ban"
+                            :style="
+                              updatedOrNewUser.documents_required
+                                ? 'background-color: green; color: white'
+                                : 'background-color: red; color: white'
+                            "
+                            aria-label="Are you sure?"
+                            @change="approveRejectDocs()"
                           />
-                        </div> -->
-                        <div class="col-md-4">
-                          <label for="">Phone</label>
-                          <div class="input-group">
-                            <InputMask
-                              class="form-control"
-                              mask="9999-9999999"
-                              v-model="contact_person.phone"
-                            />
-                            <button
-                              type="button"
-                              class="btn-danger"
-                              @click="
-                                removeContactPerson(
-                                  $event,
-                                  updatedOrNewUser.contact_persons,
-                                  contact_person_index,
-                                  contact_person.id
-                                )
-                              "
-                              v-tooltip.top="'Remove'"
-                              :disabled="saving"
-                            >
-                              <span class="fa fa-minus"></span>
-                            </button>
-                          </div>
+                        </div>
+                        <span
+                        class="mt-2 text-success" style="font-size: 12px;"
+                          
+                          v-if="
+                            updatedOrNewUser &&
+                            updatedOrNewUser.id &&
+                            updatedOrNewUser.is_approved > 0 &&
+                            updatedOrNewUser.approved_at
+                          "
+                        >
+                          (User approved at:
+                          <span>{{
+                            updatedOrNewUser.approved_at
+                              ? updatedOrNewUser.approved_at
+                              : ""
+                          }}</span>
+                          by
+                          <span>{{
+                            updatedOrNewUser.approve_by
+                              ? updatedOrNewUser.approve_by.name
+                              : ""
+                          }}</span
+                          >)
+                        </span>
+                        <span
+                        class="text-success" style="font-size: 12px;"
+                          v-if="
+                            updatedOrNewUser &&
+                            !updatedOrNewUser.documents_required
+                          "
+                        >(This user has uploaded required documents.)</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6 col-md-6 col-sm-12" v-show="profileImg">
+                    <div>
+                      <img
+                        v-if="updatedOrNewUser && updatedOrNewUser.attachment"
+                        :src="
+                          this.base_url +
+                          '/storage/attachments/user/' +
+                          updatedOrNewUser.id +
+                          '/' +
+                          updatedOrNewUser.attachment.file_name
+                        "
+                        alt="avatar"
+                        style="width: 75px; height: 70px"
+                      />
+                    </div>
+                    <div v-if="updatedOrNewUser.required_documents.length > 0">
+                      <p><strong>Required Documents </strong></p>
+                      <div
+                        class="row"
+                        v-for="requiredDoc in updatedOrNewUser.required_documents"
+                      >
+                        <div class="col-md-12">
+                          <img
+                            v-if="requiredDoc.path"
+                            :src="
+                              this.base_url + '/storage/' + requiredDoc.path
+                            "
+                            :alt="requiredDoc.file_name"
+                            style="width: 80%"
+                          />
                         </div>
                       </div>
                     </div>
-                    <button type="button" @click="addContactPerson()">
-                      <span class="fa fa-plus"></span> Add Contact Person
-                    </button>
-                  </div>
-                  <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
-                    <!-- <button type="button" class="btn btn-success">
-                      Approve this User
-                    </button>
-                    <button type="button" class="btn btn-danger">
-                      Block this User
-                    </button> -->
-                    <p
-                      style="font-weight: bold; font-size: 14px; color: green"
-                      v-if="
-                        updatedOrNewUser &&
-                        updatedOrNewUser.id &&
-                        updatedOrNewUser.is_approved > 0 &&
-                        updatedOrNewUser.approved_at
-                      "
-                    >
-                      (User approved at:
-                      <span style="font-size: 15px">{{
-                        updatedOrNewUser.approved_at
-                          ? updatedOrNewUser.approved_at
-                          : ""
-                      }}</span>
-                      by
-                      <span style="font-size: 15px">{{
-                        updatedOrNewUser.approve_by
-                          ? updatedOrNewUser.approve_by.name
-                          : ""
-                      }}</span
-                      >)
-                    </p>
-                    <ToggleButton
-                      v-if="
-                        updatedOrNewUser &&
-                        updatedOrNewUser.id &&
-                        this.user.is_admin
-                      "
-                      v-tooltip.top="
-                        blockOrApproved
-                          ? 'Click To Approve this User'
-                          : 'Click To Block this User'
-                      "
-                      v-model="blockOrApproved"
-                      onLabel="Approve this User"
-                      offLabel="Block this User"
-                      onIcon="pi pi-check"
-                      offIcon="pi pi-ban"
-                      :style="
-                        blockOrApproved
-                          ? 'background-color: green; color: white'
-                          : 'background-color: red; color: white'
-                      "
-                      class="w-full sm:w-10rem"
-                      aria-label="do you confirm"
-                      @change="
-                        blockOrApprove(updatedOrNewUser, !blockOrApproved)
-                      "
-                    />
                   </div>
                 </div>
               </div>
@@ -527,6 +564,11 @@ export default {
   methods: {
     blockOrApprove(updatedOrNewUser, param) {
       updatedOrNewUser.is_approved = param;
+      this.fromApproveBlockBtn = false;
+      this.submitForm();
+    },
+
+    approveRejectDocs() {
       this.fromApproveBlockBtn = false;
       this.submitForm();
     },
