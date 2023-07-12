@@ -256,7 +256,7 @@
                         updatedOrNewUser.attachment.file_name
                         " alt="avatar" style="width: 75px; height: 70px" />
                     </div>
-                    <div v-if="updatedOrNewUser.required_documents.length > 0">
+                    <div v-if="updatedOrNewUser && updatedOrNewUser.required_documents.length > 0">
                       <p><strong>Required Documents </strong></p>
                       <div class="row" v-for="requiredDoc in updatedOrNewUser.required_documents">
                         <div class="col-md-12">
