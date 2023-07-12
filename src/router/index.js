@@ -115,13 +115,12 @@ const routes = [
     beforeEnter(to, from, next) {
       const url = new URL(window.location.href);
       const domain = url.hostname;
-      
-
       var isloggedin = localStorage.getItem("lfms_user");
       if (isloggedin) {
         next("/dashboard");
       } else {
         if(domain == 'elawfirmpk.com'){
+          //we only want to allow elawfirm to see homepage. For all other companies landing page will be 'login'
           next();
         }else{
           next("/login");
