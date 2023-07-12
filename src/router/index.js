@@ -113,11 +113,19 @@ const routes = [
     name: "Home",
     component: Home,
     beforeEnter(to, from, next) {
+      const url = new URL(window.location.href);
+      const domain = url.hostname;
+      
+
       var isloggedin = localStorage.getItem("lfms_user");
       if (isloggedin) {
         next("/dashboard");
       } else {
-        next();
+        if(domain == 'elawfirmpk.com'){
+          next();
+        }else{
+          next("/login");
+        }
       }
     },
   },
