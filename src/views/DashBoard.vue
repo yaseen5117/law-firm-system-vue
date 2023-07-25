@@ -561,24 +561,28 @@
     :breakpoints="{ '960px': '75vw', '641px': '100vw' }" :closable="false"
     @FileUploadBeforeUploadEvent="onTemplatedUpload(xhr, formData)">
 
-    <form>
+    <form @submit="handleFileUpload">
       <div class="row">
         <div v-if="!this.user.has_uploaded_required_docs" class="col-12">
-          <p >
+          <p>
             <strong class="text-danger">Please upload following document to start using the system. If you already
               uploaded the
               documents than please wait. Our Admin will review and approve your documents soon.</strong>
-          <ul class="mt-3">
-            <li>CNIC</li>
-            <li>Non-Disclosure Agreement (NDA)</li>
-          </ul>
+
           </p>
-          <FileUpload name="files[]" :customUpload="true" @uploader="handleFileUpload" :multiple="true" accept="image/*"
-            :maxFileSize="1000000" maxFileSize="2">
-            <template #empty>
-              <p>Drag and drop files to here to upload.</p>
-            </template>
-          </FileUpload>
+          <div class="form-group">
+            <label class="label label-primary" for="">CNIC: </label>
+            <input class="form-control" @change="handleCNICFileChange"  type="file" name="cnic">
+          </div>
+          <div class="form-group">
+            <label class="label label-primary">Non-Disclosure Agreement (NDA): </label>
+            <input class="form-control" @change="handleNDAFileChange" type="file" name="cnic">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" :disabled="!this.cnic || !this.nda || this.processing" >Upload Documents</button>
+            <small class="text-danger d-block" v-if="processing">Processing...</small>
+          </div>
+
         </div>
         <div v-if="this.user.has_uploaded_required_docs" class="col-12">
           <p>Thanks for uploading your documents. Our Admin will review and approve your documents soon.</p>
@@ -604,27 +608,37 @@ export default {
   computed: mapState(["user", "globalGeneralSetting"]),
   data() {
     return {
+      cnic: null,
+      nda: null,
+      processing: false,
       displaymodal: false,
       modalRequireUserDocs: false,
       base_url: process.env.VUE_APP_SERVICE_URL,
     };
   },
   methods: {
-    fileUploadError(event) {
+
+    handleCNICFileChange(event) {
+      this.cnic = event.target.files[0];
     },
+    handleNDAFileChange(event) {
+      this.nda = event.target.files[0];
+    },
+    
     handleFileUpload(event) {
+      
+      event.preventDefault();
       let formData = new FormData();
 
-      for (var i = 0; i < event.files.length; i++) {
-        let file = event.files[i];
-        formData.append("files[" + i + "]", file);
-      }
+      formData.append("cnic", this.cnic);
+      formData.append("nda", this.nda);
 
-      formData.append("attachmentable_id", this.user.id);
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
+
       let url = `${this.base_url}/api/upload_user_required_docs/${this.user.id}`;
+      this.processing = true;
       axios
         .post(url, formData, { headers })
         .then((response) => {
@@ -635,8 +649,10 @@ export default {
             title: "Success",
             text: "Document(s) uploaded successfully.",
           });
+          $this.processing = false;
         })
         .catch((error) => {
+          this.processing = false;
           console.log(error);
           this.$notify({
             type: "error",
