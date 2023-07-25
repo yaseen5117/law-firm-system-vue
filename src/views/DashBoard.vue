@@ -385,8 +385,7 @@
             : { click: () => gotoLink('fir-sections') }
             " :class="this.user.is_student ? 'disabled-dashboard-menu' : ''" v-if="(this.user.is_admin ||
     this.user.is_lawyer ||
-    this.user.is_student) &&
-    this.user.company_id == 1
+    this.user.is_student)
     " class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos-delay="200">
             <div class="icon-box fir-section-box border">
               <div class="icon">
@@ -571,7 +570,7 @@
               documents than please wait. Our Admin will review and approve your documents soon.</strong>
           <ul class="mt-3">
             <li>CNIC</li>
-            <li>Agreement Form</li>
+            <li>Non-Disclosure Agreement (NDA)</li>
           </ul>
           </p>
           <FileUpload name="files[]" :customUpload="true" @uploader="handleFileUpload" :multiple="true" accept="image/*"
@@ -630,7 +629,7 @@ export default {
         .post(url, formData, { headers })
         .then((response) => {
           console.log("Image Uploaded successfully");
-          //this.user.has_uploaded_required_docs = true;
+          this.user.has_uploaded_required_docs = true;
           this.$notify({
             type: "success",
             title: "Success",
