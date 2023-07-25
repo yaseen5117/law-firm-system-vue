@@ -5,65 +5,21 @@
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="col-sm-3">
-            <div
-              class="nav flex-column nav-pills me-3 nav-stacked mb-2"
-              id="v-pills-tab"
-              role="tablist"
-              aria-orientation="vertical"
-            >
-              <button
-                class="nav-link active"
-                id="v-pills-home-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#v-pills-home"
-                type="button"
-                role="tab"
-                aria-controls="v-pills-home"
-                aria-selected="true"
-                @click="generelSetting()"
-              >
+            <div class="nav flex-column nav-pills me-3 nav-stacked mb-2" id="v-pills-tab" role="tablist"
+              aria-orientation="vertical">
+              <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home"
+                type="button" role="tab" aria-controls="v-pills-home" aria-selected="true" @click="generelSetting()">
                 General Settings
               </button>
-              <button
-                class="nav-link"
-                id="v-pills-profile-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#v-pills-profile"
-                type="button"
-                role="tab"
-                aria-controls="v-pills-profile"
-                aria-selected="false"
-                @click="invoiceSetting()"
-              >
+              <button v-if="this.globalGeneralSetting.invoice_settings" class="nav-link" id="v-pills-profile-tab"
+                data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab"
+                aria-controls="v-pills-profile" aria-selected="false" @click="invoiceSetting()">
                 Invoice Settings
               </button>
-              <button
-                class="nav-link"
-                id="v-pills-messages-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#v-pills-messages"
-                type="button"
-                role="tab"
-                aria-controls="v-pills-messages"
-                aria-selected="false"
-                @click="siteSetting()"
-              >
+              <button v-if="this.globalGeneralSetting.site_settings" class="nav-link" id="v-pills-messages-tab"
+                data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab"
+                aria-controls="v-pills-messages" aria-selected="false" @click="siteSetting()">
                 Site Setting
-              </button>
-
-              <button
-                v-if="this.user.is_admin"
-                class="nav-link"
-                id="v-pills-settings-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#v-pills-settings"
-                type="button"
-                role="tab"
-                aria-controls="v-pills-settings"
-                aria-selected="false"
-                @click="FirSections()"
-              >
-                FIR Sections
               </button>
             </div>
           </div>
@@ -77,13 +33,7 @@
                         <div class="form-group">
                           <label for="">
                             Site Name
-                            <input
-                              autofocus
-                              v-model="setting.site_name"
-                              type="text"
-                              class="form-control"
-                              id=""
-                            />
+                            <input autofocus v-model="setting.site_name" type="text" class="form-control" id="" />
                           </label>
                         </div>
                       </div>
@@ -91,12 +41,7 @@
                         <div class="form-group">
                           <label for="">
                             Site Email
-                            <input
-                              v-model="setting.site_email"
-                              type="text"
-                              class="form-control"
-                              id=""
-                            />
+                            <input v-model="setting.site_email" type="text" class="form-control" id="" />
                           </label>
                         </div>
                       </div>
@@ -106,13 +51,8 @@
                         <div class="form-group">
                           <label for="">
                             Site Phone
-                            <InputMask
-                              v-model="setting.site_phone"
-                              type="text"
-                              class="form-control"
-                              id=""
-                              mask="9999-9999999"
-                            />
+                            <InputMask v-model="setting.site_phone" type="text" class="form-control" id=""
+                              mask="9999-9999999" />
                           </label>
                         </div>
                       </div>
@@ -120,11 +60,7 @@
                         <div class="form-group">
                           <label for="">
                             Site URL
-                            <input
-                              v-model="setting.site_url"
-                              type="text"
-                              class="form-control"
-                            />
+                            <input v-model="setting.site_url" type="text" class="form-control" />
                           </label>
                         </div>
                       </div>
@@ -133,11 +69,8 @@
                         <div class="form-group">
                           <label for="">
                             Host Whereby iFrame
-                            <textarea
-                              class="form-control"
-                              style="width: 100%"
-                              v-model="setting.host_whereby_iframe"
-                            ></textarea>
+                            <textarea class="form-control" style="width: 100%"
+                              v-model="setting.host_whereby_iframe"></textarea>
                           </label>
                         </div>
                       </div>
@@ -146,11 +79,7 @@
                         <div class="form-group">
                           <label for="">
                             Whereby Meeting Link
-                            <input
-                              v-model="setting.public_whereby_iframe"
-                              type="text"
-                              class="form-control"
-                            />
+                            <input v-model="setting.public_whereby_iframe" type="text" class="form-control" />
                           </label>
                         </div>
                       </div>
@@ -158,29 +87,16 @@
                   </div>
                   <div class="col-sm-4">
                     <label for="">Additional Email</label>
-                    <div
-                      v-for="(additionalEmail, i) in setting.additionalemails"
-                      :key="additionalEmail"
-                    >
+                    <div v-for="(additionalEmail, i) in setting.additionalemails" :key="additionalEmail">
                       <div class="row">
                         <div class="col-sm-12">
                           <div class="input-group mb-3">
-                            <input
-                              v-model.lazy="setting.additionalemails[i]"
-                              type="email"
-                              class="form-control"
-                              placeholder="Additional Email"
-                            />
+                            <input v-model.lazy="setting.additionalemails[i]" type="email" class="form-control"
+                              placeholder="Additional Email" />
                             <div class="input-group-append">
-                              <button
-                                class="btn btn-outline-secondary"
-                                type="button"
-                                for="edit_client"
-                                data-bs-toggle="tooltip"
-                                data-bs-placement="top"
-                                title="Remove"
-                                @click="deleteAdditionalEmail(i)"
-                              >
+                              <button class="btn btn-outline-secondary" type="button" for="edit_client"
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="Remove"
+                                @click="deleteAdditionalEmail(i)">
                                 <i class="fa fa-minus"></i>
                               </button>
                             </div>
@@ -190,11 +106,7 @@
                     </div>
                     <div class="row">
                       <div class="col-sm-12">
-                        <button
-                          type="button"
-                          @click="addMoreAdditionalEmail()"
-                          class="mb-2"
-                        >
+                        <button type="button" @click="addMoreAdditionalEmail()" class="mb-2">
                           <span class="fa fa-plus"></span> Add additional Email
                         </button>
                       </div>
@@ -206,13 +118,7 @@
                     <div class="col-sm-12">
                       <label for="">
                         Invoice Heading
-                        <textarea
-                          v-model="setting.invoice_heading"
-                          name=""
-                          id=""
-                          style="width: 100%"
-                          rows="4"
-                        ></textarea>
+                        <textarea v-model="setting.invoice_heading" name="" id="" style="width: 100%" rows="4"></textarea>
                       </label>
                     </div>
                   </div>
@@ -220,10 +126,7 @@
                     <div class="col-sm-6">
                       <label for="">
                         Invoice Heading Left
-                        <Editor
-                          v-model="setting.invoice_heading_left"
-                          editorStyle="height: 120px"
-                        />
+                        <Editor v-model="setting.invoice_heading_left" editorStyle="height: 120px" />
                       </label>
                     </div>
                     <div class="col-sm-6">
@@ -231,10 +134,7 @@
                         <div class="col-sm-12 form-group">
                           <label for="">
                             Invoice Heading Right
-                            <Editor
-                              v-model="setting.invoice_heading_right"
-                              editorStyle="height: 120px"
-                            />
+                            <Editor v-model="setting.invoice_heading_right" editorStyle="height: 120px" />
                           </label>
                         </div>
                       </div>
@@ -246,45 +146,26 @@
                     <div class="col-sm-8">
                       <label for="">
                         Content
-                        <Editor
-                          v-model="setting.login_page_content"
-                          editorStyle="height: 220px"
-                        />
+                        <Editor v-model="setting.login_page_content" editorStyle="height: 220px" />
                       </label>
                     </div>
                     <div class="col-sm-4">
-                      <button
-                        type="button"
-                        class="btn btn-primary mb-2 btn-sm"
-                        style="margin-right: 2px"
-                        @click="uploadImage()"
-                      >
+                      <button type="button" class="btn btn-primary mb-2 btn-sm" style="margin-right: 2px"
+                        @click="uploadImage()">
                         Upload Image
                       </button>
                       <div v-if="uploadDialog">
-                        <file-upload
-                          @afterUpload="previewMod"
-                          type="App\Models\Setting"
-                          :attachmentable_id="1"
-                          upload_site_image="true"
-                          image_type="image/png, image/jpeg, image/jpg"
-                        />
+                        <file-upload @afterUpload="previewMod" type="App\Models\Setting" :attachmentable_id="1"
+                          upload_site_image="true" image_type="image/png, image/jpeg, image/jpg" />
                       </div>
                       <div v-if="imagePreview">
-                        <Image
-                          v-if="setting.site_file_name"
-                          :src="
-                            this.base_url +
-                            '/storage/attachments/settings' +
-                            '/' +
-                            setting_id +
-                            '/' +
-                            setting.site_file_name
-                          "
-                          alt="Site Image"
-                          width="250"
-                          preview
-                        />
+                        <Image v-if="setting.site_file_name" :src="this.base_url +
+                          '/storage/attachments/settings' +
+                          '/' +
+                          setting_id +
+                          '/' +
+                          setting.site_file_name
+                          " alt="Site Image" width="250" preview />
                       </div>
                     </div>
                   </div>
@@ -324,7 +205,7 @@ export default {
     FileUpload,
     Image,
   },
-  computed: mapState(["user"]),
+  computed: mapState(["user", "globalGeneralSetting"]),
   setup() {
     return {
       v$: useVuelidate(),

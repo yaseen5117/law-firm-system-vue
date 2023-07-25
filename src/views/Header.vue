@@ -85,17 +85,6 @@
               >Dashboard</router-link
             >
           </li>
-          <!-- <li>
-            <router-link
-              :class="
-                this.$route.name == 'fir_reader'
-                  ? 'active nav-link'
-                  : 'nav-link'
-              "
-              to="/fir-reader"
-              >FIR Reader</router-link
-            >
-          </li> -->
           <li
             v-if="
               this.user &&
@@ -131,8 +120,6 @@
               >Login</router-link
             >
           </li>
-          <!-- <li><a class="nav-link scrollto" href="#">Link-1</a></li>
-          <li><a class="nav-link scrollto" href="#">Link-2</a></li>           -->
           <li v-show="this.user && this.user.is_admin" class="dropdown">
             <a href="javascript:void"
               ><span>Settings</span> <i class="bi bi-chevron-down"></i
@@ -219,12 +206,6 @@
                   >Contact Requests</router-link
                 >
               </li>
-              <!-- <li class="dropdown" v-show="this.user && this.user.is_admin">
-                <a href="javascript:void"
-                  ><span>System Settings</span>
-                  <i class="bi bi-chevron-right"></i
-                ></a>                
-              </li> -->
             </ul>
           </li>
           <li v-if="this.user">

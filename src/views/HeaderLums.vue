@@ -40,15 +40,6 @@
               >My Profile</router-link
             >
           </li>
-          <!-- <li v-show="!this.user">
-            <router-link
-              :class="
-                this.$route.name == 'SignUp' ? 'active nav-link' : 'nav-link'
-              "
-              to="/sign-up"
-              >Sign Up</router-link
-            >
-          </li> -->
           <li v-show="!this.user">
             <router-link
               :class="
@@ -58,8 +49,6 @@
               >Login</router-link
             >
           </li>
-          <!-- <li><a class="nav-link scrollto" href="#">Link-1</a></li>
-          <li><a class="nav-link scrollto" href="#">Link-2</a></li>           -->
           <li v-show="this.user && this.user.is_admin" class="dropdown">
             <a href="javascript:void"
               ><span>Settings</span> <i class="bi bi-chevron-down"></i
@@ -135,23 +124,6 @@
                   >Module Types</router-link
                 >
               </li>
-              <li>
-                <router-link
-                  :class="
-                    this.$route.name == 'contact-requests'
-                      ? 'active nav-link drop-down'
-                      : 'nav-link drop-down'
-                  "
-                  to="/contact-requests"
-                  >Contact Requests</router-link
-                >
-              </li>
-              <!-- <li class="dropdown" v-show="this.user && this.user.is_admin">
-                <a href="javascript:void"
-                  ><span>System Settings</span>
-                  <i class="bi bi-chevron-right"></i
-                ></a>                
-              </li> -->
             </ul>
           </li>
           <li v-if="this.user">
