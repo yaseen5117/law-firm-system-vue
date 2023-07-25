@@ -561,17 +561,19 @@
   <Dialog v-model:visible="modalRequireUserDocs" modal header="Documents Required!" :style="{ width: '50vw' }"
     :breakpoints="{ '960px': '75vw', '641px': '100vw' }" :closable="false"
     @FileUploadBeforeUploadEvent="onTemplatedUpload(xhr, formData)">
-    <p>
-      <strong class="text-danger">Please upload following document to start using the system. If you already uploaded the
-        documents than please wait. Our Admin will review and approve your documents soon.</strong>
-    <ul class="mt-3">
-      <li>CNIC</li>
-      <li>Agreement Form</li>
-    </ul>
-    </p>
+
     <form>
       <div class="row">
-        <div class="col-12">
+        <div v-if="!this.user.has_uploaded_required_docs" class="col-12">
+          <p >
+            <strong class="text-danger">Please upload following document to start using the system. If you already
+              uploaded the
+              documents than please wait. Our Admin will review and approve your documents soon.</strong>
+          <ul class="mt-3">
+            <li>CNIC</li>
+            <li>Agreement Form</li>
+          </ul>
+          </p>
           <FileUpload name="files[]" :customUpload="true" @uploader="handleFileUpload" :multiple="true" accept="image/*"
             :maxFileSize="1000000" maxFileSize="2">
             <template #empty>
@@ -579,6 +581,10 @@
             </template>
           </FileUpload>
         </div>
+        <div v-if="this.user.has_uploaded_required_docs" class="col-12">
+          <p>Thanks for uploading your documents. Our Admin will review and approve your documents soon.</p>
+        </div>
+
       </div>
     </form>
   </Dialog>
@@ -624,6 +630,12 @@ export default {
         .post(url, formData, { headers })
         .then((response) => {
           console.log("Image Uploaded successfully");
+          //this.user.has_uploaded_required_docs = true;
+          this.$notify({
+            type: "success",
+            title: "Success",
+            text: "Document(s) uploaded successfully.",
+          });
         })
         .catch((error) => {
           console.log(error);
