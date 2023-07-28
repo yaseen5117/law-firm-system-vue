@@ -580,13 +580,16 @@
           </div>
           <div class="form-group">
             <button type="submit" class="btn btn-primary" :disabled="!this.cnic || !this.nda || this.processing" >Upload Documents</button>
+            <button class="btn btn-danger margin-l" @click="logout()">Logout</button>
             <small class="text-danger d-block" v-if="processing">Processing...</small>
           </div>
 
         </div>
         <div v-if="this.user.has_uploaded_required_docs" class="col-12">
           <p>Thanks for uploading your documents. Our Admin will review and approve your documents soon.</p>
+          <button class="btn btn-danger" @click="logout()">Logout</button>
         </div>
+        
 
       </div>
     </form>
@@ -617,7 +620,11 @@ export default {
     };
   },
   methods: {
-
+    logout() {
+      localStorage.removeItem("lfms_user");
+      this.$store.dispatch("authUser");
+      this.$router.push({ name: "Login" });
+    },
     handleCNICFileChange(event) {
       this.cnic = event.target.files[0];
     },
@@ -684,7 +691,8 @@ export default {
     document.title = "Dashboard";
   },
   updated() {
-    this.modalRequireUserDocs = !this.user.is_admin && this.user.documents_required;
+    this.modalRequireUserDocs = (!this.user.is_admin && this.user.req_docs_uploaded===0);
+     
   }
 };
 </script>
@@ -692,6 +700,9 @@ export default {
 <style scoped>
 .forbidden-icon {
   color: red;
+}
+.margin-l{
+  margin-left: 2px;
 }
 
 .forbidden-text {

@@ -218,12 +218,12 @@
                       <div class="d-grid gap-2 mt-2">
                             <button type="button" class="btn btn-success btn-block" v-if="updatedOrNewUser &&
                             updatedOrNewUser.id &&
-                            this.user.is_admin"  @click="approveRejectDocs(false)">Approve Documents</button>
+                            this.user.is_admin"  @click="approveRejectDocs(true)">Approve Documents</button>
 
-                          <button  type="button" class="btn btn-danger  btn-block" v-if="updatedOrNewUser &&
+                          <button  type="button" class="btn btn-block" style="background-color: red; color: white" v-if="updatedOrNewUser &&
                             updatedOrNewUser.id &&
                             this.user.is_admin
-                            " @click="approveRejectDocs(true)">Reject Documents</button>
+                            " @click="approveRejectDocs(false)">Reject Documents</button>
                           </div>
 
 
@@ -264,9 +264,9 @@
                         updatedOrNewUser.attachment.file_name
                         " alt="avatar" style="width: 75px; height: 70px" />
                     </div>
-                    <div v-if="updatedOrNewUser.id > 0 && updatedOrNewUser.required_documents.length > 0">
+                    <div v-if="updatedOrNewUser.id > 0 && updatedOrNewUser.req_docs_uploaded.length > 0">
                       <p><strong>Required Documents </strong></p>
-                      <div class="row" v-for="requiredDoc in updatedOrNewUser.required_documents">
+                      <div class="row" :key="requiredDoc" v-for="requiredDoc in updatedOrNewUser.req_docs_uploaded">
                         <div class="col-md-12">
                           <img v-if="requiredDoc.path" :src="this.base_url + '/storage/' + requiredDoc.path
                             " :alt="requiredDoc.file_name" style="width: 80%" />
@@ -549,7 +549,7 @@ export default {
       axios
         .post(this.base_url + "/api/approve_reject_docs", {
           user_id: this.updatedOrNewUser.id,
-          required_documents: flag,
+          req_docs_uploaded: flag,
         }, {
           headers,
         })
