@@ -122,7 +122,7 @@
                     <label>Zip</label>
                     <input class="form-control" v-model="updatedOrNewUser.zip" />
                   </div>
-                  
+
                 </div>
                 <div class="row">
                   <div class="col-md-12">
@@ -138,7 +138,7 @@
                     </div>
                   </div>
                 </div>
-                
+
               </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12">
@@ -167,8 +167,8 @@
                               <div class="col-md-4">
                                 <label for="">Email</label>
                                 <input v-model="contact_person.email" type="text" :class="contact_person_email_error
-                                    ? 'form-control is-invalid'
-                                    : 'form-control'
+                                  ? 'form-control is-invalid'
+                                  : 'form-control'
                                   " />
                                 <small class="text-danger">{{ contact_person_email_error }}
                                 </small>
@@ -196,31 +196,39 @@
                           </button>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
-                          <ToggleButton v-if="updatedOrNewUser &&
+                          <div class="d-grid gap-2 mt-2">
+                            <ToggleButton v-if="updatedOrNewUser &&
                             updatedOrNewUser.id &&
                             this.user.is_admin
                             " v-tooltip.top="blockOrApproved
-      ? 'Click To Approve this User'
-      : 'Click To Block this User'
-    " v-model="blockOrApproved" onLabel="Approve this User" offLabel="Block this User"
-                            onIcon="pi pi-check" offIcon="pi pi-ban" :style="blockOrApproved
-                                ? 'background-color: green; color: white'
-                                : 'background-color: red; color: white'
+    ? 'Click To Approve this User'
+    : 'Click To Block this User'
+    " v-model="blockOrApproved" onLabel="Approve this User" offLabel="Block this User" onIcon="pi pi-check"
+                            offIcon="pi pi-ban" :style="blockOrApproved
+                              ? 'background-color: green; color: white'
+                              : 'background-color: red; color: white'
                               " class="w-full sm:w-10rem" aria-label="do you confirm" @change="
     blockOrApprove(updatedOrNewUser, !blockOrApproved)
     " />
+                          </div>
+                          
 
-                          <ToggleButton v-if="updatedOrNewUser &&
+
+
+                      <div class="d-grid gap-2 mt-2">
+                            <button type="button" class="btn btn-success btn-block" v-if="updatedOrNewUser &&
+                            updatedOrNewUser.id &&
+                            this.user.is_admin"  @click="approveRejectDocs(false)">Approve Documents</button>
+
+                          <button  type="button" class="btn btn-danger  btn-block" v-if="updatedOrNewUser &&
                             updatedOrNewUser.id &&
                             this.user.is_admin
-                            " v-tooltip.top="updatedOrNewUser.documents_required
-      ? 'Click to Approve Documents'
-      : 'Click to Reject Documents'
-    " v-model="updatedOrNewUser.documents_required" onLabel="Approve Documents"
-                            offLabel="Reject Documents" onIcon="pi pi-check" offIcon="pi pi-ban" :style="updatedOrNewUser.documents_required
-                                ? 'background-color: green; color: white'
-                                : 'background-color: red; color: white'
-                              " aria-label="Are you sure?" @change="approveRejectDocs()" />
+                            " @click="approveRejectDocs(true)">Reject Documents</button>
+                          </div>
+
+
+
+
                         </div>
                         <span class="mt-2 text-success" style="font-size: 12px;" v-if="updatedOrNewUser &&
                           updatedOrNewUser.id &&
@@ -269,7 +277,7 @@
                 </div>
               </div>
             </div>
-            
+
           </div>
         </form>
       </div>
@@ -529,6 +537,44 @@ export default {
             }
           );
       }
+    },
+
+    approveRejectDocs(flag) {
+
+      this.saving = true;
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+
+      axios
+        .post(this.base_url + "/api/approve_reject_docs", {
+          user_id: this.updatedOrNewUser.id,
+          required_documents: flag,
+        }, {
+          headers,
+        })
+        .then(
+          (response) => {
+            if (response.status === 200) {
+              this.$notify({
+                type: "success",
+                title: "Success",
+                text: "Saved Successfully!",
+              });
+              this.getUser();
+            }
+          },
+          (error) => {
+
+            console.log(error.response.data);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
+          }
+        );
+
     },
     UploadImage(user_id) {
       let formData = new FormData();
