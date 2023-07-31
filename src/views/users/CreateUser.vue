@@ -21,238 +21,241 @@
           </div>
           <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12">
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Name <span style="color: red">*</span></label>
-                    <input autofocus class="form-control" v-model="updatedOrNewUser.name" v-bind:class="{
-                      'error-boarder': v$.updatedOrNewUser.name.$error,
-                    }" @blur="v$.updatedOrNewUser.name.$touch" />
-                    <span v-if="v$.updatedOrNewUser.name.$error" class="errorMessage error-font-size">Name field is
-                      required.</span>
+              <Fieldset>
+                <template #legend>
+                  <div class="flex align-items-center">
+                    
+                    <span class="font-bold text-lg">User Details</span>
                   </div>
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>CNIC</label>
-                    <InputMask type="text" class="form-control" v-model="updatedOrNewUser.cnic" mask="99999-9999999-9" />
-                  </div>
-
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Email <span style="color: red">*</span></label>
-                    <input type="email" class="form-control" v-model="updatedOrNewUser.email" v-bind:class="{
-                      'error-boarder': v$.updatedOrNewUser.email.$error,
-                      'is-invalid': error_email,
-                    }" @blur="v$.updatedOrNewUser.email.$touch" />
-                    <span v-if="v$.updatedOrNewUser.email.$error" class="errorMessage error-font-size">Email field is
-                      required.</span>
-                    <small v-if="!v$.updatedOrNewUser.email.$error" class="text-danger error-font-size">{{ error_email }}
-                    </small>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Phone</label>
-                    <InputMask class="form-control" mask="9999-9999999" v-model="updatedOrNewUser.phone" />
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Password
-                      <span v-show="!updatedOrNewUser.id" style="color: red">*</span></label>
-                    <input type="text" class="form-control" v-model="updatedOrNewUser.password"
-                      @blur="v$.updatedOrNewUser.password.$touch" />
-                    <span v-if="v$.updatedOrNewUser.password.$error" class="errorMessage error-font-size">Password field
-                      is required.</span>
-                    <small v-if="!v$.updatedOrNewUser.password.$error" class="text-danger">{{ error_password }}
-                    </small>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Confirm Password
-                      <span v-show="!updatedOrNewUser.id" style="color: red">*</span></label>
-                    <input type="text" v-bind:class="{
-                      'error-boarder':
-                        v$.updatedOrNewUser.confirm_password.$error,
-                    }" @blur="v$.updatedOrNewUser.confirm_password.$touch" class="form-control"
-                      v-model="updatedOrNewUser.confirm_password" />
-                    <span v-if="v$.updatedOrNewUser.confirm_password.$error" class="errorMessage error-font-size">Password
-                      and Confirm Password should be same.</span>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Role <span style="color: red">*</span></label>
-                    <Dropdown :disabled="!this.user.is_admin" v-model="updatedOrNewUser.role_id" :options="roles"
-                      class="text-capitalize" optionLabel="name" optionValue="id" placeholder="Select" :filter="true"
-                      appendTo="self" filterPlaceholder="Find by Role Title" v-bind:class="{
-                        'error-boarder': v$.updatedOrNewUser.role_id.$error,
-                      }" @blur="v$.updatedOrNewUser.role_id.$touch" />
-                    <span v-if="v$.updatedOrNewUser.role_id.$error" class="errorMessage error-font-size">Role field is
-                      required.</span>
-                  </div>
-
-                  <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Company Name</label>
-                    <input class="form-control" v-model="updatedOrNewUser.company_name" />
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-lg-12 col-md-12 col-sm-12">
-                    <label>Address</label>
-                    <input class="form-control" v-model="updatedOrNewUser.address" />
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-lg-4 col-md-4 col-sm-12">
-                    <label>City</label>
-                    <input class="form-control" v-model="updatedOrNewUser.city" />
-                  </div>
-
-                  <div class="col-lg-4 col-md-4 col-sm-12">
-                    <label>Province</label>
-                    <input class="form-control" v-model="updatedOrNewUser.province" />
-                  </div>
-
-                  <div class="col-lg-4 col-md-4 col-sm-12">
-                    <label>Zip</label>
-                    <input class="form-control" v-model="updatedOrNewUser.zip" />
-                  </div>
-
-                </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label>
-                        <input type="checkbox" v-model="updatedOrNewUser.send_email" />
-                        Send Details with Email</label>
+                </template>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                      <label>Name <span style="color: red">*</span></label>
+                      <input autofocus class="form-control" v-model="updatedOrNewUser.name" v-bind:class="{
+                        'error-boarder': v$.updatedOrNewUser.name.$error,
+                      }" @blur="v$.updatedOrNewUser.name.$touch" />
+                      <span v-if="v$.updatedOrNewUser.name.$error" class="errorMessage error-font-size">Name field is
+                        required.</span>
                     </div>
-                    <div class="form-group">
-                      <button :disabled="saving" class="btn btn-success btn-sm">
-                        {{ btnTitle }}
-                      </button>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                      <label>CNIC</label>
+                      <InputMask type="text" class="form-control" v-model="updatedOrNewUser.cnic"
+                        mask="99999-9999999-9" />
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                      <label>Email <span style="color: red">*</span></label>
+                      <input type="email" class="form-control" v-model="updatedOrNewUser.email" v-bind:class="{
+                        'error-boarder': v$.updatedOrNewUser.email.$error,
+                        'is-invalid': error_email,
+                      }" @blur="v$.updatedOrNewUser.email.$touch" />
+                      <span v-if="v$.updatedOrNewUser.email.$error" class="errorMessage error-font-size">Email field is
+                        required.</span>
+                      <small v-if="!v$.updatedOrNewUser.email.$error" class="text-danger error-font-size">{{ error_email
+                      }}
+                      </small>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                      <label>Phone</label>
+                      <InputMask class="form-control" mask="9999-9999999" v-model="updatedOrNewUser.phone" />
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                      <label>Password
+                        <span v-show="!updatedOrNewUser.id" style="color: red">*</span></label>
+                      <input type="text" class="form-control" v-model="updatedOrNewUser.password"
+                        @blur="v$.updatedOrNewUser.password.$touch" />
+                      <span v-if="v$.updatedOrNewUser.password.$error" class="errorMessage error-font-size">Password field
+                        is required.</span>
+                      <small v-if="!v$.updatedOrNewUser.password.$error" class="text-danger">{{ error_password }}
+                      </small>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                      <label>Confirm Password
+                        <span v-show="!updatedOrNewUser.id" style="color: red">*</span></label>
+                      <input type="text" v-bind:class="{
+                        'error-boarder':
+                          v$.updatedOrNewUser.confirm_password.$error,
+                      }" @blur="v$.updatedOrNewUser.confirm_password.$touch" class="form-control"
+                        v-model="updatedOrNewUser.confirm_password" />
+                      <span v-if="v$.updatedOrNewUser.confirm_password.$error"
+                        class="errorMessage error-font-size">Password
+                        and Confirm Password should be same.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                      <label>Role <span style="color: red">*</span></label>
+                      <Dropdown :disabled="!this.user.is_admin" v-model="updatedOrNewUser.role_id" :options="roles"
+                        class="text-capitalize" optionLabel="name" optionValue="id" placeholder="Select" :filter="true"
+                        appendTo="self" filterPlaceholder="Find by Role Title" v-bind:class="{
+                          'error-boarder': v$.updatedOrNewUser.role_id.$error,
+                        }" @blur="v$.updatedOrNewUser.role_id.$touch" />
+                      <span v-if="v$.updatedOrNewUser.role_id.$error" class="errorMessage error-font-size">Role field is
+                        required.</span>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                      <label>Company Name</label>
+                      <input class="form-control" v-model="updatedOrNewUser.company_name" />
                     </div>
                   </div>
                 </div>
 
-              </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                      <label>Address</label>
+                      <input class="form-control" v-model="updatedOrNewUser.address" />
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                      <label>City</label>
+                      <input class="form-control" v-model="updatedOrNewUser.city" />
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                      <label>Province</label>
+                      <input class="form-control" v-model="updatedOrNewUser.province" />
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                      <label>Zip</label>
+                      <input class="form-control" v-model="updatedOrNewUser.zip" />
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label>
+                          <input type="checkbox" v-model="updatedOrNewUser.send_email" />
+                          Send Details with Email</label>
+                      </div>
+                      <div class="form-group">
+                        <button :disabled="saving" class="btn btn-success btn-sm">
+                          {{ btnTitle }}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </Fieldset>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12">
+
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-12">
-                    <label>Profile Image</label>
-                    <input accept="image/png, image/jpeg, image/jpg" type="file" id="file" class="form-control"
-                      @change="onChange" ref="fileInput" @input="pickFile" />
-                    <div class="" v-show="previewImage">
-                      <div class="imagePreviewWrapper" :style="{ 'background-image': `url(${previewImage})` }"
-                        @click="selectImage"></div>
-                    </div>
+                    <Fieldset legend="Avatar & Contact Persons">
+                      <label>Profile Image</label>
+                      <input accept="image/png, image/jpeg, image/jpg" type="file" id="file" class="form-control"
+                        @change="onChange" ref="fileInput" @input="pickFile" />
+                      <div class="" v-show="previewImage">
+                        <div class="imagePreviewWrapper" :style="{ 'background-image': `url(${previewImage})` }"
+                          @click="selectImage"></div>
+                      </div>
 
-                    <div class="form-group">
-                      <div class="row mt-2">
-                        <div class="col-md-12">
-                          <div class="form-group" v-for="(
+                      <div class="form-group">
+                        <div class="row mt-2">
+                          <div class="col-md-12">
+                            <div class="form-group" v-for="(
                               contact_person, contact_person_index
                             ) in updatedOrNewUser.contact_persons" :key="contact_person">
-                            <div class="row">
-                              <div class="col-md-4">
-                                <label for="">Name</label>
-                                <input autofocus type="text" class="form-control" v-model="contact_person.name" />
-                              </div>
-                              <div class="col-md-4">
-                                <label for="">Email</label>
-                                <input v-model="contact_person.email" type="text" :class="contact_person_email_error
-                                  ? 'form-control is-invalid'
-                                  : 'form-control'
-                                  " />
-                                <small class="text-danger">{{ contact_person_email_error }}
-                                </small>
-                              </div>
-                              <div class="col-md-4">
-                                <label for="">Phone</label>
-                                <div class="input-group">
-                                  <InputMask class="form-control" mask="9999-9999999" v-model="contact_person.phone" />
-                                  <button type="button" class="btn-danger" @click="
-                                    removeContactPerson(
-                                      $event,
-                                      updatedOrNewUser.contact_persons,
-                                      contact_person_index,
-                                      contact_person.id
-                                    )
-                                    " v-tooltip.top="'Remove'" :disabled="saving">
-                                    <span class="fa fa-minus"></span>
-                                  </button>
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <label for="">Name</label>
+                                  <input autofocus type="text" class="form-control" v-model="contact_person.name" />
+                                </div>
+                                <div class="col-md-4">
+                                  <label for="">Email</label>
+                                  <input v-model="contact_person.email" type="text" :class="contact_person_email_error
+                                    ? 'form-control is-invalid'
+                                    : 'form-control'
+                                    " />
+                                  <small class="text-danger">{{ contact_person_email_error }}
+                                  </small>
+                                </div>
+                                <div class="col-md-4">
+                                  <label for="">Phone</label>
+                                  <div class="input-group">
+                                    <InputMask class="form-control" mask="9999-9999999" v-model="contact_person.phone" />
+                                    <button type="button" class="btn-danger" @click="
+                                      removeContactPerson(
+                                        $event,
+                                        updatedOrNewUser.contact_persons,
+                                        contact_person_index,
+                                        contact_person.id
+                                      )
+                                      " v-tooltip.top="'Remove'" :disabled="saving">
+                                      <span class="fa fa-minus"></span>
+                                    </button>
+                                  </div>
                                 </div>
                               </div>
                             </div>
+                            <button type="button" @click="addContactPerson()">
+                              <span class="fa fa-plus"></span> Add Contact Person
+                            </button>
                           </div>
-                          <button type="button" @click="addContactPerson()">
-                            <span class="fa fa-plus"></span> Add Contact Person
-                          </button>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
-                          <div class="d-grid gap-2 mt-2">
-                            <ToggleButton v-if="updatedOrNewUser &&
-                            updatedOrNewUser.id &&
-                            this.user.is_admin
-                            " v-tooltip.top="blockOrApproved
+                          <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
+                            <div class="d-grid gap-2 mt-2">
+                              <ToggleButton v-if="updatedOrNewUser &&
+                                updatedOrNewUser.id &&
+                                this.user.is_admin
+                                " v-tooltip.top="blockOrApproved
     ? 'Click To Approve this User'
     : 'Click To Block this User'
     " v-model="blockOrApproved" onLabel="Approve this User" offLabel="Block this User" onIcon="pi pi-check"
-                            offIcon="pi pi-ban" :style="blockOrApproved
-                              ? 'background-color: green; color: white'
-                              : 'background-color: red; color: white'
-                              " class="w-full sm:w-10rem" aria-label="do you confirm" @change="
+                                offIcon="pi pi-ban" :style="blockOrApproved
+                                  ? 'background-color: green; color: white'
+                                  : 'background-color: red; color: white'
+                                  " class="w-full sm:w-10rem" aria-label="do you confirm" @change="
     blockOrApprove(updatedOrNewUser, !blockOrApproved)
     " />
+                            </div>
+
+
+
+
+
+
+
+
+
                           </div>
-                          
-
-
-
-                      <div class="d-grid gap-2 mt-2">
-                            <button type="button" class="btn btn-success btn-block" v-if="updatedOrNewUser &&
+                          <span class="mt-2 text-success" style="font-size: 12px;" v-if="updatedOrNewUser &&
                             updatedOrNewUser.id &&
-                            this.user.is_admin"  @click="approveRejectDocs(true)">Approve Documents</button>
-
-                          <button  type="button" class="btn btn-block" style="background-color: red; color: white" v-if="updatedOrNewUser &&
-                            updatedOrNewUser.id &&
-                            this.user.is_admin
-                            " @click="approveRejectDocs(false)">Reject Documents</button>
-                          </div>
-
-
-
+                            updatedOrNewUser.is_approved > 0 &&
+                            updatedOrNewUser.approved_at
+                            ">
+                            (User approved at:
+                            <span>{{
+                              updatedOrNewUser.approved_at
+                              ? updatedOrNewUser.approved_at
+                              : ""
+                            }}</span>
+                            by
+                            <span>{{
+                              updatedOrNewUser.approve_by
+                              ? updatedOrNewUser.approve_by.name
+                              : ""
+                            }}</span>)
+                          </span>
 
                         </div>
-                        <span class="mt-2 text-success" style="font-size: 12px;" v-if="updatedOrNewUser &&
-                          updatedOrNewUser.id &&
-                          updatedOrNewUser.is_approved > 0 &&
-                          updatedOrNewUser.approved_at
-                          ">
-                          (User approved at:
-                          <span>{{
-                            updatedOrNewUser.approved_at
-                            ? updatedOrNewUser.approved_at
-                            : ""
-                          }}</span>
-                          by
-                          <span>{{
-                            updatedOrNewUser.approve_by
-                            ? updatedOrNewUser.approve_by.name
-                            : ""
-                          }}</span>)
-                        </span>
-                        <span class="text-success" style="font-size: 12px;" v-if="updatedOrNewUser &&
-                            !updatedOrNewUser.documents_required
-                            ">(This user has uploaded required documents.)</span>
                       </div>
-                    </div>
+                    </Fieldset>
                   </div>
 
                   <div class="col-lg-6 col-md-6 col-sm-12" v-show="profileImg">
@@ -264,15 +267,36 @@
                         updatedOrNewUser.attachment.file_name
                         " alt="avatar" style="width: 75px; height: 70px" />
                     </div>
-                    <div v-if="updatedOrNewUser.id > 0 && updatedOrNewUser.req_docs_uploaded.length > 0">
-                      <p><strong>Required Documents </strong></p>
-                      <div class="row" :key="requiredDoc" v-for="requiredDoc in updatedOrNewUser.req_docs_uploaded">
-                        <div class="col-md-12">
-                          <img v-if="requiredDoc.path" :src="this.base_url + '/storage/' + requiredDoc.path
-                            " :alt="requiredDoc.file_name" style="width: 80%" />
+                    <!-- showing required documents of a user -->
+
+
+
+                    <div v-if="updatedOrNewUser.id > 0 && updatedOrNewUser.required_documents.length > 0">
+                      <Fieldset legend="Required Documents">
+                        <span class="text-success" style="font-size: 12px;" v-if="updatedOrNewUser &&
+                          !updatedOrNewUser.req_docs_uploaded
+                          ">(This user has uploaded required documents.)</span>
+                        <div class="d-grid gap-2 mt-2">
+                          <button type="button" class="btn btn-success btn-block" v-if="updatedOrNewUser &&
+                            updatedOrNewUser.id &&
+                            this.user.is_admin" @click="approveRejectDocs(true)">Approve Documents</button>
+
+                          <button type="button" class="btn btn-block" style="background-color: red; color: white" v-if="updatedOrNewUser &&
+                            updatedOrNewUser.id &&
+                            this.user.is_admin
+                            " @click="approveRejectDocs(false)">Reject Documents</button>
                         </div>
-                      </div>
+                        <div class="row" :key="requiredDoc" v-for="requiredDoc in updatedOrNewUser.required_documents">
+                          <div class="col-md-12">
+                            <img v-if="requiredDoc.path" :src="this.base_url + '/storage/' + requiredDoc.path
+                              " :alt="requiredDoc.file_name" style="width: 80%" /> <span><a :href="this.base_url + '/storage/' + requiredDoc.path
+    " target="_blank" rel="noopener noreferrer">View</a></span>
+                          </div>
+                        </div>
+                      </Fieldset>
                     </div>
+                    <!-- showing required documents of a user -->
+
                   </div>
                 </div>
               </div>
@@ -292,12 +316,13 @@ import PageHeader from "../shared/PageHeader.vue";
 import useVuelidate from "@vuelidate/core";
 import { required, email, helpers, sameAs } from "@vuelidate/validators";
 import ToggleButton from "primevue/togglebutton";
+import Fieldset from 'primevue/fieldset';
 
 import { mapState } from "vuex";
 
 export default {
   computed: mapState(["user"]),
-  components: { PageHeader, ToggleButton },
+  components: { PageHeader, ToggleButton, Fieldset },
   setup() {
     return {
       v$: useVuelidate(),
