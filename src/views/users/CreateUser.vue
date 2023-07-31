@@ -24,8 +24,7 @@
               <Fieldset>
                 <template #legend>
                   <div class="flex align-items-center">
-                    
-                    <span class="font-bold text-lg">User Details</span>
+                    <span class="font-bold text-sm">User Details</span>
                   </div>
                 </template>
                 <div class="form-group">
@@ -157,7 +156,44 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-12">
-                    <Fieldset legend="Avatar & Contact Persons">
+                    <Fieldset legend="Status & Contact Persons">
+                      <div class="col-lg-12 col-md-12 col-sm-12" id="contact-persons-section">
+                            <span class="text-success" style="font-size: 12px;" v-if="updatedOrNewUser &&
+                            updatedOrNewUser.id &&
+                            updatedOrNewUser.is_approved > 0 &&
+                            updatedOrNewUser.approved_at
+                            ">
+                            (User <strong>Approved</strong> at:
+                            <strong>{{
+                              updatedOrNewUser.approved_at
+                              ? updatedOrNewUser.approved_at
+                              : ""
+                            }}</strong>
+                            by
+                            <strong>{{
+                              updatedOrNewUser.approve_by
+                              ? updatedOrNewUser.approve_by.name
+                              : ""
+                            }}</strong>)
+                          </span>
+
+                            <div class="d-grid gap-2 mt-2">
+                              <ToggleButton v-if="updatedOrNewUser &&
+                                updatedOrNewUser.id &&
+                                this.user.is_admin
+                                " v-tooltip.top="blockOrApproved
+    ? 'Click To Approve this User'
+    : 'Click To Block this User'
+    " v-model="blockOrApproved" onLabel="Approve this User" offLabel="Block this User" onIcon="pi pi-check"
+                                offIcon="pi pi-ban" :style="blockOrApproved
+                                  ? 'background-color: green; color: white'
+                                  : 'background-color: red; color: white'
+                                  " class="w-full sm:w-10rem" aria-label="do you confirm" @change="
+    blockOrApprove(updatedOrNewUser, !blockOrApproved)
+    " />
+                            </div>
+                          </div>
+
                       <label>Profile Image</label>
                       <input accept="image/png, image/jpeg, image/jpg" type="file" id="file" class="form-control"
                         @change="onChange" ref="fileInput" @input="pickFile" />
@@ -208,50 +244,8 @@
                               <span class="fa fa-plus"></span> Add Contact Person
                             </button>
                           </div>
-                          <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
-                            <div class="d-grid gap-2 mt-2">
-                              <ToggleButton v-if="updatedOrNewUser &&
-                                updatedOrNewUser.id &&
-                                this.user.is_admin
-                                " v-tooltip.top="blockOrApproved
-    ? 'Click To Approve this User'
-    : 'Click To Block this User'
-    " v-model="blockOrApproved" onLabel="Approve this User" offLabel="Block this User" onIcon="pi pi-check"
-                                offIcon="pi pi-ban" :style="blockOrApproved
-                                  ? 'background-color: green; color: white'
-                                  : 'background-color: red; color: white'
-                                  " class="w-full sm:w-10rem" aria-label="do you confirm" @change="
-    blockOrApprove(updatedOrNewUser, !blockOrApproved)
-    " />
-                            </div>
-
-
-
-
-
-
-
-
-
-                          </div>
-                          <span class="mt-2 text-success" style="font-size: 12px;" v-if="updatedOrNewUser &&
-                            updatedOrNewUser.id &&
-                            updatedOrNewUser.is_approved > 0 &&
-                            updatedOrNewUser.approved_at
-                            ">
-                            (User approved at:
-                            <span>{{
-                              updatedOrNewUser.approved_at
-                              ? updatedOrNewUser.approved_at
-                              : ""
-                            }}</span>
-                            by
-                            <span>{{
-                              updatedOrNewUser.approve_by
-                              ? updatedOrNewUser.approve_by.name
-                              : ""
-                            }}</span>)
-                          </span>
+                          
+                          
 
                         </div>
                       </div>
@@ -279,12 +273,12 @@
                         <div class="d-grid gap-2 mt-2">
                           <button type="button" class="btn btn-success btn-block" v-if="updatedOrNewUser &&
                             updatedOrNewUser.id &&
-                            this.user.is_admin" @click="approveRejectDocs(true)">Approve Documents</button>
+                            this.user.is_admin"  @click="approveRejectDocs(true)" :disabled="saving">Approve Documents</button>
 
                           <button type="button" class="btn btn-block" style="background-color: red; color: white" v-if="updatedOrNewUser &&
                             updatedOrNewUser.id &&
                             this.user.is_admin
-                            " @click="approveRejectDocs(false)">Reject Documents</button>
+                            " @click="approveRejectDocs(false)" :disabled="saving">Reject Documents</button>
                         </div>
                         <div class="row" :key="requiredDoc" v-for="requiredDoc in updatedOrNewUser.required_documents">
                           <div class="col-md-12">
@@ -410,10 +404,10 @@ export default {
       this.submitForm();
     },
 
-    approveRejectDocs() {
-      this.fromApproveBlockBtn = false;
-      this.submitForm();
-    },
+    // approveRejectDocs() {
+    //   this.fromApproveBlockBtn = false;
+    //   this.submitForm();
+    // },
 
     generatePassword() {
       // program to generate random Password
@@ -580,6 +574,7 @@ export default {
         })
         .then(
           (response) => {
+            this.saving = false;
             if (response.status === 200) {
               this.$notify({
                 type: "success",
@@ -590,8 +585,7 @@ export default {
             }
           },
           (error) => {
-
-            console.log(error.response.data);
+            this.saving = false;
             this.$notify({
               type: "error",
               title: "Something went wrong!",
@@ -724,5 +718,10 @@ export default {
 
 .error-font-size {
   font-size: 13px;
+}
+.p-fieldset-legend	{
+  font-size: 16px;
+  font-weight: bold !important;
+  padding: 10px 10px !important;
 }
 </style>
