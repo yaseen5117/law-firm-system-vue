@@ -13,8 +13,8 @@
                 <thead>
                   <th>Description of Documents</th>
                   <th>Date</th>
-                  <th>Annexure</th>
-                  <th>Page</th>
+                  <th v-show="pageSetup && !pageSetup.hide_annexure_column">Annexure</th>
+                  <th  v-show="pageSetup && !pageSetup.hide_page_column">Page</th>
                   <th width="10%" v-if="this.user.is_admin || this.user.is_lawyer">Actions</th>
                   <th
                     v-if="this.user.is_admin || this.user.is_lawyer"
@@ -34,7 +34,7 @@
                     @dragenter.prevent
                     @dragover.prevent
                   >
-                    <td>
+                    <td  >
                       <input
                         v-show="index_data_single.editMode"
                         class="form-control"
@@ -51,7 +51,7 @@
                             module_type: module_type,
                           },
                         }"
-                        >{{ index_data_single.document_description }}
+                        >{{ index_data_single.document_description }} <span v-if="index_data_single.author"><small>(Author: {{ index_data_single.author.name }})</small></span>
                       </router-link>
                     </td>
                     <td>
@@ -69,7 +69,7 @@
                         index_data_single.date
                       }}</span>
                     </td>
-                    <td>
+                    <td  v-show="pageSetup && !pageSetup.hide_annexure_column">
                       <input
                         v-show="index_data_single.editMode"
                         class="form-control"
@@ -80,7 +80,7 @@
                         index_data_single.annexure
                       }}</span>
                     </td>
-                    <td>
+                    <td   v-show="pageSetup && !pageSetup.hide_page_column">
                       <input
                         v-show="index_data_single.editMode"
                         class="form-control"
@@ -180,6 +180,7 @@
                     </td>
                     <td>
                       <input
+                         v-show="pageSetup && !pageSetup.hide_annexure_column"
                         class="form-control"
                         v-model="new_standard_index.annexure"
                         v-on:keyup.enter="submitPetitionIndex()"
@@ -187,6 +188,7 @@
                     </td>
                     <td>
                       <input
+                      v-show="pageSetup && !pageSetup.hide_page_column"
                         class="form-control"
                         v-model="new_standard_index.page_info"
                         v-on:keyup.enter="submitPetitionIndex()"
@@ -234,6 +236,7 @@ export default {
     return {
       base_url: process.env.VUE_APP_SERVICE_URL,
       page_title: "...",
+      pageSetup:{},
       petition: {},
       module_type: this.$route.params.module_type,
       petition_id: this.$route.params.petition_id,
@@ -319,6 +322,7 @@ export default {
           this.compactInlineView = response.data.compactInlineView;
           this.ShowOnOralArgument = response.data.ShowOnOralArgument;
           this.model_type = response.data.model_type;
+          this.pageSetup = response.data.page_setup;
           console.log(this.index_data);
         })
         .catch((error) => {

@@ -100,8 +100,9 @@
             </div>
           </div> -->
 
-          <div @click="gotoLink('contract-and-agreement')" v-if="(user.company_id == 1) &&
-            this.user.is_admin || this.user.is_lawyer || this.user.is_student
+          <div @click="gotoLink('contract-and-agreement')" 
+            v-if="(user.company_id == 1) &&
+            this.user.is_admin 
             " class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos-delay="100">
             <div class="icon-box iconbox-yellow border">
               <div class="icon">
@@ -125,7 +126,7 @@
 
           <!-- pleading link -->
           <div @click="gotoLink('sample-pleading')" v-if="(user.company_id == 1) &&
-            this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            this.user.is_admin 
             " class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos-delay="200">
             <div class="icon-box iconbox-redish border">
               <div class="icon">
@@ -145,6 +146,7 @@
           </div>
 
           <div @click="gotoLink('petition-general-case-law')" v-if="this.user.is_admin || this.user.is_lawyer || this.user.is_student
+
             " class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos-delay="200">
             <div class="icon-box iconbox-red border">
               <div class="icon">
@@ -169,7 +171,7 @@
             : { click: () => gotoLink('limitation-calculator') }
             " v-if="(user.company_id == 1) &&
 
-    this.user.is_admin || this.user.is_lawyer || this.user.is_student
+    this.user.is_admin 
     " :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos-delay="200">
             <div class="icon-box iconbox-dark-red border">
@@ -199,7 +201,7 @@
 
           <div @click="gotoLink('#')" v-if="(user.company_id == 1) &&
 
-            this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            this.user.is_admin 
             " class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos-delay="200">
             <div class="icon-box iconbox-secret border">
               <div class="icon">
@@ -225,7 +227,7 @@
             : { click: () => gotoLink('#transaction-calculator') }
             " v-if="(user.company_id == 1) &&
 
-    this.user.is_admin || this.user.is_lawyer || this.user.is_student
+    this.user.is_admin 
     " :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos-delay="200">
             <div class="icon-box iconbox-grey border">
@@ -255,7 +257,7 @@
             : { click: () => gotoLink('#service-rules-library') }
             " v-if="(user.company_id == 1) &&
 
-    this.user.is_admin || this.user.is_lawyer || this.user.is_student
+    this.user.is_admin 
     " :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos-delay="200">
             <div class="icon-box iconbox-service-rules border">
@@ -305,7 +307,7 @@
 
           <!-- <div
             v-if="
-              this.user.is_admin || this.user.is_lawyer || this.user.is_student
+              this.user.is_admin 
             "
             :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
             class="col-lg-4 col-md-6 d-flex align-items-stretch"
@@ -356,7 +358,7 @@
             ? { click: () => studentModal() }
             : { click: () => gotoLink('links') }
             " v-if="(user.company_id == 1) &&
-    this.user.is_admin || this.user.is_lawyer || this.user.is_student
+    this.user.is_admin 
     " :class="this.user.is_student ? 'disabled-dashboard-menu' : ''"
             class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos-delay="200">
             <div class="icon-box iconbox-orange border">
@@ -383,9 +385,7 @@
           <div v-on="this.user.is_student
             ? { click: () => studentModal() }
             : { click: () => gotoLink('fir-sections') }
-            " :class="this.user.is_student ? 'disabled-dashboard-menu' : ''" v-if="(this.user.is_admin ||
-    this.user.is_lawyer ||
-    this.user.is_student)
+            " :class="this.user.is_student ? 'disabled-dashboard-menu' : ''" v-if="(this.user.is_admin )
     " class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos-delay="200">
             <div class="icon-box fir-section-box border">
               <div class="icon">
@@ -510,7 +510,7 @@
           </div>
 
           <div v-if="(user.company_id == 1) &&
-            this.user.is_admin || this.user.is_lawyer || this.user.is_student
+            this.user.is_admin 
             " v-on="this.user.is_student
     ? { click: () => studentModal() }
     : { click: () => gotoLink('#') }
