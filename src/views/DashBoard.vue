@@ -101,7 +101,7 @@
           </div> -->
 
           <div @click="gotoLink('contract-and-agreement')" 
-            v-if="(user.company_id == 1) &&
+            v-if="
             this.user.is_admin 
             " class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos-delay="100">
             <div class="icon-box iconbox-yellow border">
@@ -125,7 +125,7 @@
           </div>
 
           <!-- pleading link -->
-          <div @click="gotoLink('sample-pleading')" v-if="(user.company_id == 1) &&
+          <div @click="gotoLink('sample-pleading')" v-if="
             this.user.is_admin 
             " class="cursor-pointer col-lg-4 col-md-6 d-flex align-items-stretch" data-aos-delay="200">
             <div class="icon-box iconbox-redish border">
