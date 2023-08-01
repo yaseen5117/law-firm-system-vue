@@ -29,6 +29,11 @@ export default {
     link.rel = 'stylesheet';
     link.href = this.cssFile;
     document.head.appendChild(link);
+
+    const favicon = document.getElementById('favicon');
+    const faviconApple = document.getElementById('favicon-apple');
+    favicon.href = 'assets/img/favicon.ico';
+    faviconApple.href = 'assets/img/favicon.ico';
   },
   computed: {
     dynamicHeader() {
