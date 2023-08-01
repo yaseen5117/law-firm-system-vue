@@ -1,30 +1,6 @@
 <template>
   <!-- ======= Header ======= -->
-  <nav style="padding: 30px;" class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-      <!-- Logo and site name on the left side -->
-      <a class="navbar-brand" href="#">
-        <img src="path/to/your-logo.png" alt="Your Logo" height="30">
-        Your Site Name
-      </a>
-
-      <!-- Menu links on the right side -->
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Services</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
       <!-- <img src="/assets/img/lums-logo.jpg" style="width: 90px!important;" /> -->
