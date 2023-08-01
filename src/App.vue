@@ -18,9 +18,17 @@ export default {
     HeaderLums,
     Footer,
   },
+  data: {
+    cssFile: 'assets/css/lumsstyle.css' // Replace with the path to your CSS file
+  },
   created() {
     this.$store.dispatch("authUser");
     this.$store.dispatch("loadGeneralSettings");
+
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = this.cssFile;
+    document.head.appendChild(link);
   },
   computed: {
     dynamicHeader() {
