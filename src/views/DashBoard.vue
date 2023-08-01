@@ -1,7 +1,7 @@
 <template>
   <main id="main">
     <!-- ======= Services Section ======= -->
-    <section id="services" style="margin-top: 120px" class="services section-bg">
+    <section id="services"  class="services section-bg dashboard-margin-top">
 
       <div class="container" v-if="!this.user">
         <p class="text-danger text-center">Authenticating...</p>
