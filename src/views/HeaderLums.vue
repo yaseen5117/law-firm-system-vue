@@ -3,10 +3,12 @@
   
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
-      <!-- <img src="/assets/img/lums-logo.jpg" style="width: 90px!important;" /> -->
-      <h1 class="logo">
-        <router-link to="/login">Lums Law Clinic</router-link>
-      </h1>
+      <div class="logo-container">
+            <img src="/assets/img/lums-logo.jpg" class="logo-img" alt="Lums Law Clinic Logo" style="width: 70px!important;" />
+            <h1 class="logo">
+                <router-link to="/login">Lums Law Clinic</router-link>
+            </h1>
+        </div>
 
       <nav id="navbar" class="navbar">
         <ul>
@@ -164,4 +166,34 @@ nav .dropdown .drop-down.active {
   color: #2e3192;
   
 }
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo-container img {
+  margin-right: 10px; /* Adjust the spacing between the logo and text */
+}
+
+.logo {
+  margin: 0; /* Remove any default margin on the H1 element */
+}
+
+/* Add the following CSS if you want to make the logo and text vertically centered */
+.container {
+  display: flex;
+  align-items: center;
+}
+
+/* Hide the H1 element in mobile view (up to 768px width, adjust as needed) */
+@media (max-width: 768px) {
+  .logo-img {
+    display: none;
+  }
+  .logo {
+    font-size: 16px!important ;
+  }
+}
+
+
 </style>
