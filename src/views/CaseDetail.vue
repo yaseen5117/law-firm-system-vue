@@ -23,10 +23,9 @@
                     class="btn btn-sm btn-grey action-btn right_margin"
                     v-if="
                       petition &&
-                        petition.pending_tag &&
-                        pendingTag &&
-                        (this.user.is_admin ||
-                      this.user.is_lawyer)
+                      petition.pending_tag &&
+                      pendingTag &&
+                      (this.user.is_admin || this.user.is_lawyer)
                     "
                     v-tooltip.top="'Click To Change/Remove'"
                   >
@@ -36,9 +35,8 @@
                   <button
                     v-if="
                       !insertPendingTag &&
-                        !petition.pending_tag &&
-                        (this.user.is_admin ||
-                        this.user.is_lawyer)
+                      !petition.pending_tag &&
+                      (this.user.is_admin || this.user.is_lawyer)
                     "
                     @click="openInsertField"
                     class="btn btn-sm btn-success action-btn right_margin"
@@ -48,8 +46,8 @@
                   <button
                     class="btn"
                     v-if="
-                      insertPendingTag && (this.user.is_admin ||
-                      this.user.is_lawyer)
+                      insertPendingTag &&
+                      (this.user.is_admin || this.user.is_lawyer)
                     "
                   >
                     <div class="p-inputgroup">
@@ -112,7 +110,12 @@
                   <th>Date</th>
                   <th>Annexure</th>
                   <th>Page</th>
-                  <th v-if="this.user.is_admin || this.user.is_lawyer" width="10%">Actions</th>
+                  <th
+                    v-if="this.user.is_admin || this.user.is_lawyer"
+                    width="18%"
+                  >
+                    Actions
+                  </th>
                 </thead>
                 <tbody>
                   <tr
@@ -182,7 +185,19 @@
                         petition_detail.page_info
                       }}</span>
                     </td>
-                    <td width="15%" v-if="this.user.is_admin || this.user.is_lawyer">
+                    <td
+                      width="15%"
+                      v-if="this.user.is_admin || this.user.is_lawyer"
+                    >
+                      <a
+                        class="btn btn-sm btn-warning action-btn"
+                        v-show="!petition_detail.editMode"
+                        @click="downloadSingleIndex(petition_detail)"
+                        href="javascript:void"
+                        v-tooltip.top="'Download PDF'"
+                      >
+                        Download
+                      </a>
                       <a
                         class="btn btn-sm btn-primary action-btn left_margin"
                         v-show="!petition_detail.editMode"
@@ -673,7 +688,54 @@ export default {
         },
       });
     },
+    async downloadSingleIndex(petition_detail) {
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+
+      await axios
+        .post(
+          this.base_url + "/api/download_single_petiton_index_pdf",
+          petition_detail,
+          {
+            headers,
+          }
+        )
+        .then(
+          (response) => {
+            if (response.status === 200) {
+              const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
+              });
+              const url = URL.createObjectURL(pdfBlob);
+              // Trigger the download
+              const link = document.createElement("a");
+              link.href = url;
+              link.download = "images.pdf";
+              link.click();
+
+              // Clean up the URL.createObjectURL
+              URL.revokeObjectURL(url);
+              // this.$notify({
+              //   type: "success",
+              //   title: "Success",
+              //   text: "Saved Successfully!",
+              // });
+              // petitionToUpdate.editMode = false;
+            }
+          },
+          (error) => {
+            console.log(error.response.data);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
+          }
+        );
+    },
   },
+
   updated() {
     document.title = this.petition.petition_standard_title + " | Petition";
   },
