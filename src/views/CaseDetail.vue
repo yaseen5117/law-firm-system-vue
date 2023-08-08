@@ -708,7 +708,9 @@ export default {
               //var fileURL = window.URL.createObjectURL(new Blob([response.data]));
               const link = document.createElement("a");
               link.href = response.data.file_path;
-              link.setAttribute("download", "Petition_index.pdf");
+              // link.setAttribute("download", "Petition_index.pdf");
+
+              link.target = "_blank"; // This will open the link in a new tab
 
               document.body.appendChild(link);
               link.click();
