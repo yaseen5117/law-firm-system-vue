@@ -695,7 +695,7 @@ export default {
 
       await axios
         .post(
-          this.base_url + "/api/download_single_petiton_index_pdf",
+          this.base_url + "/api/download_single_petition_index_pdf",
           petition_detail,
           {
             headers,
@@ -704,24 +704,21 @@ export default {
         .then(
           (response) => {
             if (response.status === 200) {
-              const pdfBlob = new Blob([response.data], {
-                type: "application/pdf",
-              });
-              const url = URL.createObjectURL(pdfBlob);
-              // Trigger the download
+              console.log("response: ", response);
+              //var fileURL = window.URL.createObjectURL(new Blob([response.data]));
               const link = document.createElement("a");
-              link.href = url;
-              link.download = "images.pdf";
-              link.click();
+              link.href = response.data.file_path;
+              link.setAttribute("download", "Petition_index.pdf");
 
-              // Clean up the URL.createObjectURL
-              URL.revokeObjectURL(url);
-              // this.$notify({
-              //   type: "success",
-              //   title: "Success",
-              //   text: "Saved Successfully!",
-              // });
-              // petitionToUpdate.editMode = false;
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              //window.open(response.data.file_path, "_blank");
+
+              this.$notify({
+                type: "success",
+                title: "File Downloaded SuccessFully",
+              });
             }
           },
           (error) => {
