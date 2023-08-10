@@ -144,17 +144,20 @@
                             minLength="3"
                             appendTo="self"
                             placeholder="Name"
+                            :inputStyle="'padding: 2px'"
                             class="p-autocomplete"
                             v-model="petitioner.user.name"
                           />
                           <div class="input-group-prepend">
                             <span
+                              v-tooltip.top="'Remove'"
+                              style="background-color: red; color: white"
                               class="input-group-text cursor-pointer"
                               @click="
                                 removeInputRow(petition.petitioners, index)
                               "
-                              >Delete</span
-                            >
+                              ><i class="fa fa-minus"></i
+                            ></span>
                           </div>
                           <div
                             v-if="petitioner.user.id"
@@ -212,15 +215,18 @@
                             minLength="3"
                             appendTo="self"
                             placeholder="Name"
+                            :inputStyle="'padding: 2px'"
                             class="p-autocomplete"
                             v-model="opponent.user.name"
                           />
                           <div class="input-group-prepend">
                             <span
+                              v-tooltip.top="'Remove'"
+                              style="background-color: red; color: white"
                               class="input-group-text cursor-pointer"
                               @click="removeInputRow(petition.opponents, index)"
-                              >Delete</span
-                            >
+                              ><i class="fa fa-minus"></i
+                            ></span>
                           </div>
                           <div
                             v-if="opponent.user.id"
