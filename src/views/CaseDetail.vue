@@ -192,7 +192,7 @@
                       <a
                         class="btn btn-sm btn-warning action-btn"
                         v-show="!petition_detail.editMode"
-                        @click="downloadSingleIndex(petition_detail)"
+                        @click="downloadSingleIndex(petition_detail.id)"
                         href="javascript:void"
                         v-tooltip.top="'Download PDF'"
                       >
@@ -688,7 +688,7 @@ export default {
         },
       });
     },
-    async downloadSingleIndex(petition_detail) {
+    async downloadSingleIndex(petition_index_id) {
       var headers = {
         Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
       };
@@ -696,7 +696,7 @@ export default {
       await axios
         .post(
           this.base_url + "/api/download_single_petition_index_pdf",
-          petition_detail,
+          {id: petition_index_id},
           {
             headers,
           }
