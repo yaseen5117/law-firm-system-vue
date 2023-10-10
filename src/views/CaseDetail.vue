@@ -696,7 +696,7 @@ export default {
       await axios
         .post(
           this.base_url + "/api/download_single_petition_index_pdf",
-          {id: petition_index_id},
+          { id: petition_index_id },
           {
             headers,
           }
@@ -705,17 +705,16 @@ export default {
           (response) => {
             if (response.status === 200) {
               console.log("response: ", response);
-              //var fileURL = window.URL.createObjectURL(new Blob([response.data]));
               const link = document.createElement("a");
               link.href = response.data.file_path;
-              // link.setAttribute("download", "Petition_index.pdf");
-
               link.target = "_blank"; // This will open the link in a new tab
+              //link.download = "Petition_index.pdf"; // Set a suggested file name
 
-              document.body.appendChild(link);
+              // Trigger a click event on the link to initiate the download
               link.click();
+
+              // Clean up the link element
               document.body.removeChild(link);
-              //window.open(response.data.file_path, "_blank");
 
               this.$notify({
                 type: "success",
