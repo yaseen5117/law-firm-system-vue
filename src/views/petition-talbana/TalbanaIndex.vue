@@ -64,8 +64,23 @@
                   <strong>Description: </strong>{{ TalbanaActive.description }}
                   <strong>Talbana Date: </strong
                   >{{ TalbanaActive.talbana_date }}
+                  <button
+                    class="btn btn-sm btn-warning action-btn"
+                    @click="downloadSingleIndex(TalbanaActive.id)"
+                    href="javascript:void"
+                    v-tooltip.top="'Download PDF'"
+                    :disabled="
+                      !TalbanaActive.attachments ||
+                      TalbanaActive.attachments.length == 0
+                        ? true
+                        : isDisabled
+                    "
+                  >
+                    Download
+                  </button>
                   <router-link
                     v-tooltip.top="'Edit'"
+                    style="margin-left: 2px"
                     v-if="this.user.is_admin || this.user.is_lawyer"
                     class="btn btn-success btn-sm action-btn"
                     :to="{
@@ -232,6 +247,7 @@ export default {
       activePage: null,
       removePageHeader: true,
       visibleRight: true,
+      isDisabled: false,
     };
   },
   created() {
@@ -430,6 +446,53 @@ export default {
           this.$confirm.close();
         },
       });
+    },
+    async downloadSingleIndex(index_id) {
+      this.isDisabled = true;
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+
+      await axios
+        .post(
+          this.base_url + "/api/download_single_petition_index_pdf",
+          { id: index_id, model: "PetitionTalbana" },
+          {
+            headers,
+          }
+        )
+        .then(
+          (response) => {
+            if (response.status === 200) {
+              this.isDisabled = false;
+              console.log("response: ", response);
+              const link = document.createElement("a");
+              link.href = response.data.file_path;
+              link.target = "_blank"; // This will open the link in a new tab
+              //link.download = "Petition_index.pdf"; // Set a suggested file name
+
+              // Trigger a click event on the link to initiate the download
+              link.click();
+
+              // Clean up the link element
+              document.body.removeChild(link);
+
+              this.$notify({
+                type: "success",
+                title: "File Downloaded SuccessFully",
+              });
+            }
+          },
+          (error) => {
+            this.isDisabled = false;
+            console.log(error.response.data);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
+          }
+        );
     },
   },
 };

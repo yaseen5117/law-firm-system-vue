@@ -19,7 +19,7 @@
           <div id="heading" style="display: none">
             <h1>HEading</h1>
           </div>
-          <div class="col-lg-5 col-md-5 col-sm-12">
+          <div class="col-lg-6 col-md-6 col-sm-12">
             <!-- v-if="!removePageHeader" -->
             <button
               v-if="removePageHeader"
@@ -91,8 +91,18 @@
               @click="printCurrentOrderSheet(orderSheetsActive, petition)"
               ><i class="fa fa-print"></i>Print List</a
             >
+            <a
+              class="btn btn-warning btn-sm mobile-margin-top action-btn"
+              v-show="!orderSheetsActive.editMode"
+              @click="downloadSingleIndex(orderSheetsActive.id)"
+              href="javascript:void"
+              style="margin-left: 2px"
+              v-tooltip.top="'Download PDF'"
+            >
+              Download
+            </a>
           </div>
-          <div class="col-lg-7 col-md-7 col-sm-12">
+          <div class="col-lg-6 col-md-6 col-sm-12">
             <BreadCrumb
               :moduleDetail="orderSheetsActive"
               :isPetitionOrderSheet="true"
@@ -356,17 +366,20 @@ export default {
           }
         )
         .then((response) => {
-          this.orderSheetsActive = response.data.record;
+          console.log("RESPONSE: ", response);
+          if (response.data.record) {
+            this.orderSheetsActive = response.data.record;
+            this.petition = response.data.record.petition;
+          }
           this.previous_index_id = response.data.previous_index_id;
           this.next_index_id = response.data.next_index_id;
-          this.petition = response.data.record.petition;
         })
         .catch((error) => {
-          console.log(error.response.data);
+          console.log("ERROR: ", error);
           this.$notify({
             type: "error",
             title: "Something went wrong!",
-            text: error.response.data.message,
+            text: error.response,
           });
         });
     },
@@ -503,6 +516,50 @@ export default {
       document.body.innerHTML = printContents;
       window.print();
     },
+    async downloadSingleIndex(index_id) {
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+
+      await axios
+        .post(
+          this.base_url + "/api/download_single_petition_index_pdf",
+          { id: index_id, model: "PetitonOrderSheet" },
+          {
+            headers,
+          }
+        )
+        .then(
+          (response) => {
+            if (response.status === 200) {
+              console.log("response: ", response);
+              const link = document.createElement("a");
+              link.href = response.data.file_path;
+              link.target = "_blank"; // This will open the link in a new tab
+              //link.download = "Petition_index.pdf"; // Set a suggested file name
+
+              // Trigger a click event on the link to initiate the download
+              link.click();
+
+              // Clean up the link element
+              document.body.removeChild(link);
+
+              this.$notify({
+                type: "success",
+                title: "File Downloaded SuccessFully",
+              });
+            }
+          },
+          (error) => {
+            console.log(error.response.data);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
+          }
+        );
+    },
   },
 };
 </script>
@@ -515,5 +572,5 @@ export default {
   .mobile-margin-top {
     margin-top: 2px;
   }
-} 
+}
 </style>

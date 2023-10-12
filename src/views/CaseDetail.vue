@@ -696,7 +696,7 @@ export default {
       await axios
         .post(
           this.base_url + "/api/download_single_petition_index_pdf",
-          { id: petition_index_id },
+          { id: petition_index_id, model: "PetitionIndex" },
           {
             headers,
           }

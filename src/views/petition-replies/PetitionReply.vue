@@ -15,7 +15,12 @@
                   <th>Date</th>
                   <th>Annexure</th>
                   <th>Page</th>
-                  <th width="10%" v-if="this.user.is_admin || this.user.is_lawyer">Actions</th>
+                  <th
+                    width="10%"
+                    v-if="this.user.is_admin || this.user.is_lawyer"
+                  >
+                    Actions
+                  </th>
                 </thead>
                 <tbody>
                   <tr
@@ -82,7 +87,19 @@
                         petition_reply.page_info
                       }}</span>
                     </td>
-                    <td width="15%" v-if="this.user.is_admin || this.user.is_lawyer">
+                    <td
+                      width="15%"
+                      v-if="this.user.is_admin || this.user.is_lawyer"
+                    >
+                      <a
+                        class="btn btn-sm btn-warning action-btn"
+                        v-show="!petition_reply.editMode"
+                        @click="downloadSingleIndex(petition_reply.id)"
+                        href="javascript:void"
+                        v-tooltip.top="'Download PDF'"
+                      >
+                        Download
+                      </a>
                       <a
                         class="btn btn-sm btn-primary action-btn"
                         v-show="!petition_reply.editMode"
@@ -436,6 +453,50 @@ export default {
             }
           );
       }
+    },
+    async downloadSingleIndex(index_id) {
+      var headers = {
+        Authorization: `Bearer ` + localStorage.getItem("lfms_user"),
+      };
+
+      await axios
+        .post(
+          this.base_url + "/api/download_single_petition_index_pdf",
+          { id: index_id, model: "PetitionReply" },
+          {
+            headers,
+          }
+        )
+        .then(
+          (response) => {
+            if (response.status === 200) {
+              console.log("response: ", response);
+              const link = document.createElement("a");
+              link.href = response.data.file_path;
+              link.target = "_blank"; // This will open the link in a new tab
+              //link.download = "Petition_index.pdf"; // Set a suggested file name
+
+              // Trigger a click event on the link to initiate the download
+              link.click();
+
+              // Clean up the link element
+              document.body.removeChild(link);
+
+              this.$notify({
+                type: "success",
+                title: "File Downloaded SuccessFully",
+              });
+            }
+          },
+          (error) => {
+            console.log(error.response.data);
+            this.$notify({
+              type: "error",
+              title: "Something went wrong!",
+              text: error.response.data.message,
+            });
+          }
+        );
     },
   },
 };
